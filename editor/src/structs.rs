@@ -1,29 +1,10 @@
-// typedef struct {
-//     SetBackColor( 0xFF00CCFF );
-//     unsigned long  questTypeFlagsPtr;
-//     unsigned long  loadedStagesPtr;
-//     unsigned long  supplyBoxPtr;
-//     unsigned long  rewardPtr;
-//     unsigned short  subSupplyBoxPtr;
-//     unsigned byte  unk0;
-//     unsigned byte  subSupplyBoxLen;
-//     unsigned long  questAreaPtr;
-//     unsigned long  largeMonsterPtr;
-//     unsigned long  areaFloats;
-//     unsigned long  unkFloats1;
-//     unsigned long  unkPtr3;
-//     unsigned long  unkPtr4;
-//     unsigned long  unkPtr5;
-//     unsigned long  unkPtr6;
-//     unsigned long  unkPtr7;
-//     unsigned long  gatheringPointers;
-//     unsigned long  unkPtr8;
-//     unsigned long  unkPtr9;
-// } QuestFileHeader;
-
 use crate::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 
+// O Rust não armazena os attributos na mesma ordem que foi declarado na memória
+// O compilador decide a ordem para otimizações
+// É necessário adicionar o repr(C) para o rust utilizar a mesma ordem
 #[derive(Debug)]
+#[repr(C)]
 pub struct QuestFileHeader {
     pub quest_type_ptr: u32,
     pub loaded_stages_ptr: u32,
@@ -46,9 +27,10 @@ pub struct QuestFileHeader {
     pub unk_ptr9: u32,
 }
 
+
 #[derive(Debug)]
 pub struct QuestFile {
     pub header: QuestFileHeader,
-    pub monster_pointers: LargeMonsterPointers,
-    pub monster_spawn: LargeMonsterSpawn,
+    // pub monster_pointers: LargeMonsterPointers,
+    // pub monster_spawn: LargeMonsterSpawn,
 }

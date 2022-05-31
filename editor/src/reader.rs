@@ -12,9 +12,7 @@ use crate::structs::{QuestFile, QuestFileHeader};
  */
 pub fn read_struct<T>(read: &mut BufReader<File>) -> std::io::Result<T> {
     // calculando o tamanho da struct em bytes
-    let num_bytes = size_of::<T>();
-    println!("num_bytes: {}", num_bytes);
-    
+    let num_bytes = size_of::<T>();    
     
     unsafe {
         // Aqui vamos criar uma instancia da nossa struct não inicializada
@@ -29,7 +27,6 @@ pub fn read_struct<T>(read: &mut BufReader<File>) -> std::io::Result<T> {
         // Depois de ler os bytes do arquivo para nosso buffer a nossa variavel data estava com os dados corretos
         match read.read_exact(buffer) {
             Ok(()) =>{ 
-                println!("buffer: {:x?}", buffer);
                 Ok(data)
             },
             Err(e) => {
@@ -44,19 +41,19 @@ pub fn reader(reader: &mut BufReader<File>) -> QuestFile {
 
     let header = read_struct::<QuestFileHeader>(reader).unwrap();
 
-    reader
-        .seek_relative(header.large_monster_ptr as i64)
-        .unwrap();
-    let monster_pointers = read_struct::<LargeMonsterPointers>(reader).unwrap();
+    // reader
+    //     .seek_relative(header.large_monster_ptr as i64)
+    //     .unwrap();
+    // let monster_pointers = read_struct::<LargeMonsterPointers>(reader).unwrap();
 
-    reader
-        .seek_relative(monster_pointers.large_monster_spawns as i64)
-        .unwrap();
-    let monster_spawn = read_struct::<LargeMonsterSpawn>(reader).unwrap();
+    // reader
+    //     .seek_relative(monster_pointers.large_monster_spawns as i64)
+    //     .unwrap();
+    // let monster_spawn = read_struct::<LargeMonsterSpawn>(reader).unwrap();
 
     QuestFile {
         header: header,
-        monster_pointers,
-        monster_spawn,
+        // monster_pointers,
+        // monster_spawn,
     }
 }
