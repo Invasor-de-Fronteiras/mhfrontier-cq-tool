@@ -1,20 +1,21 @@
 use std::fs::File;
-use std::io::{ BufReader, Result, Read, Seek, SeekFrom };
+use std::io::{BufReader, Read, Result, Seek, SeekFrom};
 use std::mem::{forget, size_of, MaybeUninit};
 use std::path::Path;
 use std::slice;
 
 pub struct FileReader {
-    pub reader:  BufReader<File>
+    pub reader: BufReader<File>,
 }
 
 impl FileReader {
-    
     pub fn from_filename(filename: &str) -> FileReader {
         let filename = Path::new(filename);
         let f = File::open(filename).unwrap();
 
-        FileReader { reader: BufReader::new(f) }
+        FileReader {
+            reader: BufReader::new(f),
+        }
     }
 
     pub fn seek_start(&mut self, pos: u64) -> Result<u64> {
@@ -37,14 +38,12 @@ impl FileReader {
             let mut data = MaybeUninit::<T>::uninit().assume_init();
             // Vamos criar um buffer dividindo nossa struct em um array de bytes
             // esse buffer é um espelho da nossa instancia, ou seja, eles compartilham o mesmo endereço na memória
+            #[allow(unused_mut)]
             let mut buffer = slice::from_raw_parts_mut(&mut data as *mut T as *mut u8, num_bytes);
 
             // Depois de ler os bytes do arquivo para nosso buffer a nossa variavel data estava com os dados corretos
             match self.reader.read_exact(buffer) {
-                Ok(()) => {
-                    print!("{:?}", buffer);
-                    Ok(data)
-                }
+                Ok(()) => Ok(data),
                 Err(e) => {
                     forget(data);
                     Err(e)
@@ -53,33 +52,31 @@ impl FileReader {
         }
     }
 
-
     pub fn read_u32(&mut self) -> std::io::Result<u32> {
         let mut buffer = [0_u8; 4];
-        self.reader.read_exact(&mut buffer);
-    
+        self.reader.read_exact(&mut buffer)?;
+
         Ok(u32::from_le_bytes(buffer))
     }
-    
+
     pub fn read_u16(&mut self) -> std::io::Result<u16> {
         let mut buffer = [0_u8; 2];
-        self.reader.read_exact(&mut buffer);
-    
+        self.reader.read_exact(&mut buffer)?;
+
         Ok(u16::from_le_bytes(buffer))
     }
 
     pub fn read_u8(&mut self) -> std::io::Result<u8> {
         let mut buffer = [0_u8; 1];
-        self.reader.read_exact(&mut buffer);
-    
+        self.reader.read_exact(&mut buffer)?;
+
         Ok(u8::from_le_bytes(buffer))
     }
 
     pub fn read_f32(&mut self) -> std::io::Result<f32> {
         let mut buffer = [0_u8; size_of::<f32>()];
-        self.reader.read_exact(&mut buffer);
-    
+        self.reader.read_exact(&mut buffer)?;
+
         Ok(f32::from_le_bytes(buffer))
     }
-
 }

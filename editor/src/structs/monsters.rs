@@ -1,4 +1,4 @@
-use serde_derive::{Serialize, Deserialize};
+use serde_derive::{Deserialize, Serialize};
 
 pub enum MonsterID {
     None,
@@ -180,7 +180,7 @@ pub enum MonsterID {
     KingShakalaka,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct LargeMonsterPointers {
     // skip 8 bytes
@@ -194,7 +194,7 @@ pub struct LargeMonsterPointers {
     pub unk_5: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct LargeMonsterSpawn {
     pub monster_id: u8,
