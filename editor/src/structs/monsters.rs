@@ -178,12 +178,6 @@ pub enum MonsterID {
     KingShakalaka,
 }
 
-// struct LargeMonsterPointers{
-//     FSkip(8);
-//     uint32 largeMonsterIds;
-//     uint32 largeMonsterSpawns;
-// } lgPtr<size=32>;
-
 #[derive(Debug)]
 #[repr(C)]
 pub struct LargeMonsterPointers {
@@ -197,18 +191,6 @@ pub struct LargeMonsterPointers {
     pub unk_4: u32,
     pub unk_5: u32,
 }
-
-// struct LargeMonsterSpawn {
-//     MonsterID monster;
-//     FSkip(3);// adjust for other values being int16s
-//     uint32 spawnAmount;
-//     uint32 spawnStage;
-//     FSkip(16); // null in working example
-//     uint32 Unk2;
-//     float xPos;
-//     float yPos;
-//     float zPos;
-// }
 
 #[derive(Debug)]
 #[repr(C)]
@@ -228,19 +210,7 @@ pub struct LargeMonsterSpawn {
     pub unk7: u32,
 
     pub unk8: u32,
-    pub x_position: u32,
-    pub y_position: u32,
-    pub z_position: u32,
+    pub x_position: f32,
+    pub y_position: f32,
+    pub z_position: f32,
 }
-
-// struct LargeMonster {
-//     monster_id: u8,
-//     spawn: LargeMonsterSpawn
-// }
-
-// fn test() {
-//     let monster = MonsterID::Akantor;
-
-// }
-
-// MonsterID<

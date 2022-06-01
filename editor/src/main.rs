@@ -1,10 +1,14 @@
-pub mod monsters;
 pub mod reader;
 pub mod structs;
+pub mod quest_file;
+
+use quest_file::QuestFile;
 
 fn main() {
-    println!("Hello, world!");
+    let quest_file = QuestFile::from_path("./editor/21085d0.bin");
+
+    println!("quest: {:?}", quest_file);
 }
 
 #[cfg(test)]
-mod reader_test;
+mod tests;

@@ -1,23 +1,9 @@
-use std::{
-    fs::File,
-    io::BufReader,
-    path::Path,
-};
-
-use crate::reader::reader;
-
-fn read_test_file() -> BufReader<File> {
-    let filename = Path::new("./21085d0.bin");
-    let f = File::open(filename).unwrap();
-    return BufReader::new(f);
-}
-
-
+use crate::quest_file::QuestFile;
 
 #[test]
 fn reader_test() {
-    let mut buffer = read_test_file();
-    let quest_file = reader(&mut buffer);
+    // let mut buffer = read_test_file();
+    let quest_file = QuestFile::from_path("./21085d0.bin");
 
     // Headers
     assert_eq!(quest_file.header.quest_type_ptr, 192);
@@ -43,8 +29,8 @@ fn reader_test() {
     assert_eq!(quest_file.header.unk_ptr9, 11264);
 
     // Monster pointers
-    assert_eq!(quest_file.monster_pointers.large_monster_ids, 5952);
-    assert_eq!(quest_file.monster_pointers.large_monster_spawns, 5984);
+    assert_eq!(quest_file.large_monster_pointers.large_monster_ids, 5952);
+    assert_eq!(quest_file.large_monster_pointers.large_monster_spawns, 59841);
 
-
+    println!("quest:{:?}", quest_file);
 }

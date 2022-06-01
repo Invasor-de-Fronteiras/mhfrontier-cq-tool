@@ -1,4 +1,3 @@
-use crate::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 
 // O Rust não armazena os attributos na mesma ordem que foi declarado na memória
 // O compilador decide a ordem para otimizações
@@ -25,12 +24,4 @@ pub struct QuestFileHeader {
     pub gathering_pointers: u32,
     pub unk_ptr8: u32,
     pub unk_ptr9: u32,
-}
-
-#[derive(Debug)]
-#[repr(C)]
-pub struct QuestFile {
-    pub header: QuestFileHeader,
-    pub monster_pointers: LargeMonsterPointers,
-    // pub monster_spawn: LargeMonsterSpawn,
 }
