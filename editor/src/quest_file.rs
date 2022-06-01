@@ -1,14 +1,16 @@
 use crate::reader::FileReader;
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::structs::header::QuestFileHeader;
+// use serde::{Serialize, Deserialize};
+use serde_derive::{Serialize, Deserialize};
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[repr(C)]
 struct QuestFileQuestType {
     big_monster_size_multi: u16,
 }
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[repr(C)]
 pub struct QuestFile {
     pub header: QuestFileHeader,

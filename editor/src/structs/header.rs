@@ -1,8 +1,10 @@
+use serde_derive::{Deserialize, Serialize};
+
 
 // O Rust não armazena os attributos na mesma ordem que foi declarado na memória
 // O compilador decide a ordem para otimizações
 // É necessário adicionar o repr(C) para o rust utilizar a mesma ordem
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[repr(C)]
 pub struct QuestFileHeader {
     pub quest_type_ptr: u32,
