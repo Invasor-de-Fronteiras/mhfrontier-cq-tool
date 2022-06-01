@@ -27,10 +27,10 @@ pub struct QuestFileHeader {
     pub unk_ptr9: u32,
 }
 
-
 #[derive(Debug)]
+#[repr(C)]
 pub struct QuestFile {
     pub header: QuestFileHeader,
-    // pub monster_pointers: LargeMonsterPointers,
+    pub monster_pointers: LargeMonsterPointers,
     // pub monster_spawn: LargeMonsterSpawn,
 }

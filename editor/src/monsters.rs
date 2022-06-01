@@ -185,6 +185,7 @@ pub enum MonsterID {
 // } lgPtr<size=32>;
 
 #[derive(Debug)]
+#[repr(C)]
 pub struct LargeMonsterPointers {
     // skip 8 bytes
     pub unk_0: u32,
@@ -210,6 +211,7 @@ pub struct LargeMonsterPointers {
 // }
 
 #[derive(Debug)]
+#[repr(C)]
 pub struct LargeMonsterSpawn {
     pub monster_id: u32,
     // skip 3 bytes
