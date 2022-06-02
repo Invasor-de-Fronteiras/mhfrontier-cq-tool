@@ -9,17 +9,17 @@ pub struct FileReader {
 }
 
 impl FileReader {
-    pub fn from_filename(filename: &str) -> FileReader {
+    pub fn from_filename(filename: &str) -> Result<FileReader> {
         let filename = Path::new(filename);
-        let f = File::open(filename).unwrap();
+        let f = File::open(filename)?;
 
-        FileReader {
+        Ok(FileReader {
             reader: BufReader::new(f),
-        }
+        })
     }
 
     pub fn seek_start(&mut self, pos: u64) -> Result<u64> {
-        let result = self.reader.seek(SeekFrom::Start(pos)).unwrap();
+        let result = self.reader.seek(SeekFrom::Start(pos))?;
 
         Ok(result)
     }
