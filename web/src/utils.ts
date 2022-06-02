@@ -1,0 +1,16 @@
+export const maps = [
+    "Jungle",
+    "Desert",
+    "Swamp",
+    "Snowy Mountains",
+    "Volcano",
+    "Tower",
+    "Forest & Hills",
+    "Great Forest",
+    "Gorge",
+    "Small Arena",
+    "Large Arena",
+    "Town",
+    "Fortress",
+    "Castle Schrade",
+]

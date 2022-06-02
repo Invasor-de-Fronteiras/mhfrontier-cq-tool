@@ -1,5 +1,6 @@
 import React from "react";
 import {BsUpload} from 'react-icons/bs';
+import { maps } from "./utils";
 
 function App() {
   return (
@@ -24,20 +25,10 @@ function App() {
             <fieldset>
               <legend className="font-normal mb-2">Select a template</legend>
             <select className="border w-full p-2">
-              <option>Jungle</option>
-              <option>Desert</option>
-              <option>Swamp</option>
-              <option>Snowy Mountains</option>
-              <option>Volcano</option>
-              <option>Tower</option>
-              <option>Forest & Hills</option>
-              <option>Great Forest</option>
-              <option>Gorge</option>
-              <option>Small Arena</option>
-              <option>Large Arena</option>
-              <option>Town</option>
-              <option>Fortress</option>
-              <option>Castle Schrade</option>
+              <option>Select a template</option>
+              {maps.map((map) => (
+                <option key={map}>{map}</option>
+              ))}
             </select>
             </fieldset>
             </div>
