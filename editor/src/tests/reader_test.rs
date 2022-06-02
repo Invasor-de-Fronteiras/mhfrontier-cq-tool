@@ -6,7 +6,7 @@ use crate::{
 #[test]
 fn reader_test() {
     // let mut buffer = read_test_file();
-    let quest_file = QuestFile::from_path("./21085d0.bin");
+    let quest_file = QuestFile::from_path("./21085d0.bin").unwrap();
 
     let expected = QuestFile {
         header: QuestFileHeader {
