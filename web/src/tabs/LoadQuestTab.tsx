@@ -1,4 +1,5 @@
-import { BsUpload } from "react-icons/bs";
+import { useCallback } from "react";
+import { Dropzone } from "../components/Dropzone";
 import { maps } from "../utils";
 
 export function LoadQuestTab() {
@@ -15,10 +16,7 @@ export function LoadQuestTab() {
             title="Select a quest file from your machine."
             buttonDisabled
           >
-            <div className="border border-dashed w-full h-full flex items-center justify-center p-2 flex-col">
-              <BsUpload size={25} className="my-4" />
-              <h3>Choose a File</h3>
-            </div>
+            <Dropzone />
           </Card>
           <Card
             buttonText="Edit template"
