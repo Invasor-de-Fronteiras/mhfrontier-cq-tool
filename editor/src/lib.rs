@@ -2,14 +2,14 @@ pub mod quest_file;
 pub mod reader;
 pub mod save_json;
 pub mod structs;
+pub mod offsets;
 
 use quest_file::QuestFile;
 
 pub fn main_test(input: &str, output: &str) {
-    // "./core/21085d0.bin"
 
     let result = QuestFile::from_path(input);
-    // "./output/21085d0.json"
+
     if let Ok(quest) = result {
         if let Err(result) = save_json::save_quest_to_json(output, &quest) {
             println!("failed to save json!");
