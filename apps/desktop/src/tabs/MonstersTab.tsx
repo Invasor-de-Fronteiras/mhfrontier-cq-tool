@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { QuestContext } from "../hooks/quest";
 import { monsters, QuestFile } from "../types/quest-file";
+import { MonsterCard, Select } from 'ui';
 
 export function MonstersTab() {
   const { quest } = useContext(QuestContext);
@@ -33,31 +34,37 @@ export function MonstersTab() {
       <h2>Monsters</h2>
       <div className="flex flex-col gap-3">
 
-        {quest && quest.large_monster_spawns.map((monster) => (
-          <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6">
-            <div className="flex flex-col">
-              <label>Monster</label>
-              <select
-                value={monster.monster_id}
-                className="border rounded p-2 w-full max-w-xs"
-              >
-                <option>Select a monster</option>
-                {monsters.map((monster, i) => (
-                  <option key={monster} value={i}>
-                    {monster}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <fieldset>
-              <legend>Position</legend>
-              <div className="flex flex-row">
-                <PosInput label="X" value={monster.x_position} />
-                <PosInput label="Y" value={monster.y_position} />
-                <PosInput label="Z" value={monster.z_position} />
-              </div>
-            </fieldset>
-          </div>
+        {quest && quest.large_monster_spawns.map((monster, index) => (
+          <MonsterCard
+            data={monster}
+            index={index}
+            key={`${monster.monster_id}_${index}`}
+          />
+          // <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6">
+          //   <div className="flex flex-col">
+          //     <label>Monster</label>
+          //     <Select options={monsters} />
+          //     {/* <select
+          //       value={monster.monster_id}
+          //       className="border rounded p-2 w-full max-w-xs"
+          //     >
+          //       <option>Select a monster</option>
+          //       {monsters.map((monster, i) => (
+          //         <option key={monster} value={i}>
+          //           {monster}
+          //         </option>
+          //       ))}
+          //     </select> */}
+          //   </div>
+          //   <fieldset>
+          //     <legend>Position</legend>
+          //     <div className="flex flex-row">
+          //       <PosInput label="X" value={monster.x_position} />
+          //       <PosInput label="Y" value={monster.y_position} />
+          //       <PosInput label="Z" value={monster.z_position} />
+          //     </div>
+          //   </fieldset>
+          // </div>
         ))}
       </div>
     </div>
