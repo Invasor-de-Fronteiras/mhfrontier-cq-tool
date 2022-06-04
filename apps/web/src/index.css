@@ -6,10 +6,3 @@ body {
     @apply bg-gray-200;
 }
 
-.btn {
-    @apply border rounded p-2 bg-gray-700 text-white w-52 font-medium
-}
-
-.btn:disabled {
-    @apply bg-gray-500 cursor-not-allowed;
-}

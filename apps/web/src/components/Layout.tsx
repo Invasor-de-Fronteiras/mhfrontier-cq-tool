@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import {
   BsFillGeoFill,
   BsFillWalletFill,
@@ -10,11 +9,9 @@ import {
 import { SiMonster } from "react-icons/si";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { IconType } from "react-icons";
-import React from "react";
+
 import {
   Layout as SharedLayout,
-  Button,
   LayoutBody,
   LayoutNavbar,
   LayoutNavbarItem,
@@ -34,7 +31,7 @@ const options = [
 
 export function Layout() {
   let location = useLocation();
-  console.log(location);
+  let route = options.find((option) => option.uri === location.pathname)?.name ?? 'Unknown';
 
   return (
     <div className="flex items-center justify-center mt-6 h-full">
@@ -53,7 +50,7 @@ export function Layout() {
             )
           )}
         </LayoutNavbar>
-        <LayoutBody>
+        <LayoutBody title={route}>
           <Outlet />
         </LayoutBody>
       </SharedLayout>
