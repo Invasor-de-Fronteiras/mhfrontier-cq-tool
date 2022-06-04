@@ -61,10 +61,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
         "resizable": true,
         "title": "Quest Editor",
-        "width": 800
+        "height": 940,
+        "width": 1480,
+        "minHeight": 720,
+        "minWidth": 1280
       }
     ]
   }

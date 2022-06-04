@@ -1,11 +1,26 @@
 import React, { useMemo, useState } from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 import { open } from '@tauri-apps/api/dialog';
+import { Layout, LoadQuestTab, MonstersTab } from '@editor/components';
 import logo from './logo.svg';
 import { QuestFile, monsters } from './types/quest-file';
-import './App.css';
+// import './App.css';
+import './index.css'
+
+import { Route, Routes } from "react-router-dom";
+// import { Layout } from "./components/Layout";
+// import { LoadQuestTab } from "./tabs/LoadQuestTab";
+// import { MonstersTab } from "./tabs/MonstersTab";
 
 function App() {
+  return (
+    <Layout>
+      <MonstersTab />
+    </Layout>
+  );
+}
+
+function AppTest() {
   const [result, setResult] = useState<QuestFile | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,6 +53,7 @@ function App() {
           <div>
             <label> EDITOR DE QUEST </label>
           </div>
+          <MonstersTab />
           <div>
             <button onClick={onReadFile}>Select File</button>
           </div>
