@@ -1,7 +1,7 @@
 import * as React from "react";
-export * from "./lib/Layout";
-export * from "./lib/PosInput";
-export * from "./lib/MonsterCard";
-export * from './lib/Button';
-export * from './lib/Select';
+export * from "./lib/components/Layout";
+export * from "./lib/components/PosInput";
+export * from "./lib/components/MonsterCard";
+export * from './lib/components/Button';
+export * from './lib/components/Select';
 export * from './utils';
