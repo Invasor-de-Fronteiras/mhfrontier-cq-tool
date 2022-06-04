@@ -241,3 +241,8 @@ export const monsters = [
   "PSO2 Rappy",
   "King Shakalaka",
 ];
+
+export const monster_options = monsters.map((monster, index) => ({
+  label: monster,
+  value: index,
+}));

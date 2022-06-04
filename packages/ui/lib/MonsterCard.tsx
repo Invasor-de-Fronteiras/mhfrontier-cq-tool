@@ -1,22 +1,14 @@
 import { PosInput } from "./PosInput";
-import { LargeMonsterSpawn, monsters } from "../utils";
+import { LargeMonsterSpawn,  monster_options } from "../utils";
+import { Select } from "./Select";
 
-export function MonsterCard({ data }: { data: LargeMonsterSpawn }) {
+export function MonsterCard({ data,index }: { data: LargeMonsterSpawn, index: number }) {
   return (
     <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6 w-min">
       <div className="flex flex-col">
         <label>Monster</label>
-        <select
-          value={data.monster_id}
-          className="border rounded p-2 w-full max-w-xs"
-        >
-          <option>Select a monster</option>
-          {monsters.map((monster, i) => (
-            <option key={monster} value={i}>
-              {monster}
-            </option>
-          ))}
-        </select>
+        {/* className="border rounded p-2 w-full max-w-xs" */}
+        <Select options={monster_options} value={data.monster_id} index={index} />
       </div>
       <fieldset>
         <legend>Position</legend>

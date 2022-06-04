@@ -6,3 +6,30 @@ body {
     @apply bg-gray-200;
 }
 
+.react-select__menu {
+    @apply border-red-600 border-2;
+}
+
+.react-select__control {
+    @apply border-red-600 border-2;
+}
+
+.react-select__value-container {
+    @apply border-red-600 border-2;
+}
+
+.react-select__indicators {
+    @apply border-red-600 border-2;
+}
+
+.react-select__menu {
+    @apply border-red-600 border-2;
+}
+
+.react-select__menu-list {
+    @apply border-red-600 border-2;
+}
+
+.react-select__option {
+    @apply border-red-600 border-2;
+}
