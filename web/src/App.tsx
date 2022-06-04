@@ -1,5 +1,4 @@
 import React from "react";
-import { BsUpload } from "react-icons/bs";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { LoadQuestTab } from "./tabs/LoadQuestTab";

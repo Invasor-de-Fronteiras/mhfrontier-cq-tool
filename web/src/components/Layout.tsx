@@ -12,19 +12,19 @@ import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { Outlet } from "react-router-dom";
 
 const options = [
-  { name: "Load Quest", icon: BsUpload },
-  { name: "Quest Information", icon: BsInfoCircle },
-  { name: "Monsters", icon: SiMonster },
-  { name: "Items", icon: BsFillWalletFill },
-  { name: "Gathering", icon: BsMinecartLoaded },
-  { name: "Map Data", icon: BsFillGeoFill },
-  { name: "Objects", icon: BsUmbrella },
-  { name: "Fishing", icon: GiFishingLure },
-  { name: "Forced Equipment", icon: GiAbdominalArmor },
+  { name: "Load Quest", icon: BsUpload, disabled: false },
+  { name: "Quest Information", icon: BsInfoCircle, disabled: true },
+  { name: "Monsters", icon: SiMonster, disabled: true },
+  { name: "Items", icon: BsFillWalletFill, disabled: true },
+  { name: "Gathering", icon: BsMinecartLoaded, disabled: true },
+  { name: "Map Data", icon: BsFillGeoFill, disabled: true },
+  { name: "Objects", icon: BsUmbrella, disabled: true },
+  { name: "Fishing", icon: GiFishingLure, disabled: true },
+  { name: "Forced Equipment", icon: GiAbdominalArmor, disabled: true },
 ];
 
 export function Layout() {
-    const currentPage = "Load Quest";
+  const currentPage = "Load Quest";
 
   return (
     <div className="flex items-center justify-center mt-6 h-full">
@@ -38,10 +38,13 @@ export function Layout() {
               <li
                 key={option.name}
                 className={classNames(
-                  "w-full font-semibold flex flex-row items-center cursor-pointer p-2 m-2 border-white border rounded hover:bg-emerald-300 hover:text-emerald-700",
+                  "w-full font-semibold flex flex-row items-center cursor-pointer p-2 m-2 border-white border rounded",
                   {
                     "bg-emerald-300 text-emerald-700 cursor-default":
                       option.name === currentPage,
+                    "opacity-75 cursor-not-allowed": option.disabled,
+                    "hover:bg-emerald-300 hover:text-emerald-700":
+                      !option.disabled,
                   }
                 )}
               >
@@ -53,10 +56,6 @@ export function Layout() {
         </div>
         <div className="bg-white w-full border-y border-r rounded-y rounded-r">
           <div className="flex flex-col m-3">
-            {/* <h1 className="font-bold text-2xl text-center">
-              MHFrontier Custom Quest Editor
-            </h1>
-            <p>Create and edit custom quests for MHFrontier.</p> */}
             <Outlet />
           </div>
         </div>
