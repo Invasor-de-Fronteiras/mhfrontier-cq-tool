@@ -5,7 +5,7 @@ use crate::{
 
 #[test]
 fn gen_quest_prop() {
-    let mut reader = FileReader::from_filename("../quest-tests/21085d0.bin").unwrap();
+    let mut reader = FileReader::from_filename("../../quest-tests/21085d0.bin").unwrap();
 
     let expected = GenQuestProp {
         big_monster_size_multi: 102,

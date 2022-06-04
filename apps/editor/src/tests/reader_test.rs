@@ -1,12 +1,15 @@
 use crate::{
     quest_file::QuestFile,
     structs::{header::QuestFileHeader, monsters::{LargeMonsterPointers, LargeMonsterSpawn}},
+    save_json::save_quest_to_json
 };
 
 #[test]
 fn reader_test() {
     // let mut buffer = read_test_file();
-    let quest_file = QuestFile::from_path("./21085d0.bin").unwrap();
+    let quest_file = QuestFile::from_path("../../quest-tests/21085d0.bin").unwrap();
+
+    save_quest_to_json("../../output/21085d0.json", &quest_file).unwrap();
 
     let expected = QuestFile {
         header: QuestFileHeader {

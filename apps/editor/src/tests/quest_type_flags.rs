@@ -5,7 +5,7 @@ use crate::{
 
 #[test]
 fn quest_type_flasgs() {
-    let mut reader = FileReader::from_filename("../quest-tests/21085d0.bin").unwrap();
+    let mut reader = FileReader::from_filename("../../quest-tests/21085d0.bin").unwrap();
 
     let expected = QuestTypeFlags {
         main_quest_prop: MainQuestProp {
