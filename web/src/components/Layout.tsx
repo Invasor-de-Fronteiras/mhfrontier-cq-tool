@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classnames from "classnames";
 import {
   BsFillGeoFill,
   BsFillWalletFill,
@@ -11,6 +11,7 @@ import { SiMonster } from "react-icons/si";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { IconType } from "react-icons";
+import React from "react";
 
 const options = [
   { name: "Load Quest", icon: BsUpload, disabled: false, uri: "/" },
@@ -26,49 +27,58 @@ const options = [
 
 export function Layout() {
   let location = useLocation();
-  console.log(location)
+  console.log(location);
 
   return (
     <div className="flex items-center justify-center mt-6 h-full">
-      <div className="w-full h-full max-w-6xl  max-h-6xl flex flex-row drop-shadow-md">
-        <div className="w-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l">
-          <div className="border-b h-14 flex items-center justify-center">
-            <h2 className="font-semibold">MHFrontier CQ Editor</h2>
-          </div>
-          <nav className="w-full max-w-max">
-            {options.map((option) =>
-              option.uri ? (
-                <Link to={option.uri} key={option.name}>
-                  <NavbarItem {...option} selected={option.uri === location.pathname} />
-                </Link>
-              ) : (
-                <NavbarItem {...option} key={option.name} />
-              )
-            )}
-          </nav>
-        </div>
-        <div className="bg-white w-full border-y border-r rounded-y rounded-r">
-          <div className="flex flex-col m-3">
-            <Outlet />
-          </div>
-        </div>
-      </div>
+      <CLayout>
+        <LayoutNavbar>
+          {options.map((option) =>
+            option.uri ? (
+              <Link to={option.uri} key={option.name}>
+                <LayoutNavbarItem
+                  {...option}
+                  selected={option.uri === location.pathname}
+                />
+              </Link>
+            ) : (
+              <LayoutNavbarItem {...option} key={option.name} />
+            )
+          )}
+        </LayoutNavbar>
+        <LayoutBody>
+          <Outlet />
+        </LayoutBody>
+      </CLayout>
     </div>
   );
 }
 
-interface Option {
+export function CLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-full h-full max-w-6xl  max-h-6xl flex flex-row drop-shadow-md">
+      {children}
+    </div>
+  );
+}
+
+interface LayoutNavbarItemProps {
   name: string;
   icon: IconType;
   disabled?: boolean;
   selected?: boolean;
 }
 
-function NavbarItem({ name, disabled, selected, ...props }: Option) {
+function LayoutNavbarItem({
+  name,
+  disabled,
+  selected,
+  ...props
+}: LayoutNavbarItemProps) {
   return (
     <div
       key={name}
-      className={classNames(
+      className={classnames(
         "w-full font-semibold flex flex-row items-center cursor-pointer p-2 m-2 border-white border rounded",
         {
           "bg-emerald-300 text-emerald-700 cursor-default": selected,
@@ -79,6 +89,25 @@ function NavbarItem({ name, disabled, selected, ...props }: Option) {
     >
       <props.icon className="mr-2" />
       <span>{name}</span>
+    </div>
+  );
+}
+
+function LayoutNavbar({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l">
+      <div className="border-b h-14 flex items-center justify-center">
+        <h2 className="font-semibold">MHFrontier CQ Editor</h2>
+      </div>
+      <nav className="w-full max-w-max">{children}</nav>
+    </div>
+  );
+}
+
+function LayoutBody({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-white w-full border-y border-r rounded-y rounded-r p-3">
+      {children}
     </div>
   );
 }
