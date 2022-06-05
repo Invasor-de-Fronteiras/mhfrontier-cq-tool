@@ -43,11 +43,11 @@ export function LayoutNavbarItem({
     <div
       key={name}
       className={classnames(
-        "font-semibold flex flex-row items-center cursor-pointer p-2 m-2 border-white border rounded gap-3",
+        "font-semibold flex flex-row items-center p-2 m-2 border-white border rounded gap-3",
         {
           "bg-emerald-300 text-emerald-700 cursor-default": selected,
-          "opacity-75 cursor-not-allowed": disabled,
-          "hover:bg-emerald-300 hover:text-emerald-700": !disabled,
+          "opacity-30": disabled,
+          "hover:bg-emerald-300 hover:text-emerald-700 cursor-pointer": !disabled,
         }
       )}
       {...props}
@@ -66,7 +66,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
       className={classnames(
         "w-full h-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l",
         { "max-w-min": !isOpen },
-        { "z-20 md:z-auto fixed scroll md:static": isOpen }
+        { "z-20 md:z-auto fixed md:static": isOpen }
       )}
     >
       <div className="border-b h-14 flex items-center justify-center text-center p-1">
