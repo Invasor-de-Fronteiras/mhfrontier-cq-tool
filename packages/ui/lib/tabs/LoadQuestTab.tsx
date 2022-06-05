@@ -31,7 +31,7 @@ export function LoadQuestTab() {
             >
               <option>Select a template</option>
               {maps.map((map) => (
-                <option key={map}>{map}</option>
+                <option key={map.id}>{map.name}</option>
               ))}
             </select>
           </Card>

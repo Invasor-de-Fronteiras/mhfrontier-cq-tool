@@ -3,13 +3,15 @@ import { createContext } from "react";
 import { QuestFile } from "../utils";
 
 interface EditorContextState {
-  data: QuestFile;
+  data?: QuestFile;
   uploadFile: {
     dragSupport: boolean;
     uploadFileContainerProps: () => React.HTMLAttributes<HTMLDivElement>;
     uploadFileInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
     isDragActive: boolean;
-  }
+  },
+  handleSaveQuest: () => void;
+  onChangeData: (handler: (data: QuestFile) => QuestFile) => void;
 }
 
 interface EditorContextProps extends EditorContextState {

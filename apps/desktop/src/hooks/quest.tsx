@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri';
-import React, { ReactNode, useCallback, useState } from 'react';
-import { QuestFile, QuestFileHeader, LargeMonsterPointers, LargeMonsterSpawn, MapInfo } from '../types/quest-file';
+import React, { ReactNode, useState } from 'react';
+import { QuestFile, QuestFileHeader, LargeMonsterPointers, LargeMonsterSpawn, MapInfo } from 'ui';
 
 interface QuestContextValue {
     questPath?: string | null,

@@ -43,20 +43,26 @@ export interface QuestFileHeader {
   sub_supply_box_len: number;
   quest_area_ptr: number;
   large_monster_ptr: number;
-  area_floats: number;
-  unk_floats1: number;
-  unk_ptr3: number;
-  unk_ptr4: number;
-  unk_ptr5: number;
-  unk_ptr6: number;
-  unk_ptr7: number;
+  area_change: number;
+  area_maping: number;
+  map_info: number;
+  gather_points: number;
+  base_camp_inf: number;
+  some_strings: number;
+  fixed_cords1: number;
   gathering_pointers: number;
-  unk_ptr8: number;
-  unk_ptr9: number;
+  fixed_cords2: number;
+  fixed_inf: number;
+}
+
+export interface MapInfo {
+  map_id: number;
+  return_bc_id: number;
 }
 
 export interface QuestFile {
   header: QuestFileHeader;
+  map_info:  MapInfo;
   large_monster_pointers: LargeMonsterPointers;
   large_monster_ids: number[];
   large_monster_spawns: LargeMonsterSpawn[]; // pub monster_spawn: LargeMonsterSpawn,
@@ -241,6 +247,7 @@ export const monsters = [
   "PSO2 Rappy",
   "King Shakalaka",
 ];
+
 
 export const monster_options = monsters.map((monster, index) => ({
   label: monster,
