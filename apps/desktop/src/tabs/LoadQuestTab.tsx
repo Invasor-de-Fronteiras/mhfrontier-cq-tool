@@ -2,7 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
 import { Dropzone } from "../components/Dropzone";
-import { QuestFile } from "../types/quest-file";
+import { QuestFile } from "ui";
 import { QuestContext } from "../hooks/quest";
 // import { maps } from "../utils";
 

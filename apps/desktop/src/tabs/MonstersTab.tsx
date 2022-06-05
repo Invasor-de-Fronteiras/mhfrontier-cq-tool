@@ -1,8 +1,7 @@
 import { useContext, useMemo } from "react";
 import { QuestContext } from "../hooks/quest";
-import { monsters, QuestFile } from "../types/quest-file";
 import { LargeMonsterSpawn, MonsterCard, Select } from 'ui';
-import { maps } from "ui/utils/maps";
+import { maps } from "ui";
 
 export function MonstersTab() {
   const { largeMonsterSpawns, mapInfo, setLargeMonsterSpawns } = useContext(QuestContext);
