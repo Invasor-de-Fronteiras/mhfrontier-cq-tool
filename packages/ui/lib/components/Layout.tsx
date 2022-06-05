@@ -8,11 +8,14 @@ import { useContext } from "react";
 const context = createContext({ isOpen: false, onToggle: () => {} });
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <context.Provider value={{ isOpen, onToggle: () => setIsOpen(!isOpen) }}>
-      <div className="w-full h-full flex flex-row drop-shadow-md sm:absolute">
+      <div className="w-full h-full flex flex-row drop-shadow-md">
+        {isOpen && (
+          <div onClick={() => setIsOpen(false)} className="h-full left-0 fixed top-0 w-full z-10 bg-black opacity-50 md:h-auto md:left-auto md:static md:top-auto md:w-auto md:z-auto" />
+        )}
         {children}
       </div>
     </context.Provider>
@@ -61,8 +64,9 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={classnames(
-        "w-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l",
-        { "max-w-min": !isOpen }
+        "w-full h-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l",
+        { "max-w-min": !isOpen },
+        { "z-20 md:z-auto fixed scroll md:static": isOpen }
       )}
     >
       <div className="border-b h-14 flex items-center justify-center text-center p-1">
