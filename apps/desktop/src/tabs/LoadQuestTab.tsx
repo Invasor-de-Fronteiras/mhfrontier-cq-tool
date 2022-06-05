@@ -27,7 +27,7 @@ export function LoadQuestTab() {
         return;
       }
 
-      if (onLoadQuest) onLoadQuest(quest as QuestFile);
+      if (onLoadQuest) onLoadQuest(quest as QuestFile, path as string);
       // setResult(quest);
       console.log("response ", response);
     } catch (error) {

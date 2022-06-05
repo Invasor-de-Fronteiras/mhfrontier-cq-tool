@@ -1,6 +1,7 @@
 use crate::reader::FileReader;
-use crate::structs::header::QuestFileHeader;
+use crate::structs::header::{ QuestFileHeader, MapInfo };
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
+use crate::writter::FileWriter;
 use std::io::Result;
 
 // use serde::{Serialize, Deserialize};
@@ -16,6 +17,7 @@ struct QuestFileQuestType {
 #[repr(C)]
 pub struct QuestFile {
     pub header: QuestFileHeader,
+    pub map_info: MapInfo,
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>, // pub monster_spawn: LargeMonsterSpawn,
@@ -26,6 +28,10 @@ impl QuestFile {
         let mut reader = FileReader::from_filename(filename)?;
 
         let header = reader.read_struct::<QuestFileHeader>()?;
+
+        // Read mapinfo
+        reader.seek_start(header.map_info as u64)?;
+        let map_info = reader.read_struct::<MapInfo>()?;
 
         // Read large_monster_ptr
         reader.seek_start(header.large_monster_ptr as u64)?;
@@ -53,10 +59,36 @@ impl QuestFile {
         // let quest_type = reader.read_struct::<QuestFileQuestType>().unwrap();
 
         Ok(QuestFile {
-            header: header,
+            header,
+            map_info,
             large_monster_pointers,
             large_monster_ids,
             large_monster_spawns, // monster_spawn,
         })
+    }
+
+    pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {
+        let original = QuestFile::from_path(filename)?;
+        let mut writer = FileWriter::from_filename(filename)?;
+        
+        // Write large_monster_ptr
+        // writer.seek_start(original.header.large_monster_ptr as u64)?;
+        // writer.write_struct::<LargeMonsterPointers>(&mut quest.large_monster_pointers)?;
+
+        println!("seek = {}", original.large_monster_pointers.large_monster_ids);
+        writer.seek_start(original.large_monster_pointers.large_monster_ids as u64)?;
+
+        for i in 0..5 {
+            println!("write monster id = {}", &quest.large_monster_ids[i]);
+            let result = writer.write_u32(&quest.large_monster_ids[i])?;
+            println!("result = {}", result);
+        }
+ 
+        writer.seek_start(original.large_monster_pointers.large_monster_spawns as u64)?;
+        for i in 0..5 {
+            writer.write_struct(&mut quest.large_monster_spawns[i])?;
+        }
+
+        Ok(())
     }
 }
