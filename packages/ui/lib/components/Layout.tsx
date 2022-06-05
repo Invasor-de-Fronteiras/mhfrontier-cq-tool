@@ -66,7 +66,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
       className={classnames(
         "w-full h-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l",
         { "max-w-min": !isOpen },
-        { "z-20 md:z-auto fixed md:static": isOpen }
+        { "z-20 md:z-auto fixed md:relative": isOpen }
       )}
     >
       <div className="border-b h-14 flex items-center justify-center text-center p-1">
