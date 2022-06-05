@@ -13,14 +13,13 @@ interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
 
 export function Select<T>({ label, ...props }: SelectProps<T>) {
   return (
-    <label className="flex flex-col">
+    <label className="flex flex-col w-full max-w-xs">
       <span>{label}</span>
       <ReactSelect
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
         // @ts-ignore
         menuPortalTarget={document.body}
-        className="text-emerald-200"
         theme={(theme) => ({
           ...theme,
           colors: {

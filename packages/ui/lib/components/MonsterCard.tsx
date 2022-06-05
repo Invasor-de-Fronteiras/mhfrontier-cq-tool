@@ -65,7 +65,7 @@ export function MonsterCard({
   };
 
   return (
-    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6 w-full max-w-md">
+    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6 w-full max-w-sm">
       <Select
         label="Monster"
         options={monster_options}
@@ -83,7 +83,7 @@ export function MonsterCard({
 
       <fieldset>
         <legend>Position</legend>
-        <div className="flex flex-row">
+        <div className="flex flex-row flex-wrap">
           <PosInput
             label="X"
             onChange={change("x_position")}
