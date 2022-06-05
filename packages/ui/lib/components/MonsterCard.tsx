@@ -36,7 +36,7 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
     if (!option) {
       onChange({
         ...data,
-        monster_id: 255
+        monster_id: 65535
       });
       return;
     }
@@ -48,7 +48,13 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
   }
 
   const handleChangeStage = (option: Stage | null) => {
-    if (!option) return;
+    if (!option) {
+      onChange({
+        ...data,
+        spawn_stage: 0
+      });
+      return;
+    };
 
     onChange({
       ...data,
@@ -61,12 +67,12 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
       <div className="flex flex-col">
         <label>Monster</label>
         {/* className="border rounded p-2 w-full max-w-xs" */}
-        <Select options={monster_options} onChange={v => handleChangeMonster(v)} value={monsterSelected} index={index} />
+        <Select isClearable options={monster_options} onChange={v => handleChangeMonster(v)} value={monsterSelected} index={index} />
       </div>
       <div className="flex flex-col">
         <label>Area</label>
         {/* className="border rounded p-2 w-full max-w-xs" */}
-        <Select options={stages} onChange={v => handleChangeStage(v)} value={stageSelected} index={index} />
+        <Select isClearable options={stages} onChange={v => handleChangeStage(v)} value={stageSelected} index={index} />
       </div>
       <fieldset>
         <legend>Position</legend>
@@ -74,6 +80,7 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
           <PosInput label="X" onChange={change('x_position')} value={data.x_position} />
           <PosInput label="Y" onChange={change('y_position')} value={data.y_position} />
           <PosInput label="Z" onChange={change('z_position')} value={data.z_position} />
+          <PosInput label="Amount" onChange={change('spawn_amount')} value={data.spawn_amount} />
         </div>
       </fieldset>
     </div>
