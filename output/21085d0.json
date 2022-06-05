@@ -9,16 +9,20 @@
     "sub_supply_box_len": 128,
     "quest_area_ptr": 816,
     "large_monster_ptr": 5920,
-    "area_floats": 8576,
-    "unk_floats1": 8224,
-    "unk_ptr3": 11248,
-    "unk_ptr4": 6816,
-    "unk_ptr5": 6368,
-    "unk_ptr6": 15524,
-    "unk_ptr7": 576,
+    "area_change": 8576,
+    "area_maping": 8224,
+    "map_info": 11248,
+    "gather_points": 6816,
+    "base_camp_inf": 6368,
+    "some_strings": 15524,
+    "fixed_cords1": 576,
     "gathering_pointers": 12448,
-    "unk_ptr8": 12256,
-    "unk_ptr9": 11264
+    "fixed_cords2": 12256,
+    "fixed_inf": 11264
+  },
+  "map_info": {
+    "map_id": 6,
+    "return_bc_id": 110
   },
   "large_monster_pointers": {
     "unk_0": 1,

@@ -1,12 +1,11 @@
-import type { ComponentProps } from "react";
-import { useState } from "react";
-import ReactSelect, { StylesConfig } from "react-select";
+import react from "react";
+import ReactSelect, { Props, GroupBase } from "react-select";
 
-interface SelectProps extends ComponentProps<ReactSelect> {
+interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
   index: number;
 }
 
-export function Select(props: SelectProps) {
+export function Select<T>(props: SelectProps<T>) {
   return (
     <ReactSelect
       {...props}
@@ -17,7 +16,7 @@ export function Select(props: SelectProps) {
           ...theme,
          colors: {
            ...theme.colors,
-           primary: 'rgb(4 120 87 / var(--tw-text-opacity))',
+           primary: 'rgb(4 120 87)',
          },
       })}
     />
