@@ -1,68 +1,87 @@
-import React, { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { QuestFile, monsters } from "./types/quest-file";
-import "./index.css";
-import { Route, Routes } from "react-router-dom";
-import { Layout } from './components/Layout';
-import { LoadQuestTab } from './tabs/LoadQuestTab';
-import { MonstersTab } from './tabs/MonstersTab';
-import { QuestProvider } from "./hooks/quest";
+import { EditorContextProvider, QuestFile, Ui } from "ui";
+import { invoke } from "@tauri-apps/api";
+import { open } from "@tauri-apps/api/dialog";
+
+interface SaveQuestPayload {
+  filepath: string;
+  quest: QuestFile;
+}
 
 function App() {
-  
+  const [questPath, setQuestPath] = useState<string | null>(null);
+  const [data, setData] = useState<QuestFile | undefined>(undefined);
 
-  
+  const handleChangeSave = async () => {
+    if (!questPath || !data) return;
+
+    const quest: QuestFile = {
+      header: data.header,
+      map_info: data.map_info,
+      large_monster_pointers: data.large_monster_pointers,
+      large_monster_spawns: data.large_monster_spawns,
+      large_monster_ids: data.large_monster_spawns.map((v) => v.monster_id),
+    };
+
+    const payload: SaveQuestPayload = { filepath: questPath, quest };
+
+    const response: string = await invoke("save_quest_file", {
+      event: JSON.stringify(payload),
+    });
+
+    console.log("response: ", response);
+
+    const resData = JSON.parse(response);
+    if (resData?.error) {
+      console.log("error: ", resData.error);
+      return;
+    }
+  };
+
+  const onReadFile = async () => {
+    try {
+      const path = await open({ multiple: false });
+      if (!path) return;
+
+      const response: string = await invoke("read_quest_file", {
+        event: path,
+      });
+
+      const quest = JSON.parse(response);
+      if (quest && quest.error) {
+        // setError(quest.error);
+        console.log("response ", response);
+        return;
+      }
+
+      setData(quest as QuestFile);
+      setQuestPath(path as string);
+      // setResult(quest);
+      console.log("response ", response);
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
 
   return (
-    <QuestProvider>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<LoadQuestTab />} />
-          <Route path="/monsters" element={<MonstersTab />} />
-        </Route>
-      </Routes>
-    </QuestProvider>
-    // <div className="w-screen  h-screen flex flex-row drop-shadow-md">
-    //   <LayoutNavbar>
-    //     {options.map((option) =>
-    //       option.uri ? (
-    //         // <Link to={option.uri} key={option.name}>
-    //           <LayoutNavbarItem
-    //             {...option}
-    //             selected={option.uri === location.pathname}
-
-    //           />
-    //         // </Link>
-    //       ) : (
-    //         <LayoutNavbarItem {...option} key={option.name} />
-    //       )
-    //     )}
-    //   </LayoutNavbar>
-    //   <LayoutBody>
-    //     <div>
-    //       <label> EDITOR DE QUEST </label>
-    //     </div>
-    //     <div>
-    //       <button onClick={onReadFile}>Select File</button>
-    //     </div>
-    //     {result && (
-    //       <div>
-    //         Monsters
-    //         <ul>
-    //           {result.large_monster_spawns.map((v) => (
-    //             <li>
-    //               Id: {v.monster_id} Name: {monsters[v.monster_id]}
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       </div>
-    //     )}
-    //     {/* <div>
-    //         <button onClick={onReadFile}>Send</button>
-    //       </div> */}
-    //     {error && <div>error: {error}</div>}
-    //   </LayoutBody>
-    // </div>
+    <EditorContextProvider
+      data={data}
+      handleSaveQuest={handleChangeSave}
+      onChangeData={(handler) => setData(handler(data!))}
+      uploadFile={{
+        dragSupport: false,
+        isDragActive: false,
+        uploadFileInputProps: () => ({
+          onClick: onReadFile,
+        }),
+        uploadFileContainerProps: () => ({
+          onClick: onReadFile,
+        }),
+      }}
+    >
+      <Ui />
+    </EditorContextProvider>
   );
 }
 

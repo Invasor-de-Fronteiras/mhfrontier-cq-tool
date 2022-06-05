@@ -4,7 +4,7 @@ import * as React from "react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full h-full max-w-6xl  max-h-6xl flex flex-row drop-shadow-md">
+    <div className="w-full h-full flex flex-row drop-shadow-md">
       {children}
     </div>
   );

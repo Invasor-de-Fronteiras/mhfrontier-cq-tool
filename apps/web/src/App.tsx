@@ -13,20 +13,22 @@ function App() {
   });
 
   return (
-    <div className="flex items-center justify-center mt-6 h-full">
-      <EditorContextProvider
-        data={data}
-        handleSaveQuest={() => {}}
-        onChangeData={(data) => data}
-        uploadFile={{
-          dragSupport: true,
-          isDragActive,
-          uploadFileContainerProps: () => getRootProps(),
-          uploadFileInputProps: () => getInputProps(),
-        }}
-      >
-        <Ui />
-      </EditorContextProvider>
+    <div className="flex items-center justify-center mt-6 h-full w-full">
+      <div className="max-w-6xl max-h-6xl">
+        <EditorContextProvider
+          data={data}
+          handleSaveQuest={() => {}}
+          onChangeData={(data) => data}
+          uploadFile={{
+            dragSupport: true,
+            isDragActive,
+            uploadFileContainerProps: () => getRootProps(),
+            uploadFileInputProps: () => getInputProps(),
+          }}
+        >
+          <Ui />
+        </EditorContextProvider>
+      </div>
     </div>
   );
 }
