@@ -4,6 +4,7 @@ import * as React from "react";
 import { createContext, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useContext } from "react";
+import { VERSION } from "../constants";
 
 const context = createContext({ isOpen: false, onToggle: () => {} });
 
@@ -72,7 +73,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
       <div className="border-b h-14 flex items-center justify-center text-center p-1">
         {isOpen && (
           <h2 className="font-semibold flex-1 text-center">
-            MHFrontier CQ Editor
+            MHFrontier CQ Editor ({VERSION})
           </h2>
         )}
         <div
