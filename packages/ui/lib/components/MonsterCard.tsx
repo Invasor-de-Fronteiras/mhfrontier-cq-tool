@@ -1,8 +1,7 @@
-import React, { useContext, useMemo } from "react";
+import React, {  useMemo } from "react";
 import { PosInput } from "./PosInput";
-import { LargeMonsterSpawn,  monster_options } from "../../utils";
+import { LargeMonsterSpawn,  monster_options } from "../utils";
 import { Select } from "./Select";
-import { maps } from "../../utils/maps";
 
 interface Stage {
   value: number;
@@ -23,7 +22,7 @@ type Option = {
 export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps) {
 
   const monsterSelected = useMemo(() => monster_options.find(monster => monster.value === data.monster_id), [data.monster_id]);
-  const stageSelected = useMemo(() => stages.find(stage => stage.value === data.spawn_stage), [data.spawn_stage]);
+  const stageSelected = useMemo(() => stages.find(stage => stage.value === data.spawn_stage), [data.spawn_stage, stages]);
 
   const change = (key: keyof LargeMonsterSpawn) => (event: React.ChangeEvent<HTMLInputElement>) => {
       console.log(`${key} => ${event.target.value}`);
@@ -33,7 +32,7 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
       });
   }
 
-  const changeMonster = (option: Option | null) => {
+  const handleChangeMonster = (option: Option | null) => {
     if (!option) {
       onChange({
         ...data,
@@ -48,7 +47,7 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
     });
   }
 
-  const changeStage = (option: Stage | null) => {
+  const handleChangeStage = (option: Stage | null) => {
     if (!option) return;
 
     onChange({
@@ -62,12 +61,12 @@ export function MonsterCard({ data, stages, onChange, index }: MonsterCardProps)
       <div className="flex flex-col">
         <label>Monster</label>
         {/* className="border rounded p-2 w-full max-w-xs" */}
-        <Select options={monster_options} onChange={v => changeMonster(v)} value={monsterSelected} index={index} />
+        <Select options={monster_options} onChange={v => handleChangeMonster(v)} value={monsterSelected} index={index} />
       </div>
       <div className="flex flex-col">
         <label>Area</label>
         {/* className="border rounded p-2 w-full max-w-xs" */}
-        <Select options={stages} onChange={v => changeStage(v)} value={stageSelected} index={index} />
+        <Select options={stages} onChange={v => handleChangeStage(v)} value={stageSelected} index={index} />
       </div>
       <fieldset>
         <legend>Position</legend>
