@@ -95,11 +95,11 @@ export function LayoutBody({
   title: string;
 }) {
   return (
-    <div className="bg-white w-full border-y border-r rounded-y rounded-r">
+    <div className="bg-white w-full h-full border-y border-r rounded-y rounded-r">
       <div className="border-b h-14 flex items-center justify-center">
         <h2 className="font-semibold">{title}</h2>
       </div>
-      <div className="p-3">{children}</div>
+      <div className="px-3 pt-3 pb-20 h-full max-h-screen overflow-auto">{children}</div>
     </div>
   );
 }
