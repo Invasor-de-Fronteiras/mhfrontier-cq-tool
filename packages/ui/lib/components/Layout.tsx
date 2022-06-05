@@ -15,12 +15,14 @@ interface LayoutNavbarItemProps {
   icon: IconType;
   disabled?: boolean;
   selected?: boolean;
+  onClick?: () => void;
 }
 
 export function LayoutNavbarItem({
   name,
   disabled,
   selected,
+  icon: Icon,
   ...props
 }: LayoutNavbarItemProps) {
   return (
@@ -34,8 +36,9 @@ export function LayoutNavbarItem({
           "hover:bg-emerald-300 hover:text-emerald-700": !disabled,
         }
       )}
+      {...props}
     >
-      <props.icon className="mr-2" />
+      <Icon className="mr-2" />
       <span>{name}</span>
     </div>
   );

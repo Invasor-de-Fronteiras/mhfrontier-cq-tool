@@ -1,10 +1,18 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { QuestContext } from "../hooks/quest";
 import { monsters, QuestFile } from "../types/quest-file";
-import { MonsterCard, Select } from 'ui';
+import { LargeMonsterSpawn, MonsterCard, Select } from 'ui';
+import { maps } from "ui/utils/maps";
 
 export function MonstersTab() {
-  const { quest } = useContext(QuestContext);
+  const { largeMonsterSpawns, mapInfo, setLargeMonsterSpawns } = useContext(QuestContext);
+  const stages = useMemo(() => !mapInfo ? [] : maps[mapInfo.map_id].stages.map((v, i) => ({ value: v, label: i === 0 ? 'Base' : `Area ${i}` })), [mapInfo])
+
+  const onChangeMonster = (index: number) => (monster: LargeMonsterSpawn) => {
+    if (!setLargeMonsterSpawns || !largeMonsterSpawns) return;
+    console.log('onChangeMonster: ', monster);
+    setLargeMonsterSpawns(largeMonsterSpawns.map((v, i) => i === index ? monster : v));
+  }
 
   // const questMonsters = [
   //   {
@@ -29,15 +37,18 @@ export function MonstersTab() {
   //   },
   // ];
 
+  console.log('largeMonsterSpawns: ', largeMonsterSpawns);
   return (
     <div>
       <h2>Monsters</h2>
       <div className="flex flex-col gap-3">
 
-        {quest && quest.large_monster_spawns.map((monster, index) => (
+        {largeMonsterSpawns && largeMonsterSpawns.map((monster, index) => (
           <MonsterCard
             data={monster}
             index={index}
+            stages={stages}
+            onChange={onChangeMonster(index)}
             key={`${monster.monster_id}_${index}`}
           />
           // <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6">
