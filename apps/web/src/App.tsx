@@ -1,18 +1,30 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { Layout } from "./components/Layout";
-import { LoadQuestTab } from "./tabs/LoadQuestTab";
-import { MonstersTab } from "./tabs/MonstersTab";
+import { EditorContextProvider, Ui } from "ui";
+import data from './64554d1-musous.json'
+import { useDropzone } from "react-dropzone";
 
 function App() {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    multiple: false,
+    accept: { "application/octet-stream": ["bin"] },
+    onDragOver: () => {},
+    onDragEnter: () => {},
+    onDragLeave: () => {},
+  });
+
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<LoadQuestTab />} />
-        <Route path="/monsters" element={<MonstersTab />} />
-      </Route>
-    </Routes>
-  );
+    <div className="flex items-center justify-center mt-6 h-full">
+    <EditorContextProvider data={data} uploadFile={{
+      dragSupport: true,
+      isDragActive,
+      uploadFileContainerProps: () => getRootProps(),
+      uploadFileInputProps: () => getInputProps(),
+    }}>
+
+    <Ui />
+    </EditorContextProvider>
+    </div>
+  )
 }
 
 export default App;

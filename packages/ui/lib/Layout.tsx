@@ -31,29 +31,29 @@ const options = [
 
 export function Layout() {
   let location = useLocation();
-  let route = options.find((option) => option.uri === location.pathname)?.name ?? 'Unknown';
+  let route =
+    options.find((option) => option.uri === location.pathname)?.name ??
+    "Unknown";
 
   return (
-    <div className="flex items-center justify-center mt-6 h-full">
-      <SharedLayout>
-        <LayoutNavbar>
-          {options.map((option) =>
-            option.uri ? (
-              <Link to={option.uri} key={option.name}>
-                <LayoutNavbarItem
-                  {...option}
-                  selected={option.uri === location.pathname}
-                />
-              </Link>
-            ) : (
-              <LayoutNavbarItem {...option} key={option.name} />
-            )
-          )}
-        </LayoutNavbar>
-        <LayoutBody title={route}>
-          <Outlet />
-        </LayoutBody>
-      </SharedLayout>
-    </div>
+    <SharedLayout>
+      <LayoutNavbar>
+        {options.map((option) =>
+          option.uri ? (
+            <Link to={option.uri} key={option.name}>
+              <LayoutNavbarItem
+                {...option}
+                selected={option.uri === location.pathname}
+              />
+            </Link>
+          ) : (
+            <LayoutNavbarItem {...option} key={option.name} />
+          )
+        )}
+      </LayoutNavbar>
+      <LayoutBody title={route}>
+        <Outlet />
+      </LayoutBody>
+    </SharedLayout>
   );
 }
