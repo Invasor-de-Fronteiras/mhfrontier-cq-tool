@@ -1,3 +1,5 @@
+import { SelectOption } from "../components/Select";
+
 export interface LargeMonsterPointers {
   unk_0: number;
   unk_1: number;
@@ -249,7 +251,7 @@ export const monsters = [
 ];
 
 
-export const monster_options = monsters.map((monster, index) => ({
+export const monster_options: SelectOption[] = monsters.map((monster, index) => ({
   label: monster,
   value: index,
 }));
