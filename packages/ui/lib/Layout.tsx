@@ -17,6 +17,7 @@ import {
   LayoutBody,
   LayoutNavbar,
   LayoutNavbarItem,
+  LayoutNavbarGroup,
 } from "ui";
 import { useMemo } from "react";
 
@@ -24,35 +25,49 @@ export function Layout() {
   const location = useLocation();
   const { data, handleSaveQuest } = useEditor();
 
-  const options = useMemo(
+  const groups = useMemo(
     () => [
-      { name: "Load Quest", icon: BsUpload, disabled: false, uri: "/" },
       {
-        name: "Save Quest",
-        icon: BsSave,
-        onClick: handleSaveQuest,
-        disabled: !data,
+        name: "File",
+        options: [
+          { name: "Load Quest", icon: BsUpload, disabled: false, uri: "/" },
+          {
+            name: "Save Quest",
+            icon: BsSave,
+            onClick: handleSaveQuest,
+            disabled: !data,
+          },
+        ],
       },
       {
-        name: "Quest Information",
-        icon: BsInfoCircle,
-        disabled: !data || true,
-      },
-      {
-        name: "Monsters",
-        icon: SiMonster,
-        disabled: !data,
-        uri: "/monsters",
-      },
-      { name: "Items", icon: BsFillWalletFill, disabled: !data || true },
-      { name: "Gathering", icon: BsMinecartLoaded, disabled: !data || true },
-      { name: "Map Data", icon: BsFillGeoFill, disabled: !data || true },
-      { name: "Objects", icon: BsUmbrella, disabled: !data || true },
-      { name: "Fishing", icon: GiFishingLure, disabled: !data || true },
-      {
-        name: "Forced Equipment",
-        icon: GiAbdominalArmor,
-        disabled: !data || true,
+        name: "Editor",
+        options: [
+          {
+            name: "Quest Information",
+            icon: BsInfoCircle,
+            disabled: !data || true,
+          },
+          {
+            name: "Monsters",
+            icon: SiMonster,
+            disabled: !data,
+            uri: "/monsters",
+          },
+          { name: "Items", icon: BsFillWalletFill, disabled: !data || true },
+          {
+            name: "Gathering",
+            icon: BsMinecartLoaded,
+            disabled: !data || true,
+          },
+          { name: "Map Data", icon: BsFillGeoFill, disabled: !data || true },
+          { name: "Objects", icon: BsUmbrella, disabled: !data || true },
+          { name: "Fishing", icon: GiFishingLure, disabled: !data || true },
+          {
+            name: "Forced Equipment",
+            icon: GiAbdominalArmor,
+            disabled: !data || true,
+          },
+        ],
       },
     ],
     [data, handleSaveQuest]
@@ -60,26 +75,33 @@ export function Layout() {
 
   let route = useMemo(
     () =>
-      options.find((option) => option.uri === location.pathname)?.name ??
-      "Unknown",
-    [location.pathname, options]
+      groups.reduce<null | string>(
+        (acc, group) =>
+          acc ??
+          // @ts-ignore 
+          group.options.find((option) => option.uri === location.pathname)
+            ?.name,
+        null
+      ) ?? "Unknown",
+    [location.pathname, groups]
   );
 
   return (
     <SharedLayout>
       <LayoutNavbar>
-        {options.map((option) =>
-          option.uri && !option.disabled ? (
-            <Link to={option.uri} key={option.name}>
-              <LayoutNavbarItem
-                {...option}
-                selected={option.uri === location.pathname}
-              />
-            </Link>
-          ) : (
-            <LayoutNavbarItem {...option} key={option.name}  />
-          )
-        )}
+        {groups.map((group) => (
+          <LayoutNavbarGroup name={group.name}>
+            {group.options.map((option) =>
+              option.uri && !option.disabled ? (
+                <Link to={option.uri} key={option.name}>
+                  <LayoutNavbarItem {...option} />
+                </Link>
+              ) : (
+                <LayoutNavbarItem {...option} key={option.name} />
+              )
+            )}
+          </LayoutNavbarGroup>
+        ))}
       </LayoutNavbar>
       <LayoutBody title={route}>
         <Outlet />
