@@ -47,7 +47,7 @@ export function LayoutNavbarItem({
   const isSelected = location.pathname === uri;
 
   return (
-    <div
+    <li
       key={name}
       className={classnames(
         "font-semibold flex flex-row items-center p-2 m-2 border-white border rounded gap-3",
@@ -62,7 +62,7 @@ export function LayoutNavbarItem({
     >
       <Icon size={16} />
       {isOpen && <span>{name}</span>}
-    </div>
+    </li>
   );
 }
 
@@ -74,12 +74,12 @@ export function LayoutNavbarGroup({
   children: React.ReactNode;
 }) {
   const { isOpen } = useContext(context);
-  
+
   return (
     <>
-     {isOpen && <h4 className="px-3 font-semibold text-gray-600">{name}</h4>}
-      {children}
-     {!isOpen && <div className="border-b border-gray-400 mx-2" />}
+      {isOpen && <h4 className="px-3 font-semibold text-gray-600">{name}</h4>}
+      <ul>{children}</ul>
+      {!isOpen && <div className="border-b border-gray-400 mx-2 last:border-none" />}
     </>
   );
 }
@@ -88,7 +88,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
   const { isOpen, onToggle } = useContext(context);
 
   return (
-    <div
+    <nav
       className={classnames(
         "w-full h-full max-w-xs bg-white border-r border-y border-l rounded-y rounded-l",
         { "max-w-min": !isOpen },
@@ -108,8 +108,8 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
           {isOpen ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
         </div>
       </div>
-      <nav className="w-full max-w-max pt-3">{children}</nav>
-    </div>
+      <ul className="w-full max-w-max pt-3">{children}</ul>
+    </nav>
   );
 }
 

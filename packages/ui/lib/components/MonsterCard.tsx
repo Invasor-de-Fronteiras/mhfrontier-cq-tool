@@ -14,7 +14,6 @@ export interface MonsterCardProps {
   index: number;
 }
 
-
 export function MonsterCard({
   data,
   stages,
@@ -44,7 +43,7 @@ export function MonsterCard({
     if (!option) {
       onChange({
         ...data,
-        monster_id: 65535
+        monster_id: 65535,
       });
       return;
     }
@@ -59,10 +58,10 @@ export function MonsterCard({
     if (!option) {
       onChange({
         ...data,
-        spawn_stage: 0
+        spawn_stage: 0,
       });
       return;
-    };
+    }
 
     onChange({
       ...data,
@@ -106,9 +105,15 @@ export function MonsterCard({
             value={data.z_position}
           />
         </div>
+      </fieldset>
+      <fieldset>
         <legend>Amount</legend>
         <div className="flex flex-row flex-wrap">
-          <PosInput label="" onChange={change('spawn_amount')} value={data.spawn_amount} />
+          <PosInput
+            label=""
+            onChange={change("spawn_amount")}
+            value={data.spawn_amount}
+          />
         </div>
       </fieldset>
     </div>

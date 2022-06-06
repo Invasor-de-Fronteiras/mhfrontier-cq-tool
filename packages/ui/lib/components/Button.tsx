@@ -1,12 +1,14 @@
 import classNames from "classnames";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 
 export function Button(props: ComponentProps<"button">) {
   return (
     <button
       className={classNames(
-        "border rounded p-2 bg-gray-700 text-white w-52 font-medium disabled:bg-gray-500 disabled:cursor-not-allowed",
-        props.className
+        "border rounded p-2 text-white bg-slate-900 hover:bg-slate-700 font-semibold h-12 px-6 w-full sm:w-auto",
+        "disabled:bg-slate-500 disabled:cursor-not-allowed",
+        "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50",
+        props.className,
       )}
       {...props}
     />
