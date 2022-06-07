@@ -4,7 +4,7 @@ on:
     branches:
       - release
  
-permissions: read-all|write-all
+permissions: write-all
  
 jobs:
   publish-tauri:
