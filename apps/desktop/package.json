@@ -20,6 +20,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "vite-tauri": "vite-tauri",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
