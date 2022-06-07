@@ -33,7 +33,6 @@ export function MonstersTab() {
         <MonsterCard
           key={i}
           data={monster}
-          index={i}
           onChange={handleChangeMonster(i)}
           stages={stages}
         />
