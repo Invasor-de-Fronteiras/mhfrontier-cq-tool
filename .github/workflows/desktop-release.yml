@@ -6,6 +6,7 @@ on:
 
 jobs:
   publish-tauri:
+    permissions: read-all|write-all
     strategy:
       fail-fast: false
       matrix:
