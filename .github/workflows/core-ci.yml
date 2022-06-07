@@ -14,6 +14,9 @@ env:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: apps/editor
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +31,9 @@ jobs:
         run: cargo build --verbose
 
   test:
+    defaults:
+      run:
+        working-directory: apps/editor
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,6 +57,9 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
 
   fmt:
+    defaults:
+      run:
+        working-directory: apps/editor
     runs-on: ubuntu-latest
 
     steps:
