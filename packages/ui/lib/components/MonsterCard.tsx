@@ -75,6 +75,7 @@ export function MonsterCard({
       <Select
         label="Monster"
         options={monster_options}
+        isClearable
         onChange={(v) => handleChangeMonster(v)}
         value={monsterSelected}
         index={index}
@@ -82,6 +83,7 @@ export function MonsterCard({
       <Select
         label="Area"
         options={stages}
+        isClearable
         onChange={(v) => handleChangeStage(v)}
         value={stageSelected}
         index={index}
