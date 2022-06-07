@@ -1,6 +1,6 @@
 use std::fs::{File, OpenOptions};
-use std::io::{ Result, Seek, SeekFrom, BufWriter, Write};
-use std::mem::{forget, size_of };
+use std::io::{BufWriter, Result, Seek, SeekFrom, Write};
+use std::mem::{forget, size_of};
 use std::path::Path;
 use std::slice;
 
@@ -11,15 +11,10 @@ pub struct FileWriter {
 impl FileWriter {
     pub fn from_filename(filename: &str) -> Result<FileWriter> {
         let filename = Path::new(filename);
-        
-        let f = OpenOptions::new()
-        .read(true)
-        .write(true)
-        .open(filename)?;
-        
-        Ok(FileWriter {
-            writer: f,
-        })
+
+        let f = OpenOptions::new().read(true).write(true).open(filename)?;
+
+        Ok(FileWriter { writer: f })
     }
 
     pub fn seek_start(&mut self, pos: u64) -> Result<u64> {

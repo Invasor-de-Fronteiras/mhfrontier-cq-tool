@@ -1,4 +1,4 @@
-use serde_derive::{ Deserialize, Serialize };
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -17,7 +17,7 @@ pub struct QuestStringsPointers {
 struct QuestString {
     pointer: u32,
     hex: Vec<u8>,
-    string: String
+    string: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

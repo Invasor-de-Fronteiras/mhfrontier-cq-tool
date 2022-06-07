@@ -1,7 +1,10 @@
 use crate::{
     quest_file::QuestFile,
-    structs::{header::{QuestFileHeader, MapInfo}, monsters::{LargeMonsterPointers, LargeMonsterSpawn}},
-    save_json::save_quest_to_json
+    save_json::save_quest_to_json,
+    structs::{
+        header::{MapInfo, QuestFileHeader},
+        monsters::{LargeMonsterPointers, LargeMonsterSpawn},
+    },
 };
 
 #[test]
@@ -35,7 +38,7 @@ fn reader_test() {
         },
         map_info: MapInfo {
             map_id: 6,
-            return_bc_id: 110
+            return_bc_id: 110,
         },
         large_monster_pointers: LargeMonsterPointers {
             large_monster_ids: 5952,
@@ -157,11 +160,10 @@ fn reader_test() {
         quest_file.large_monster_pointers,
         expected.large_monster_pointers
     );
-    
+
     assert_eq!(quest_file.large_monster_ids, expected.large_monster_ids);
     assert_eq!(
         quest_file.large_monster_spawns,
         expected.large_monster_spawns
     );
-
 }

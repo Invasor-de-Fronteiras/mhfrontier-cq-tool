@@ -31,5 +31,5 @@ pub struct QuestFileHeader {
 #[repr(C)]
 pub struct MapInfo {
     pub map_id: u32,
-    pub return_bc_id: u32
+    pub return_bc_id: u32,
 }

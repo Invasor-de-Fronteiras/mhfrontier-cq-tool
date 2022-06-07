@@ -1,6 +1,7 @@
 use crate::{
+    offsets::GEN_QUEST_PROP_PRT,
+    reader::FileReader,
     structs::quest_type_flags::{GenQuestProp, Quantity},
-    reader::FileReader, offsets::GEN_QUEST_PROP_PRT,
 };
 
 #[test]
@@ -39,6 +40,6 @@ fn gen_quest_prop() {
 
     reader.seek_start(GEN_QUEST_PROP_PRT as u64).unwrap();
     let gen_quest_prop = reader.read_struct::<GenQuestProp>().unwrap();
-    
+
     assert_eq!(gen_quest_prop, expected);
 }

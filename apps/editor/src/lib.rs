@@ -1,8 +1,8 @@
+pub mod offsets;
 pub mod quest_file;
 pub mod reader;
 pub mod save_json;
 pub mod structs;
-pub mod offsets;
 pub mod writter;
 
 use quest_file::QuestFile;
@@ -30,7 +30,6 @@ use quest_file::QuestFile;
 //         }
 //     }
 // }
-
 
 #[cfg(test)]
 mod tests;

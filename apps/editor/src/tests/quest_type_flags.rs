@@ -1,6 +1,10 @@
 use crate::{
-    structs::quest_type_flags::{ QuestTypeFlags, MainQuestProp, QuestObjective, Objective, ForcedEquipment, Variants, RewardsFocus },
-    reader::FileReader, offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT},
+    offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT},
+    reader::FileReader,
+    structs::quest_type_flags::{
+        ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
+        Variants,
+    },
 };
 
 #[test]
@@ -23,7 +27,7 @@ fn quest_type_flasgs() {
             reward_main: 4400,
             deathtime: 1500,
             reward_a: 1000,
-            skip2: [0;2],
+            skip2: [0; 2],
             reward_b: 1000,
             hard_hunter_rank_req: 0,
             quest_time: 90000,
@@ -36,19 +40,19 @@ fn quest_type_flasgs() {
                     quest_objective: 1,
                     monster_id: 48,
                     unk: 0,
-                    quantity: 1
+                    quantity: 1,
                 },
                 objective2: Objective {
                     quest_objective: 2,
                     monster_id: 15,
                     unk: 2,
-                    quantity: 8
+                    quantity: 8,
                 },
                 objective3: Objective {
                     quest_objective: 0x4004,
                     monster_id: 48,
                     unk: 0,
-                    quantity: 1
+                    quantity: 1,
                 },
             },
             unk6: 2,
@@ -58,7 +62,7 @@ fn quest_type_flasgs() {
             post_rank_min: 31,
             post_rank_max: 0,
         },
-        skip1: [0;8],
+        skip1: [0; 8],
         forced_equipement: ForcedEquipment {
             legs: 0,
             legs_attach1: 0, // +0x80 for some reason
@@ -103,24 +107,24 @@ fn quest_type_flasgs() {
         rewards_focus: RewardsFocus {
             exp_type_maybe: 0,
             main_rp_grp: 530,
-            skip1: [0;2],
+            skip1: [0; 2],
             sub_a_rp_grp: 80,
-            skip2: [0;2],
+            skip2: [0; 2],
             sub_b_rp_grp: 80,
-            skip3: [0;2],
+            skip3: [0; 2],
             item1: 532,
             item2: 528,
             item3: 473,
-            skip4: [0;3],
-            monster_id: 48
+            skip4: [0; 3],
+            monster_id: 48,
         },
-        skip3: [0;10],
+        skip3: [0; 10],
         quest_clears_allowed: 0,
-        quest_monster_icon: 0
+        quest_monster_icon: 0,
     };
 
     reader.seek_start(MAIN_QUEST_PROP_PRT as u64).unwrap();
     let gen_quest_prop = reader.read_struct::<QuestTypeFlags>().unwrap();
-    
+
     assert_eq!(gen_quest_prop, expected);
 }

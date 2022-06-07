@@ -1,4 +1,4 @@
-use serde_derive::{ Deserialize, Serialize };
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -6,7 +6,7 @@ pub struct Objective {
     pub quest_objective: u32,
     pub monster_id: u8,
     pub unk: u8,
-    pub quantity: u16
+    pub quantity: u16,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -45,7 +45,7 @@ pub struct MainQuestProp {
     pub reward_main: u32,
     pub deathtime: u32,
     pub reward_a: u16,
-    pub skip2: [u8;2],
+    pub skip2: [u8; 2],
     pub reward_b: u16,
     pub hard_hunter_rank_req: u16,
     pub quest_time: u32,
@@ -106,7 +106,6 @@ pub struct ForcedEquipment {
     pub waist_attach3: u16, // +0x80 for some reason
 
     pub unk: u32,
-    
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -114,16 +113,16 @@ pub struct ForcedEquipment {
 pub struct RewardsFocus {
     pub exp_type_maybe: u32,
     pub main_rp_grp: u16,
-    pub skip1: [u8;2],
+    pub skip1: [u8; 2],
     pub sub_a_rp_grp: u16,
-    pub skip2: [u8;2],
+    pub skip2: [u8; 2],
     pub sub_b_rp_grp: u16,
-    pub skip3: [u8;2],
+    pub skip3: [u8; 2],
     pub item1: u16,
     pub item2: u16,
     pub item3: u16,
-    pub skip4: [u8;3],
-    pub monster_id: u8
+    pub skip4: [u8; 3],
+    pub monster_id: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -158,13 +157,13 @@ pub struct GenQuestProp {
 #[repr(C)]
 pub struct QuestTypeFlags {
     pub main_quest_prop: MainQuestProp,
-    pub skip1: [u8;8],
+    pub skip1: [u8; 8],
     pub forced_equipement: ForcedEquipment,
     pub variants: Variants,
     // pub skip2: [u8; 2],
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8;10],
+    pub skip3: [u8; 10],
     pub quest_clears_allowed: u32,
-    pub quest_monster_icon: u8
+    pub quest_monster_icon: u8,
 }
