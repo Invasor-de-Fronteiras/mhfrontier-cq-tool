@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import { string } from "yup";
+
 import { findMapAndStage } from "../utils";
 import { getPolynomialX, getPolynomialY } from "../utils/math";
 
@@ -15,6 +15,7 @@ interface MapPreviewProps {
   areaId: number;
   objects: MaPreviewObject[];
   shouldCalculate?: boolean;
+  canDraw?: boolean;
   onChange?: (objects: MaPreviewObject) => void;
 }
 
@@ -35,6 +36,7 @@ export function MapPreview({
   areaId,
   mapId,
   objects,
+  canDraw = true,
   shouldCalculate = true,
   onChange,
 }: MapPreviewProps) {
@@ -70,22 +72,13 @@ export function MapPreview({
       const drawObject = (obj: MaPreviewObject, index: number) => {
         const x =
           hasCalc && shouldCalculate
-            ? getPolynomialX(
-                obj.x,
-                stage.calculationX!.b,
-                stage.calculationX!.a
-              )
+            ? getPolynomialX(obj.x, stage.calculationX!)
             : obj.x;
         const y =
           hasCalc && shouldCalculate
-            ? getPolynomialX(
-                obj.y,
-                stage.calculationY!.b,
-                stage.calculationY!.a
-              )
+            ? getPolynomialX(obj.y, stage.calculationY!)
             : obj.y;
 
-    
         ctx.fillStyle = colors[index];
         ctx.beginPath();
 
@@ -100,6 +93,8 @@ export function MapPreview({
   }, [stage, map, objects, shouldCalculate, hasCalc, validMap]);
 
   const getMousePos: React.MouseEventHandler<HTMLCanvasElement> = (evt) => {
+    if (!canDraw) return;
+
     var rect = canvasRef.current!.getBoundingClientRect();
     const pos = {
       x: evt.clientX - rect.left,
@@ -108,14 +103,16 @@ export function MapPreview({
     const obj = {
       x:
         shouldCalculate && hasCalc
-          ? getPolynomialY(pos.x, stage.calculationX!.a, stage?.calculationY!.b)
+          ? getPolynomialY(pos.x, stage.calculationX!)
           : pos.x,
       y:
         shouldCalculate && hasCalc
-          ? getPolynomialY(pos.y, stage.calculationY!.a, stage?.calculationY!.b)
+          ? getPolynomialY(pos.y, stage.calculationY!)
           : pos.y,
       id: selected,
     };
+    console.log(obj, pos, stage);
+
     onChange?.(obj);
   };
 

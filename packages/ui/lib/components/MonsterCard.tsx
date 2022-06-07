@@ -127,6 +127,7 @@ export function MonsterCard({
               z_position: obj.y,
             })
           }
+          canDraw={false}
         />
       </fieldset>
       <fieldset>

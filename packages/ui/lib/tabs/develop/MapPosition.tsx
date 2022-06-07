@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PosInput } from "../../components/PosInput";
 
 import { Button } from "../../components/Button";
@@ -75,6 +75,10 @@ export function MapPositionTab() {
     () => selectAreas.find((v) => v.value === selectedAreaId),
     [selectAreas, selectedAreaId]
   );
+
+  useEffect(() => {
+    setSelectedAreaId(selectAreas[0]!.value ?? 0);
+  }, [setSelectedAreaId, selectAreas]);
 
   return (
     <div>
@@ -205,16 +209,38 @@ const Calculate = ({ name, input1, input2 }: CalculateProps) => {
         <PosInput label="a" value={a} />
         <PosInput label="b" value={b} />
       </div>
-      <label>
+      <label className="border">
         <span>Game {name}</span>
         <input
-          className="border ml-2"
+          id="input"
+          className="border ml-2 w-20"
           type="number"
           value={result}
           onChange={(ev) => setResult(Number(ev.target.value))}
         />
+      
+        <output htmlFor="input" className="text-xs">
+          {getX(result)}
+        </output>
       </label>
-      <span>Result: {getX(result)}</span>
+      <span
+        className={classNames("text-green-500 border", {
+          "text-red-500": getX(input1[1]) !== input1[0],
+        })}
+      >
+        f({input1[0]}) = {input1[1]}
+        <br />
+        Result red: {getX(input1[1])}
+      </span>
+      <span
+        className={classNames("text-green-500 border", {
+          "text-red-500": getX(input2[1]) !== input2[0],
+        })}
+      >
+        f({input2[0]}) = {input2[1]}
+        <br />
+        Result blue: {getX(input2[1])}
+      </span>
     </fieldset>
   );
 };
