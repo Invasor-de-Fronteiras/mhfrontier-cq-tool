@@ -11,8 +11,8 @@ export function MonstersTab() {
       !data?.map_info
         ? []
         : maps[data?.map_info.map_id].stages.map((v, i) => ({
-            value: v,
-            label: i === 0 ? "Base" : `Area ${i}`,
+            value: v.id,
+            label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
           })),
     [data?.map_info]
   );

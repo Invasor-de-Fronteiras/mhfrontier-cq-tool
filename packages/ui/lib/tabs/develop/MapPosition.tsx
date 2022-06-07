@@ -19,13 +19,12 @@ interface Object {
 }
 
 export function MapPositionTab() {
-  const [selected, setSelected] = useState<string>("red");
   const [useGameCoords, setUseGameCoords] = useState(false);
 
   const [objects, setObjects] = useState<Object[]>([
     {
-      x: 7400,
-      y: 13000,
+      x: 34,
+      y: 75,
       gameX: 7400,
       gameY: 13000,
       name: "red",
@@ -36,8 +35,9 @@ export function MapPositionTab() {
       name: "blue",
       canvasColor: "blue",
       color: "blue",
-      x: 14300,
-      y: 11300,
+
+      x: 94,
+      y: 70,
       gameX: 14300,
       gameY: 11300,
     },
@@ -150,7 +150,6 @@ export function MapPositionTab() {
           areaId={selectedAreaId}
           shouldCalculate={useGameCoords}
           onChange={(obj) => {
-            console.log(objects, obj);
             const data = useGameCoords
               ? { gamex: obj.x, gameY: obj.y }
               : { x: obj.x, y: obj.y };
@@ -180,7 +179,7 @@ export function MapPositionTab() {
           />
 
           <Button onClick={() => setUseGameCoords(!useGameCoords)}>
-            {useGameCoords ? "Use Game Coordinates" : "Use Canvas Coordinates"}
+            {useGameCoords ? "Use Canvas Coordinates" : "Use Game Coordinates"}
           </Button>
         </div>
       </div>

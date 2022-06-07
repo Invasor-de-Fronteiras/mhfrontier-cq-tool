@@ -2,11 +2,12 @@ import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { string } from "yup";
 import { findMapAndStage } from "../utils";
+import { getPolynomialX, getPolynomialY } from "../utils/math";
 
 interface MaPreviewObject {
   x: number;
   y: number;
-  id: string;
+  id: string | number;
 }
 
 interface MapPreviewProps {
@@ -38,18 +39,18 @@ export function MapPreview({
   onChange,
 }: MapPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selected, setSelected] = useState<string>(objects[0]?.id);
+  const [selected, setSelected] = useState<string | number>(objects[0]?.id);
 
   const { map, stage } = findMapAndStage(mapId, areaId);
 
+  const validMap = map && stage;
+  const hasCalc = stage?.calculationX && stage?.calculationY;
+
   useEffect(() => {
-    if (!map || !stage) return;
+    if (!validMap) return;
 
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
-
-
-    const hasCalc = stage.calculationX && stage.calculationY;
 
     const img = new Image();
     img.src = `/maps/${map.name}/${stage.areaNumber}.png`;
@@ -69,15 +70,22 @@ export function MapPreview({
       const drawObject = (obj: MaPreviewObject, index: number) => {
         const x =
           hasCalc && shouldCalculate
-            ? (obj.x - stage.calculationX!.b) / stage.calculationX!.a
+            ? getPolynomialX(
+                obj.x,
+                stage.calculationX!.b,
+                stage.calculationX!.a
+              )
             : obj.x;
         const y =
           hasCalc && shouldCalculate
-            ? (obj.y - stage.calculationY!.b) / stage.calculationY!.a
+            ? getPolynomialX(
+                obj.y,
+                stage.calculationY!.b,
+                stage.calculationY!.a
+              )
             : obj.y;
-        
-            console.log(obj.id,x, y);
 
+    
         ctx.fillStyle = colors[index];
         ctx.beginPath();
 
@@ -89,18 +97,29 @@ export function MapPreview({
         drawObject(objects[i], Number(i));
       }
     };
-  }, [stage, map, objects, shouldCalculate]);
+  }, [stage, map, objects, shouldCalculate, hasCalc, validMap]);
 
   const getMousePos: React.MouseEventHandler<HTMLCanvasElement> = (evt) => {
     var rect = canvasRef.current!.getBoundingClientRect();
-    const obj = {
-      id: selected,
+    const pos = {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top,
     };
-
+    const obj = {
+      x:
+        shouldCalculate && hasCalc
+          ? getPolynomialY(pos.x, stage.calculationX!.a, stage?.calculationY!.b)
+          : pos.x,
+      y:
+        shouldCalculate && hasCalc
+          ? getPolynomialY(pos.y, stage.calculationY!.a, stage?.calculationY!.b)
+          : pos.y,
+      id: selected,
+    };
     onChange?.(obj);
   };
+
+  if (!validMap) return <></>;
 
   return (
     <div className="text-center w-min ">
