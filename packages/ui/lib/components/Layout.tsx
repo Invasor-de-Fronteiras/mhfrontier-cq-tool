@@ -7,7 +7,12 @@ import { useContext } from "react";
 import { VERSION } from "../constants";
 import { useLocation } from "react-router-dom";
 
-const context = createContext({ isOpen: false, onToggle: () => {} });
+interface ContextState {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+const context = createContext({} as ContextState);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -79,7 +84,9 @@ export function LayoutNavbarGroup({
     <>
       {isOpen && <h4 className="px-3 font-semibold text-gray-600">{name}</h4>}
       <ul>{children}</ul>
-      {!isOpen && <div className="border-b border-gray-400 mx-2 last:border-none" />}
+      {!isOpen && (
+        <div className="border-b border-gray-400 mx-2 last:border-none" />
+      )}
     </>
   );
 }

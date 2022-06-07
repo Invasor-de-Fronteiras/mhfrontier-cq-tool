@@ -86,7 +86,7 @@ export function MapPreview({
         ctx.fill();
       };
 
-      for (let i in objects) {
+      for (const i in objects) {
         drawObject(objects[i], Number(i));
       }
     };
@@ -95,7 +95,7 @@ export function MapPreview({
   const getMousePos: React.MouseEventHandler<HTMLCanvasElement> = (evt) => {
     if (!canDraw) return;
 
-    var rect = canvasRef.current!.getBoundingClientRect();
+    const rect = canvasRef.current!.getBoundingClientRect();
     const pos = {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top,

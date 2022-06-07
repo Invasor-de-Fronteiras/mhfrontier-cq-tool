@@ -18,6 +18,7 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
       <ReactSelect
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         menuPortalTarget={document.body}
         theme={(theme) => ({

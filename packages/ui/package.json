@@ -5,7 +5,8 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint *.ts*"
+    "lint": "eslint *.(tsx|ts|js)",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "classnames": "^2.3.1",

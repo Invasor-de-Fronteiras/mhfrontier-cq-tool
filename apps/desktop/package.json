@@ -19,7 +19,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "vite-tauri": "vite-tauri"
+    "vite-tauri": "vite-tauri",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0-rc.13",

@@ -8,7 +8,7 @@ import { maps } from "../../utils";
 import { polynomial } from "../../utils/math";
 import { MapPreview } from "../../components/MapPreview";
 
-interface Object {
+interface MapObject {
   x: number;
   y: number;
   gameX: number;
@@ -21,7 +21,7 @@ interface Object {
 export function MapPositionTab() {
   const [useGameCoords, setUseGameCoords] = useState(false);
 
-  const [objects, setObjects] = useState<Object[]>([
+  const [objects, setObjects] = useState<MapObject[]>([
     {
       x: 34,
       y: 75,
@@ -200,7 +200,7 @@ interface CalculateProps {
 const Calculate = ({ name, input1, input2 }: CalculateProps) => {
   const [result, setResult] = useState<number>(0);
 
-  const { a, b, getX, getY } = polynomial(input1, input2);
+  const { a, b, getX } = polynomial(input1, input2);
 
   return (
     <fieldset className="rounded-sm border p-2 max-w-xs flex flex-col">
@@ -218,7 +218,7 @@ const Calculate = ({ name, input1, input2 }: CalculateProps) => {
           value={result}
           onChange={(ev) => setResult(Number(ev.target.value))}
         />
-      
+
         <output htmlFor="input" className="text-xs">
           {getX(result)}
         </output>

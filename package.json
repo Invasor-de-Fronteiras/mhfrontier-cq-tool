@@ -9,11 +9,13 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+    "lint": "turbo run lint --parallel --continue",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "check-types": "turbo run check-types --parallel --continue"
   },
   "devDependencies": {
-    "eslint-config-custom": "latest",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "latest"
   },

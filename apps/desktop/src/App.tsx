@@ -68,6 +68,7 @@ function App() {
     <EditorContextProvider
       data={data}
       handleSaveQuest={handleChangeSave}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       onChangeData={(handler) => setData(handler(data!))}
       uploadFile={{
         dragSupport: false,

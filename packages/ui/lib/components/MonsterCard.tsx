@@ -13,14 +13,12 @@ export interface MonsterCardProps {
   data: LargeMonsterSpawn;
   stages: Stage[];
   onChange: (value: LargeMonsterSpawn) => void;
-  index: number;
 }
 
 export function MonsterCard({
   data,
   stages,
   onChange,
-  index,
 }: MonsterCardProps) {
   const { data: file } = useEditor();
 

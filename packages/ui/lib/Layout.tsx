@@ -83,11 +83,12 @@ export function Layout() {
     [data, handleSaveQuest]
   );
 
-  let route = useMemo(
+  const route = useMemo(
     () =>
       groups.reduce<null | string>(
         (acc, group) =>
           acc ??
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore 
           group.options.find((option) => option.uri === location.pathname)
             ?.name,

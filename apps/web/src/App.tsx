@@ -7,9 +7,9 @@ function App() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
     accept: { "application/octet-stream": ["bin"] },
-    onDragOver: () => {},
-    onDragEnter: () => {},
-    onDragLeave: () => {},
+    onDragOver: () => null,
+    onDragEnter: () => null,
+    onDragLeave: () => null,
   });
 
   return (
@@ -17,7 +17,7 @@ function App() {
       <div className="max-w-6xl max-h-6xl">
         <EditorContextProvider
           data={data}
-          handleSaveQuest={() => {}}
+          handleSaveQuest={() => null}
           onChangeData={(data) => data}
           uploadFile={{
             dragSupport: true,
