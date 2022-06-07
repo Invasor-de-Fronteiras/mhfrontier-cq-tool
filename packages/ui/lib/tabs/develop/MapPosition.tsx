@@ -72,9 +72,17 @@ export function MapPositionTab() {
     }));
   }, [selectedMapId]);
   // const selectedMap = useMemo(() => ,[]);
+  // f(1) = 5
+  // f(-3) = -7
+  // 5 = 1a + b
+  // -7 = -3a + b
+  // 5 - 1a = -7 - 3a
+  // 12 - 4a = b
+  //  12 = 4a
+  // a = 3
 
-  const calcX = useCallback((x: number) => x / divisorX, [divisorX]);
-  const calcY = useCallback((y: number) => y / divisorY, [divisorY]);
+  const calcX = useCallback((x: number) => (x - 3000) / 115, []);
+  const calcY = useCallback((y: number) => 75, [divisorY]);
 
   const drawMonster = useCallback(
     (obj: Object, ctx: CanvasRenderingContext2D) => {
@@ -134,7 +142,7 @@ export function MapPositionTab() {
 
   return (
     <div>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-col  md:flex-row gap-3">
         {objects.map((object, index) => (
           <fieldset
             key={index}
@@ -189,58 +197,17 @@ export function MapPositionTab() {
             </fieldset>
           </fieldset>
         ))}
-        <fieldset className="p-2 border rounded-sm w-min my-3 flex flex-row">
-          <legend>Distance</legend>
-          <fieldset>
-            <legend>Map</legend>
-            <PosInput label="X" value={objects[1].x - objects[0].x} />
-            <PosInput label="Y" value={objects[1].y - objects[0].y} />
-          </fieldset>
-          <fieldset>
-            <legend>Game</legend>
-            <PosInput label="X" value={objects[1].gameX - objects[0].gameX} />
-            <PosInput label="Y" value={objects[1].gameY - objects[0].gameY} />
-          </fieldset>
-          <fieldset>
-            <legend>Calc</legend>
-            <PosInput
-              label="X"
-              value={
-                (objects[1].gameX - objects[0].gameX) /
-                (objects[1].x - objects[0].x)
-              }
-            />
-            <PosInput
-              label="Y"
-              value={
-                (objects[1].gameY - objects[0].gameY) /
-                (objects[1].y - objects[0].y)
-              }
-            />
-          </fieldset>
-        </fieldset>
-        <fieldset className="p-2 border rounded-sm w-10 my-3 flex-1">
-          <legend className="text-sm">Divisor's</legend>
-          <div className="flex flex-col justify-center items-center gap-3 ">
-            <PosInput
-              label="X"
-              value={divisorX}
-              onChange={(e) => {
-                setDivisorX(e.target.valueAsNumber);
-              }}
-            />
-            <PosInput
-              label="Y"
-              value={divisorY}
-              onChange={(e) => {
-                setDivisorY(e.target.valueAsNumber);
-              }}
-            />
-            <PosInput label="X" value={objects[0].gameX / divisorY} />
-            <PosInput label="Y" value={objects[0].gameY / divisorY} />
-          </div>
-        </fieldset>
       </div>
+      <Calculate
+        name="calcX"
+        input1={[objects[0].x, objects[0].gameX]}
+        input2={[objects[1].x, objects[1].gameX]}
+      />
+      <Calculate
+        name="calcY"
+        input1={[objects[0].y, objects[0].gameY]}
+        input2={[objects[1].y, objects[1].gameY]}
+      />
 
       <div className="flex flex-row justify-around">
         <div className="flex flex-col items-center justify-center">
@@ -281,3 +248,56 @@ export function MapPositionTab() {
     </div>
   );
 }
+
+interface CalculateProps {
+  name: string;
+  input1: [number, number];
+  input2: [number, number];
+}
+
+const Calculate = ({ name, input1, input2 }: CalculateProps) => {
+  const [result, setResult] = useState<number>(0);
+
+  const calc = (input1: [number, number], input2: [number, number]) => {
+    const [x1, x2] = input1;
+    const [y1, y2] = input2;
+
+    const x = x1 - y1;
+    const y = x2 - y2;
+
+    const a = x / y;
+    const b = x2 - x1 * a;
+
+    const getX = (v: number) => (v - b) / a;
+    const getY = (v: number) => (v - b) / a;
+
+    return {
+      a,
+      b,
+      getX,
+      getY,
+    };
+  };
+
+  const { a, b, getX, getY } = calc(input1, input2);
+
+  return (
+    <fieldset className="rounded-sm border p-2 max-w-xs flex flex-col">
+      <legend>{name} - f(x) = ax + b</legend>
+      <div className="flex flex-row">
+        <PosInput label="a" value={a} />
+        <PosInput label="b" value={b} />
+      </div>
+      <label>
+        <span>Game {name}</span>
+        <input
+          className="border ml-2"
+          type="number"
+          value={result}
+          onChange={(ev) => setResult(Number(ev.target.value))}
+        />
+      </label>
+      <span>Result: {getX(result)}</span>
+    </fieldset>
+  );
+};

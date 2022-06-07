@@ -1,7 +1,14 @@
+interface Polynomial {
+  a: number;
+  b: number;
+}
+
 interface MapStage {
   id: number;
   areaNumber: number;
   imgPath: string;
+  calculationX?: Polynomial;
+  calculationY?: Polynomial;
 }
 
 interface Map {
@@ -99,7 +106,19 @@ export const maps: Map[] = [
     id: 6,
     name: "Jungle Day",
     stages: [
-      { id: 110, areaNumber: 0, imgPath: "/Jungle/Day/mitu-bc.png" },
+      {
+        id: 110,
+        areaNumber: 0,
+        imgPath: "/Jungle/Day/mitu-bc.png",
+        calculationX: {
+          a: 0.009878628495810688,
+          b: 7399.673635052247,
+        },
+        calculationY: {
+          a: 0.0058823529411764705,
+          b: 12999.491176470588,
+        },
+      },
       { id: 111, areaNumber: 1, imgPath: "/Jungle/Day/mitu-1.png" },
       { id: 112, areaNumber: 2, imgPath: "/Jungle/Day/mitu-2d.png" },
       { id: 113, areaNumber: 3, imgPath: "/Jungle/Day/mitu-3d.png" },
