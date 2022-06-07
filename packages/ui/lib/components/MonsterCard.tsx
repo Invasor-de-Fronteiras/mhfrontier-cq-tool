@@ -76,14 +76,12 @@ export function MonsterCard({
         options={monster_options}
         onChange={(v) => handleChangeMonster(v)}
         value={monsterSelected}
-        index={index}
       />
       <Select
         label="Area"
         options={stages}
         onChange={(v) => handleChangeStage(v)}
         value={stageSelected}
-        index={index}
       />
 
       <fieldset>

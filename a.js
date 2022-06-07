@@ -1,16 +1,20 @@
-interface MapStage {
-  id: number;
-  areaNumber: number;
-  imgPath: string;
+class MapStage {
+  constructor(id, areaNumber, imgPath) {
+    this.id = id;
+    this.areaNumber = areaNumber;
+    this.imgPath = imgPath;
+  }
 }
 
-interface Map {
-  id: number;
-  name: string;
-  stages: MapStage[];
+class Map {
+  constructor(id, name, stages) {
+    this.id = id;
+    this.name = name;
+    this.stages = stages;
+  }
 }
 
-export const maps: Map[] = [
+const maps = [
   { id: 0, name: "null", stages: [] },
   {
     id: 1,
@@ -896,3 +900,59 @@ export const maps: Map[] = [
     ],
   },
 ];
+
+const fs = require("fs");
+const path = require("path");
+const { promisify } = require("util");
+const readdir = promisify(fs.readdir);
+const stat = promisify(fs.stat);
+
+const mapsPath = path.join(
+  __dirname,
+  "packages",
+  "ui",
+  "lib",
+  "assets",
+  "MHFZ Resource Maps"
+);
+
+const saveMap = async () => {
+  const data = [];
+
+  for (let i = 0; i < maps.length; i++) {
+    const map = maps[i];
+    const stages = [];
+
+    for (let j = 0; j < map.stages.length; j++) {
+      const stage = map.stages[j];
+      const imgPath = path.join(mapsPath, stage.imgPath);
+
+      if (stage.imgPath && !(await fileExists(imgPath))) {
+        console.log(`${imgPath} does not exist`);
+      }
+      stages.push(new MapStage(stage.id, stage.areaNumber, stage.imgPath));
+    }
+
+    data.push(new Map(map.id, map.name, stages));
+  }
+
+  await fs.writeFileSync(`./obj.json`, JSON.stringify(data));
+  console.log("salvou!");
+};
+
+const getFiles = async () => {
+  const files = await readdir(mapsPath);
+
+  return files;
+};
+
+const fileExists = async (filePath) => {
+  try {
+    const r = await stat(filePath);
+    return !r.isDirectory();
+  } catch (err) {
+    return false;
+  }
+};
+
+saveMap();

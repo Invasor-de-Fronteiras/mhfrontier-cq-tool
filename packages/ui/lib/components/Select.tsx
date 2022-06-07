@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import ReactSelect, { Props, GroupBase } from "react-select";
 
 
@@ -7,13 +8,12 @@ export type SelectOption = {
 };
 
 interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
-  index: number;
   label: string;
 }
 
-export function Select<T>({ label, ...props }: SelectProps<T>) {
+export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
-    <label className="flex flex-col w-full max-w-xs">
+    <label className={classNames("flex flex-col w-full max-w-xs", className)}>
       <span>{label}</span>
       <ReactSelect
         {...props}

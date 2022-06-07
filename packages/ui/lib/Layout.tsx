@@ -68,7 +68,17 @@ export function Layout() {
             disabled: !data || true,
           },
         ],
-      },
+      },{
+        name: "Development",
+        options: [
+          {
+            name: "Map Position",
+            icon: BsFillGeoFill,
+            uri: "/map-position",
+            disabled: false,
+          }
+        ]
+      }
     ],
     [data, handleSaveQuest]
   );
