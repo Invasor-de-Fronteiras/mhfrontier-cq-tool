@@ -1,7 +1,7 @@
 use crate::reader::FileReader;
 use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
-use crate::writter::FileWriter;
+use crate::writer::FileWriter;
 use std::io::Result;
 
 // use serde::{Serialize, Deserialize};

@@ -9,10 +9,9 @@ use crate::{
 
 #[test]
 fn reader_test() {
-    // let mut buffer = read_test_file();
-    let quest_file = QuestFile::from_path("../../quest-tests/21085d0.bin").unwrap();
+    let quest_file = QuestFile::from_path("quest-tests/21085d0.bin").unwrap();
 
-    save_quest_to_json("../../output/21085d0.json", &quest_file).unwrap();
+    save_quest_to_json("output/21085d0.json", &quest_file).unwrap();
 
     let expected = QuestFile {
         header: QuestFileHeader {
@@ -54,9 +53,6 @@ fn reader_test() {
         large_monster_spawns: vec![
             LargeMonsterSpawn {
                 monster_id: 48,
-                unk1: 0,
-                unk2: 0,
-                unk3: 0,
                 spawn_amount: 1,
                 spawn_stage: 120,
                 unk4: 0,
@@ -73,10 +69,7 @@ fn reader_test() {
                 unk12: 0,
             },
             LargeMonsterSpawn {
-                monster_id: 255,
-                unk1: 255,
-                unk2: 0,
-                unk3: 0,
+                monster_id: 65535,
                 spawn_amount: 0,
                 spawn_stage: 0,
                 unk4: 0,
@@ -93,10 +86,7 @@ fn reader_test() {
                 unk12: 0,
             },
             LargeMonsterSpawn {
-                monster_id: 255,
-                unk1: 255,
-                unk2: 0,
-                unk3: 0,
+                monster_id: 65535,
                 spawn_amount: 0,
                 spawn_stage: 0,
                 unk4: 0,
@@ -113,10 +103,7 @@ fn reader_test() {
                 unk12: 0,
             },
             LargeMonsterSpawn {
-                monster_id: 255,
-                unk1: 255,
-                unk2: 0,
-                unk3: 0,
+                monster_id: 65535,
                 spawn_amount: 0,
                 spawn_stage: 0,
                 unk4: 0,
@@ -133,10 +120,7 @@ fn reader_test() {
                 unk12: 0,
             },
             LargeMonsterSpawn {
-                monster_id: 255,
-                unk1: 255,
-                unk2: 0,
-                unk3: 0,
+                monster_id: 65535,
                 spawn_amount: 0,
                 spawn_stage: 0,
                 unk4: 0,
@@ -162,8 +146,8 @@ fn reader_test() {
     );
 
     assert_eq!(quest_file.large_monster_ids, expected.large_monster_ids);
-    assert_eq!(
-        quest_file.large_monster_spawns,
-        expected.large_monster_spawns
-    );
+
+    for (i, large_monster_spawn) in quest_file.large_monster_spawns.iter().enumerate() {
+        assert_eq!(large_monster_spawn, &expected.large_monster_spawns[i]);
+    }
 }

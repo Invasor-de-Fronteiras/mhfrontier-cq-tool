@@ -1,5 +1,5 @@
 use crate::{
-    offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT},
+    offsets::{MAIN_QUEST_PROP_PRT},
     reader::FileReader,
     structs::quest_type_flags::{
         ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
@@ -8,8 +8,8 @@ use crate::{
 };
 
 #[test]
-fn quest_type_flasgs() {
-    let mut reader = FileReader::from_filename("../../quest-tests/21085d0.bin").unwrap();
+fn quest_type_flags() {
+    let mut reader = FileReader::from_filename("quest-tests/21085d0.bin").unwrap();
 
     let expected = QuestTypeFlags {
         main_quest_prop: MainQuestProp {
