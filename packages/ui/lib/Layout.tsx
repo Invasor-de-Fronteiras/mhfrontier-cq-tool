@@ -100,7 +100,7 @@ export function Layout() {
     <SharedLayout>
       <LayoutNavbar>
         {groups.map((group) => (
-          <LayoutNavbarGroup name={group.name}>
+          <LayoutNavbarGroup name={group.name} key={group.name}>
             {group.options.map((option) =>
               option.uri && !option.disabled ? (
                 <Link to={option.uri} key={option.name}>
