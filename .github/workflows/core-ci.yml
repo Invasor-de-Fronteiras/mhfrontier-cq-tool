@@ -28,8 +28,6 @@ jobs:
         run: cargo build --verbose
 
   test:
-    needs: [check]
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -53,8 +51,6 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
 
   fmt:
-    needs: [check]
-
     runs-on: ubuntu-latest
 
     steps:
