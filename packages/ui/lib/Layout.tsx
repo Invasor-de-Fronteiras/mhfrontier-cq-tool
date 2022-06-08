@@ -69,7 +69,7 @@ export function Layout() {
           },
         ],
       },{
-        name: "Development",
+        name: "Advanced",
         options: [
           {
             name: "Map Position",

@@ -15,11 +15,7 @@ export interface MonsterCardProps {
   onChange: (value: LargeMonsterSpawn) => void;
 }
 
-export function MonsterCard({
-  data,
-  stages,
-  onChange,
-}: MonsterCardProps) {
+export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
   const { data: file } = useEditor();
 
   const monsterSelected = useMemo(
@@ -88,56 +84,57 @@ export function MonsterCard({
         onChange={(v) => handleChangeStage(v)}
         value={stageSelected}
       />
-
-      <fieldset className="flex flex-row gap-2">
-        <legend>Position</legend>
-        <div className="flex flex-col flex-wrap">
-          <PosInput
-            label="X"
-            onChange={change("x_position")}
-            value={data.x_position}
+      <div className="flex flex-wrap">
+        <fieldset className="flex flex-row gap-2">
+          <legend>Position</legend>
+          <div className="flex flex-col flex-wrap">
+            <PosInput
+              label="X"
+              onChange={change("x_position")}
+              value={data.x_position}
+            />
+            <PosInput
+              label="Y"
+              onChange={change("y_position")}
+              value={data.y_position}
+            />
+            <PosInput
+              label="Z"
+              onChange={change("z_position")}
+              value={data.z_position}
+            />
+          </div>
+          <MapPreview
+            mapId={file!.map_info.map_id}
+            areaId={data.spawn_stage}
+            objects={[
+              {
+                id: data.monster_id,
+                x: data.x_position,
+                y: data.z_position,
+              },
+            ]}
+            onChange={(obj) =>
+              onChange({
+                ...data,
+                x_position: obj.x,
+                z_position: obj.y,
+              })
+            }
+            canDraw={false}
           />
-          <PosInput
-            label="Y"
-            onChange={change("y_position")}
-            value={data.y_position}
-          />
-          <PosInput
-            label="Z"
-            onChange={change("z_position")}
-            value={data.z_position}
-          />
-        </div>
-        <MapPreview
-          areaId={file!.map_info.map_id}
-          mapId={data.spawn_stage}
-          objects={[
-            {
-              id: data.monster_id,
-              x: data.x_position,
-              y: data.y_position,
-            },
-          ]}
-          onChange={(obj) =>
-            onChange({
-              ...data,
-              x_position: obj.x,
-              z_position: obj.y,
-            })
-          }
-          canDraw={false}
-        />
-      </fieldset>
-      <fieldset>
-        <legend>Amount</legend>
-        <div className="flex flex-row flex-wrap">
-          <PosInput
-            label=""
-            onChange={change("spawn_amount")}
-            value={data.spawn_amount}
-          />
-        </div>
-      </fieldset>
+        </fieldset>
+        <fieldset>
+          <legend>Amount</legend>
+          <div className="flex flex-row flex-wrap">
+            <PosInput
+              label=""
+              onChange={change("spawn_amount")}
+              value={data.spawn_amount}
+            />
+          </div>
+        </fieldset>
+      </div>
     </div>
   );
 }
