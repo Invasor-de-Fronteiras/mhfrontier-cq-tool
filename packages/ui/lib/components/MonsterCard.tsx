@@ -75,12 +75,14 @@ export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
       <Select
         label="Monster"
         options={monster_options}
+        isClearable
         onChange={(v) => handleChangeMonster(v)}
         value={monsterSelected}
       />
       <Select
         label="Area"
         options={stages}
+        isClearable
         onChange={(v) => handleChangeStage(v)}
         value={stageSelected}
       />
