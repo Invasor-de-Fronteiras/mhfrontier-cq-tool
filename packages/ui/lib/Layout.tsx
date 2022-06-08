@@ -6,6 +6,7 @@ import {
   BsSave,
   BsUmbrella,
   BsUpload,
+  BsQuestion
 } from "react-icons/bs";
 import { SiMonster } from "react-icons/si";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
@@ -76,6 +77,12 @@ export function Layout() {
             icon: BsFillGeoFill,
             uri: "/map-position",
             disabled: false,
+          },
+          {
+            name: "Unknown",
+            icon: BsQuestion,
+            uri: "/unknown",
+            disabled: !data,
           }
         ]
       }
