@@ -28,7 +28,7 @@ export function MonstersTab() {
     };
 
   return (
-    <div className="flex flex-row flex-wrap gap-3 justify-center">
+    <div className="flex flex-row flex-wrap gap-2">
       {data!.large_monster_spawns.map((monster, i) => (
         <MonsterCard
           key={i}

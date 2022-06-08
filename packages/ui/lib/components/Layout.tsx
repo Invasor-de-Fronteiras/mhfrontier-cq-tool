@@ -6,6 +6,8 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useContext } from "react";
 import { VERSION } from "../constants";
 import { useLocation } from "react-router-dom";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+import { useTheme } from "../useTheme";
 
 interface ContextState {
   isOpen: boolean;
@@ -83,7 +85,7 @@ export function LayoutNavbarGroup({
   return (
     <>
       {isOpen && <h4 className="px-3 font-semibold text-gray-600">{name}</h4>}
-      <ul>{children}</ul>
+      <ul className="border-l-2 ml-3">{children}</ul>
       {!isOpen && (
         <div className="border-b border-gray-400 mx-2 last:border-none" />
       )}
@@ -127,10 +129,15 @@ export function LayoutBody({
   children: React.ReactNode;
   title: string;
 }) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="bg-white w-full h-full border-y border-r rounded-y rounded-r">
-      <div className="border-b h-14 flex items-center justify-center">
-        <h2 className="font-semibold">{title}</h2>
+      <div className="border-b h-14 flex items-center">
+        <h2 className="font-semibold text-center flex-1">{title}</h2>
+        <div className="p-2 mr-4 border cursor-pointer bg-white text-black dark:bg-black dark:text-white" onClick={toggleTheme}>
+          {theme === "dark" ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
+        </div>
       </div>
       <div className="px-3 pt-3 pb-20 h-full max-h-screen overflow-auto">
         {children}

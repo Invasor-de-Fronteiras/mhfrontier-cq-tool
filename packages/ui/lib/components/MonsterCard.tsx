@@ -71,7 +71,7 @@ export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
   };
 
   return (
-    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap gap-6 w-full max-w-sm">
+    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
       <Select
         label="Monster"
         options={monster_options}
@@ -121,7 +121,6 @@ export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
                 z_position: obj.y,
               })
             }
-            canDraw={false}
           />
         </fieldset>
         <fieldset>
