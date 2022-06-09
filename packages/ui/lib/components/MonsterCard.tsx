@@ -78,8 +78,8 @@ export function MonsterCard({
   };
 
   return (
-    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
-      <GrClose className="self-end hover:cursor-pointer" onClick={onClose}/>
+    <div className="drop-shadow-sm border bg-white dark:bg-slate-800 rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
+      <GrClose className="self-end hover:cursor-pointer dark:text-white" onClick={onClose}/>
       <Select
         label="Monster"
         options={monster_options}
@@ -96,7 +96,7 @@ export function MonsterCard({
       />
       <div className="flex flex-wrap">
         <fieldset className="flex flex-row gap-2">
-          <legend>Position</legend>
+          <legend className="dark:text-white">Position</legend>
           <div className="flex flex-col flex-wrap">
             <PosInput
               label="X"
@@ -134,7 +134,7 @@ export function MonsterCard({
           />
         </fieldset>
         <fieldset>
-          <legend>Amount</legend>
+          <legend className="dark:text-white">Amount</legend>
           <div className="flex flex-row flex-wrap">
             <PosInput
               label=""

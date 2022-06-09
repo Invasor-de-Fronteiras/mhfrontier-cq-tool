@@ -16,7 +16,7 @@ export function Dropzone() {
       {...uploadFile.uploadFileContainerProps()}
     >
       <BsUpload size={25} className="my-4" />
-      <input {...uploadFile.uploadFileInputProps()} />
+      <input {...uploadFile.uploadFileInputProps()} className="hidden" />
       <h3>{uploadFile.isDragActive ? "Drop the file here" : "Choose a File"}</h3>
     </div>
   );

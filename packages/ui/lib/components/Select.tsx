@@ -14,7 +14,7 @@ interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
 export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
     <label className={classNames("flex flex-col w-full max-w-xs", className)}>
-      <span>{label}</span>
+      <span className="dark:text-white">{label}</span>
       <ReactSelect
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410

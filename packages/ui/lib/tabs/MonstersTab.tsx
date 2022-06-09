@@ -4,13 +4,11 @@ import { MonsterCard } from "../components/MonsterCard";
 import { useEditor } from "../context/EditorContext";
 import {
   findMap,
-  findStage,
   getStageName,
   LargeMonsterSpawn,
   maps,
   monsters,
 } from "../utils";
-import {GrClose} from 'react-icons/gr';
 
 export function MonstersTab() {
   const { data, onChangeData } = useEditor();
@@ -47,7 +45,7 @@ export function MonstersTab() {
       >
         <caption>click on which monster you want to edit</caption>
         <thead className="text-xs uppercase">
-          <tr>
+          <tr className="dark:text-white">
             <th role="columnheader" scope="col" className="px-6 py-4">
               Monster
             </th>
@@ -95,7 +93,7 @@ export function MonstersTab() {
           })}
         </tbody>
       </table>
-      {selectedIndex !== null && <div className=" bg-white absolute right-0">
+      {selectedIndex !== null && <div className="absolute right-0">
         <MonsterCard
            
           key={selectedIndex}
