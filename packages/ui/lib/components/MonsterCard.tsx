@@ -4,6 +4,7 @@ import { LargeMonsterSpawn, monster_options } from "../utils";
 import { Select, SelectOption } from "./Select";
 import { MapPreview } from "./MapPreview";
 import { useEditor } from "../context/EditorContext";
+import { GrClose } from "react-icons/gr";
 
 interface Stage {
   value: number;
@@ -13,9 +14,15 @@ export interface MonsterCardProps {
   data: LargeMonsterSpawn;
   stages: Stage[];
   onChange: (value: LargeMonsterSpawn) => void;
+  onClose: () => void;
 }
 
-export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
+export function MonsterCard({
+  data,
+  stages,
+  onChange,
+  onClose,
+}: MonsterCardProps) {
   const { data: file } = useEditor();
 
   const monsterSelected = useMemo(
@@ -72,6 +79,7 @@ export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
 
   return (
     <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
+      <GrClose className="self-end hover:cursor-pointer" onClick={onClose}/>
       <Select
         label="Monster"
         options={monster_options}
