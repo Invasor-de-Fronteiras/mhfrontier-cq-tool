@@ -1,22 +1,45 @@
+import { useMemo } from 'react';
 import classNames from "classnames";
-import ReactSelect, { Props, GroupBase } from "react-select";
+import ReactSelect, { Props, GroupBase, GetOptionValue, GetOptionLabel } from "react-select";
 
 
 export type SelectOption = {
   label: string;
-  value: number;
+  value: number | string;
 };
 
-interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
+const getOptionValueDefault: GetOptionValue<SelectOption> = (option) => option.value.toString();
+const getOptionLabel: GetOptionLabel<SelectOption> = (option) => option.label;
+
+
+
+interface DefaultSelectProps extends Omit<Props<SelectOption, false, GroupBase<SelectOption>>, 'value'> {
   label: string;
+  options: SelectOption[];
+  value: string;
 }
 
-export function Select<T>({ label, className, ...props }: SelectProps<T>) {
+interface SelectProps<O> extends Omit<Props<O, false, GroupBase<O>>, 'options' | 'value' > {
+  label: string;
+  value: string;
+  options: O[];
+  getOptionValue: GetOptionValue<O>;
+  getOptionLabel: GetOptionLabel<O>;
+}
+
+export function Select<O, V>({ label, className, value, options, getOptionValue = getOptionValueDefault, ...props }: SelectProps<O> | DefaultSelectProps) {
+
+  const selected = useMemo(() => (options as O[]).find(o => getOptionValue(o as O) === value), [value, getOptionValue, options])
+
   return (
     <label className={classNames("flex flex-col w-full pt-3 max-w-xs", className)}>
       <span className="dark:text-white">{label}</span>
       <ReactSelect
         {...props}
+
+        value={selected}
+        getOptionValue={getOptionValue}
+        options={options}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
