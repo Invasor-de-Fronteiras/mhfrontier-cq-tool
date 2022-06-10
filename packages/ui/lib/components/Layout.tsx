@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import { useTheme } from "../useTheme";
 import { useEditor } from "../context/EditorContext";
+import { convertToIntObj } from "../utils";
 
 interface ContextState {
   isOpen: boolean;
@@ -25,7 +26,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <context.Provider value={{ isOpen, onToggle: () => setIsOpen(!isOpen) }}>
       <form
         className="w-full h-full flex flex-row overflow-auto dark:bg-[#0f0f10] dark:text-zinc-400"
-        onSubmit={form.handleSubmit(handleSaveQuest)}
+        onSubmit={form.handleSubmit((data) => {
+          handleSaveQuest(convertToIntObj(data));
+        })}
       >
         {isOpen && (
           <div

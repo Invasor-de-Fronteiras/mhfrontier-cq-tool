@@ -1,38 +1,35 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isObject = (obj: any): obj is object => obj && typeof obj === "object";
+export const isObject = (obj: any): obj is object =>
+  obj && typeof obj === "object";
 
-export function updateObjByDepth<O extends object>(obj: O, key: string, value: any): O {
-  const [k, ...rest] = key.split(".");
-
-  if (Array.isArray(obj)) {
-    const index = parseInt(k, 10);
-    if (isNaN(index)) {
-      throw new Error(`Key ${key} is not a number`);
+export function convertToIntObj<A extends object>(obj: A): A {
+  return Object.keys(obj).reduce((acc, key) => {
+    //@ts-ignore
+    const value = obj[key];
+    if (typeof value === "number") {
+      //@ts-ignore
+      acc[key] = value;
+    } else if (typeof value === "string") {
+      //@ts-ignore
+      acc[key] = parseInt(value, 10);
+    } else if (Array.isArray(value)) {
+      //@ts-ignore
+      acc[key] = value.map((v) => {
+        if (typeof v === "number") {
+          return v;
+        } else if (typeof v === "string") {
+          return parseInt(v, 10);
+        }
+        return convertToIntObj(v);
+      });
+    } else if (isObject(value)) {
+      //@ts-ignore
+      acc[key] = convertToIntObj(value);
     }
 
-    if (rest.length === 0) {
-      obj[index] = value;
-    } else {
-      obj[index] = updateObjByDepth(obj[index], rest.join("."), value);
-    }
-    
-    return obj;
-  }
-
-  if (!(k in obj)) {
-    throw new Error(`Key ${key} not exists`);
-  }
-
-  if (rest.length === 0) {
-    return { ...obj, [k]: value };
-  }
-
-  return {
-    ...obj,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    [k]: changeObj(obj[k] as object, rest.join("."), value),
-  };
+    return acc;
+  }, {} as A);
 }

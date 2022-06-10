@@ -11,7 +11,7 @@ interface SaveQuestPayload {
 
 function App() {
   const [questPath, setQuestPath] = useState<string | null>(null);
-  const [data, setData] = useState<QuestFile | undefined>(undefined);
+  const [file, setFile] = useState<QuestFile | undefined>(undefined);
 
   const handleChangeSave = async (data: QuestFile) => {
     if (!questPath || !data) return;
@@ -31,12 +31,10 @@ function App() {
     const response: string = await invoke("save_quest_file", {
       event: JSON.stringify(payload),
     });
-
-    console.log("response: ", response);
-
+    
     const resData = JSON.parse(response);
     if (resData?.error) {
-      console.log("error: ", resData.error);
+      console.error("error: ", resData.error);
       return;
     }
   };
@@ -53,24 +51,23 @@ function App() {
       const quest = JSON.parse(response);
       if (quest && quest.error) {
         // setError(quest.error);
-        console.log("response ", response);
+        console.error("response ", response);
         return;
       }
 
-      setData(quest as QuestFile);
+      setFile(quest as QuestFile);
       setQuestPath(path as string);
       // setResult(quest);
-      console.log("response ", response);
     } catch (error) {
-      console.log("error ", error);
+      console.error("error ", error);
     }
   };
 
   return (
     <EditorContextProvider
-      data={data}
+      data={file}
       handleSaveQuest={handleChangeSave}
-      isLoadedFile={data !== null}
+      isLoadedFile={!!file}
       uploadFile={{
         dragSupport: false,
         isDragActive: false,
