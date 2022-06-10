@@ -8,6 +8,8 @@ import { VERSION } from "../constants";
 import { useLocation } from "react-router-dom";
 import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import { useTheme } from "../useTheme";
+import { useEditor } from "../context/EditorContext";
+import { convertToIntObj } from "../utils";
 
 interface ContextState {
   isOpen: boolean;
@@ -18,10 +20,16 @@ const context = createContext({} as ContextState);
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
+  const { form, handleSaveQuest } = useEditor();
 
   return (
     <context.Provider value={{ isOpen, onToggle: () => setIsOpen(!isOpen) }}>
-      <div className="w-full h-full flex flex-row overflow-auto dark:bg-[#0f0f10] dark:text-zinc-400">
+      <form
+        className="w-full h-full flex flex-row overflow-auto dark:bg-[#0f0f10] dark:text-zinc-400"
+        onSubmit={form.handleSubmit((data) => {
+          handleSaveQuest(convertToIntObj(data));
+        })}
+      >
         {isOpen && (
           <div
             onClick={() => setIsOpen(false)}
@@ -30,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         {children}
-      </div>
+      </form>
     </context.Provider>
   );
 }
@@ -41,6 +49,7 @@ interface LayoutNavbarItemProps {
   uri?: string;
   disabled?: boolean;
   onClick?: () => void;
+  type?: boolean;
 }
 
 export function LayoutNavbarItem({
@@ -55,21 +64,55 @@ export function LayoutNavbarItem({
   const isSelected = location.pathname === uri;
 
   return (
-    <li
-      key={name}
-      className={classnames(
-        "font-semibold flex flex-row items-center p-2 m-2 rounded gap-3",
-        {
-          "bg-emerald-300 text-emerald-700 cursor-default dark:text-white": isSelected,
-          "opacity-30": disabled,
-          "hover:bg-emerald-300 hover:text-emerald-700 cursor-pointer":
-            !disabled,
-        }
-      )}
-      {...props}
-    >
-      <Icon size={16} />
-      {isOpen && <span>{name}</span>}
+    <li key={name}>
+      <div
+        className={classnames(
+          "font-semibold flex flex-row items-center p-2 m-2 rounded gap-3",
+          {
+            "bg-emerald-300 text-emerald-700 cursor-default dark:text-white":
+              isSelected,
+            "opacity-30": disabled,
+            "hover:bg-emerald-300 hover:text-emerald-700 cursor-pointer":
+              !disabled,
+          }
+        )}
+        {...props}
+      >
+        <Icon size={16} />
+        {isOpen && <span>{name}</span>}
+      </div>
+    </li>
+  );
+}
+
+export function LayoutNavbarItemSubmitButton({
+  name,
+  disabled,
+  uri,
+  icon: Icon,
+}: LayoutNavbarItemProps) {
+  const { isOpen } = useContext(context);
+  const location = useLocation();
+  const isSelected = location.pathname === uri;
+
+  return (
+    <li key={name}>
+      <button
+        type="submit"
+        className={classnames(
+          "font-semibold flex flex-row items-center p-2 m-2 rounded gap-3",
+          {
+            "bg-emerald-300 text-emerald-700 cursor-default dark:text-white":
+              isSelected,
+            "opacity-30": disabled,
+            "hover:bg-emerald-300 hover:text-emerald-700 cursor-pointer":
+              !disabled,
+          }
+        )}
+      >
+        <Icon size={16} />
+        {isOpen && <span>{name}</span>}
+      </button>
     </li>
   );
 }
@@ -85,10 +128,24 @@ export function LayoutNavbarGroup({
 
   return (
     <>
-      {isOpen && <h4 className="px-3 font-semibold text-gray-600 dark:text-white">{name}</h4>}
-      <ul className={classnames({ "border-l-2 border-slate-100 dark:border-slate-800 ml-3": isOpen })}>{children}</ul>
+      {isOpen && (
+        <h4 className="px-3 font-semibold text-gray-600 dark:text-white">
+          {name}
+        </h4>
+      )}
+      <ul
+        className={classnames({
+          "border-l-2 border-slate-100 dark:border-slate-800 ml-3": isOpen,
+        })}
+      >
+        {children}
+      </ul>
       {!isOpen && (
-        <div className={"border-b border-slate-100 dark:border-slate-800 mx-2 last:border-none"} />
+        <div
+          className={
+            "border-b border-slate-100 dark:border-slate-800 mx-2 last:border-none"
+          }
+        />
       )}
     </>
   );
@@ -144,7 +201,9 @@ export function LayoutBody({
         >
           {isOpen ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
         </div>
-        <h2 className="font-semibold text-center flex-1 dark:text-slate-200">{title}</h2>
+        <h2 className="font-semibold text-center flex-1 dark:text-slate-200">
+          {title}
+        </h2>
         <div
           className="p-2 border cursor-pointer text-black dark:text-white"
           onClick={toggleTheme}

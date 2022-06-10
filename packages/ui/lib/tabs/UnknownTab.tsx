@@ -1,10 +1,12 @@
 import { useEditor } from "../context/EditorContext";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
-import { isObject, updateObjByDepth } from "../utils/util";
+import { isObject } from "../utils/util";
+import { Controller, useWatch } from "react-hook-form";
 
 export function UnknownTab() {
-  const { data } = useEditor();
+  const { form } = useEditor();
+  const data = useWatch({ control: form.control });
 
   return <UnknownField data={data!} name="root" initialHide={false} path="" />;
 }
@@ -23,7 +25,7 @@ function UnknownField({
   path,
 }: UnknownFieldProps) {
   const [hide, setHide] = useState(initialHide);
-  const { onChangeData } = useEditor();
+  const { form } = useEditor();
 
   return (
     <fieldset className="border p-2 w-full">
@@ -44,20 +46,20 @@ function UnknownField({
             return isObject(value) ? (
               <UnknownField data={value} name={key} key={key} path={newPath} />
             ) : (
-              <label className="flex flex-col gap-2" key={key}>
-                <span className="text-sm">{key}</span>
-                <input
-                  className="border p-1"
-                  type="text"
-                  value={value}
-                  onChange={(e) => {
-                    onChangeData((file) => {
-                      const data = updateObjByDepth(file, newPath, e.target.value);
-                      return data;
-                    });
-                  }}
-                />
-              </label>
+              <Controller
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                /** @ts-ignore */
+                name={newPath}
+                control={form.control}
+                render={({ field }) => (
+                  <label className="flex flex-col gap-2" key={key}>
+                    <span className="text-sm">{key}</span>
+                    {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
+                    {/*@ts-ignore*/}
+                    <input className="border p-1" type="text" {...field} />
+                  </label>
+                )}
+              />
             );
           })}
         </div>

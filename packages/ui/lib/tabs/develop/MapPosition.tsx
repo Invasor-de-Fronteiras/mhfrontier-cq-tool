@@ -1,75 +1,62 @@
 import { useEffect, useMemo, useState } from "react";
-import { PosInput } from "../../components/PosInput";
+import { PosInput, PosInputField } from "../../components/PosInput";
 
 import { Button } from "../../components/Button";
 import classNames from "classnames";
-import { Select } from "../../components/Select";
+import {  SelectField } from "../../components/Select";
 import { maps } from "../../utils";
 import { polynomial } from "../../utils/math";
 import { MapPreview } from "../../components/MapPreview";
-
-interface MapObject {
-  x: number;
-  y: number;
-  gameX: number;
-  gameY: number;
-  color: string;
-  canvasColor: string;
-  name: string;
-}
+import {  useForm, useWatch } from "react-hook-form";
 
 export function MapPositionTab() {
   const [useGameCoords, setUseGameCoords] = useState(false);
 
-  const [objects, setObjects] = useState<MapObject[]>([
-    {
-      x: 34,
-      y: 75,
-      gameX: 7400,
-      gameY: 13000,
-      name: "rosa",
-      canvasColor: "rgb(250,82,222)",
-      color: "#fa52de",
+  const form = useForm({
+    defaultValues: {
+      mapId: 1,
+      mapStage: 10,
+      pink: {
+        x: 34,
+        y: 75,
+        gameX: 7400,
+        gameY: 13000,
+        name: "pink",
+        canvasColor: "rgb(250,82,222)",
+        color: "#fa52de",
+      },
+      red: {
+        name: "red",
+        canvasColor: "red",
+        color: "red",
+
+        x: 94,
+        y: 70,
+        gameX: 14300,
+        gameY: 11300,
+      },
     },
-    {
-      name: "red",
-      canvasColor: "red",
-      color: "red",
+  });
 
-      x: 94,
-      y: 70,
-      gameX: 14300,
-      gameY: 11300,
-    },
-  ]);
-
-  const selectMaps = useMemo(
-    () =>
-      maps.map((v) => ({
-        value: v.id,
-        label: v.name,
-      })),
-    []
-  );
-
-  const [selectedMapId, setSelectedMapId] = useState<number>(maps[2].id);
+  const selectedMapId = useWatch({ control: form.control, name: "mapId" });
+  const selectedAreaId = useWatch({ control: form.control, name: "mapStage" });
+  const pinkObject = useWatch({ control: form.control, name: "pink" });
+  const redObject = useWatch({ control: form.control, name: "red" });
 
   const selectedMap = useMemo(
-    () => selectMaps.find((v) => v.value === selectedMapId),
-    [selectMaps, selectedMapId]
+    () => maps.find((v) => String(v.id) === String(selectedMapId)),
+    [maps, selectedMapId]
   );
 
   const selectAreas = useMemo(() => {
-    const map = maps.find((v) => v.id === selectedMap?.value);
+    const map = maps.find((v) => v.id === selectedMapId);
     if (!map) return [];
 
     return map.stages.map((v) => ({
       value: v.id,
       label: v.areaNumber === 0 ? "Base" : `Area ${v.areaNumber}`,
     }));
-  }, [selectedMap]);
-
-  const [selectedAreaId, setSelectedAreaId] = useState<number>(0);
+  }, [selectedMap, selectedMapId]);
 
   const selectedArea = useMemo(
     () => selectAreas.find((v) => v.value === selectedAreaId),
@@ -77,43 +64,51 @@ export function MapPositionTab() {
   );
 
   useEffect(() => {
-    setSelectedAreaId(selectAreas[0]!.value ?? 0);
-  }, [setSelectedAreaId, selectAreas]);
+    form.setValue("mapStage", selectAreas[0]!.value ?? 0);
+  }, [selectAreas]);
 
   return (
     <div className="flex flex-wrap gap-3 items-center justify-center">
-        <div className="flex flex-row flex-wrap items-center justify-center gap-6">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-6">
         <MapPreview
           mapId={selectedMapId}
           areaId={selectedAreaId}
           shouldCalculate={useGameCoords}
           onChange={(obj) => {
-            const data = useGameCoords
-              ? { gamex: obj.x, gameY: obj.y }
-              : { x: obj.x, y: obj.y };
+            const id = obj.id as "pink" | "red";
+            const prev = id === "pink" ? pinkObject : redObject;
+            const data = {
+              ...prev,
+              ...(useGameCoords
+                ? { gamex: obj.x, gameY: obj.y }
+                : { x: obj.x, y: obj.y }),
+            };
 
-            setObjects((prev) =>
-              prev.map((v) => (v.name === obj.id ? { ...v, ...data } : v))
-            );
+            form.setValue(id, data);
           }}
-          objects={objects.map((v) => ({
+          objects={[pinkObject, redObject].map((v) => ({
             id: v.name,
             x: useGameCoords ? v.gameX : v.x,
             y: useGameCoords ? v.gameY : v.y,
           }))}
         />
         <div className="flex flex-col justify-center gap-3">
-          <Select
+          <SelectField
             label="Maps"
-            options={selectMaps}
+            options={maps}
+            getOptionLabel={(v) => v.name}
+            getOptionValue={(v) => String(v.id)}
+            getFormValue={(v) => v.id}
             value={selectedMap}
-            onChange={(v) => setSelectedMapId(v!.value)}
+            control={form.control}
+            name="mapId"
           />
-          <Select
+          <SelectField
             label="Area"
             options={selectAreas}
             value={selectedArea}
-            onChange={(v) => setSelectedAreaId(v!.value)}
+            control={form.control}
+            name="mapStage"
           />
 
           <Button onClick={() => setUseGameCoords(!useGameCoords)}>
@@ -123,74 +118,60 @@ export function MapPositionTab() {
       </div>
 
       <div className="flex flex-wrap flex-row lg:flex-col m-2 gap-3">
-        {objects.map((object, index) => (
-          <fieldset
-            key={index}
-            className={classNames(
-              "flex gap-3 border-x border-t rounded-sm w-full md:w-10 p-2 flex-1",
-              `border-b-[${object.color}] border-b-2`
-            )}
-          >
-            <legend>{object.name}</legend>
-            <fieldset>
-              <legend className="text-sm">Image positions</legend>
-              <PosInput
-                label="X"
-                value={object.x}
-                onChange={(e) => {
-                  const newObjects = [...objects];
-                  newObjects[index].x = Number(e.target.value);
-                  setObjects(newObjects);
-                }}
-              />
-              <PosInput
-                label="Y"
-                value={object.y}
-                onChange={(e) => {
-                  const newObjects = [...objects];
-                  newObjects[index].y = Number(e.target.value);
-                  setObjects(newObjects);
-                }}
-              />
-            </fieldset>
-            <fieldset>
-              <legend className="text-sm">Game positions</legend>
+        {[pinkObject, redObject].map((object, index) => {
+          const id = object.name as "pink" | "red";
 
-              <PosInput
-                label="X"
-                value={object.gameX}
-                onChange={(e) => {
-                  const newObjects = [...objects];
-                  newObjects[index].gameX = Number(e.target.value);
-                  setObjects(newObjects);
-                }}
-              />
-              <PosInput
-                label="Y"
-                value={object.gameY}
-                onChange={(e) => {
-                  const newObjects = [...objects];
-                  newObjects[index].gameY = Number(e.target.value);
-                  setObjects(newObjects);
-                }}
-              />
+          return (
+            <fieldset
+              key={index}
+              className={classNames(
+                "flex gap-3 border-x border-t rounded-sm w-full md:w-10 p-2 flex-1",
+                `border-b-[${object.color}] border-b-2`
+              )}
+            >
+              <legend>{object.name}</legend>
+              <fieldset>
+                <legend className="text-sm">Image positions</legend>
+                <PosInputField
+                  label="X"
+                  control={form.control}
+                  name={`${id}.x`}
+                />
+                <PosInputField
+                  label="Y"
+                  control={form.control}
+                  name={`${id}.y`}
+                />
+              </fieldset>
+              <fieldset>
+                <legend className="text-sm">Game positions</legend>
+                <PosInputField
+                  label="X"
+                  control={form.control}
+                  name={`${id}.gameX`}
+                />
+                <PosInputField
+                  label="Y"
+                  control={form.control}
+                  name={`${id}.gameY`}
+                />
+              </fieldset>
             </fieldset>
-          </fieldset>
-        ))}
-        </div>
-        <div className="flex flex-wrap gap-3">
-
+          );
+        })}
+      </div>
+      <div className="flex flex-wrap gap-3">
         <Calculate
           name="calcX"
-          input1={[objects[0].x, objects[0].gameX]}
-          input2={[objects[1].x, objects[1].gameX]}
+          input1={[pinkObject.x, pinkObject.gameX]}
+          input2={[redObject.x, redObject.gameX]}
         />
         <Calculate
           name="calcY"
-          input1={[objects[0].y, objects[0].gameY]}
-          input2={[objects[1].y, objects[1].gameY]}
+          input1={[pinkObject.y, pinkObject.gameY]}
+          input2={[redObject.y, redObject.gameY]}
         />
-        </div>
+      </div>
     </div>
   );
 }

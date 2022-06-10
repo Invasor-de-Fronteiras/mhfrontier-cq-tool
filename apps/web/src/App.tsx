@@ -1,9 +1,11 @@
 import React from "react";
-import { EditorContextProvider, Ui } from "ui";
+import { EditorContextProvider, QuestFile, Ui } from "ui";
 import data from "./64554d1-musous.json";
 import { useDropzone } from "react-dropzone";
 
 function App() {
+  const [quest, setQuest] = React.useState<QuestFile>(data);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
     accept: { "application/octet-stream": ["bin"] },
@@ -14,9 +16,9 @@ function App() {
 
   return (
     <EditorContextProvider
-      data={data}
-      handleSaveQuest={() => null}
-      onChangeData={(data) => data}
+      data={quest}
+      isLoadedFile={quest !== null}
+      handleSaveQuest={(data) => setQuest(data)}
       uploadFile={{
         dragSupport: true,
         isDragActive,

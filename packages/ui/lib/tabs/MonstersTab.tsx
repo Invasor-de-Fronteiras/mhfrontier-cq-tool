@@ -1,65 +1,32 @@
 import classNames from "classnames";
 import { useMemo, useState } from "react";
+import { useWatch } from "react-hook-form";
 import { MonsterCard } from "../components/MonsterCard";
 import { useEditor } from "../context/EditorContext";
-import {
-  findMap,
-  getStageName,
-  LargeMonsterSpawn,
-  maps,
-  monsters,
-  Variants,
-} from "../utils";
+import { findMap, getStageName, maps, monsters } from "../utils";
 
 export function MonstersTab() {
-  const { data, onChangeData } = useEditor();
-  const [selectedIndex, setSelectedIndex] = useState<null|number>(null);
+  const { form } = useEditor();
+  const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
+  const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
 
-  const map = findMap(data!.map_info.map_id);
+  const fields = useWatch({
+    control: form.control,
+    name: "large_monster_spawns",
+  });
+
+  const map = findMap(mapId);
 
   const stages = useMemo(
     () =>
-      !data?.map_info
-        ? []
-        : maps[data?.map_info.map_id].stages.map((v, i) => ({
+      mapId
+        ? maps[mapId].stages.map((v, i) => ({
             value: v.id,
             label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
-          })),
-    [data?.map_info]
+          }))
+        : [],
+    [mapId]
   );
-
-  const handleChangeMonster =
-    (index: number) => (monster: LargeMonsterSpawn) => {
-      onChangeData((prev) => ({
-        ...prev,
-        large_monster_spawns: prev.large_monster_spawns.map((v, i) =>
-          i === index ? monster : v
-        ),
-      }));
-    };
-
-  const onChangeVariant = (key: keyof Variants) => (value: number) => {
-      onChangeData((prev) => ({
-        ...prev,
-        quest_type_flags: {
-          ...prev.quest_type_flags,
-          variants: {
-            ...prev.quest_type_flags.variants,
-            [key]: value
-          }
-        }
-      }));
-    };
-
-  const getVariantProps = (index: number) => {
-    if (!data) return {};
-    const { variants } = data.quest_type_flags;
-    if (index === 0) return { variant: variants.monster_variant0, onChangeVariant: onChangeVariant('monster_variant0') };
-    if (index === 1) return { variant: variants.monster_variant1, onChangeVariant: onChangeVariant('monster_variant1') };
-    if (index === 2) return { variant: variants.monster_variant2, onChangeVariant: onChangeVariant('monster_variant2') };
-
-    return {};
-  }
 
   return (
     <div className="flex h-full w-full">
@@ -91,25 +58,23 @@ export function MonstersTab() {
           </tr>
         </thead>
         <tbody>
-          {data!.large_monster_spawns.map((monster, i) => {
+          {fields.map((monster, i) => {
             return (
               <tr
                 key={i}
                 className={classNames("hover:bg-emerald-300 cursor-pointer", {
                   "bg-emerald-300": i === selectedIndex,
                 })}
-                onClick={() =>   setSelectedIndex(i === selectedIndex ? null : i)}
+                onClick={() => setSelectedIndex(i === selectedIndex ? null : i)}
               >
                 <th className="px-6 py-4" scope="row">
-                  {monsters[monster.monster_id] ?? "--"}
+                  {monsters[monster!.monster_id!] ?? "--"}
                 </th>
                 <td className="px-6 py-4">
-                  {getStageName(map!, monster.spawn_stage)}
+                  {getStageName(map!, monster!.spawn_stage!)}
                 </td>
                 <td className="px-6 py-4">{monster.x_position}</td>
-
                 <td className="px-6 py-4">{monster.y_position}</td>
-
                 <td className="px-6 py-4">{monster.z_position}</td>
                 <td className="px-6 py-4">{monster.spawn_amount}</td>
               </tr>
@@ -117,17 +82,16 @@ export function MonstersTab() {
           })}
         </tbody>
       </table>
-      {selectedIndex !== null && <div className="absolute right-0">
-        <MonsterCard
-           
-          key={selectedIndex}
-          data={data!.large_monster_spawns[selectedIndex]}
-          onChange={handleChangeMonster(selectedIndex)}
-          onClose={() => setSelectedIndex(null)}
-          stages={stages}
-          {...getVariantProps(selectedIndex)}
-        />
-      </div>}
+      {selectedIndex !== null && (
+        <div className="absolute right-0">
+          <MonsterCard
+            index={selectedIndex}
+            key={selectedIndex}
+            onClose={() => setSelectedIndex(null)}
+            stages={stages}
+          />
+        </div>
+      )}
     </div>
   );
 }

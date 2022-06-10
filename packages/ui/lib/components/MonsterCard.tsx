@@ -1,38 +1,36 @@
-import React, { useMemo } from "react";
-import { PosInput } from "./PosInput";
-import { LargeMonsterSpawn, monster_options } from "../utils";
-import { Select, SelectOption } from "./Select";
+import { useMemo } from "react";
+import { PosInputField } from "./PosInput";
+import { monster_options } from "../utils";
+import { SelectField } from "./Select";
 import { MapPreview } from "./MapPreview";
 import { useEditor } from "../context/EditorContext";
-import { Input } from "./Input";
+import { InputField } from "./Input";
 import { GrClose } from "react-icons/gr";
+import { useWatch } from "react-hook-form";
 
 interface Stage {
   value: number;
   label: string;
 }
 export interface MonsterCardProps {
-  data: LargeMonsterSpawn;
   stages: Stage[];
-  onChange: (value: LargeMonsterSpawn) => void;
-  onChangeVariant?: (value: number) => void;
-  variant?: number;
   onClose: () => void;
-
+  index: number;
 }
 
-export function MonsterCard({
-  data,
-  stages,
-  onChange,
-  onClose,
-  onChangeVariant,
-  variant
-}: MonsterCardProps) {
-  const { data: file } = useEditor();
+export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
+  const { form } = useEditor();
+  const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
+  const data = useWatch({
+    name: `large_monster_spawns.${index}`,
+    control: form.control,
+  });
 
   const monsterSelected = useMemo(
-    () => monster_options.find((monster) => monster.value === data.monster_id),
+    () =>
+      monster_options.find(
+        (monster) => monster.value === String(data.monster_id)
+      ),
     [data.monster_id]
   );
   const stageSelected = useMemo(
@@ -40,88 +38,47 @@ export function MonsterCard({
     [data.spawn_stage, stages]
   );
 
-  const changeVal = (key: keyof LargeMonsterSpawn) => (val: number) => {
-    onChange({
-      ...data,
-      [key]: parseInt(String(val), 10),
-    });
-  };
-
-  const change =
-    (key: keyof LargeMonsterSpawn) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      changeVal(key)(parseInt(event.target.value, 10));
-    };
-
-  const handleChangeMonster = (option: SelectOption | null) => {
-    if (!option) {
-      onChange({
-        ...data,
-        monster_id: 65535,
-      });
-      return;
-    }
-
-    onChange({
-      ...data,
-      monster_id: option.value,
-    });
-  };
-
-  const handleChangeStage = (option: Stage | null) => {
-    if (!option) {
-      onChange({
-        ...data,
-        spawn_stage: 0,
-      });
-      return;
-    }
-
-    onChange({
-      ...data,
-      spawn_stage: option.value,
-    });
-  };
-
   return (
     <div className="drop-shadow-sm border bg-white dark:bg-slate-800 rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
-      <GrClose className="self-end hover:cursor-pointer dark:text-white" onClick={onClose}/>
-      <Select
+      <GrClose
+        className="self-end hover:cursor-pointer dark:text-white"
+        onClick={onClose}
+      />
+      <SelectField
         label="Monster"
         options={monster_options}
         isClearable
-        onChange={(v) => handleChangeMonster(v)}
+        control={form.control}
+        name={`large_monster_spawns.${index}.monster_id`}
         value={monsterSelected}
       />
-      <Select
+      <SelectField
         label="Area"
         options={stages}
         isClearable
-        onChange={(v) => handleChangeStage(v)}
+        control={form.control}
+        name={`large_monster_spawns.${index}.spawn_stage`}
         value={stageSelected}
       />
       <div className="flex flex-wrap">
         <fieldset className="flex flex-row gap-2">
           <legend className="dark:text-white">Position</legend>
           <div className="flex flex-col flex-wrap">
-            <PosInput
+            <PosInputField
               label="X"
-              onChange={change("x_position")}
-              value={data.x_position}
+              name={`large_monster_spawns.${index}.x_position`}
             />
-            <PosInput
+            <PosInputField
               label="Y"
-              onChange={change("y_position")}
-              value={data.y_position}
+              name={`large_monster_spawns.${index}.y_position`}
             />
-            <PosInput
+            <PosInputField
               label="Z"
-              onChange={change("z_position")}
-              value={data.z_position}
+              name={`large_monster_spawns.${index}.z_position`}
             />
           </div>
           <MapPreview
-            mapId={file!.map_info.map_id}
+            mapId={mapId}
             areaId={data.spawn_stage}
             objects={[
               {
@@ -131,7 +88,7 @@ export function MonsterCard({
               },
             ]}
             onChange={(obj) =>
-              onChange({
+              form.setValue(`large_monster_spawns.${index}`, {
                 ...data,
                 x_position: obj.x,
                 z_position: obj.y,
@@ -140,18 +97,20 @@ export function MonsterCard({
           />
         </fieldset>
         <fieldset className="flex flex-row mb-3 mt-3">
-          <Input
+          <InputField
             label="Amount"
             type="number"
-            onChange={change("spawn_amount")}
-            value={data.spawn_amount}
+            name={`large_monster_spawns.${index}.spawn_amount`}
           />
-          {onChangeVariant && <Input
-            label="Monster variant"
-            type="number"
-            onChange={event => onChangeVariant(parseInt(event.target.value, 10))}
-            value={variant}
-          />}
+          {index >= 0 && index <= 2 && (
+            <InputField
+              label="Monster variant"
+              type="number"
+              name={`quest_type_flags.variants.monster_variant${
+                index as 0 | 1 | 2
+              }`}
+            />
+          )}
         </fieldset>
       </div>
     </div>
