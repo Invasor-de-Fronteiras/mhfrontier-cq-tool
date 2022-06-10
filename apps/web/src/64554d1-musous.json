@@ -283,7 +283,10 @@
       "skip1": 0,
       "quest_fee": 300,
       "reward_main": 4400,
-      "deathtime": 1500,
+      "max_death": 3,
+      "unk9": 1,
+      "unk10": 1,
+      "unk11": 1,
       "reward_a": 1000,
       "skip2": [
         0,
