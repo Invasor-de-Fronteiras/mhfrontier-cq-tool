@@ -110,12 +110,12 @@ export const maps: Map[] = [
         areaNumber: 0,
 
         calculationX: {
-          a: 107.8125,
-          b: 3950,
+          a: 100,
+          b: 2846.875,
         },
         calculationY: {
-          a: 283.3333333333333,
-          b: -11366.666666666664,
+          a: 80.95238095238095,
+          b: 4823.809523809524,
         },
       },
       { id: 111, areaNumber: 1 },
@@ -124,8 +124,30 @@ export const maps: Map[] = [
       { id: 114, areaNumber: 4 },
       { id: 115, areaNumber: 5 },
       { id: 116, areaNumber: 6 },
-      { id: 117, areaNumber: 7 },
-      { id: 118, areaNumber: 8 },
+      { 
+        id: 117,
+        areaNumber: 8,
+        calculationX: {
+          a: 50,
+          b: 11398.4375,
+        },
+        calculationY: {
+          a: 83.26315789473684,
+          b: -175.26315789473665,
+        },
+      },
+      { 
+        id: 118,
+        areaNumber: 7,
+        calculationX: {
+          a: 96.48275862068965,
+          b: 4973.640086206897,
+        },
+        calculationY: {
+          a: 228.6315789473684,
+          b: -1065.3684210526317,
+        },
+        },
       { id: 119, areaNumber: 9 },
       { id: 120, areaNumber: 10 },
     ],

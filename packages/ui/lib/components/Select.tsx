@@ -13,7 +13,7 @@ interface SelectProps<T = unknown> extends Props<T, false, GroupBase<T>> {
 
 export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
-    <label className={classNames("flex flex-col w-full max-w-xs", className)}>
+    <label className={classNames("flex flex-col w-full pt-3 max-w-xs", className)}>
       <span>{label}</span>
       <ReactSelect
         {...props}

@@ -46,7 +46,8 @@ export function Layout() {
           {
             name: "Quest Information",
             icon: BsInfoCircle,
-            disabled: !data || true,
+            disabled: !data,
+            uri: "/quest-info",
           },
           {
             name: "Monsters",

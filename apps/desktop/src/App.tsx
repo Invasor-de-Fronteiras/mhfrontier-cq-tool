@@ -18,6 +18,8 @@ function App() {
 
     const quest: QuestFile = {
       header: data.header,
+      gen_quest_prop: data.gen_quest_prop,
+      quest_type_flags: data.quest_type_flags,
       map_info: data.map_info,
       large_monster_pointers: data.large_monster_pointers,
       large_monster_spawns: data.large_monster_spawns,

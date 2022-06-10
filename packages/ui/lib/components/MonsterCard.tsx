@@ -4,6 +4,7 @@ import { LargeMonsterSpawn, monster_options } from "../utils";
 import { Select, SelectOption } from "./Select";
 import { MapPreview } from "./MapPreview";
 import { useEditor } from "../context/EditorContext";
+import { Input } from "./Input";
 
 interface Stage {
   value: number;
@@ -13,9 +14,11 @@ export interface MonsterCardProps {
   data: LargeMonsterSpawn;
   stages: Stage[];
   onChange: (value: LargeMonsterSpawn) => void;
+  onChangeVariant?: (value: number) => void;
+  variant?: number;
 }
 
-export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
+export function MonsterCard({ data, stages, onChange, onChangeVariant, variant }: MonsterCardProps) {
   const { data: file } = useEditor();
 
   const monsterSelected = useMemo(
@@ -125,15 +128,19 @@ export function MonsterCard({ data, stages, onChange }: MonsterCardProps) {
             }
           />
         </fieldset>
-        <fieldset>
-          <legend>Amount</legend>
-          <div className="flex flex-row flex-wrap">
-            <PosInput
-              label=""
-              onChange={change("spawn_amount")}
-              value={data.spawn_amount}
-            />
-          </div>
+        <fieldset className="flex flex-row mb-3 mt-3">
+          <Input
+            label="Amount"
+            type="number"
+            onChange={change("spawn_amount")}
+            value={data.spawn_amount}
+          />
+          {onChangeVariant && <Input
+            label="Monster variant"
+            type="number"
+            onChange={event => onChangeVariant(parseInt(event.target.value, 10))}
+            value={variant}
+          />}
         </fieldset>
       </div>
     </div>

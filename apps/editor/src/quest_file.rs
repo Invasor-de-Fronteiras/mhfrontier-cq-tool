@@ -1,22 +1,20 @@
+use crate::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use crate::reader::FileReader;
 use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
+use crate::structs::quest_type_flags::{QuestTypeFlags, GenQuestProp};
 use crate::writer::FileWriter;
 use std::io::Result;
 
 // use serde::{Serialize, Deserialize};
 use serde_derive::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
-#[repr(C)]
-struct QuestFileQuestType {
-    big_monster_size_multi: u16,
-}
-
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct QuestFile {
     pub header: QuestFileHeader,
+    pub gen_quest_prop: GenQuestProp,
+    pub quest_type_flags: QuestTypeFlags,
     pub map_info: MapInfo,
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
@@ -28,6 +26,12 @@ impl QuestFile {
         let mut reader = FileReader::from_filename(filename)?;
 
         let header = reader.read_struct::<QuestFileHeader>()?;
+
+        reader.seek_start(GEN_QUEST_PROP_PRT as u64)?;
+        let gen_quest_prop = reader.read_struct::<GenQuestProp>()?;
+        
+        reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
+        let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
 
         // Read mapinfo
         reader.seek_start(header.map_info as u64)?;
@@ -58,6 +62,8 @@ impl QuestFile {
 
         Ok(QuestFile {
             header,
+            gen_quest_prop,
+            quest_type_flags,
             map_info,
             large_monster_pointers,
             large_monster_ids,
@@ -72,6 +78,12 @@ impl QuestFile {
         // Write large_monster_ptr
         // writer.seek_start(original.header.large_monster_ptr as u64)?;
         // writer.write_struct::<LargeMonsterPointers>(&mut quest.large_monster_pointers)?;
+
+        writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
+        writer.write_struct(&mut quest.gen_quest_prop)?;
+
+        writer.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
+        writer.write_struct(&mut quest.quest_type_flags)?;
 
         println!(
             "seek = {}",
