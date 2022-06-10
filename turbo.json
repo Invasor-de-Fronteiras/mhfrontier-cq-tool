@@ -7,6 +7,10 @@
     "lint": {
       "outputs": []
     },
+    "lint:fix": {
+      "outputs": [],
+      "cache": false
+    },
     "dev": {
       "cache": false
     },

@@ -2,7 +2,7 @@ use crate::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use crate::reader::FileReader;
 use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
-use crate::structs::quest_type_flags::{QuestTypeFlags, GenQuestProp};
+use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
 use crate::writer::FileWriter;
 use std::io::Result;
 
@@ -29,7 +29,7 @@ impl QuestFile {
 
         reader.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         let gen_quest_prop = reader.read_struct::<GenQuestProp>()?;
-        
+
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
 

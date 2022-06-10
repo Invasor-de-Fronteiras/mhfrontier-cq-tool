@@ -21,6 +21,7 @@
     "tauri": "tauri",
     "vite-tauri": "vite-tauri",
     "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint>fix": "eslint --fix \"**/*.{ts,tsx}\"",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {

@@ -2,9 +2,12 @@ use crate::{
     quest_file::QuestFile,
     save_json::save_quest_to_json,
     structs::{
-        header::{ MapInfo, QuestFileHeader },
-        quest_type_flags:: { ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective, QuestTypeFlags, RewardsFocus, Variants },
-        monsters::{ LargeMonsterPointers, LargeMonsterSpawn },
+        header::{MapInfo, QuestFileHeader},
+        monsters::{LargeMonsterPointers, LargeMonsterSpawn},
+        quest_type_flags::{
+            ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
+            QuestTypeFlags, RewardsFocus, Variants,
+        },
     },
 };
 
@@ -142,7 +145,7 @@ fn reader_test() {
                 waist_attach1: 0, // +0x80 for some reason
                 waist_attach2: 0, // +0x80 for some reason
                 waist_attach3: 0, // +0x80 for some reason
-    
+
                 unk: 0,
             },
             variants: Variants {

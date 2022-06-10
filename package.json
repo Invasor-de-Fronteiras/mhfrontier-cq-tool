@@ -10,6 +10,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint --parallel --continue",
+    "lint:fix": "turbo run lint:fix --parallel --continue",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "check-types": "turbo run check-types --parallel --continue",
     "build-desktop": "yarn workspace desktop build"
