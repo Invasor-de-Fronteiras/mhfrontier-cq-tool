@@ -13,7 +13,7 @@ function App() {
   const [questPath, setQuestPath] = useState<string | null>(null);
   const [data, setData] = useState<QuestFile | undefined>(undefined);
 
-  const handleChangeSave = async () => {
+  const handleChangeSave = async (data: QuestFile) => {
     if (!questPath || !data) return;
 
     const quest: QuestFile = {
@@ -70,8 +70,7 @@ function App() {
     <EditorContextProvider
       data={data}
       handleSaveQuest={handleChangeSave}
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      onChangeData={(handler) => setData(handler(data!))}
+      isLoadedFile={data !== null}
       uploadFile={{
         dragSupport: false,
         isDragActive: false,

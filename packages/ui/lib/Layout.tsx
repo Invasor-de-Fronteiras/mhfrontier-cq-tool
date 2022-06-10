@@ -6,7 +6,7 @@ import {
   BsSave,
   BsUmbrella,
   BsUpload,
-  BsQuestion
+  BsQuestion,
 } from "react-icons/bs";
 import { SiMonster } from "react-icons/si";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
@@ -18,13 +18,14 @@ import {
   LayoutBody,
   LayoutNavbar,
   LayoutNavbarItem,
+  LayoutNavbarItemSubmitButton,
   LayoutNavbarGroup,
 } from "ui";
 import { useMemo } from "react";
 
 export function Layout() {
   const location = useLocation();
-  const { data, handleSaveQuest } = useEditor();
+  const { isLoadedFile, handleSaveQuest } = useEditor();
 
   const groups = useMemo(
     () => [
@@ -35,8 +36,8 @@ export function Layout() {
           {
             name: "Save Quest",
             icon: BsSave,
-            onClick: handleSaveQuest,
-            disabled: !data,
+            isSubmit: true,
+            disabled: !isLoadedFile,
           },
         ],
       },
@@ -46,31 +47,48 @@ export function Layout() {
           {
             name: "Quest Information",
             icon: BsInfoCircle,
-            disabled: !data,
+            disabled: !isLoadedFile,
             uri: "/quest-info",
           },
           {
             name: "Monsters",
             icon: SiMonster,
-            disabled: !data,
+            disabled: !isLoadedFile,
             uri: "/monsters",
           },
-          { name: "Items", icon: BsFillWalletFill, disabled: !data || true },
+          {
+            name: "Items",
+            icon: BsFillWalletFill,
+            disabled: !isLoadedFile || true,
+          },
           {
             name: "Gathering",
             icon: BsMinecartLoaded,
-            disabled: !data || true,
+            disabled: !isLoadedFile || true,
           },
-          { name: "Map Data", icon: BsFillGeoFill, disabled: !data || true },
-          { name: "Objects", icon: BsUmbrella, disabled: !data || true },
-          { name: "Fishing", icon: GiFishingLure, disabled: !data || true },
+          {
+            name: "Map Data",
+            icon: BsFillGeoFill,
+            disabled: !isLoadedFile || true,
+          },
+          {
+            name: "Objects",
+            icon: BsUmbrella,
+            disabled: !isLoadedFile || true,
+          },
+          {
+            name: "Fishing",
+            icon: GiFishingLure,
+            disabled: !isLoadedFile || true,
+          },
           {
             name: "Forced Equipment",
             icon: GiAbdominalArmor,
-            disabled: !data || true,
+            disabled: !isLoadedFile || true,
           },
         ],
-      },{
+      },
+      {
         name: "Advanced",
         options: [
           {
@@ -83,12 +101,12 @@ export function Layout() {
             name: "Unknown",
             icon: BsQuestion,
             uri: "/unknown",
-            disabled: !data,
-          }
-        ]
-      }
+            disabled: !isLoadedFile,
+          },
+        ],
+      },
     ],
-    [data, handleSaveQuest]
+    [isLoadedFile, handleSaveQuest]
   );
 
   const route = useMemo(
@@ -97,7 +115,7 @@ export function Layout() {
         (acc, group) =>
           acc ??
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore 
+          // @ts-ignore
           group.options.find((option) => option.uri === location.pathname)
             ?.name,
         null
@@ -115,6 +133,8 @@ export function Layout() {
                 <Link to={option.uri} key={option.name}>
                   <LayoutNavbarItem {...option} />
                 </Link>
+              ) : "isSubmit" in option && option.isSubmit ? (
+                <LayoutNavbarItemSubmitButton {...option} key={option.name} />
               ) : (
                 <LayoutNavbarItem {...option} key={option.name} />
               )
