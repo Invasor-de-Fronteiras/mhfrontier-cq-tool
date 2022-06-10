@@ -1,5 +1,5 @@
 use crate::{
-    offsets::{MAIN_QUEST_PROP_PRT},
+    offsets::MAIN_QUEST_PROP_PRT,
     reader::FileReader,
     structs::quest_type_flags::{
         ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
