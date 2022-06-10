@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import { MonsterCard } from "ui";
 import { GroupCard } from "../components/CardGroup";
 import { Input } from "../components/Input";
 import { Select } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
-import { GenQuestProp, LargeMonsterSpawn, maps, monsters, QuestTypeFlags, quest_type_options, Variants } from "../utils";
+import { GenQuestProp, quest_type_options } from "../utils";
 
 export function QuestInfoTab() {
   const { data, onChangeData } = useEditor();
@@ -28,35 +27,6 @@ export function QuestInfoTab() {
   const onChangeGenQuest = (key: keyof GenQuestProp) => (event: React.ChangeEvent<HTMLInputElement>) => {
     changeGenQuest(key)(parseInt(event.target.value, 10));
   };
-
-  const onChangeVariant = (key: keyof Variants) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeData((prev) => ({
-      ...prev,
-      quest_type_flags: {
-        ...prev.quest_type_flags,
-        variants: {
-          ...prev.quest_type_flags.variants,
-          [key]: parseInt(event.target.value, 10),
-        }
-      }
-    }));
-  };
-
-  // const change =
-  //   (key: keyof LargeMonsterSpawn) =>
-  //   (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     changeVal(key)(parseInt(event.target.value, 10));
-  //   };
-
-  // const handleChangeMonster =
-  //   (index: number) => (monster: LargeMonsterSpawn) => {
-  //     onChangeData((prev) => ({
-  //       ...prev,
-  //       large_monster_spawns: prev.large_monster_spawns.map((v, i) =>
-  //         i === index ? monster : v
-  //       ),
-  //     }));
-  //   };
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
