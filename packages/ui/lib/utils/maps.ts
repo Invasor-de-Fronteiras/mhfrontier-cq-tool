@@ -937,11 +937,30 @@ export const maps: Map[] = [
   },
 ];
 
+export const findMap = (mapId: number): Map | undefined => {
+  const map = maps.find((map) => map.id === mapId);
+  return map;
+};
+
+export const findStage = (map: Map, stageId: number): MapStage | undefined => {
+  const stage = map.stages.find((stage) => stage.id === stageId);
+  return stage;
+};
+
+export const getStageName = (map: Map, stageId: number): string => {
+  const stage = findStage(map, stageId);
+  if (stage) {
+    return stage.areaNumber === 0 ? "Base" : `Area ${stage.areaNumber}`;
+  }
+
+  return "--";
+};
+
 export const findMapAndStage = (
   mapId: number,
   stageId: number
 ): { map?: Map; stage?: MapStage } => {
-  const map = maps.find((map) => map.id === mapId);
-  const stage = map?.stages.find((stage) => stage.id === stageId);
+  const map = findMap(mapId);
+  const stage = map ? findStage(map, stageId) : undefined;
   return { map, stage };
 };

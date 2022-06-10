@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isObject = (obj: any): obj is object => obj && typeof obj === "object";
@@ -6,7 +7,6 @@ export function updateObjByDepth<O extends object>(obj: O, key: string, value: a
   const [k, ...rest] = key.split(".");
 
   if (Array.isArray(obj)) {
-    console.log("é uma array", obj, key);
     const index = parseInt(k, 10);
     if (isNaN(index)) {
       throw new Error(`Key ${key} is not a number`);

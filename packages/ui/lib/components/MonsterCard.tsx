@@ -5,6 +5,7 @@ import { Select, SelectOption } from "./Select";
 import { MapPreview } from "./MapPreview";
 import { useEditor } from "../context/EditorContext";
 import { Input } from "./Input";
+import { GrClose } from "react-icons/gr";
 
 interface Stage {
   value: number;
@@ -16,9 +17,18 @@ export interface MonsterCardProps {
   onChange: (value: LargeMonsterSpawn) => void;
   onChangeVariant?: (value: number) => void;
   variant?: number;
+  onClose: () => void;
+
 }
 
-export function MonsterCard({ data, stages, onChange, onChangeVariant, variant }: MonsterCardProps) {
+export function MonsterCard({
+  data,
+  stages,
+  onChange,
+  onClose,
+  onChangeVariant,
+  variant
+}: MonsterCardProps) {
   const { data: file } = useEditor();
 
   const monsterSelected = useMemo(
@@ -74,7 +84,8 @@ export function MonsterCard({ data, stages, onChange, onChangeVariant, variant }
   };
 
   return (
-    <div className="drop-shadow-sm border rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
+    <div className="drop-shadow-sm border bg-white dark:bg-slate-800 rounded px-3 py-2 flex flex-col flex-wrap items-center gap-6 w-full max-w-sm">
+      <GrClose className="self-end hover:cursor-pointer dark:text-white" onClick={onClose}/>
       <Select
         label="Monster"
         options={monster_options}
@@ -91,7 +102,7 @@ export function MonsterCard({ data, stages, onChange, onChangeVariant, variant }
       />
       <div className="flex flex-wrap">
         <fieldset className="flex flex-row gap-2">
-          <legend>Position</legend>
+          <legend className="dark:text-white">Position</legend>
           <div className="flex flex-col flex-wrap">
             <PosInput
               label="X"

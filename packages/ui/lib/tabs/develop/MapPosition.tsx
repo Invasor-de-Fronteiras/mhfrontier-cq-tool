@@ -27,14 +27,14 @@ export function MapPositionTab() {
       y: 75,
       gameX: 7400,
       gameY: 13000,
-      name: "red",
+      name: "rosa",
       canvasColor: "rgb(250,82,222)",
       color: "#fa52de",
     },
     {
-      name: "blue",
-      canvasColor: "blue",
-      color: "blue",
+      name: "red",
+      canvasColor: "red",
+      color: "red",
 
       x: 94,
       y: 70,
@@ -81,13 +81,53 @@ export function MapPositionTab() {
   }, [setSelectedAreaId, selectAreas]);
 
   return (
-    <div>
-      <div className="grid grid-cols-2 m-2 gap-3">
+    <div className="flex flex-wrap gap-3 items-center justify-center">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-6">
+        <MapPreview
+          mapId={selectedMapId}
+          areaId={selectedAreaId}
+          shouldCalculate={useGameCoords}
+          onChange={(obj) => {
+            const data = useGameCoords
+              ? { gamex: obj.x, gameY: obj.y }
+              : { x: obj.x, y: obj.y };
+
+            setObjects((prev) =>
+              prev.map((v) => (v.name === obj.id ? { ...v, ...data } : v))
+            );
+          }}
+          objects={objects.map((v) => ({
+            id: v.name,
+            x: useGameCoords ? v.gameX : v.x,
+            y: useGameCoords ? v.gameY : v.y,
+          }))}
+        />
+        <div className="flex flex-col justify-center gap-3">
+          <Select
+            label="Maps"
+            options={selectMaps}
+            value={selectedMap}
+            onChange={(v) => setSelectedMapId(v!.value)}
+          />
+          <Select
+            label="Area"
+            options={selectAreas}
+            value={selectedArea}
+            onChange={(v) => setSelectedAreaId(v!.value)}
+          />
+
+          <Button onClick={() => setUseGameCoords(!useGameCoords)}>
+            {useGameCoords ? "Use Canvas Coordinates" : "Use Game Coordinates"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap flex-row lg:flex-col m-2 gap-3">
         {objects.map((object, index) => (
           <fieldset
             key={index}
             className={classNames(
-              "flex gap-3 border-x border-t rounded-sm w-min p-2 flex-1",
+              "flex gap-3 border-x border-t rounded-sm w-full md:w-10 p-2 flex-1",
               `border-b-[${object.color}] border-b-2`
             )}
           >
@@ -137,6 +177,9 @@ export function MapPositionTab() {
             </fieldset>
           </fieldset>
         ))}
+        </div>
+        <div className="flex flex-wrap gap-3">
+
         <Calculate
           name="calcX"
           input1={[objects[0].x, objects[0].gameX]}
@@ -147,46 +190,7 @@ export function MapPositionTab() {
           input1={[objects[0].y, objects[0].gameY]}
           input2={[objects[1].y, objects[1].gameY]}
         />
-      </div>
-      <div className="flex flex-row gap-6 items-center justify-center">
-        <MapPreview
-          mapId={selectedMapId}
-          areaId={selectedAreaId}
-          shouldCalculate={useGameCoords}
-          onChange={(obj) => {
-            const data = useGameCoords
-              ? { gamex: obj.x, gameY: obj.y }
-              : { x: obj.x, y: obj.y };
-
-            setObjects((prev) =>
-              prev.map((v) => (v.name === obj.id ? { ...v, ...data } : v))
-            );
-          }}
-          objects={objects.map((v) => ({
-            id: v.name,
-            x: useGameCoords ? v.gameX : v.x,
-            y: useGameCoords ? v.gameY : v.y,
-          }))}
-        />
-        <div className="flex flex-col justify-center gap-3">
-          <Select
-            label="Maps"
-            options={selectMaps}
-            value={selectedMap}
-            onChange={(v) => setSelectedMapId(v!.value)}
-          />
-          <Select
-            label="Area"
-            options={selectAreas}
-            value={selectedArea}
-            onChange={(v) => setSelectedAreaId(v!.value)}
-          />
-
-          <Button onClick={() => setUseGameCoords(!useGameCoords)}>
-            {useGameCoords ? "Use Canvas Coordinates" : "Use Game Coordinates"}
-          </Button>
         </div>
-      </div>
     </div>
   );
 }
@@ -209,7 +213,7 @@ const Calculate = ({ name, input1, input2 }: CalculateProps) => {
         <PosInput label="a" value={a} />
         <PosInput label="b" value={b} />
       </div>
-      <label className="border">
+      <label className="border p-2">
         <span>Game {name}</span>
         <input
           id="input"
@@ -223,24 +227,26 @@ const Calculate = ({ name, input1, input2 }: CalculateProps) => {
           {getX(result)}
         </output>
       </label>
-      <span
-        className={classNames("text-green-500 border", {
-          "text-red-500": getX(input1[1]) !== input1[0],
-        })}
-      >
-        f({input1[0]}) = {input1[1]}
-        <br />
-        Result red: {getX(input1[1])}
-      </span>
-      <span
-        className={classNames("text-green-500 border", {
-          "text-red-500": getX(input2[1]) !== input2[0],
-        })}
-      >
-        f({input2[0]}) = {input2[1]}
-        <br />
-        Result blue: {getX(input2[1])}
-      </span>
+      <div className="flex flex-row flex-wrap gap-3 justify-center mt-3">
+        <span
+          className={classNames("text-green-500 border p-2 w-full", {
+            "text-red-500": getX(input1[1]) !== input1[0],
+          })}
+        >
+          f({input1[0]}) = {input1[1]}
+          <br />
+          Result rosa: {getX(input1[1])}
+        </span>
+        <span
+          className={classNames("text-green-500 border p-2 w-full", {
+            "text-red-500": getX(input2[1]) !== input2[0],
+          })}
+        >
+          f({input2[0]}) = {input2[1]}
+          <br />
+          Result red: {getX(input2[1])}
+        </span>
+      </div>
     </fieldset>
   );
 };
