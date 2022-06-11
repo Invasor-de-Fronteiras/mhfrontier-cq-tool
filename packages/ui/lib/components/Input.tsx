@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import classNames from "classnames";
 import React from "react";
 import { Control, Path, useController } from "react-hook-form";
 import { useEditor } from "../context/EditorContext";
@@ -8,9 +9,9 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export function Input({ label, placeholder, type, ...props }: InputProps) {
+export function Input({ label, placeholder, type, className, ...props }: InputProps) {
   return (
-    <div className="grid-cols-3 mt-3 px-3">
+    <div className={classNames("grid-cols-3 mt-3 px-3", className)}>
       <label
         className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
         htmlFor="grid-last-name"

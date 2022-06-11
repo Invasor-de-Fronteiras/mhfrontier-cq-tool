@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useMemo } from "react";
 import { Control, Path, useController } from "react-hook-form";
 import ReactSelect, { Props, GroupBase, MenuListProps, OptionProps, components, createFilter } from "react-select";
 import { FixedSizeList as List } from 'react-window';
@@ -75,13 +76,16 @@ interface SelectFieldProps<T = SelectOption, FormT = QuestFile>
   name: Path<FormT>;
   control?: Control<FormT>;
   getFormValue?: (option: T) => unknown;
-
+  onClearValue?: unknown;
 }
 
 export function SelectField<T, FormT>({
   name,
   control,
-  getFormValue = (option) => (option as unknown as SelectOption).value,
+  options,
+  value,
+  getFormValue = (option) => option ? (option as unknown as SelectOption).value : null,
+  onClearValue,
   ...props
 }: SelectFieldProps<T, FormT>) {
   const { form } = useEditor();
@@ -96,11 +100,23 @@ export function SelectField<T, FormT>({
     control: control ?? form.control,
   });
 
+  const selectedValue = useMemo(() => {
+    if (value !== undefined) return value;
+    if (!options) return null;
+    return options.find(v => getFormValue(v as T) === _value) as T;
+  }, [value, _value, options]);
+
   return (
     <Select
       {...props}
       {...field}
+      options={options}
+      value={selectedValue}
       onChange={(option) => {
+        if (!option && onClearValue !== undefined) {
+          onChange(onClearValue);
+          return;
+        }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onChange(getFormValue(option));

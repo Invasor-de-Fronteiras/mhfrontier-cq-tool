@@ -15,18 +15,27 @@ export function MonstersTab() {
     name: "large_monster_spawns",
   });
 
-  const map = findMap(mapId);
 
   const stages = useMemo(
-    () =>
-      mapId
-        ? maps[mapId].stages.map((v, i) => ({
-            value: v.id,
-            label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
-          }))
-        : [],
+    () => {
+      console.log('mapId: ', mapId);
+      if (!mapId) return [];
+      const map = findMap(mapId);
+      if (!map) return [];
+
+      console.log('map: ', map);
+
+      return map.stages.map((v, i) => ({
+        value: v.id,
+        label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
+      }));
+    },
     [mapId]
   );
+
+  const map = findMap(mapId);
+
+  if (!fields) return null;
 
   return (
     <div className="flex h-full w-full">

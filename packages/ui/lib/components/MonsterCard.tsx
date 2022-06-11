@@ -48,17 +48,19 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
         label="Monster"
         options={monster_options}
         isClearable
+        onClearValue={65535}
         control={form.control}
         name={`large_monster_spawns.${index}.monster_id`}
-        value={monsterSelected}
+        value={monsterSelected || null}
       />
       <SelectField
         label="Area"
         options={stages}
         isClearable
+        onClearValue={0}
         control={form.control}
         name={`large_monster_spawns.${index}.spawn_stage`}
-        value={stageSelected}
+        value={stageSelected || null}
       />
       <div className="flex flex-wrap">
         <fieldset className="flex flex-row gap-2">

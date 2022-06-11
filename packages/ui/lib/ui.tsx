@@ -5,6 +5,7 @@ import { MapPositionTab } from "./tabs/develop/MapPosition";
 import { LoadQuestTab } from "./tabs/LoadQuestTab";
 import { MonstersTab } from "./tabs/MonstersTab";
 import { QuestInfoTab } from "./tabs/QuestInfoTab";
+import { RewardsTab } from "./tabs/RewardsTab";
 import { UnknownTab } from "./tabs/UnknownTab";
 
 export function Ui() {
@@ -15,6 +16,7 @@ export function Ui() {
         <Route path="/monsters" element={<MonstersTab />} />
         <Route path="/quest-info" element={<QuestInfoTab />} />
         <Route path="/map-position" element={<MapPositionTab />} />
+        <Route path="/rewards" element={<RewardsTab />} />
         <Route path="/unknown" element={<UnknownTab />} />
       </Route>
     </Routes>
