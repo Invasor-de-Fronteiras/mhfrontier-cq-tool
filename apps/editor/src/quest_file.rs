@@ -3,6 +3,7 @@ use crate::reader::FileReader;
 use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
+use crate::structs::supply_items::SupplyItem;
 use crate::writer::FileWriter;
 use std::io::Result;
 
@@ -19,6 +20,8 @@ pub struct QuestFile {
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>, // pub monster_spawn: LargeMonsterSpawn,
+    // pub supply_items_box: SupplyItemBox,
+    pub supply_items: Vec<SupplyItem>,
 }
 
 impl QuestFile {
@@ -57,8 +60,7 @@ impl QuestFile {
             large_monster_spawns.push(monster_spawn);
         }
 
-        // reader.seek_start(header.quest_type_ptr as u64).unwrap();
-        // let quest_type = reader.read_struct::<QuestFileQuestType>().unwrap();
+        let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
 
         Ok(QuestFile {
             header,
@@ -67,8 +69,35 @@ impl QuestFile {
             map_info,
             large_monster_pointers,
             large_monster_ids,
-            large_monster_spawns, // monster_spawn,
+            large_monster_spawns,
+            supply_items,
         })
+    }
+
+    fn read_supply_items(
+        header: &QuestFileHeader,
+        reader: &mut FileReader,
+    ) -> Result<Vec<SupplyItem>> {
+        let mut supply_items: Vec<SupplyItem> = vec![];
+        let max_supply_items = 40;
+
+        reader.seek_start(header.supply_box_ptr as u64)?;
+
+        let supply_item = reader.read_struct::<SupplyItem>()?;
+        supply_items.push(supply_item);
+
+        let mut count = 1;
+        while reader.read_current_u16()? != 0xFFFF {
+            if max_supply_items == count {
+                break;
+            }
+
+            let supply_item = reader.read_struct::<SupplyItem>()?;
+            supply_items.push(supply_item);
+            count += 1;
+        }
+
+        Ok(supply_items)
     }
 
     pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {

@@ -284,6 +284,11 @@ fn reader_test() {
                 unk12: 0,
             },
         ],
+        // supply_items_box: SupplyItemBox {
+        //     unk: 657,
+        //     quantity: 1,
+        // },
+        supply_items: vec![],
     };
 
     assert_eq!(quest_file.header, expected.header, "Header");
@@ -297,13 +302,5 @@ fn reader_test() {
         "LargeMonsterIds"
     );
 
-    for (i, large_monster_spawn) in quest_file.large_monster_spawns.iter().enumerate() {
-        assert_eq!(
-            large_monster_spawn, &expected.large_monster_spawns[i],
-            "LargeMonsterSpawns {}",
-            i
-        );
-    }
-
-    assert_eq!(quest_file, expected);
+    assert_eq!(quest_file.supply_items.len(), 40);
 }
