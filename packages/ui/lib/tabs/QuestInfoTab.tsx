@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
+import { ObjectiveCard } from "../components/Objective";
 import { SelectField } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
 import { quest_type_options } from "../utils";
@@ -17,7 +18,7 @@ export function QuestInfoTab() {
   const monsterClassIdSelected = useMemo(
     () =>
       quest_type_options.find(
-        (option) => option.value === String(monster_class_id)
+        (option) => option.value === monster_class_id
       ),
     [monster_class_id]
   );
@@ -45,12 +46,13 @@ export function QuestInfoTab() {
           type="number"
           name="quest_type_flags.main_quest_prop.quest_time"
         />
-        {/* <InputField
-          label="Main rank points"
-          type="number"
-          onChange={onChangeMainQuestProp("deathtime"
-          value={mainQuestProp?.objectives}
-        /> */}
+      </GroupCard>
+      <GroupCard title="Objectives" >
+        <div>
+          <ObjectiveCard objective={1} />
+          <ObjectiveCard objective={2} />
+          <ObjectiveCard objective={3} />
+        </div>
       </GroupCard>
       <GroupCard title="Points">
         <InputField

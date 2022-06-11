@@ -29,7 +29,7 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
   const monsterSelected = useMemo(
     () =>
       monster_options.find(
-        (monster) => monster.value === String(data.monster_id)
+        (monster) => monster.value === data.monster_id
       ),
     [data.monster_id]
   );

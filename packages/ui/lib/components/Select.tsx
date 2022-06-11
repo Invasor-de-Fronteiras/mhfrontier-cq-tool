@@ -1,13 +1,37 @@
 import classNames from "classnames";
 import { Control, Path, useController } from "react-hook-form";
-import ReactSelect, { Props, GroupBase } from "react-select";
+import ReactSelect, { Props, GroupBase, MenuListProps, OptionProps, components, createFilter } from "react-select";
+import { FixedSizeList as List } from 'react-window';
 import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
 
 export type SelectOption = {
   label: string;
-  value: string;
+  value: number;
 };
+
+const height = 35;
+
+function MenuList<T>({ options, children, maxHeight, getValue }: MenuListProps<T>) {
+    const [value] = getValue();
+    const initialOffset = options.indexOf(value) * height;
+
+    return (
+      // @ts-ignore
+      <List
+        // width={100}
+        height={maxHeight}
+        // @ts-ignore
+        itemCount={children.length}
+        itemSize={height}
+        initialScrollOffset={initialOffset}
+      >
+        {/* @ts-ignore */}
+        {({ index, style }) => <div style={style}>{children[index]}</div>}
+      </List>
+    );
+}
+
 
 interface SelectProps<T = SelectOption> extends Props<T, false, GroupBase<T>> {
   label: string;
@@ -33,6 +57,10 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
             primary25: "rgb(167 243 208 / 1)", // text-emerald-200
           },
         })}
+        filterOption={createFilter({ ignoreAccents: false })}
+        components={{
+          MenuList
+        }}
         {...props}
       />
     </label>
@@ -47,6 +75,7 @@ interface SelectFieldProps<T = SelectOption, FormT = QuestFile>
   name: Path<FormT>;
   control?: Control<FormT>;
   getFormValue?: (option: T) => unknown;
+
 }
 
 export function SelectField<T, FormT>({

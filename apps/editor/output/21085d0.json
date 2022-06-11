@@ -327,5 +327,122 @@
       "unk11": 0,
       "unk12": 0
     }
+  ],
+  "rewards": [
+    {
+      "table_header": {
+        "table_id": 1,
+        "unk_0": 128,
+        "unk_1": 0,
+        "table_offset": 15296
+      },
+      "items": [
+        {
+          "rate": 40,
+          "item": 532,
+          "quantity": 1
+        },
+        {
+          "rate": 13,
+          "item": 530,
+          "quantity": 2
+        },
+        {
+          "rate": 5,
+          "item": 529,
+          "quantity": 1
+        },
+        {
+          "rate": 2,
+          "item": 321,
+          "quantity": 1
+        },
+        {
+          "rate": 8,
+          "item": 531,
+          "quantity": 2
+        },
+        {
+          "rate": 7,
+          "item": 247,
+          "quantity": 3
+        },
+        {
+          "rate": 5,
+          "item": 528,
+          "quantity": 1
+        },
+        {
+          "rate": 3,
+          "item": 470,
+          "quantity": 1
+        },
+        {
+          "rate": 2,
+          "item": 473,
+          "quantity": 1
+        },
+        {
+          "rate": 15,
+          "item": 533,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "table_header": {
+        "table_id": 2,
+        "unk_0": 128,
+        "unk_1": 0,
+        "table_offset": 15260
+      },
+      "items": [
+        {
+          "rate": 38,
+          "item": 7,
+          "quantity": 1
+        },
+        {
+          "rate": 52,
+          "item": 180,
+          "quantity": 1
+        },
+        {
+          "rate": 10,
+          "item": 183,
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "table_header": {
+        "table_id": 3,
+        "unk_0": 128,
+        "unk_1": 0,
+        "table_offset": 15232
+      },
+      "items": [
+        {
+          "rate": 25,
+          "item": 321,
+          "quantity": 1
+        },
+        {
+          "rate": 16,
+          "item": 528,
+          "quantity": 1
+        },
+        {
+          "rate": 58,
+          "item": 471,
+          "quantity": 1
+        },
+        {
+          "rate": 1,
+          "item": 473,
+          "quantity": 1
+        }
+      ]
+    }
   ]
 }

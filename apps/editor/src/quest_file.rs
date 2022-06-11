@@ -3,6 +3,7 @@ use crate::reader::FileReader;
 use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
+use crate::structs::reward::{RewardTableHeader, RewardTable, RewardItem};
 use crate::writer::FileWriter;
 use std::io::Result;
 
@@ -18,7 +19,8 @@ pub struct QuestFile {
     pub map_info: MapInfo,
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
-    pub large_monster_spawns: Vec<LargeMonsterSpawn>, // pub monster_spawn: LargeMonsterSpawn,
+    pub large_monster_spawns: Vec<LargeMonsterSpawn>,
+    pub rewards: Vec<RewardTable>
 }
 
 impl QuestFile {
@@ -57,9 +59,24 @@ impl QuestFile {
             large_monster_spawns.push(monster_spawn);
         }
 
-        // reader.seek_start(header.quest_type_ptr as u64).unwrap();
-        // let quest_type = reader.read_struct::<QuestFileQuestType>().unwrap();
+        let mut rewards: Vec<RewardTable> = vec![];
 
+        reader.seek_start(header.reward_ptr as u64)?;
+        while reader.read_current_u16()? != 0xFFFF {
+            let table_header = reader.read_struct::<RewardTableHeader>()?;
+            let next_table = reader.current_position()?;
+            let mut reward_table = RewardTable { table_header, items: vec![] };
+
+            reader.seek_start(reward_table.table_header.table_offset as u64)?;
+            while reader.read_current_u16()? != 0xFFFF {
+                let item = reader.read_struct::<RewardItem>()?;
+                reward_table.items.push(item);
+            }
+
+            rewards.push(reward_table);
+            reader.seek_start(next_table)?;
+        }
+        
         Ok(QuestFile {
             header,
             gen_quest_prop,
@@ -67,17 +84,14 @@ impl QuestFile {
             map_info,
             large_monster_pointers,
             large_monster_ids,
-            large_monster_spawns, // monster_spawn,
+            large_monster_spawns,
+            rewards
         })
     }
 
     pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {
         let original = QuestFile::from_path(filename)?;
         let mut writer = FileWriter::from_filename(filename)?;
-
-        // Write large_monster_ptr
-        // writer.seek_start(original.header.large_monster_ptr as u64)?;
-        // writer.write_struct::<LargeMonsterPointers>(&mut quest.large_monster_pointers)?;
 
         writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         writer.write_struct(&mut quest.gen_quest_prop)?;

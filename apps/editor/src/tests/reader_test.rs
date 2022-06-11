@@ -13,9 +13,9 @@ use crate::{
 
 #[test]
 fn reader_test() {
-    let quest_file = QuestFile::from_path("quest-tests/64554d1-musous.bin").unwrap();
+    let quest_file = QuestFile::from_path("quest-tests/21085d0.bin").unwrap();
 
-    save_quest_to_json("output/64554d1-musous.json", &quest_file).unwrap();
+    save_quest_to_json("output/21085d0.json", &quest_file).unwrap();
 
     let expected = QuestFile {
         header: QuestFileHeader {
@@ -284,6 +284,7 @@ fn reader_test() {
                 unk12: 0,
             },
         ],
+        rewards: vec![]
     };
 
     assert_eq!(quest_file.header, expected.header);

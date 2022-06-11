@@ -183,5 +183,5 @@ export const monsters = [
 
 export const monster_options: SelectOption[] = monsters.map((monster, index) => ({
   label: monster,
-  value: index.toString(),
+  value: index,
 }));
