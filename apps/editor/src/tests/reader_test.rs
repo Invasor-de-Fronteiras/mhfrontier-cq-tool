@@ -13,9 +13,9 @@ use crate::{
 
 #[test]
 fn reader_test() {
-    let quest_file = QuestFile::from_path("quest-tests/64554d1-musous.bin").unwrap();
+    let quest_file = QuestFile::from_path("quest-tests/21085d0.bin").unwrap();
 
-    save_quest_to_json("output/64554d1-musous.json", &quest_file).unwrap();
+    save_quest_to_json("output/21085d0.json", &quest_file).unwrap();
 
     let expected = QuestFile {
         header: QuestFileHeader {
@@ -286,15 +286,24 @@ fn reader_test() {
         ],
     };
 
-    assert_eq!(quest_file.header, expected.header);
+    assert_eq!(quest_file.header, expected.header, "Header");
     assert_eq!(
-        quest_file.large_monster_pointers,
-        expected.large_monster_pointers
+        quest_file.large_monster_pointers, expected.large_monster_pointers,
+        "LargeMonsterPointers"
     );
 
-    assert_eq!(quest_file.large_monster_ids, expected.large_monster_ids);
+    assert_eq!(
+        quest_file.large_monster_ids, expected.large_monster_ids,
+        "LargeMonsterIds"
+    );
 
     for (i, large_monster_spawn) in quest_file.large_monster_spawns.iter().enumerate() {
-        assert_eq!(large_monster_spawn, &expected.large_monster_spawns[i]);
+        assert_eq!(
+            large_monster_spawn, &expected.large_monster_spawns[i],
+            "LargeMonsterSpawns {}",
+            i
+        );
     }
+
+    assert_eq!(quest_file, expected);
 }
