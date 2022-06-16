@@ -5,10 +5,8 @@ use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
 use crate::structs::supply_items::SupplyItem;
 use crate::writer::FileWriter;
-use std::io::Result;
-
-// use serde::{Serialize, Deserialize};
 use serde_derive::{Deserialize, Serialize};
+use std::io::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -78,8 +76,8 @@ impl QuestFile {
         header: &QuestFileHeader,
         reader: &mut FileReader,
     ) -> Result<Vec<SupplyItem>> {
-        let mut supply_items: Vec<SupplyItem> = vec![];
         let max_supply_items = 40;
+        let mut supply_items: Vec<SupplyItem> = Vec::with_capacity(max_supply_items);
 
         reader.seek_start(header.supply_box_ptr as u64)?;
 
@@ -88,7 +86,7 @@ impl QuestFile {
 
         let mut count = 1;
         while reader.read_current_u16()? != 0xFFFF {
-            if max_supply_items == count {
+            if count == max_supply_items {
                 break;
             }
 
