@@ -3,11 +3,11 @@ import { PosInput, PosInputField } from "../../components/PosInput";
 
 import { Button } from "../../components/Button";
 import classNames from "classnames";
-import {  SelectField } from "../../components/Select";
+import { SelectField } from "../../components/Select";
 import { maps } from "../../utils";
 import { polynomial } from "../../utils/math";
 import { MapPreview } from "../../components/MapPreview";
-import {  useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 export function MapPositionTab() {
   const [useGameCoords, setUseGameCoords] = useState(false);

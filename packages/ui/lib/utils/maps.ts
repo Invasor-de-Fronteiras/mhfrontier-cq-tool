@@ -124,7 +124,7 @@ export const maps: Map[] = [
       { id: 114, areaNumber: 4 },
       { id: 115, areaNumber: 5 },
       { id: 116, areaNumber: 6 },
-      { 
+      {
         id: 117,
         areaNumber: 8,
         calculationX: {
@@ -136,7 +136,7 @@ export const maps: Map[] = [
           b: -175.26315789473665,
         },
       },
-      { 
+      {
         id: 118,
         areaNumber: 7,
         calculationX: {
@@ -147,7 +147,7 @@ export const maps: Map[] = [
           a: 228.6315789473684,
           b: -1065.3684210526317,
         },
-        },
+      },
       { id: 119, areaNumber: 9 },
       { id: 120, areaNumber: 10 },
     ],

@@ -34,7 +34,7 @@ export function PosInputField<T>({
 }: PosInputFieldProps<T>) {
   const { form } = useEditor();
   const { field } = useController({
-     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     name,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

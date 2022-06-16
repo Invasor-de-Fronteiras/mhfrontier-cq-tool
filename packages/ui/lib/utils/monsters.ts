@@ -180,8 +180,9 @@ export const monsters = [
   "King Shakalaka",
 ];
 
-
-export const monster_options: SelectOption[] = monsters.map((monster, index) => ({
-  label: monster,
-  value: index.toString(),
-}));
+export const monster_options: SelectOption[] = monsters.map(
+  (monster, index) => ({
+    label: monster,
+    value: index.toString(),
+  })
+);
