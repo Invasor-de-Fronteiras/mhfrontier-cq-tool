@@ -104,7 +104,6 @@ impl QuestFile {
         let original = QuestFile::from_path(filename)?;
         let mut writer = FileWriter::from_filename(filename)?;
 
-
         writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         writer.write_struct(&mut quest.gen_quest_prop)?;
 
@@ -130,11 +129,10 @@ impl QuestFile {
         }
 
         // Write supply items
-        write.seek_start(quest.header.supply_box_ptr as u64)?;
-        for supply_item in &quest.supply_items {
-            write.write_struct(supply_item)?;
+        writer.seek_start(quest.header.supply_box_ptr as u64)?;
+        for i in 0..40 {
+            writer.write_struct(&mut quest.supply_items[i])?;
         }
-
 
         Ok(())
     }
