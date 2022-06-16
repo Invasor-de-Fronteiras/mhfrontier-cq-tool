@@ -19,8 +19,8 @@ pub struct QuestFile {
     pub map_info: MapInfo,
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
-    pub large_monster_spawns: Vec<LargeMonsterSpawn>, // pub monster_spawn: LargeMonsterSpawn,
-    // pub supply_items_box: SupplyItemBox,
+    pub large_monster_spawns: Vec<LargeMonsterSpawn>,
+    // supply items are a fixed-size array of 40 item slots
     pub supply_items: Vec<SupplyItem>,
 }
 
@@ -104,9 +104,6 @@ impl QuestFile {
         let original = QuestFile::from_path(filename)?;
         let mut writer = FileWriter::from_filename(filename)?;
 
-        // Write large_monster_ptr
-        // writer.seek_start(original.header.large_monster_ptr as u64)?;
-        // writer.write_struct::<LargeMonsterPointers>(&mut quest.large_monster_pointers)?;
 
         writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         writer.write_struct(&mut quest.gen_quest_prop)?;
@@ -118,6 +115,7 @@ impl QuestFile {
             "seek = {}",
             original.large_monster_pointers.large_monster_ids
         );
+
         writer.seek_start(original.large_monster_pointers.large_monster_ids as u64)?;
 
         for i in 0..5 {
@@ -130,6 +128,13 @@ impl QuestFile {
         for i in 0..5 {
             writer.write_struct(&mut quest.large_monster_spawns[i])?;
         }
+
+        // Write supply items
+        write.seek_start(quest.header.supply_box_ptr as u64)?;
+        for supply_item in &quest.supply_items {
+            write.write_struct(supply_item)?;
+        }
+
 
         Ok(())
     }
