@@ -6,7 +6,7 @@ import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { SelectField } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
-import { findMap, getStageName, maps, monsters } from "../utils";
+import { findMap, getStageName, maps, monsters, monster_options } from "../utils";
 import { item_options } from "../utils/items";
 
 export function RewardsTab() {
@@ -18,8 +18,43 @@ export function RewardsTab() {
 
     if (!rewardsTables) return null;
 
+    const data = useWatch({
+        control: form.control,
+    });
+
+    data.quest_type_flags?.rewards_focus?.monster_id
     return (
         <div className="flex flex-row flex-wrap gap-2">
+            <GroupCard title="Rewards Focus">
+                <SelectField
+                    name="quest_type_flags.rewards_focus.monster_id"
+                    label="Monster"
+                    options={monster_options}
+                    className="mt-2 px-2"
+                    filterOption={createFilter({ ignoreAccents: false })}
+                />
+                <SelectField
+                    name="quest_type_flags.rewards_focus.item1"
+                    label="Item 1"
+                    options={item_options}
+                    className="mt-2 px-2"
+                    filterOption={createFilter({ ignoreAccents: false })}
+                />
+                <SelectField
+                    name="quest_type_flags.rewards_focus.item2"
+                    label="Item 2"
+                    options={item_options}
+                    className="mt-2 px-2"
+                    filterOption={createFilter({ ignoreAccents: false })}
+                />
+                <SelectField
+                    name="quest_type_flags.rewards_focus.item3"
+                    label="Item 3"
+                    options={item_options}
+                    className="mt-2 px-2"
+                    filterOption={createFilter({ ignoreAccents: false })}
+                />
+            </GroupCard>
             {rewardsTables.map((table, tableIndex) => <GroupCard key={table.table_header.table_id} title={`Reward Table ${table.table_header.table_id}`}>
                 <table
                     aria-label="Reward items"

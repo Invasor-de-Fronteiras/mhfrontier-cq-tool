@@ -175,7 +175,9 @@
       "required_item_count": 0,
       "quest_variant1": 0,
       "quest_variant2": 0,
-      "quest_variant3": 0
+      "quest_variant3": 0,
+      "quest_variant4": 0,
+      "unk1": 0
     },
     "allowed_equipment_bitmask": 0,
     "rewards_focus": {

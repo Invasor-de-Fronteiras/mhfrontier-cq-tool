@@ -77,7 +77,8 @@ pub struct Variants {
     pub quest_variant1: u8,
     pub quest_variant2: u8,
     pub quest_variant3: u8,
-    // quest_variant4: u8, // esse valor está pegando dado da struct ForcedEquipment
+    pub quest_variant4: u8, // esse valor está pegando dado da struct ForcedEquipment
+    pub unk1: u8
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -163,7 +164,6 @@ pub struct QuestTypeFlags {
     pub skip1: [u8; 8],
     pub forced_equipement: ForcedEquipment,
     pub variants: Variants,
-    // pub skip2: [u8; 2],
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
     pub skip3: [u8; 10],
