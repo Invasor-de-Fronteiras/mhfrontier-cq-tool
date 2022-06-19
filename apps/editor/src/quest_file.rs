@@ -19,7 +19,7 @@ pub struct QuestFile {
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
-    pub rewards: Vec<RewardTable>
+    pub rewards: Vec<RewardTable>,
     // supply items are a fixed-size array of 40 item slots
     pub supply_items: Vec<SupplyItem>,
 }

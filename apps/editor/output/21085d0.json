@@ -29,11 +29,34 @@
     "sub_arank_points": 80,
     "sub_brank_points": 80,
     "monster_class_id": 1,
-    "skip1": [1, 1, 0, 0],
+    "skip1": [
+      1,
+      1,
+      0,
+      0
+    ],
     "little_mons_stat_table": 13,
-    "skip2": [0, 0, 1, 0, 0, 0, 57, 0, 3],
+    "skip2": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      57,
+      0,
+      3
+    ],
     "quest_kn0": 1,
-    "skip3": [0, 0, 0, 0, 0, 0, 0],
+    "skip3": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "quest_kn1": 2,
     "quest_kn2": 3,
     "quest_kn3": 56,
@@ -68,7 +91,10 @@
       "unk10": 0,
       "unk11": 0,
       "reward_a": 1000,
-      "skip2": [0, 0],
+      "skip2": [
+        0,
+        0
+      ],
       "reward_b": 1000,
       "hard_hunter_rank_req": 0,
       "quest_time": 90000,
@@ -103,7 +129,16 @@
       "post_rank_min": 31,
       "post_rank_max": 0
     },
-    "skip1": [0, 0, 0, 0, 0, 0, 0, 0],
+    "skip1": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "forced_equipement": {
       "legs": 0,
       "legs_attach1": 0,
@@ -148,18 +183,42 @@
     "rewards_focus": {
       "exp_type_maybe": 0,
       "main_rp_grp": 530,
-      "skip1": [0, 0],
+      "skip1": [
+        0,
+        0
+      ],
       "sub_a_rp_grp": 80,
-      "skip2": [0, 0],
+      "skip2": [
+        0,
+        0
+      ],
       "sub_b_rp_grp": 80,
-      "skip3": [0, 0],
+      "skip3": [
+        0,
+        0
+      ],
       "item1": 532,
       "item2": 528,
       "item3": 473,
-      "skip4": [0, 0, 0],
+      "skip4": [
+        0,
+        0,
+        0
+      ],
       "monster_id": 48
     },
-    "skip3": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "skip3": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "quest_clears_allowed": 0,
     "quest_monster_icon": 0
   },
@@ -177,7 +236,13 @@
     "unk_4": 0,
     "unk_5": 0
   },
-  "large_monster_ids": [48, 0, 0, 0, 0],
+  "large_monster_ids": [
+    48,
+    0,
+    0,
+    0,
+    0
+  ],
   "large_monster_spawns": [
     {
       "monster_id": 48,
@@ -379,8 +444,8 @@
           "item": 473,
           "quantity": 1
         }
-      ],
-    },
+      ]
+    }
   ],
   "supply_items": [
     {
