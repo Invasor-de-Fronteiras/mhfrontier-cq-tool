@@ -14,6 +14,5 @@ export const quest_type = [
 export const quest_type_options: SelectOption[] = quest_type.map(
   (type, index) => ({
     label: type,
-    value: index.toString(),
-  })
-);
+    value: index,
+}));

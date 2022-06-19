@@ -1,6 +1,7 @@
 import {
   BsFillGeoFill,
   BsFillWalletFill,
+  BsFillAwardFill,
   BsInfoCircle,
   BsMinecartLoaded,
   BsSave,
@@ -60,6 +61,12 @@ export function Layout() {
             name: "Items",
             icon: BsFillWalletFill,
             disabled: !isLoadedFile || true,
+          },
+          {
+            name: "Rewards",
+            icon: BsFillAwardFill,
+            disabled: !isLoadedFile,
+            uri: "/rewards"
           },
           {
             name: "Gathering",

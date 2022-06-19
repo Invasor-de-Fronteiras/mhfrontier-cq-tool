@@ -161,6 +161,8 @@ fn reader_test() {
                 quest_variant1: 0,
                 quest_variant2: 0,
                 quest_variant3: 0,
+                quest_variant4: 0,
+                unk1: 0,
             },
             allowed_equipment_bitmask: 0, // FF7F for none
             // skip2: [0;2],
@@ -284,6 +286,7 @@ fn reader_test() {
                 unk12: 0,
             },
         ],
+        rewards: vec![],
         // supply_items_box: SupplyItemBox {
         //     unk: 657,
         //     quantity: 1,

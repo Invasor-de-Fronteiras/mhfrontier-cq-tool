@@ -44,7 +44,7 @@ export function MapPositionTab() {
   const redObject = useWatch({ control: form.control, name: "red" });
 
   const selectedMap = useMemo(
-    () => maps.find((v) => String(v.id) === String(selectedMapId)),
+    () => maps.find((v) => v.id === selectedMapId),
     [maps, selectedMapId]
   );
 

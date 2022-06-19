@@ -3,6 +3,7 @@ import { useState } from "react";
 import { EditorContextProvider, QuestFile, Ui } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
+import { toast } from 'react-toastify';
 
 interface SaveQuestPayload {
   filepath: string;
@@ -26,6 +27,7 @@ function App() {
       large_monster_ids: data.large_monster_spawns.map((v) =>
         v.monster_id >= 255 ? 0 : v.monster_id
       ),
+      rewards: data.rewards
     };
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };
@@ -37,8 +39,11 @@ function App() {
     const resData = JSON.parse(response);
     if (resData?.error) {
       console.error("error: ", resData.error);
+      toast.error(`Failed to save file: ${resData.error}`);
       return;
     }
+
+    toast.success('Successfully saved quest file!');
   };
 
   const onReadFile = async () => {
@@ -52,6 +57,7 @@ function App() {
 
       const quest = JSON.parse(response);
       if (quest && quest.error) {
+        toast.error(`Failed to read file: ${quest.error}`);
         // setError(quest.error);
         console.error("response ", response);
         return;
@@ -59,6 +65,7 @@ function App() {
 
       setFile(quest as QuestFile);
       setQuestPath(path as string);
+      toast.success('Quest file read successfully!');
       // setResult(quest);
     } catch (error) {
       console.error("error ", error);

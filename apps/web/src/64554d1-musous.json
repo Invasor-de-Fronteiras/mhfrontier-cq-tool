@@ -29,11 +29,34 @@
     "sub_arank_points": 500,
     "sub_brank_points": 300,
     "monster_class_id": 7,
-    "skip1": [0, 0, 0, 0],
+    "skip1": [
+      0,
+      0,
+      0,
+      0
+    ],
     "little_mons_stat_table": 53,
-    "skip2": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "skip2": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "quest_kn0": 1,
-    "skip3": [0, 0, 0, 0, 0, 0, 0],
+    "skip3": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "quest_kn1": 2,
     "quest_kn2": 3,
     "quest_kn3": 52,
@@ -63,9 +86,15 @@
       "skip1": 0,
       "quest_fee": 700,
       "reward_main": 2800,
-      "deathtime": 5,
+      "max_death": 5,
+      "unk9": 0,
+      "unk10": 0,
+      "unk11": 0,
       "reward_a": 0,
-      "skip2": [0, 0],
+      "skip2": [
+        0,
+        0
+      ],
       "reward_b": 0,
       "hard_hunter_rank_req": 0,
       "quest_time": 90000,
@@ -100,7 +129,16 @@
       "post_rank_min": 1,
       "post_rank_max": 0
     },
-    "skip1": [0, 0, 0, 0, 0, 0, 0, 0],
+    "skip1": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "forced_equipement": {
       "legs": 0,
       "legs_attach1": 0,
@@ -137,165 +175,50 @@
       "required_item_count": 0,
       "quest_variant1": 8,
       "quest_variant2": 0,
-      "quest_variant3": 32
+      "quest_variant3": 32,
+      "quest_variant4": 0,
+      "unk1": 0
     },
     "allowed_equipment_bitmask": 0,
     "rewards_focus": {
       "exp_type_maybe": 1,
       "main_rp_grp": 1000,
-      "skip1": [0, 0],
+      "skip1": [
+        0,
+        0
+      ],
       "sub_a_rp_grp": 500,
-      "skip2": [0, 0],
+      "skip2": [
+        0,
+        0
+      ],
       "sub_b_rp_grp": 300,
-      "skip3": [0, 0],
+      "skip3": [
+        0,
+        0
+      ],
       "item1": 0,
       "item2": 0,
       "item3": 0,
-      "skip4": [10, 10, 10],
+      "skip4": [
+        10,
+        10,
+        10
+      ],
       "monster_id": 146
     },
-    "skip3": [172, 154, 231, 3, 0, 0, 0, 0, 0, 0],
-    "quest_clears_allowed": 0,
-    "quest_monster_icon": 0
-  },
-  "gen_quest_prop": {
-    "big_monster_size_multi": 102,
-    "size_range": 3,
-    "mons_stat_table1": 13,
-    "main_rank_points": 530,
-    "kn": 15,
-    "sub_arank_points": 80,
-    "sub_brank_points": 80,
-    "monster_class_id": 1,
-    "skip1": [1, 1, 0, 0],
-    "little_mons_stat_table": 13,
-    "skip2": [0, 0, 1, 0, 0, 0, 57, 0, 3],
-    "quest_kn0": 1,
-    "skip3": [0, 0, 0, 0, 0, 0, 0],
-    "quest_kn1": 2,
-    "quest_kn2": 3,
-    "quest_kn3": 56,
-    "quantity": {
-      "gathering_tables_qty": 102,
-      "unk0": 6,
-      "area1zones": 11,
-      "area2zones": 11,
-      "area3zones": 11,
-      "area4zones": 11
-    },
-    "unk3": 0,
-    "unk4": 0,
-    "unk5": 0
-  },
-  "quest_type_flags": {
-    "main_quest_prop": {
-      "unk0": 65,
-      "unk1": 0,
-      "quest_locale_flags": 10,
-      "unk2": 0,
-      "ranking_id": 6,
-      "unk3": 5,
-      "unk4": 19,
-      "rank_band0": 31,
-      "untat_id": 1,
-      "skip1": 0,
-      "quest_fee": 300,
-      "reward_main": 4400,
-      "max_death": 3,
-      "unk9": 1,
-      "unk10": 1,
-      "unk11": 1,
-      "reward_a": 1000,
-      "skip2": [0, 0],
-      "reward_b": 1000,
-      "hard_hunter_rank_req": 0,
-      "quest_time": 90000,
-      "quest_map_only_monitor": 6,
-      "quest_strings_ptr": 15680,
-      "unkk": 0,
-      "quest_id": 21085,
-      "objectives": {
-        "objective1": {
-          "quest_objective": 1,
-          "monster_id": 48,
-          "unk": 0,
-          "quantity": 1
-        },
-        "objective2": {
-          "quest_objective": 2,
-          "monster_id": 15,
-          "unk": 2,
-          "quantity": 8
-        },
-        "objective3": {
-          "quest_objective": 16388,
-          "monster_id": 48,
-          "unk": 0,
-          "quantity": 1
-        }
-      },
-      "unk6": 2,
-      "unk7": 0,
-      "join_rank_min": 31,
-      "join_rank_max": 0,
-      "post_rank_min": 31,
-      "post_rank_max": 0
-    },
-    "skip1": [0, 0, 0, 0, 0, 0, 0, 0],
-    "forced_equipement": {
-      "legs": 0,
-      "legs_attach1": 0,
-      "legs_attach2": 0,
-      "legs_attach3": 0,
-      "weapon": 0,
-      "weapon_attach1or_bitmask": 0,
-      "weapon_attach2": 0,
-      "weapon_attach3": 0,
-      "head": 0,
-      "head_attach1": 0,
-      "head_attach2": 0,
-      "head_attach3": 0,
-      "chest": 0,
-      "chest_attach1": 0,
-      "chest_attach2": 0,
-      "chest_attach3": 0,
-      "arms": 0,
-      "arms_attach1": 0,
-      "arms_attach2": 0,
-      "arms_attach3": 0,
-      "waist": 0,
-      "waist_attach1": 0,
-      "waist_attach2": 0,
-      "waist_attach3": 0,
-      "unk": 0
-    },
-    "variants": {
-      "monster_variant0": 0,
-      "monster_variant1": 0,
-      "monster_variant2": 0,
-      "map_variant0": 0,
-      "required_item_type": 0,
-      "required_item_count": 0,
-      "quest_variant1": 0,
-      "quest_variant2": 0,
-      "quest_variant3": 0
-    },
-    "allowed_equipment_bitmask": 0,
-    "rewards_focus": {
-      "exp_type_maybe": 0,
-      "main_rp_grp": 530,
-      "skip1": [0, 0],
-      "sub_a_rp_grp": 80,
-      "skip2": [0, 0],
-      "sub_b_rp_grp": 80,
-      "skip3": [0, 0],
-      "item1": 532,
-      "item2": 528,
-      "item3": 473,
-      "skip4": [0, 0, 0],
-      "monster_id": 48
-    },
-    "skip3": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "skip3": [
+      172,
+      154,
+      231,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "quest_clears_allowed": 0,
     "quest_monster_icon": 0
   },
@@ -313,7 +236,13 @@
     "unk_4": 0,
     "unk_5": 0
   },
-  "large_monster_ids": [146, 166, 163, 172, 174],
+  "large_monster_ids": [
+    146,
+    166,
+    163,
+    172,
+    174
+  ],
   "large_monster_spawns": [
     {
       "monster_id": 146,
@@ -399,6 +328,195 @@
       "unk10": 0,
       "unk11": 0,
       "unk12": 0
+    }
+  ],
+  "rewards": [
+    {
+      "table_header": {
+        "table_id": 1,
+        "unk_0": 128,
+        "unk_1": 0,
+        "table_offset": 5088
+      },
+      "items": [
+        {
+          "rate": 30,
+          "item": 12306,
+          "quantity": 10000
+        },
+        {
+          "rate": 60,
+          "item": 12306,
+          "quantity": 999
+        },
+        {
+          "rate": 10,
+          "item": 12306,
+          "quantity": 20000
+        }
+      ]
+    }
+  ],
+  "supply_items": [
+    {
+      "item": 657,
+      "quantity": 1
+    },
+    {
+      "item": 657,
+      "quantity": 1
+    },
+    {
+      "item": 657,
+      "quantity": 1
+    },
+    {
+      "item": 657,
+      "quantity": 1
+    },
+    {
+      "item": 2041,
+      "quantity": 5
+    },
+    {
+      "item": 2041,
+      "quantity": 5
+    },
+    {
+      "item": 2041,
+      "quantity": 5
+    },
+    {
+      "item": 2041,
+      "quantity": 5
+    },
+    {
+      "item": 659,
+      "quantity": 2
+    },
+    {
+      "item": 659,
+      "quantity": 2
+    },
+    {
+      "item": 659,
+      "quantity": 2
+    },
+    {
+      "item": 659,
+      "quantity": 2
+    },
+    {
+      "item": 661,
+      "quantity": 5
+    },
+    {
+      "item": 661,
+      "quantity": 5
+    },
+    {
+      "item": 667,
+      "quantity": 5
+    },
+    {
+      "item": 667,
+      "quantity": 5
+    },
+    {
+      "item": 667,
+      "quantity": 5
+    },
+    {
+      "item": 667,
+      "quantity": 5
+    },
+    {
+      "item": 71,
+      "quantity": 1
+    },
+    {
+      "item": 71,
+      "quantity": 1
+    },
+    {
+      "item": 137,
+      "quantity": 20
+    },
+    {
+      "item": 138,
+      "quantity": 20
+    },
+    {
+      "item": 103,
+      "quantity": 50
+    },
+    {
+      "item": 105,
+      "quantity": 30
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
+    },
+    {
+      "item": 0,
+      "quantity": 0
     }
   ]
 }
