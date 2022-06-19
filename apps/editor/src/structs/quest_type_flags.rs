@@ -78,7 +78,7 @@ pub struct Variants {
     pub quest_variant2: u8,
     pub quest_variant3: u8,
     pub quest_variant4: u8, // esse valor está pegando dado da struct ForcedEquipment
-    pub unk1: u8
+    pub unk1: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { MonsterCard } from "../components/MonsterCard";
 import { useEditor } from "../context/EditorContext";
-import { findMap, getStageName, maps, monsters } from "../utils";
+import { findMap, getStageName, monsters } from "../utils";
 
 export function MonstersTab() {
   const { form } = useEditor();

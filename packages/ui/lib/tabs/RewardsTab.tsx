@@ -1,12 +1,11 @@
 import classNames from "classnames";
-import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { createFilter } from "react-select";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { SelectField } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
-import { findMap, getStageName, maps, monsters, monster_options } from "../utils";
+import { monster_options } from "../utils";
 import { item_options } from "../utils/items";
 
 export function RewardsTab() {

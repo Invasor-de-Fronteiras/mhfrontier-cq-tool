@@ -1,11 +1,8 @@
 import { useMemo } from "react";
-import { PosInputField } from "./PosInput";
 import { monster_options } from "../utils";
 import { SelectField } from "./Select";
-import { MapPreview } from "./MapPreview";
 import { useEditor } from "../context/EditorContext";
 import { InputField } from "./Input";
-import { GrClose } from "react-icons/gr";
 import { useWatch } from "react-hook-form";
 import { ObjectiveType, objective_options } from "../utils/objectiveType";
 import { item_options } from "../utils/items";

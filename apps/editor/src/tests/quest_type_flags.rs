@@ -105,7 +105,7 @@ fn quest_type_flags() {
             quest_variant2: 0,
             quest_variant3: 0,
             quest_variant4: 0,
-            unk1: 0
+            unk1: 0,
         },
         allowed_equipment_bitmask: 0, // FF7F for none
         // skip2: [0;2],

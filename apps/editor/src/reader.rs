@@ -8,7 +8,6 @@ pub struct FileReader {
     pub reader: BufReader<File>,
 }
 
-
 impl FileReader {
     pub fn from_filename(filename: &str) -> Result<FileReader> {
         let filename = Path::new(filename);

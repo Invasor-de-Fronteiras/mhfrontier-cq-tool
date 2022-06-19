@@ -31,7 +31,7 @@ export enum ObjectiveType {
 // ];
 
 export const objective_options: SelectOption[] = Object.entries(ObjectiveType)
-    .filter(([_, value]) => typeof value === 'number')
+    .filter(([, value]) => typeof value === 'number')
     .map(([label, value]) => ({
         label,
         value: value as number,

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useMemo } from "react";
 import { Control, Path, useController } from "react-hook-form";
-import ReactSelect, { Props, GroupBase, MenuListProps, OptionProps, components, createFilter } from "react-select";
+import ReactSelect, { Props, GroupBase, MenuListProps, createFilter } from "react-select";
 import { FixedSizeList as List } from 'react-window';
 import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
@@ -18,15 +18,18 @@ function MenuList<T>({ options, children, maxHeight, getValue }: MenuListProps<T
     const initialOffset = options.indexOf(value) * height;
 
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       <List
         // width={100}
         height={maxHeight}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         itemCount={children.length}
         itemSize={height}
         initialScrollOffset={initialOffset}
       >
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         {({ index, style }) => <div style={style}>{children[index]}</div>}
       </List>
