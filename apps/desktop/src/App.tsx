@@ -24,8 +24,9 @@ function App() {
       map_info: data.map_info,
       large_monster_pointers: data.large_monster_pointers,
       large_monster_spawns: data.large_monster_spawns,
-      large_monster_ids: data.large_monster_spawns.map((v) => v.monster_id >= 255 ? 0 : v.monster_id),
-      rewards: data.rewards
+      large_monster_ids: data.large_monster_spawns.map((v) =>
+        v.monster_id >= 255 ? 0 : v.monster_id
+      ),
     };
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };
@@ -33,7 +34,7 @@ function App() {
     const response: string = await invoke("save_quest_file", {
       event: JSON.stringify(payload),
     });
-    
+
     const resData = JSON.parse(response);
     if (resData?.error) {
       console.error("error: ", resData.error);

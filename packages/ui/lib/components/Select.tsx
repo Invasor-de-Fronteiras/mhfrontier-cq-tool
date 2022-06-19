@@ -92,7 +92,7 @@ export function SelectField<T, FormT>({
   const {
     field: { value: _value, onChange, ...field },
   } = useController({
-     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     name: name,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

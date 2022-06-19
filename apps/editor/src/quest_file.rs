@@ -4,11 +4,10 @@ use crate::structs::header::{MapInfo, QuestFileHeader};
 use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
 use crate::structs::reward::{RewardTableHeader, RewardTable, RewardItem};
+use crate::structs::supply_items::SupplyItem;
 use crate::writer::FileWriter;
-use std::io::Result;
-
-// use serde::{Serialize, Deserialize};
 use serde_derive::{Deserialize, Serialize};
+use std::io::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -21,6 +20,8 @@ pub struct QuestFile {
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
     pub rewards: Vec<RewardTable>
+    // supply items are a fixed-size array of 40 item slots
+    pub supply_items: Vec<SupplyItem>,
 }
 
 impl QuestFile {
@@ -61,6 +62,9 @@ impl QuestFile {
 
         let rewards: Vec<RewardTable> = QuestFile::read_rewards(&mut reader, header.reward_ptr as u64)?;
 
+        let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
+
+
         Ok(QuestFile {
             header,
             gen_quest_prop,
@@ -69,8 +73,35 @@ impl QuestFile {
             large_monster_pointers,
             large_monster_ids,
             large_monster_spawns,
-            rewards
+            rewards,
+            supply_items,
         })
+    }
+
+    fn read_supply_items(
+        header: &QuestFileHeader,
+        reader: &mut FileReader,
+    ) -> Result<Vec<SupplyItem>> {
+        let max_supply_items = 40;
+        let mut supply_items: Vec<SupplyItem> = Vec::with_capacity(max_supply_items);
+
+        reader.seek_start(header.supply_box_ptr as u64)?;
+
+        let supply_item = reader.read_struct::<SupplyItem>()?;
+        supply_items.push(supply_item);
+
+        let mut count = 1;
+        while reader.read_current_u16()? != 0xFFFF {
+            if count == max_supply_items {
+                break;
+            }
+
+            let supply_item = reader.read_struct::<SupplyItem>()?;
+            supply_items.push(supply_item);
+            count += 1;
+        }
+
+        Ok(supply_items)
     }
 
     pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {
@@ -94,7 +125,14 @@ impl QuestFile {
             writer.write_struct(&mut quest.large_monster_spawns[i])?;
         }
 
+
         QuestFile::write_rewards(&mut writer, quest)?;
+      
+         // Write supply items
+        writer.seek_start(quest.header.supply_box_ptr as u64)?;
+        for i in 0..40 {
+            writer.write_struct(&mut quest.supply_items[i])?;
+        }
 
         Ok(())
     }
@@ -129,7 +167,7 @@ impl QuestFile {
                 writer.write_struct(item)?;
             }
         }
-        
+      
         Ok(())
     }
 }

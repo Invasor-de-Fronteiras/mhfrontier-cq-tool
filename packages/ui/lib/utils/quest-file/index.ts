@@ -5,11 +5,11 @@ import { LargeMonsterPointers, LargeMonsterSpawn } from './monsters';
 import { QuestTypeFlags } from './questTypeFlags';
 import { RewardTable } from './reward';
 
-export * from './header';
-export * from './genQuestProp';
-export * from './questTypeFlags';
-export * from './map';
-export * from './monsters';
+export * from "./header";
+export * from "./genQuestProp";
+export * from "./questTypeFlags";
+export * from "./map";
+export * from "./monsters";
 
 export interface QuestFile {
     header: QuestFileHeader;

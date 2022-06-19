@@ -286,18 +286,24 @@ fn reader_test() {
                 unk12: 0,
             },
         ],
-        rewards: vec![]
+        rewards: vec![],
+        // supply_items_box: SupplyItemBox {
+        //     unk: 657,
+        //     quantity: 1,
+        // },
+        supply_items: vec![],
     };
 
-    assert_eq!(quest_file.header, expected.header);
+    assert_eq!(quest_file.header, expected.header, "Header");
     assert_eq!(
-        quest_file.large_monster_pointers,
-        expected.large_monster_pointers
+        quest_file.large_monster_pointers, expected.large_monster_pointers,
+        "LargeMonsterPointers"
     );
 
-    assert_eq!(quest_file.large_monster_ids, expected.large_monster_ids);
+    assert_eq!(
+        quest_file.large_monster_ids, expected.large_monster_ids,
+        "LargeMonsterIds"
+    );
 
-    for (i, large_monster_spawn) in quest_file.large_monster_spawns.iter().enumerate() {
-        assert_eq!(large_monster_spawn, &expected.large_monster_spawns[i]);
-    }
+    assert_eq!(quest_file.supply_items.len(), 40);
 }

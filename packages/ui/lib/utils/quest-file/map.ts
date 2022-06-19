@@ -1,5 +1,4 @@
-
 export interface MapInfo {
-    map_id: number;
-    return_bc_id: number;
+  map_id: number;
+  return_bc_id: number;
 }
