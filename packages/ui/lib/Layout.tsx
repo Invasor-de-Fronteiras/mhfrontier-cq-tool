@@ -10,6 +10,7 @@ import {
   BsQuestion,
 } from "react-icons/bs";
 import { SiMonster } from "react-icons/si";
+import { GiArmorVest } from "react-icons/gi";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
@@ -56,6 +57,12 @@ export function Layout() {
             icon: SiMonster,
             disabled: !isLoadedFile,
             uri: "/monsters",
+          },
+          {
+            name: "Forced Equipment",
+            icon: GiArmorVest,
+            disabled: !isLoadedFile,
+            uri: "/equipment",
           },
           {
             name: "Items",

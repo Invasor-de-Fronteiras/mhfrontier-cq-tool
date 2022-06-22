@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./Layout";
 import { MapPositionTab } from "./tabs/develop/MapPosition";
+import { ForcedEquipmentTab } from "./tabs/ForcedEquipementTab";
 import { LoadQuestTab } from "./tabs/LoadQuestTab";
 import { MonstersTab } from "./tabs/MonstersTab";
 import { QuestInfoTab } from "./tabs/QuestInfoTab";
@@ -14,6 +15,7 @@ export function Ui() {
       <Route element={<Layout />}>
         <Route path="/" element={<LoadQuestTab />} />
         <Route path="/monsters" element={<MonstersTab />} />
+        <Route path="/equipment" element={<ForcedEquipmentTab />} />
         <Route path="/quest-info" element={<QuestInfoTab />} />
         <Route path="/map-position" element={<MapPositionTab />} />
         <Route path="/rewards" element={<RewardsTab />} />

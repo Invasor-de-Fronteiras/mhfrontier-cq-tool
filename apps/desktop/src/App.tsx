@@ -27,7 +27,8 @@ function App() {
       large_monster_ids: data.large_monster_spawns.map((v) =>
         v.monster_id >= 255 ? 0 : v.monster_id
       ),
-      rewards: data.rewards
+      rewards: data.rewards,
+      supply_items: data.supply_items
     };
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };

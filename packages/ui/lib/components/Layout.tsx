@@ -25,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <context.Provider value={{ isOpen, onToggle: () => setIsOpen(!isOpen) }}>
       <form
-        className="w-full h-full flex flex-row overflow-auto dark:bg-[#0f0f10] dark:text-zinc-400"
+        className="w-full h-full flex flex-row dark:bg-[#0f0f10] dark:text-zinc-400"
         onSubmit={form.handleSubmit((data) => {
           handleSaveQuest(convertToIntObj(data));
         })}

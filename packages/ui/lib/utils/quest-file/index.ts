@@ -4,6 +4,7 @@ import { MapInfo } from './map';
 import { LargeMonsterPointers, LargeMonsterSpawn } from './monsters';
 import { QuestTypeFlags } from './questTypeFlags';
 import { RewardTable } from './reward';
+import { SupplyItem } from './supply_item';
 
 export * from "./header";
 export * from "./genQuestProp";
@@ -20,4 +21,5 @@ export interface QuestFile {
     large_monster_ids: number[];
     large_monster_spawns: LargeMonsterSpawn[];
     rewards: RewardTable[];
+    supply_items: SupplyItem[];
 }
