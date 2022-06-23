@@ -92,6 +92,7 @@ interface SelectFieldProps<T = SelectOption, FormT = QuestFile>
   name: Path<FormT>;
   control?: Control<FormT>;
   getFormValue?: (option: T) => unknown;
+  setFormValue?: (option: T) => unknown;
   onClearValue?: unknown;
 }
 
@@ -100,8 +101,8 @@ export function SelectField<T, FormT>({
   control,
   options,
   value,
-  getFormValue = (option) =>
-    option ? (option as unknown as SelectOption).value : null,
+  getFormValue = (option) => option ? (option as unknown as SelectOption).value : null,
+  setFormValue = getFormValue,
   onClearValue,
   ...props
 }: SelectFieldProps<T, FormT>) {
@@ -136,7 +137,7 @@ export function SelectField<T, FormT>({
         }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        onChange(getFormValue(option));
+        onChange(setFormValue(option));
       }}
     />
   );
