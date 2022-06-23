@@ -58,9 +58,10 @@ export function Layout() {
             uri: "/monsters",
           },
           {
-            name: "Items",
+            name: "Supply Items",
             icon: BsFillWalletFill,
-            disabled: !isLoadedFile || true,
+            uri: "/supply-items",
+            disabled: !isLoadedFile,
           },
           {
             name: "Rewards",
