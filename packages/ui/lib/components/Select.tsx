@@ -1,8 +1,13 @@
 import classNames from "classnames";
 import { useMemo } from "react";
 import { Control, Path, useController } from "react-hook-form";
-import ReactSelect, { Props, GroupBase, MenuListProps, createFilter } from "react-select";
-import { FixedSizeList as List } from 'react-window';
+import ReactSelect, {
+  Props,
+  GroupBase,
+  MenuListProps,
+  createFilter,
+} from "react-select";
+import { FixedSizeList as List } from "react-window";
 import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
 
@@ -13,38 +18,46 @@ export type SelectOption = {
 
 const height = 35;
 
-function MenuList<T>({ options, children, maxHeight, getValue }: MenuListProps<T>) {
-    const [value] = getValue();
-    const initialOffset = options.indexOf(value) * height;
+function MenuList<T>({
+  options,
+  children,
+  maxHeight,
+  getValue,
+}: MenuListProps<T>) {
+  const [value] = getValue();
+  const initialOffset = options.indexOf(value) * height;
 
-    return (
+  return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    <List
+      // width={100}
+      height={maxHeight}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      <List
-        // width={100}
-        height={maxHeight}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        itemCount={children.length}
-        itemSize={height}
-        initialScrollOffset={initialOffset}
-      >
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        {({ index, style }) => <div style={style}>{children[index]}</div>}
-      </List>
-    );
+      itemCount={children.length}
+      itemSize={height}
+      initialScrollOffset={initialOffset}
+    >
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
+      {({ index, style }) => <div style={style}>{children[index]}</div>}
+    </List>
+  );
 }
 
-
 interface SelectProps<T = SelectOption> extends Props<T, false, GroupBase<T>> {
-  label: string;
+  label?: string;
 }
 
 export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
-    <label className={classNames("flex flex-col w-full max-w-xs mt-3 px-3", className)}>
-      <span>{label}</span>
+    <label className={classNames("flex flex-col w-full max-w-xs m-2", className)}>
+      {label && (
+        <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          {label}
+        </span>
+      )}
       <ReactSelect
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
@@ -63,7 +76,7 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
         })}
         filterOption={createFilter({ ignoreAccents: false })}
         components={{
-          MenuList
+          MenuList,
         }}
         {...props}
       />
@@ -108,7 +121,7 @@ export function SelectField<T, FormT>({
   const selectedValue = useMemo(() => {
     if (value !== undefined) return value;
     if (!options) return null;
-    return options.find(v => getFormValue(v as T) === _value) as T;
+    return options.find((v) => getFormValue(v as T) === _value) as T;
   }, [value, _value, options]);
 
   return (

@@ -10,6 +10,6 @@ export const GroupCard: React.FC<GroupCardProps> = ({ title, children }) => (
     <div className="px-2 py-1">
       <div className="font-bold text-xl">{title}</div>
     </div>
-    <div className="px-2 py-2 flex flex-row  flex-wrap">{children}</div>
+    <div className="px-2 py-2 flex flex-row flex-wrap">{children}</div>
   </div>
 );

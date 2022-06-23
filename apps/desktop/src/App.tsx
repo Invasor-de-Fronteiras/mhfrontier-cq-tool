@@ -28,7 +28,7 @@ function App() {
         v.monster_id >= 255 ? 0 : v.monster_id
       ),
       rewards: data.rewards,
-      supply_items: data.supply_items
+      supply_items: data.supply_items,
     };
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };

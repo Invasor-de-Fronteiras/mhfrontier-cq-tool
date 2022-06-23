@@ -4,7 +4,7 @@ import { MapInfo } from './map';
 import { LargeMonsterPointers, LargeMonsterSpawn } from './monsters';
 import { QuestTypeFlags } from './questTypeFlags';
 import { RewardTable } from './reward';
-import { SupplyItem } from './supply_item';
+import { SupplyItem } from './supplyItems';
 
 export * from "./header";
 export * from "./genQuestProp";
