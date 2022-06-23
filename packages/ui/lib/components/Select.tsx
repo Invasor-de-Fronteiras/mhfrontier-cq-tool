@@ -47,15 +47,17 @@ function MenuList<T>({
 }
 
 interface SelectProps<T = SelectOption> extends Props<T, false, GroupBase<T>> {
-  label: string;
+  label?: string;
 }
 
 export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
-    <label className={classNames("flex flex-col w-full max-w-xs", className)}>
-      <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-        {label}
-      </span>
+    <label className={classNames("flex flex-col w-full max-w-xs m-2", className)}>
+      {label && (
+        <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          {label}
+        </span>
+      )}
       <ReactSelect
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
