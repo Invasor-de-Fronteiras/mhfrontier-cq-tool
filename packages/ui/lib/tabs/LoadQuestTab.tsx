@@ -1,4 +1,3 @@
-
 import { Button } from "ui";
 import { Dropzone } from "../components/Dropzone";
 import { maps } from "../utils";
@@ -53,9 +52,7 @@ function Card({ title, buttonText, buttonDisabled, children }: CardProps) {
     <div className="border px-2 py-3 w-full max-w-lg items-center flex flex-col">
       <h3 className="text-center">{title}</h3>
       <div className="flex-1 p-3 w-full h-full max-h-40">{children}</div>
-      <Button disabled={buttonDisabled}>
-        {buttonText}
-      </Button>
+      <Button disabled={buttonDisabled}>{buttonText}</Button>
     </div>
   );
 }

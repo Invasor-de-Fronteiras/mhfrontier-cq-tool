@@ -1,5 +1,5 @@
 use crate::{
-    offsets::{MAIN_QUEST_PROP_PRT},
+    offsets::MAIN_QUEST_PROP_PRT,
     reader::FileReader,
     structs::quest_type_flags::{
         ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
@@ -25,7 +25,10 @@ fn quest_type_flags() {
             skip1: 0,
             quest_fee: 300,
             reward_main: 4400,
-            deathtime: 1500,
+            max_death: 220,
+            unk9: 5,
+            unk10: 0,
+            unk11: 0,
             reward_a: 1000,
             skip2: [0; 2],
             reward_b: 1000,
@@ -101,6 +104,8 @@ fn quest_type_flags() {
             quest_variant1: 0,
             quest_variant2: 0,
             quest_variant3: 0,
+            quest_variant4: 0,
+            unk1: 0,
         },
         allowed_equipment_bitmask: 0, // FF7F for none
         // skip2: [0;2],

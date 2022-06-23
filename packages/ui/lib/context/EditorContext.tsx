@@ -1,21 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { createContext } from "react";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { QuestFile } from "../utils";
 
 interface EditorContextState {
-  data?: QuestFile;
   uploadFile: {
     dragSupport: boolean;
     uploadFileContainerProps: () => React.HTMLAttributes<HTMLDivElement>;
     uploadFileInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
     isDragActive: boolean;
-  },
-  handleSaveQuest: () => void;
-  onChangeData: (handler: (data: QuestFile) => QuestFile) => void;
+  };
+  handleSaveQuest: (data: QuestFile) => void;
+  form: UseFormReturn<QuestFile>;
+  isLoadedFile: boolean;
 }
 
-interface EditorContextProps extends EditorContextState {
+interface EditorContextProps extends Omit<EditorContextState, "form"> {
   children: React.ReactNode;
+  data?: QuestFile;
 }
 
 const context = createContext({} as EditorContextState);
@@ -24,7 +26,17 @@ export function EditorContextProvider({
   children,
   ...props
 }: EditorContextProps) {
-  return <context.Provider value={props}>{children}</context.Provider>;
+  const form = useForm<QuestFile>({
+    defaultValues: props.data,
+  });
+
+  useEffect(() => {
+    form.reset(props.data);
+  }, [props.data]);
+
+  return (
+    <context.Provider value={{ form, ...props }}>{children}</context.Provider>
+  );
 }
 
 export const useEditor = () => useContext(context);

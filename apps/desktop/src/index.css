@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply overflow-hidden;
+    overflow: hidden;
 }

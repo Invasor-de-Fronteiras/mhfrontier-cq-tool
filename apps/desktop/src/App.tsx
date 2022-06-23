@@ -3,6 +3,7 @@ import { useState } from "react";
 import { EditorContextProvider, QuestFile, Ui } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
+import { toast } from 'react-toastify';
 
 interface SaveQuestPayload {
   filepath: string;
@@ -11,17 +12,23 @@ interface SaveQuestPayload {
 
 function App() {
   const [questPath, setQuestPath] = useState<string | null>(null);
-  const [data, setData] = useState<QuestFile | undefined>(undefined);
+  const [file, setFile] = useState<QuestFile | undefined>(undefined);
 
-  const handleChangeSave = async () => {
+  const handleChangeSave = async (data: QuestFile) => {
     if (!questPath || !data) return;
 
     const quest: QuestFile = {
       header: data.header,
+      gen_quest_prop: data.gen_quest_prop,
+      quest_type_flags: data.quest_type_flags,
       map_info: data.map_info,
       large_monster_pointers: data.large_monster_pointers,
       large_monster_spawns: data.large_monster_spawns,
-      large_monster_ids: data.large_monster_spawns.map((v) => v.monster_id >= 255 ? 0 : v.monster_id),
+      large_monster_ids: data.large_monster_spawns.map((v) =>
+        v.monster_id >= 255 ? 0 : v.monster_id
+      ),
+      rewards: data.rewards,
+      supply_items: data.supply_items,
     };
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };
@@ -30,13 +37,14 @@ function App() {
       event: JSON.stringify(payload),
     });
 
-    console.log("response: ", response);
-
     const resData = JSON.parse(response);
     if (resData?.error) {
-      console.log("error: ", resData.error);
+      console.error("error: ", resData.error);
+      toast.error(`Failed to save file: ${resData.error}`);
       return;
     }
+
+    toast.success('Successfully saved quest file!');
   };
 
   const onReadFile = async () => {
@@ -50,26 +58,26 @@ function App() {
 
       const quest = JSON.parse(response);
       if (quest && quest.error) {
+        toast.error(`Failed to read file: ${quest.error}`);
         // setError(quest.error);
-        console.log("response ", response);
+        console.error("response ", response);
         return;
       }
 
-      setData(quest as QuestFile);
+      setFile(quest as QuestFile);
       setQuestPath(path as string);
+      toast.success('Quest file read successfully!');
       // setResult(quest);
-      console.log("response ", response);
     } catch (error) {
-      console.log("error ", error);
+      console.error("error ", error);
     }
   };
 
   return (
     <EditorContextProvider
-      data={data}
+      data={file}
       handleSaveQuest={handleChangeSave}
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      onChangeData={(handler) => setData(handler(data!))}
+      isLoadedFile={!!file}
       uploadFile={{
         dragSupport: false,
         isDragActive: false,

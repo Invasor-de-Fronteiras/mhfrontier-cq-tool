@@ -3,7 +3,7 @@ import { BsUpload } from "react-icons/bs";
 import { useEditor } from "../context/EditorContext";
 
 export function Dropzone() {
-  const { uploadFile } = useEditor()
+  const { uploadFile } = useEditor();
 
   return (
     <div
@@ -16,8 +16,10 @@ export function Dropzone() {
       {...uploadFile.uploadFileContainerProps()}
     >
       <BsUpload size={25} className="my-4" />
-      <input {...uploadFile.uploadFileInputProps()} />
-      <h3>{uploadFile.isDragActive ? "Drop the file here" : "Choose a File"}</h3>
+      <input {...uploadFile.uploadFileInputProps()} className="hidden" />
+      <h3>
+        {uploadFile.isDragActive ? "Drop the file here" : "Choose a File"}
+      </h3>
     </div>
   );
 }

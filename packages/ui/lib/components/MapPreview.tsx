@@ -111,7 +111,6 @@ export function MapPreview({
           : pos.y,
       id: selected,
     };
-    console.log(obj, pos, stage);
 
     onChange?.(obj);
   };

@@ -79,4 +79,22 @@ impl FileReader {
 
         Ok(f32::from_le_bytes(buffer))
     }
+
+    pub fn current_position(&mut self) -> std::io::Result<u64> {
+        self.reader.stream_position()
+    }
+
+    pub fn read_current_u8(&mut self) -> std::io::Result<u8> {
+        let current = self.reader.stream_position()?;
+        let result = self.read_u8()?;
+        self.seek_start(current)?;
+        Ok(result)
+    }
+
+    pub fn read_current_u16(&mut self) -> std::io::Result<u16> {
+        let current = self.reader.stream_position()?;
+        let result = self.read_u16()?;
+        self.seek_start(current)?;
+        Ok(result)
+    }
 }
