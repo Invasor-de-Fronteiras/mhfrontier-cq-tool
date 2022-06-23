@@ -27,7 +27,7 @@ export function SupplyItemTab() {
               <th role="columnheader" scope="col" className="px-6 py-4">
                 Item
               </th>
-              <th role="columnheader" scope="col" className="px-6 py-4">
+              <th role="columnheader" scope="col" className="px-6 py-4 m-min">
                 Quantity
               </th>
             </tr>
