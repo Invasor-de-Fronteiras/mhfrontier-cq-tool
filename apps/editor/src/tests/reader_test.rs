@@ -1,7 +1,7 @@
 use crate::{
-    quest_file::QuestFile,
+    quest::quest_file::QuestFile,
     save_json::save_quest_to_json,
-    structs::{
+    quest::{
         header::{MapInfo, QuestFileHeader},
         monsters::{LargeMonsterPointers, LargeMonsterSpawn},
         quest_type_flags::{

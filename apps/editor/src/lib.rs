@@ -1,9 +1,7 @@
-pub mod offsets;
-pub mod quest_file;
-pub mod reader;
 pub mod save_json;
-pub mod structs;
-pub mod writer;
+pub mod quest;
+pub mod questlist;
+pub mod file;
 
 // use quest_file::QuestFile;
 

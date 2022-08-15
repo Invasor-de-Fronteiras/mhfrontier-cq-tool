@@ -1,12 +1,12 @@
-use crate::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
-use crate::reader::FileReader;
-use crate::structs::header::{MapInfo, QuestFileHeader};
-use crate::structs::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
-use crate::structs::quest_type_flags::{GenQuestProp, QuestTypeFlags};
-use crate::structs::reward::{RewardItem, RewardTable, RewardTableHeader};
-use crate::structs::supply_items::SupplyItem;
-use crate::writer::FileWriter;
-use serde_derive::{Deserialize, Serialize};
+use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
+use crate::file::reader::FileReader;
+use crate::file::writer::FileWriter;
+use crate::quest::header::{MapInfo, QuestFileHeader};
+use crate::quest::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
+use crate::quest::quest_type_flags::{GenQuestProp, QuestTypeFlags};
+use crate::quest::reward::{RewardItem, RewardTable, RewardTableHeader};
+use crate::quest::supply_items::SupplyItem;
+use serde_derive::{ Deserialize, Serialize };
 use std::io::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

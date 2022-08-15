@@ -5,7 +5,7 @@
 
 use tauri;
 use serde::{Serialize, Deserialize};
-use editor::quest_file::QuestFile;
+use editor::quest::quest_file::QuestFile;
 use std::io::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
