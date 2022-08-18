@@ -75,7 +75,7 @@ fn reader_test() {
                 quest_locale_flags: 10,
                 unk2: 0,
                 ranking_id: 6,
-                unk3: 5,
+                course: 5,
                 unk4: 19,
                 rank_band0: 31,
                 untat_id: 1, // enum quest_type_id N,ka,zy,su,HC,HS,Rea,G

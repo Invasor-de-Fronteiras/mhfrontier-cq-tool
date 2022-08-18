@@ -10,5 +10,5 @@ fn size_test() {
 
     println!("size: {}", size);
 
-    panic!();
+    // panic!();
 }

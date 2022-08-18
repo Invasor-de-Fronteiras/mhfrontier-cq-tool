@@ -33,11 +33,11 @@ pub struct Quantity {
 pub struct MainQuestProp {
     pub unk0: u8,
     pub unk1: u8,
-    pub quest_locale_flags: u8,
+    pub quest_locale_flags: u8, // season / daytime
     pub unk2: u8,
     pub ranking_id: u8,
     pub unk3: u8,
-    pub unk4: u16,
+    pub course: u16,
     pub rank_band0: u16,
     pub untat_id: u8, // enum quest_type_id N,ka,zy,su,HC,HS,Rea,G
     pub skip1: u8,

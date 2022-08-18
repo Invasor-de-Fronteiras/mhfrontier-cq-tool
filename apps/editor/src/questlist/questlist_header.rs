@@ -1,7 +1,5 @@
+use serde_derive::{Serialize, Deserialize};
 
-pub fn quest_header() -> [u8; 16] {
-    return [00, 00, 15, 04, 18, 01, 00, 00, 00, 00, 00, 00, 00, 00, 255, 255 ];
-}
 
 pub fn file_header() -> [u8; 8] {
     return [ 00, 42, 13, 125, 143, 204, 00, 00 ];
@@ -15,7 +13,9 @@ pub fn quest_end_last() -> [u8; 1] {
     return [ 00 ];
 }
 
-pub struct FileHeader {
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[repr(C)]
+pub struct QuestlistHeader {
     pub quest_count: u16,
     pub unk0: u16,
     pub unk1: u16,

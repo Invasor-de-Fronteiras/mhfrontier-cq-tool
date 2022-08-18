@@ -1,8 +1,11 @@
+extern crate encoding_rs;
+
 use std::fs::File;
 use std::io::{BufReader, Read, Result, Seek, SeekFrom};
 use std::mem::{forget, size_of, MaybeUninit};
 use std::path::Path;
 use std::slice;
+use encoding_rs::SHIFT_JIS;
 
 pub struct FileReader {
     pub reader: BufReader<File>,
@@ -97,4 +100,28 @@ impl FileReader {
         self.seek_start(current)?;
         Ok(result)
     }
+
+    pub fn read_string(&mut self) -> std::io::Result<String> {
+        let mut text: Vec<u8> = vec![];
+        let mut end_of_string = false;
+        
+        while !end_of_string {
+            let value = self.read_u8()?;
+            end_of_string = value == 0;
+            if !end_of_string {
+                text.push(value);
+            }
+        }
+
+        let (res, _enc, errors) = SHIFT_JIS.decode(&text);
+        println!("read: {:?}", text);
+        if errors {
+            Ok("invalid text".to_string())
+
+        } else {
+            Ok(res.to_string())
+        }  
+    }
+
+
 }
