@@ -33,7 +33,7 @@ impl QuestlistFile {
         })
     }
 
-    pub fn save_to(filename: &str, mut questlist: QuestlistFile) -> Result<()> {
+    pub fn save_to(filename: &str, questlist: &mut QuestlistFile) -> Result<()> {
         let mut writer = FileWriter::from_filename(filename)?;
 
         questlist.header.quest_count = if questlist.quests.len() <= 42 {
@@ -80,7 +80,7 @@ impl QuestlistFile {
         Ok(questlists)
     }
 
-    pub fn save_all_questlist(path: &str, questlists: Vec<QuestlistFile>) -> Result<()> {
+    pub fn save_all_questlist(path: &str, questlists: &mut Vec<QuestlistFile>) -> Result<()> {
         
         for questlist in questlists {
             let complete_path = format!("{}/{}.bin", path, &questlist.filename);
