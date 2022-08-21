@@ -6,8 +6,9 @@
       15
     ],
     "max_players": 4,
-    "quest_category": 274,
+    "quest_category": 18,
     "unk1": [
+      0,
       0,
       0,
       0,
@@ -17,7 +18,8 @@
     "mark": 0,
     "unk2": 0,
     "unk3": 0,
-    "lenght": 0
+    "length_msb": 0,
+    "length_lsb": 0
   },
   "quest_type_flags": {
     "main_quest_prop": {
@@ -152,13 +154,13 @@
         0,
         0
       ],
-      "monster_id": 48
+      "monster_icon1": 48,
+      "monster_icon2": 0,
+      "monster_icon3": 0,
+      "monster_icon4": 0,
+      "monster_icon5": 0
     },
     "skip3": [
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -283,56 +285,24 @@
     0,
     0
   ],
-  "string_ptr": {
-    "title": 15740,
-    "main_objective": 15770,
-    "sub_a_objective": 15797,
-    "sub_b_objective": 15816,
-    "clear_reqs": 15843,
-    "fail_reqs": 15897,
-    "contractor": 15921,
-    "description": 15934
-  },
   "strings": {
-    "title": {
-      "pointer": 15740,
-      "hex": [],
-      "string": "≪密林探索≫\n水辺のダイミョウ"
+    "pointers": {
+      "title": 15740,
+      "main_objective": 15770,
+      "sub_a_objective": 15797,
+      "sub_b_objective": 15816,
+      "clear_reqs": 15843,
+      "fail_reqs": 15897,
+      "contractor": 15921,
+      "description": 15934
     },
-    "main_objective": {
-      "pointer": 15770,
-      "hex": [],
-      "string": "ダイミョウザザミ１匹の狩猟"
-    },
-    "sub_a_objective": {
-      "pointer": 15797,
-      "hex": [],
-      "string": "ザザミソ８個の納品"
-    },
-    "sub_b_objective": {
-      "pointer": 15816,
-      "hex": [],
-      "string": "ダイミョウザザミのヤド破壊"
-    },
-    "clear_reqs": {
-      "pointer": 15843,
-      "hex": [],
-      "string": "メインターゲット、もしくは\nサブターゲットＡかＢの達成"
-    },
-    "fail_reqs": {
-      "pointer": 15897,
-      "hex": [],
-      "string": "報酬金ゼロ\nタイムアップ"
-    },
-    "contractor": {
-      "pointer": 15921,
-      "hex": [],
-      "string": "大老殿ギルド"
-    },
-    "description": {
-      "pointer": 15934,
-      "hex": [],
-      "string": "この季節の水辺には、盾蟹\n≪ダイミョウザザミ≫が姿を\n現すことがあるわ。硬い殻に\n守られた体にダメージを与え\nることは容易くないわ。\nヤオザミから≪ザザミソ≫を\n剥いで収めてもいいわよ？"
-    }
+    "title": "≪密林探索≫\n水辺のダイミョウ",
+    "main_objective": "ダイミョウザザミ１匹の狩猟",
+    "sub_a_objective": "ザザミソ８個の納品",
+    "sub_b_objective": "ダイミョウザザミのヤド破壊",
+    "clear_reqs": "メインターゲット、もしくは\nサブターゲットＡかＢの達成",
+    "fail_reqs": "報酬金ゼロ\nタイムアップ",
+    "contractor": "大老殿ギルド",
+    "description": "この季節の水辺には、盾蟹\n≪ダイミョウザザミ≫が姿を\n現すことがあるわ。硬い殻に\n守られた体にダメージを与え\nることは容易くないわ。\nヤオザミから≪ザザミソ≫を\n剥いで収めてもいいわよ？"
   }
 }

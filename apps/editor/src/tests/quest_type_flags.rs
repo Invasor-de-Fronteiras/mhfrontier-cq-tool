@@ -18,8 +18,8 @@ fn quest_type_flags() {
             quest_locale_flags: 10,
             unk2: 0,
             ranking_id: 6,
+            unk3: 19,
             course: 5,
-            unk4: 19,
             rank_band0: 31,
             untat_id: 1, // enum quest_type_id N,ka,zy,su,HC,HS,Rea,G
             skip1: 0,
@@ -121,9 +121,13 @@ fn quest_type_flags() {
             item2: 528,
             item3: 473,
             skip4: [0; 3],
-            monster_id: 48,
+            monster_icon1: 48,
+            monster_icon2: 0,
+            monster_icon3: 0,
+            monster_icon4: 0,
+            monster_icon5: 0
         },
-        skip3: [0; 10],
+        skip3: [0; 6],
         quest_clears_allowed: 0,
         quest_monster_icon: 0,
     };

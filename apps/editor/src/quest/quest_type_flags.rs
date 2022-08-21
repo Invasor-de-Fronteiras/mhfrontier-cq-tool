@@ -126,7 +126,11 @@ pub struct RewardsFocus {
     pub item2: u16,
     pub item3: u16,
     pub skip4: [u8; 3],
-    pub monster_id: u8,
+    pub monster_icon1: u8,
+    pub monster_icon2: u8,
+    pub monster_icon3: u8,
+    pub monster_icon4: u8,
+    pub monster_icon5: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -166,7 +170,7 @@ pub struct QuestTypeFlags {
     pub variants: Variants,
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8; 10],
+    pub skip3: [u8; 6],
     pub quest_clears_allowed: u32,
     pub quest_monster_icon: u8,
 }

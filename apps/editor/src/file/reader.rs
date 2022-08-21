@@ -114,10 +114,8 @@ impl FileReader {
         }
 
         let (res, _enc, errors) = SHIFT_JIS.decode(&text);
-        println!("read: {:?}", text);
         if errors {
             Ok("invalid text".to_string())
-
         } else {
             Ok(res.to_string())
         }  

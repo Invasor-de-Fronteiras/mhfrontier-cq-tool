@@ -1,8 +1,10 @@
 use std::fs::{File, OpenOptions};
-use std::io::{Result, Seek, SeekFrom, Write};
+use std::io::{Result, Seek, SeekFrom, Write, Error, ErrorKind};
 use std::mem::{forget, size_of};
 use std::path::Path;
 use std::slice;
+
+use encoding_rs::SHIFT_JIS;
 
 pub struct FileWriter {
     pub writer: File,
@@ -48,6 +50,11 @@ impl FileWriter {
         }
     }
 
+    pub fn write_buffer(&mut self, buffer: &[u8]) -> std::io::Result<()> {
+        self.writer.write(&buffer)?;
+        Ok(())
+    }
+
     pub fn write_u32(&mut self, value: &u32) -> std::io::Result<usize> {
         let buffer = value.to_le_bytes();
         let result = self.writer.write(&buffer)?;
@@ -63,7 +70,7 @@ impl FileWriter {
     }
 
     pub fn write_u8(&mut self, value: &u8) -> std::io::Result<()> {
-        let mut buffer = value.to_be_bytes();
+        let mut buffer = value.to_le_bytes();
         self.writer.write(&mut buffer)?;
 
         Ok(())
@@ -72,6 +79,25 @@ impl FileWriter {
     pub fn write_f32(&mut self, value: &f32) -> std::io::Result<()> {
         let mut buffer = value.to_le_bytes();
         self.writer.write(&mut buffer)?;
+
+        Ok(())
+    }
+
+    pub fn current_position(&mut self) -> std::io::Result<u64> {
+        self.writer.stream_position()
+    }
+
+    pub fn write_string(&mut self, value: &str) -> std::io::Result<()> {
+        let (result, _enc, errors) = SHIFT_JIS.encode(value);
+        if errors {
+            return Err(
+                Error::new(ErrorKind::Other, format!("Failed to convert {} to JIS", value))
+            );
+        }
+
+        let mut buf = result.to_vec();
+        buf.push(0);
+        self.writer.write(&buf)?;
 
         Ok(())
     }

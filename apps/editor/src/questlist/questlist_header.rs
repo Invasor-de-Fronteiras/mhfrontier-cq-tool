@@ -16,10 +16,11 @@ pub fn quest_end_last() -> [u8; 1] {
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct QuestlistHeader {
-    pub quest_count: u16,
-    pub unk0: u16,
+    pub unk0: u8,
+    pub quest_count: u8,
     pub unk1: u16,
     pub unk2: u16,
+    pub unk3: u16,
 }
 
 // utilizar o quest_type_flags
