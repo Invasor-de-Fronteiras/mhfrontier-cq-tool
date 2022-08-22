@@ -18,7 +18,7 @@ export interface MainQuestProp {
   unk2: number;
   ranking_id: number;
   unk3: number;
-  unk4: number;
+  course: number;
   rank_band0: number;
   untat_id: number;
   skip1: number;
@@ -100,7 +100,11 @@ export interface RewardsFocus {
   item2: number;
   item3: number;
   skip4: number[];
-  monster_id: number;
+  monster_icon1: number;
+  monster_icon2: number;
+  monster_icon3: number;
+  monster_icon4: number;
+  monster_icon5: number;
 }
 
 export interface QuestTypeFlags {
