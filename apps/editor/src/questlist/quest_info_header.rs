@@ -1,7 +1,7 @@
 use serde_derive::{Serialize, Deserialize};
 
 
-// 2 bytes
+// 1 byte
 pub enum QuestCategory {
     Campaign = 0x0009,
     GreatSlaying = 0x10,
@@ -15,25 +15,6 @@ pub enum QuestCategory {
     Superior = 0x34,
     GSuperior = 0x35,
     GArmorWeapon = 0x36,
-    // "Campaign(HR)": 0x09,
-    // "Great Slaying": 0x10,
-    // "Event(HR)": 0x12,
-    // "Great Slaying": 0x16,
-    // "Series": 0x18,
-    // "Daily": 0x1A,
-    // "Event(GSR)": 0x1C,
-    // "Emergency(?)": 0x1F,
-    // "Exotic": 0x26,
-    // "Exotic(GSR★8)": 0x27,
-    // "Great Slaying(GSR)": 0x28,
-    // "Zenith": 0x2B,
-    // "Diva defence": 0x2E,
-    // "Keo(?)": 0x30,
-    // "Great Slaying Support(GSR)": 0x32,
-    // "Great Slaying Support(GSR)": 0x33,
-    // "Superior": 0x34,
-    // "Superior(GSR)": 0x35,
-    // "Weapon/Armor Quest(GSR)": 0x36,
 }
 
 pub enum QuestMark {
@@ -77,7 +58,7 @@ impl QuestInfoHeader {
     }
 
     pub fn get_length(&self) -> u16 {
-        u16::from_le_bytes([self.length_msb, self.length_lsb])
+        u16::from_le_bytes([self.length_lsb, self.length_msb])
     }
 
     pub fn set_length(&mut self, value: u16) {

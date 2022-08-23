@@ -21,9 +21,24 @@ impl QuestlistFile {
         let header = reader.read_struct::<QuestlistHeader>()?;
         let mut quests: Vec<QuestInfo> = vec![];
 
-        for _ in 0..header.quest_count {
-            let quest = QuestInfo::from_questlist(&mut reader)?;            
+        for i in 0..header.quest_count {
+            let quest = QuestInfo::from_questlist(&mut reader)?;        
             quests.push(quest);
+
+            let current_ptr = reader.current_position()?;
+
+            if i != header.quest_count - 1 {
+                for t in 1..250 {
+                    let offset = current_ptr + t;
+                    reader.seek_start(offset)?;
+                    let back_byte = reader.read_u8()?;
+                    let strings_ptr = reader.read_u16()?;
+                    if back_byte == 0 && strings_ptr == 0x140 {
+                        reader.seek_start(offset - 55)?;
+                        break;
+                    }
+                }
+            }
         }
 
         Ok(QuestlistFile {

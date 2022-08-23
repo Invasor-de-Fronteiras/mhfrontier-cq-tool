@@ -6,6 +6,8 @@ import { ForcedEquipmentTab } from "./tabs/ForcedEquipementTab";
 import { LoadQuestTab } from "./tabs/LoadQuestTab";
 import { MonstersTab } from "./tabs/MonstersTab";
 import { QuestInfoTab } from "./tabs/QuestInfoTab";
+import { LoadQuestlistTab } from "./tabs/questlist/LoadQuestlistTab";
+import { QuestlistTab } from "./tabs/questlist/QuestlistsTab";
 import { RewardsTab } from "./tabs/RewardsTab";
 import { SupplyItemTab } from "./tabs/SupplyItemTab";
 import { UnknownTab } from "./tabs/UnknownTab";
@@ -22,6 +24,8 @@ export function Ui() {
         <Route path="/rewards" element={<RewardsTab />} />
         <Route path="/unknown" element={<UnknownTab />} />
         <Route path="/supply-items" element={<SupplyItemTab />} />
+        <Route path="/questlist-load" element={<LoadQuestlistTab />} />
+        <Route path="/questlist" element={<QuestlistTab />} />
       </Route>
     </Routes>
   );

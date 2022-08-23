@@ -43,10 +43,6 @@ impl QuestStrings {
 
         let string_ptr = reader.read_struct::<QuestStringsPointers>()?;
 
-        println!("[questinfo] title_ptr {:#04x}", string_ptr.title);
-        println!("[questinfo] offset {:#04x}", offset);
-        println!("[questinfo] title_real_ptr {:#04x}", offset + string_ptr.title);
-
         let title = QuestStrings::read_string(reader, offset + string_ptr.title)?;
         let main_objective = QuestStrings::read_string(reader, offset + string_ptr.main_objective)?;
         let sub_a_objective = QuestStrings::read_string(reader, offset + string_ptr.sub_a_objective)?;

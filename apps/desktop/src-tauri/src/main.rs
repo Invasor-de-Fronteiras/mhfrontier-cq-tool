@@ -20,7 +20,7 @@ struct SaveQuestPayload {
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 struct SaveQuestlistPayload {
-  filepath: String,
+  folder: String,
   questlists: Vec<QuestlistFile>
 }
 
@@ -61,7 +61,7 @@ fn read_questinfo(event: String) -> String {
 fn save_all_questlists(event: String) -> String {
   let result = || -> Result<String> {
     let mut payload = serde_json::from_str::<SaveQuestlistPayload>(&event)?;
-    QuestlistFile::save_all_questlist(&payload.filepath, &mut payload.questlists)?;
+    QuestlistFile::save_all_questlist(&payload.folder, &mut payload.questlists)?;
 
     Ok(String::from("{ \"status\": \"Success\" }"))
   };
