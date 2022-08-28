@@ -1,10 +1,12 @@
-use std::fs::{File, OpenOptions};
-use std::io::{Result, Seek, SeekFrom, Write, Error, ErrorKind};
+use std::fs::{File, OpenOptions, remove_file };
+use std::io::{Result, Seek, SeekFrom, Write, Error, ErrorKind, Read};
 use std::mem::{forget, size_of};
 use std::path::Path;
 use std::slice;
 
 use encoding_rs::SHIFT_JIS;
+
+use super::reader::FileReader;
 
 pub struct FileWriter {
     pub writer: File,
@@ -16,6 +18,15 @@ impl FileWriter {
 
         let f = OpenOptions::new().read(true).write(true).open(filename)?;
 
+        Ok(FileWriter { writer: f })
+    }
+
+    pub fn from_new_filename(filename: &str) -> Result<FileWriter> {
+        let filename = Path::new(filename);
+        if filename.exists() {
+            remove_file(filename)?;
+        }
+        let f = File::create(filename)?;
         Ok(FileWriter { writer: f })
     }
 
@@ -98,6 +109,16 @@ impl FileWriter {
         let mut buf = result.to_vec();
         buf.push(0);
         self.writer.write(&buf)?;
+
+        Ok(())
+    }
+
+    pub fn write_from_filename(&mut self, filename: &str) -> Result<()> {
+        let mut reader = FileReader::from_filename(filename)?;
+        let mut buffer = Vec::new();
+        reader.reader.read_to_end(&mut buffer)?;
+        
+        self.write_buffer(&buffer)?;
 
         Ok(())
     }

@@ -4,7 +4,6 @@ use std::io::Result;
 use serde::Serialize;
 
 use crate::quest::quest_file::QuestFile;
-use crate::questlist::quest_info::QuestInfo;
 
 pub fn save_quest_to_json(filename: &str, quest: &QuestFile) -> Result<()> {
     // Save the JSON structure into the other file.

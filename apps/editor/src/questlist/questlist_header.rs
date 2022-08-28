@@ -1,5 +1,6 @@
 use serde_derive::{Serialize, Deserialize};
 
+pub const QUEST_END: [u8; 33] = [26, 131, 110, 131, 147, 131, 94, 129, 91, 143, 148, 140, 78, 130, 214, 138, 180, 142, 211, 130, 240, 141, 158, 130, 223, 130, 196, 29, 93, 48, 210, 0, 0];
 
 pub fn file_header() -> [u8; 8] {
     return [ 00, 42, 13, 125, 143, 204, 00, 00 ];
@@ -22,14 +23,3 @@ pub struct QuestlistHeader {
     pub unk2: u16,
     pub unk3: u16,
 }
-
-// utilizar o quest_type_flags
-// apartir do MAIN_QUEST_PROP_PRT: u32 = 0xC0; ler 320 bytes
-// qyestTypeFlags tem 208 bytes, sobrando 112 bytes
-// nos 320 bytes terá o quetTypeflags e mais algumas coisas
-// no nosso mainquestprop não tem os icones de monstros e nem o course
-
-// o editor de quest sempre procura pelo valor 0x140,
-// porque todas as quests no questlist usam a mesma posição para quest_strings_ptr (0x28 / 40)
-// assim sempre q ele achar esse valor ele só precisa voltar 56 posições para encontrar o começo do header (40 + 16) = posição do quest_strings_ptr no quest_types_flags + header da quest
- 

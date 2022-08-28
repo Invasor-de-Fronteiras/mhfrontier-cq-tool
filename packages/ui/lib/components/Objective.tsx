@@ -58,8 +58,6 @@ export function ObjectiveCard({ objective }: ObjectiveCardProps) {
         [shouldSelectItem, data.monster_id]
     );
 
-    console.log('data:', data);
-
     return (
         // <div className="drop-shadow-sm border bg-white dark:bg-slate-800 rounded px-3 py-3 flex flex-col flex-wrap items-center gap-3 w-full max-w-sm">
         <div className="flex flex-row" >

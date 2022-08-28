@@ -5,10 +5,10 @@ import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
 
-// interface SaveQuestlistPayload {
-//   folder: string;
-//   questlists: QuestlistFile[];
-// }
+interface SaveQuestlistPayload {
+  folder: string;
+  questlists: QuestlistFile[];
+}
 
 interface QuestlistEditorProps {
     children: React.ReactNode;
@@ -16,40 +16,52 @@ interface QuestlistEditorProps {
 
 function QuestlistEditor({ children }: QuestlistEditorProps) {
   const [questlistPath, setQuestlistPath] = useState<string | null>(null);
-  const [questlists, setQuestlists] = useState<QuestlistFile[] | undefined>(undefined);
-  const data = useMemo(() => ({ questlists: questlists || [] }), [questlists]);
+  const [quests, setQuests] = useState<QuestInfo[] | undefined>(undefined);
+  const data = useMemo(() => ({ quests: quests || [] }), [quests]);
 
-  const handleChangeSave = async (data: QuestlistFile[]) => {
-    if (!questlistPath || !data) return;
+  const handleSaveQuestlist = async (values: QuestInfo[]) => {
+    if (!questlistPath || !values) return;
+    const folder = await open({ multiple: false, directory: true }) as string;
+    if (!folder) return;
 
-    // const quest: QuestFile = {
-    //   header: data.header,
-    //   gen_quest_prop: data.gen_quest_prop,
-    //   quest_type_flags: data.quest_type_flags,
-    //   map_info: data.map_info,
-    //   large_monster_pointers: data.large_monster_pointers,
-    //   large_monster_spawns: data.large_monster_spawns,
-    //   large_monster_ids: data.large_monster_spawns.map((v) =>
-    //     v.monster_id >= 255 ? 0 : v.monster_id
-    //   ),
-    //   rewards: data.rewards,
-    //   supply_items: data.supply_items,
-    // };
+    const data = [...values];
+    const questlists: QuestlistFile[] = [];
 
-    // const payload: SaveQuestlistPayload = { filepath: questPath, quest };
+    let i = 0;
+    while (data.length > 0) {
+      const items = data.splice(0, 42);
 
-    // const response: string = await invoke("save_quest_file", {
-    //   event: JSON.stringify(payload),
-    // });
+      questlists.push({
+        filename: `list_${i}`,
+        header: { 
+          quest_count: items.length,
+          unk0: 0,
+          unk1: 38685,
+          unk2: 61732,
+          unk3: 0
+        },
+        quests: items
+      });
 
-    // const resData = JSON.parse(response);
-    // if (resData?.error) {
-    //   console.error("error: ", resData.error);
-    //   toast.error(`Failed to save file: ${resData.error}`);
-    //   return;
-    // }
+      i += 42;
+    }
 
-    // toast.success('Successfully saved quest file!');
+    const payload: SaveQuestlistPayload = {
+      folder,
+      questlists
+    };
+
+    const response: string = await invoke("save_all_questlists", {
+      event: JSON.stringify(payload),
+    });
+
+    const resData = JSON.parse(response);
+    if (resData?.error) {
+      toast.error(`Failed to save questlists: ${resData.error}`);
+      return;
+    }
+
+    toast.success('Successfully saved questlist!');
   };
 
   const loadQuestlists = async () => {
@@ -61,16 +73,16 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
         event: path,
       });
 
-      console.log('load questlist: ', response);
       const questlists = JSON.parse(response);
-      console.log('load questlist (json): ', questlists);
       if (questlists && questlists.error) {
         toast.error(`Failed to read file: ${questlists.error}`);
-        console.error("response ", response);
         return;
       }
 
-      setQuestlists(questlists as QuestlistFile[]);
+      setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
+        acc.push(...cur.quests);
+        return acc;
+      }, []));
       setQuestlistPath(path as string);
       toast.success('Quest file read successfully!');
     } catch (error) {
@@ -85,8 +97,8 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
   return (
     <QuestlistEditorContextProvider
       data={data}
-      handleSaveQuest={handleChangeSave}
-      isLoadedQuestlists={!!questlists}
+      handleSaveQuestlist={handleSaveQuestlist}
+      isLoadedQuestlists={!!quests}
       loadQuestlists={loadQuestlists}
       addQuestFromFile={addQuestFromFile}
     >

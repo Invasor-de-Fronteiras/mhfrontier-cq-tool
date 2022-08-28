@@ -20,20 +20,36 @@ import {
   LayoutBody,
   LayoutNavbar,
   LayoutNavbarItem,
-  LayoutNavbarItemSubmitButton,
+  LayoutNavbarItemButton,
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
 } from "ui";
 import { useMemo, useState } from "react";
+import { IconType } from "react-icons";
+
+interface NavbarItem {
+  name: string;
+  icon: IconType;
+  uri?: string;
+  disabled?: boolean;
+  onClick?: () => void;
+  isSubmit?: boolean;
+  type?: boolean;
+}
+
+interface NavbarGroup {
+  name: string;
+  options: NavbarItem[];
+}
 
 export function Layout() {
   const location = useLocation();
   const { isLoadedFile, handleSaveQuest } = useEditor();
-  const { isLoadedQuestlists } = useQuestlistEditor();
+  const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
   const [tool, setTool] = useState('QuestEditor');
 
-  const groups = useMemo(
+  const groups = useMemo<NavbarGroup[]>(
     () => {
       if (tool === 'QuestEditor') return [
         {
@@ -135,8 +151,9 @@ export function Layout() {
             {
               name: "Save Questlist",
               icon: BsSave,
-              isSubmit: true,
+              isSubmit: false,
               disabled: !isLoadedQuestlists,
+              onClick: questlistSubmit
             },
           ],
         },
@@ -155,18 +172,17 @@ export function Layout() {
 
       return [];
     },
-    [isLoadedFile, handleSaveQuest, tool, isLoadedQuestlists]
+    [isLoadedFile, handleSaveQuest, questlistSubmit, tool, isLoadedQuestlists]
   );
 
   const route = useMemo(
     () =>
       groups.reduce<null | string>(
-        (acc, group) =>
-          acc ??
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          group.options.find((option) => option.uri === location.pathname)
-            ?.name,
+        (acc, group) => {
+          if (acc) return acc;
+          const option = group.options.find((option) => option.uri === location.pathname);
+          return option?.name || null;
+        },
         null
       ) ?? "Unknown",
     [location.pathname, groups]
@@ -190,8 +206,8 @@ export function Layout() {
                 <Link to={option.uri} key={option.name}>
                   <LayoutNavbarItem {...option} />
                 </Link>
-              ) : "isSubmit" in option && option.isSubmit ? (
-                <LayoutNavbarItemSubmitButton {...option} key={option.name} />
+              ) : (option.onClick || option.isSubmit) ? (
+                <LayoutNavbarItemButton {...option} key={option.name} />
               ) : (
                 <LayoutNavbarItem {...option} key={option.name} />
               )

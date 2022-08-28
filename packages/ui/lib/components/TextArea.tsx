@@ -5,26 +5,17 @@ import { Control, Path, useController } from "react-hook-form";
 import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface TextAreaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const wrapOnChange = (type: string, onChange?: (...event: any[]) => void) => {
-    if (type === 'number' && onChange) return (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(parseInt(e.target.value, 10))
-    }
-
-    return onChange;
-}
-
-export function Input({
+export function TextArea({
   label,
   placeholder,
   type,
   className,
   ...props
-}: InputProps) {
+}: TextAreaProps) {
   return (
     <label className={classNames('m-2',  className)}>
       {label && (
@@ -32,9 +23,8 @@ export function Input({
           {label}
         </span>
       )}
-      <input
+      <textarea
         className="appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 leading-tight focus:border-emerald-500 outline-none"
-        type={type}
         placeholder={placeholder}
         {...props}
       />
@@ -42,7 +32,7 @@ export function Input({
   );
 }
 
-interface InputFieldProps<T = QuestFile> extends InputProps {
+interface TextAreaFieldProps<T = QuestFile> extends TextAreaProps {
   /**
    * Path reference to the value in the form data.
    */
@@ -50,13 +40,12 @@ interface InputFieldProps<T = QuestFile> extends InputProps {
   control?: Control<T>;
 }
 
-export function InputField<T>({
+export function TextAreaField<T>({
   name,
   defaultValue,
   control,
-  type,
   ...props
-}: InputFieldProps<T>) {
+}: TextAreaFieldProps<T>) {
   const { form } = useEditor();
   const { field } = useController({
     // @ts-ignore
@@ -66,5 +55,5 @@ export function InputField<T>({
   });
 
   // @ts-ignore
-  return <Input {...props} type={type} {...field} onChange={wrapOnChange(type, field.onChange)} />;
+  return <TextArea {...props} {...field} />;
 }

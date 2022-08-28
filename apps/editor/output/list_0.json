@@ -13,6 +13,314 @@
         "unk0": [
           0,
           0,
+          15
+        ],
+        "max_players": 4,
+        "quest_category": 28,
+        "unk1": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark": 1,
+        "unk2": 0,
+        "unk3": 0,
+        "length_msb": 2,
+        "length_lsb": 82
+      },
+      "quest_type_flags": {
+        "main_quest_prop": {
+          "unk0": 1,
+          "unk1": 64,
+          "quest_locale_flags": 12,
+          "unk2": 0,
+          "ranking_id": 7,
+          "unk3": 0,
+          "course": 18,
+          "rank_band0": 1,
+          "untat_id": 7,
+          "skip1": 0,
+          "quest_fee": 700,
+          "reward_main": 8000,
+          "max_death": 3,
+          "unk9": 0,
+          "unk10": 0,
+          "unk11": 0,
+          "reward_a": 1000,
+          "skip2": [
+            0,
+            0
+          ],
+          "reward_b": 0,
+          "hard_hunter_rank_req": 0,
+          "quest_time": 36000,
+          "quest_map_only_monitor": 97,
+          "quest_strings_ptr": 320,
+          "unkk": 0,
+          "quest_id": 64557,
+          "objectives": {
+            "objective1": {
+              "quest_objective": 513,
+              "monster_id": 131,
+              "unk": 0,
+              "quantity": 1
+            },
+            "objective2": {
+              "quest_objective": 16388,
+              "monster_id": 131,
+              "unk": 0,
+              "quantity": 1
+            },
+            "objective3": {
+              "quest_objective": 0,
+              "monster_id": 0,
+              "unk": 0,
+              "quantity": 0
+            }
+          },
+          "unk6": 2,
+          "unk7": 2,
+          "join_rank_min": 1,
+          "join_rank_max": 0,
+          "post_rank_min": 1,
+          "post_rank_max": 0
+        },
+        "skip1": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forced_equipement": {
+          "legs": 0,
+          "legs_attach1": 0,
+          "legs_attach2": 0,
+          "legs_attach3": 0,
+          "weapon": 0,
+          "weapon_attach1or_bitmask": 0,
+          "weapon_attach2": 0,
+          "weapon_attach3": 0,
+          "head": 0,
+          "head_attach1": 0,
+          "head_attach2": 0,
+          "head_attach3": 0,
+          "chest": 0,
+          "chest_attach1": 0,
+          "chest_attach2": 0,
+          "chest_attach3": 0,
+          "arms": 0,
+          "arms_attach1": 0,
+          "arms_attach2": 0,
+          "arms_attach3": 0,
+          "waist": 0,
+          "waist_attach1": 0,
+          "waist_attach2": 0,
+          "waist_attach3": 0,
+          "unk": 1
+        },
+        "variants": {
+          "monster_variant0": 0,
+          "monster_variant1": 15,
+          "monster_variant2": 0,
+          "map_variant0": 1,
+          "required_item_type": 0,
+          "required_item_count": 0,
+          "quest_variant1": 11,
+          "quest_variant2": 32,
+          "quest_variant3": 4,
+          "quest_variant4": 0,
+          "unk1": 0
+        },
+        "allowed_equipment_bitmask": 0,
+        "rewards_focus": {
+          "exp_type_maybe": 1,
+          "main_rp_grp": 30000,
+          "skip1": [
+            0,
+            0
+          ],
+          "sub_a_rp_grp": 10000,
+          "skip2": [
+            0,
+            0
+          ],
+          "sub_b_rp_grp": 0,
+          "skip3": [
+            0,
+            0
+          ],
+          "item1": 10585,
+          "item2": 10586,
+          "item3": 10587,
+          "skip4": [
+            0,
+            0,
+            0
+          ],
+          "monster_icon1": 131,
+          "monster_icon2": 0,
+          "monster_icon3": 0,
+          "monster_icon4": 0,
+          "monster_icon5": 0
+        },
+        "skip3": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "quest_clears_allowed": 0,
+        "quest_monster_icon": 0
+      },
+      "unk_data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "strings": {
+        "pointers": {
+          "title": 352,
+          "main_objective": 395,
+          "sub_a_objective": 415,
+          "sub_b_objective": 426,
+          "clear_reqs": 431,
+          "fail_reqs": 454,
+          "contractor": 486,
+          "description": 496
+        },
+        "title": "≪Ｇ★７ Event Quest≫\nDancinha dos pontos",
+        "main_objective": "Hunt 1 Poborubarumu",
+        "sub_a_objective": "Break Tail",
+        "sub_b_objective": "None",
+        "clear_reqs": "Achieve Main Objective",
+        "fail_reqs": "Faint ３ Times or\nTime Runs Out",
+        "contractor": "Invasores",
+        "description": "A baleia chegou arrabentando\na boca do balao.\nEssa semana soh danca quem\nperder essa quest."
+      }
+    },
+    {
+      "header": {
+        "unk0": [
+          0,
+          0,
           146
         ],
         "max_players": 4,
@@ -28,8 +336,8 @@
         "mark": 1,
         "unk2": 0,
         "unk3": 0,
-        "length_msb": 2,
-        "length_lsb": 202
+        "length_msb": 3,
+        "length_lsb": 118
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -336,8 +644,8 @@
         "mark": 2,
         "unk2": 0,
         "unk3": 0,
-        "length_msb": 2,
-        "length_lsb": 240
+        "length_msb": 3,
+        "length_lsb": 170
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -645,7 +953,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -953,7 +1261,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -1261,7 +1569,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -1569,7 +1877,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -1877,7 +2185,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -2185,7 +2493,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -2493,7 +2801,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -2801,7 +3109,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -3109,7 +3417,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -3417,7 +3725,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -3725,7 +4033,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -4033,7 +4341,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -4341,7 +4649,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -4649,7 +4957,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -4957,7 +5265,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -5265,7 +5573,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -5573,7 +5881,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -5881,7 +6189,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -6189,7 +6497,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -6497,7 +6805,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 8
+        "length_lsb": 206
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -6805,7 +7113,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -7113,7 +7421,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -7421,7 +7729,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -7729,7 +8037,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -8037,7 +8345,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -8345,7 +8653,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -8653,7 +8961,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -8961,7 +9269,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -9269,7 +9577,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -9577,7 +9885,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -9885,7 +10193,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -10193,7 +10501,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -10501,7 +10809,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -10809,7 +11117,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -11117,7 +11425,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -11425,7 +11733,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 0
+        "length_lsb": 197
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -11733,7 +12041,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 4
+        "length_lsb": 200
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -12041,7 +12349,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 4
+        "length_lsb": 200
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -12349,7 +12657,7 @@
         "unk2": 0,
         "unk3": 0,
         "length_msb": 3,
-        "length_lsb": 4
+        "length_lsb": 200
       },
       "quest_type_flags": {
         "main_quest_prop": {
@@ -12634,314 +12942,6 @@
         "fail_reqs": "３回力尽きる\nタイムアップ",
         "contractor": "ハンターズギルド",
         "description": "迎撃拠点に大型モンスターの\n大群が迫っているとの報告が\nありました。\n直ちに、現地へ向かいできる\nだけ多くの大型モンスターを\n狩猟してください。\n連戦が予想されます、\n十分な準備をしてからの\n出発をお勧めします。"
-      }
-    },
-    {
-      "header": {
-        "unk0": [
-          0,
-          0,
-          15
-        ],
-        "max_players": 4,
-        "quest_category": 28,
-        "unk1": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "mark": 0,
-        "unk2": 0,
-        "unk3": 0,
-        "length_msb": 2,
-        "length_lsb": 222
-      },
-      "quest_type_flags": {
-        "main_quest_prop": {
-          "unk0": 65,
-          "unk1": 64,
-          "quest_locale_flags": 9,
-          "unk2": 0,
-          "ranking_id": 7,
-          "unk3": 2,
-          "course": 18,
-          "rank_band0": 1,
-          "untat_id": 7,
-          "skip1": 0,
-          "quest_fee": 700,
-          "reward_main": 2000,
-          "max_death": 3,
-          "unk9": 0,
-          "unk10": 0,
-          "unk11": 0,
-          "reward_a": 0,
-          "skip2": [
-            0,
-            0
-          ],
-          "reward_b": 0,
-          "hard_hunter_rank_req": 0,
-          "quest_time": 90000,
-          "quest_map_only_monitor": 64,
-          "quest_strings_ptr": 320,
-          "unkk": 0,
-          "quest_id": 23309,
-          "objectives": {
-            "objective1": {
-              "quest_objective": 1,
-              "monster_id": 125,
-              "unk": 0,
-              "quantity": 1
-            },
-            "objective2": {
-              "quest_objective": 0,
-              "monster_id": 0,
-              "unk": 0,
-              "quantity": 0
-            },
-            "objective3": {
-              "quest_objective": 0,
-              "monster_id": 0,
-              "unk": 0,
-              "quantity": 0
-            }
-          },
-          "unk6": 2,
-          "unk7": 0,
-          "join_rank_min": 1,
-          "join_rank_max": 0,
-          "post_rank_min": 1,
-          "post_rank_max": 0
-        },
-        "skip1": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "forced_equipement": {
-          "legs": 0,
-          "legs_attach1": 0,
-          "legs_attach2": 0,
-          "legs_attach3": 0,
-          "weapon": 0,
-          "weapon_attach1or_bitmask": 0,
-          "weapon_attach2": 0,
-          "weapon_attach3": 0,
-          "head": 0,
-          "head_attach1": 0,
-          "head_attach2": 0,
-          "head_attach3": 0,
-          "chest": 0,
-          "chest_attach1": 0,
-          "chest_attach2": 0,
-          "chest_attach3": 0,
-          "arms": 0,
-          "arms_attach1": 0,
-          "arms_attach2": 0,
-          "arms_attach3": 0,
-          "waist": 0,
-          "waist_attach1": 0,
-          "waist_attach2": 0,
-          "waist_attach3": 0,
-          "unk": 1
-        },
-        "variants": {
-          "monster_variant0": 0,
-          "monster_variant1": 10,
-          "monster_variant2": 0,
-          "map_variant0": 3,
-          "required_item_type": 0,
-          "required_item_count": 0,
-          "quest_variant1": 15,
-          "quest_variant2": 0,
-          "quest_variant3": 0,
-          "quest_variant4": 0,
-          "unk1": 0
-        },
-        "allowed_equipment_bitmask": 0,
-        "rewards_focus": {
-          "exp_type_maybe": 1,
-          "main_rp_grp": 1000,
-          "skip1": [
-            0,
-            0
-          ],
-          "sub_a_rp_grp": 0,
-          "skip2": [
-            0,
-            0
-          ],
-          "sub_b_rp_grp": 0,
-          "skip3": [
-            0,
-            0
-          ],
-          "item1": 9049,
-          "item2": 9050,
-          "item3": 9051,
-          "skip4": [
-            0,
-            0,
-            0
-          ],
-          "monster_icon1": 125,
-          "monster_icon2": 0,
-          "monster_icon3": 0,
-          "monster_icon4": 0,
-          "monster_icon5": 0
-        },
-        "skip3": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "quest_clears_allowed": 0,
-        "quest_monster_icon": 0
-      },
-      "unk_data": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "strings": {
-        "pointers": {
-          "title": 352,
-          "main_objective": 396,
-          "sub_a_objective": 419,
-          "sub_b_objective": 424,
-          "clear_reqs": 429,
-          "fail_reqs": 452,
-          "contractor": 478,
-          "description": 495
-        },
-        "title": "≪Ｇ★７花畑探索≫\n百花の地に舞降りし華鳳鳥",
-        "main_objective": "フォロクルル１頭の狩猟",
-        "sub_a_objective": "なし",
-        "sub_b_objective": "なし",
-        "clear_reqs": "メインターゲットの達成",
-        "fail_reqs": "３回力尽きる\nタイムアップ",
-        "contractor": "ハンターズギルド",
-        "description": "花畑に≪フォロクルル≫が\n現れました。報告によれば蜜\nを摂取し体質変化させる、\n非常に珍しいモンスターのよ\nうです。調査の協力をお願い\nします。また、花畑の獣人族\nですが、ハンターを敵視して\nいる様子はなく危険は少ない\nという報告も届いています。"
       }
     }
   ]

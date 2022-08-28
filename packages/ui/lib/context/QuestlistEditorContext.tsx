@@ -1,21 +1,22 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { createContext } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { QuestInfo, QuestlistFile } from "../utils";
+import { QuestInfo } from "../utils";
 
 interface QuestlistForm {
-  questlists: QuestlistFile[];
+  quests: QuestInfo[];
 }
 
 interface QuestlistEditorContextState {
   addQuestFromFile: () => QuestInfo | null;
   loadQuestlists: () => void;
-  handleSaveQuest: (data: QuestlistFile[]) => void;
+  handleSaveQuestlist: (data: QuestInfo[]) => void;
+  questlistSubmit: () => void;
   form: UseFormReturn<QuestlistForm>;
   isLoadedQuestlists: boolean;
 }
 
-interface QuestlistEditorContextProps extends Omit<QuestlistEditorContextState, "form"> {
+interface QuestlistEditorContextProps extends Omit<QuestlistEditorContextState, "questlistSubmit" | "form"> {
   children: React.ReactNode;
   data?: QuestlistForm;
 }
@@ -34,8 +35,16 @@ export function QuestlistEditorContextProvider({
     form.reset(props.data);
   }, [props.data]);
 
+  const value = useMemo(() => ({
+    form,
+    questlistSubmit: () => {
+      form.handleSubmit((data) => props.handleSaveQuestlist(data.quests))();
+    },
+    ...props
+  }), [form, props]);
+
   return (
-    <context.Provider value={{ form, ...props }}>{children}</context.Provider>
+    <context.Provider value={value}>{children}</context.Provider>
   );
 }
 

@@ -10,6 +10,6 @@ export interface QuestlistHeader {
 
 export interface QuestlistFile {
     filename: string;
-    header: QuestlistHeader[];
+    header: QuestlistHeader;
     quests: QuestInfo[];
 }

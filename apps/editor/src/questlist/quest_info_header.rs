@@ -1,29 +1,5 @@
 use serde_derive::{Serialize, Deserialize};
 
-
-// 1 byte
-pub enum QuestCategory {
-    Campaign = 0x0009,
-    GreatSlaying = 0x10,
-    DivaDefense = 0x3C11,
-    LRHREvent = 0x12,
-    Series = 0x18,
-    GEvent = 0x1C,
-    HRExotic = 0x26,
-    GExotic = 0x27,
-    Zenith = 0x2B,
-    Superior = 0x34,
-    GSuperior = 0x35,
-    GArmorWeapon = 0x36,
-}
-
-pub enum QuestMark {
-    None = 00,
-    Recommended = 01,
-    New = 02,
-    Refine = 04,
-}
-
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct QuestInfoHeader {
@@ -68,6 +44,7 @@ impl QuestInfoHeader {
     }
 
 }
+
 pub fn quest_header() -> [u8; 16] {
     return [00, 00, 15, 04, 18, 01, 00, 00, 00, 00, 00, 00, 00, 00, 255, 255 ];
 }

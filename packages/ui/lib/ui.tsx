@@ -7,7 +7,7 @@ import { LoadQuestTab } from "./tabs/LoadQuestTab";
 import { MonstersTab } from "./tabs/MonstersTab";
 import { QuestInfoTab } from "./tabs/QuestInfoTab";
 import { LoadQuestlistTab } from "./tabs/questlist/LoadQuestlistTab";
-import { QuestlistTab } from "./tabs/questlist/QuestlistsTab";
+import { QuestlistTab } from "./tabs/questlist/QuestlistTab";
 import { RewardsTab } from "./tabs/RewardsTab";
 import { SupplyItemTab } from "./tabs/SupplyItemTab";
 import { UnknownTab } from "./tabs/UnknownTab";

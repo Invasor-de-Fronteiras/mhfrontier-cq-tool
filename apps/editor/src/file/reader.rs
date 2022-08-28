@@ -55,6 +55,13 @@ impl FileReader {
         }
     }
 
+    pub fn read_custom_buffer(&mut self, size: u64) -> std::io::Result<Vec<u8>> {
+        let mut buffer = vec![0_u8; size as usize];
+        self.reader.read_exact(&mut buffer)?;
+
+        Ok(buffer)
+    }
+
     pub fn read_u32(&mut self) -> std::io::Result<u32> {
         let mut buffer = [0_u8; 4];
         self.reader.read_exact(&mut buffer)?;

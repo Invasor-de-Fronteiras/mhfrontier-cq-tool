@@ -49,6 +49,7 @@ interface LayoutNavbarItemProps {
   uri?: string;
   disabled?: boolean;
   onClick?: () => void;
+  isSubmit?: boolean;
   type?: boolean;
 }
 
@@ -85,11 +86,13 @@ export function LayoutNavbarItem({
   );
 }
 
-export function LayoutNavbarItemSubmitButton({
+export function LayoutNavbarItemButton({
   name,
   disabled,
   uri,
   icon: Icon,
+  isSubmit,
+  onClick,
 }: LayoutNavbarItemProps) {
   const { isOpen } = useContext(context);
   const location = useLocation();
@@ -98,7 +101,7 @@ export function LayoutNavbarItemSubmitButton({
   return (
     <li key={name}>
       <button
-        type="submit"
+        type={isSubmit ? 'submit' : 'button'}
         className={classnames(
           "font-semibold flex flex-row items-center p-2 m-2 rounded gap-3",
           {
@@ -109,6 +112,7 @@ export function LayoutNavbarItemSubmitButton({
               !disabled,
           }
         )}
+        onClick={onClick}
       >
         <Icon size={16} />
         {isOpen && <span>{name}</span>}

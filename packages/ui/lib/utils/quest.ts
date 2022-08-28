@@ -51,6 +51,6 @@ export const quest_mark = [
   "Recommended",
   "New",
   "Refine",
-];
+].map((v, i) => ({ label: v, value: i }));
 
-export const getQuestMark = (id: number) => quest_mark[id] || '???';
+export const getQuestMark = (id: number) => quest_mark[id]?.label || '???';
