@@ -23,6 +23,7 @@ interface QuestlistRowProps {
     quest: QuestInfoRow;
     onChangePosition: (current: number, destination: number) => void;
     onEdit: (value: number) => void;
+    onDelete: (value: number) => void;
     showQuestlist?: boolean;
 }
 
@@ -41,7 +42,7 @@ export const ActionButton = ({ children, ...props }: ComponentProps<"button"> & 
         {children}
     </button>;
 
-export const QuestlistRow = ({ quest, onEdit, onChangePosition }: QuestlistRowProps) => {
+export const QuestlistRow = ({ quest, onEdit, onChangePosition, onDelete }: QuestlistRowProps) => {
     return <tr
             className={classNames("hover:bg-emerald-300 cursor-pointer")}
         >
@@ -68,7 +69,7 @@ export const QuestlistRow = ({ quest, onEdit, onChangePosition }: QuestlistRowPr
                 <ActionButton onClick={() => onEdit(quest.index)}>
                     <MdModeEdit size={16} />
                 </ActionButton>
-                <ActionButton>
+                <ActionButton onClick={() => onDelete(quest.index)}>
                     <MdDelete size={16}   />
                 </ActionButton>
             </td>

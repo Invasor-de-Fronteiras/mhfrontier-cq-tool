@@ -90,7 +90,25 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
     }
   };
 
-  const addQuestFromFile = (): QuestInfo | null => {
+  const getQuestFromFile = async (): Promise<QuestInfo | null> => {
+    try {
+      const path = await open({ multiple: false });
+      if (!path) return null;
+
+      const response: string = await invoke("read_questinfo", {
+        event: path,
+      });
+
+      const questInfo = JSON.parse(response);
+      if (questInfo && questInfo.error) {
+        toast.error(`Failed to read file: ${questInfo.error}`);
+        return null;
+      }
+      toast.success('Quest file read successfully!');
+      return questInfo;
+    } catch (error) {
+      console.error("error ", error);
+    }
     return null;
   }
 
@@ -100,7 +118,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       handleSaveQuestlist={handleSaveQuestlist}
       isLoadedQuestlists={!!quests}
       loadQuestlists={loadQuestlists}
-      addQuestFromFile={addQuestFromFile}
+      getQuestFromFile={getQuestFromFile}
     >
       {children}
     </QuestlistEditorContextProvider>

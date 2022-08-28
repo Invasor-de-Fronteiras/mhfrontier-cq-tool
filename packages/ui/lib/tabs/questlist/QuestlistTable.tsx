@@ -58,6 +58,10 @@ export function QuestlistTable({ questlistIndex, onEdit, query }: QuestlistQuest
         form.setValue('quests', items);
     }
 
+    const onDelete = (index: number) => {
+        form.setValue('quests', quests.filter((v, i) => i !== index));
+    }
+
     return (
         <table
             aria-label="Quests"
@@ -97,6 +101,7 @@ export function QuestlistTable({ questlistIndex, onEdit, query }: QuestlistQuest
                         onChangePosition={onChangePosition}
                         onEdit={onEdit}
                         showQuestlist={questlistIndex === null}
+                        onDelete={onDelete}
                     />
                 })}
             </tbody>
