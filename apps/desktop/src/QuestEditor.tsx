@@ -77,10 +77,40 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   };
 
+  const reFrontier = async () => {
+    try {
+      const filePath = await open({ multiple: false });
+      if (!filePath) return;
+
+      console.log('reFrontier: ', reFrontier);
+      console.log('filePath: ', filePath);
+      const response: string = await invoke("re_frontier", {
+        event: JSON.stringify({
+          filepath: filePath,
+          re_frontier_path: "./ReFrontier/ReFrontier.exe"
+        })
+      });
+
+      const result = JSON.parse(response) as { message: string, error?: string };
+      if (result && result.error) {
+        toast.error(`Failed to execute ReFrontier: ${result.error}`);
+        return;
+      }
+
+      const messages = result.message.split('==============================');
+      toast.success(messages[1]);
+      toast.success(messages[2]);
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
+
   return (
     <EditorContextProvider
       data={file}
       handleSaveQuest={handleChangeSave}
+      reFrontier={reFrontier}
       isLoadedFile={!!file}
       uploadFile={{
         dragSupport: false,

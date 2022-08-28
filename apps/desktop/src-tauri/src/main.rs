@@ -5,6 +5,7 @@
 
 mod utils;
 
+use std::process::Command;
 use tauri;
 use serde::{Serialize, Deserialize};
 use editor::{quest::quest_file::QuestFile, questlist::quest_info::QuestInfo};
@@ -72,6 +73,40 @@ fn save_all_questlists(event: String) -> String {
   }
 }
 
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct ReFrontierPayload {
+  filepath: String,
+  re_frontier_path: String
+}
+
+#[tauri::command]
+fn re_frontier(event: String) -> String {
+  let result = || -> Result<String> {
+    let mut payload = serde_json::from_str::<ReFrontierPayload>(&event)?;
+
+    let is_windows = cfg!(target_os = "windows");
+
+    if !is_windows {
+      return Ok(String::from("{ \"message\": \"This feature only works on Windows\" }"))
+    }
+
+    let output = Command::new(payload.re_frontier_path)
+      .args([payload.filepath])
+      .output()?;
+
+    let message = String::from_utf8(output.stdout).unwrap_or(String::from("Output invalid"));
+    let result = serde_json::json!({
+      "message": message
+    });
+    Ok(result.to_string())
+  };
+  
+  match result() {
+    Ok(response) => response,
+    Err(error) => wrap_result(error.to_string(), true)
+  }
+}
+
 fn main() {
 
   tauri::Builder::default()
@@ -80,7 +115,8 @@ fn main() {
       save_quest_file,
       read_all_questlist,
       read_questinfo,
-      save_all_questlists
+      save_all_questlists,
+      re_frontier
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

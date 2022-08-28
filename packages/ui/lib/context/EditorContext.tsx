@@ -11,6 +11,7 @@ interface EditorContextState {
     isDragActive: boolean;
   };
   handleSaveQuest: (data: QuestFile) => void;
+  reFrontier: () => void;
   form: UseFormReturn<QuestFile>;
   isLoadedFile: boolean;
 }

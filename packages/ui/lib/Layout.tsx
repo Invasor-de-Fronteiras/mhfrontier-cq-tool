@@ -12,6 +12,7 @@ import {
 import { SiMonster } from "react-icons/si";
 import { GiArmorVest } from "react-icons/gi";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
+import { FiRefreshCw } from "react-icons/fi";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
 
@@ -45,7 +46,7 @@ interface NavbarGroup {
 
 export function Layout() {
   const location = useLocation();
-  const { isLoadedFile, handleSaveQuest } = useEditor();
+  const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
   const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
   const [tool, setTool] = useState('QuestEditor');
 
@@ -127,6 +128,12 @@ export function Layout() {
         {
           name: "Advanced",
           options: [
+            {
+              name: "ReFrontier",
+              icon: FiRefreshCw,
+              disabled: false,
+              onClick: reFrontier
+            },
             {
               name: "Map Position",
               icon: BsFillGeoFill,
