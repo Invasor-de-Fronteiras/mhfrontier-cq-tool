@@ -116,12 +116,9 @@ pub struct ForcedEquipment {
 #[repr(C)]
 pub struct RewardsFocus {
     pub exp_type_maybe: u32,
-    pub main_rp_grp: u16,
-    pub skip1: [u8; 2],
-    pub sub_a_rp_grp: u16,
-    pub skip2: [u8; 2],
-    pub sub_b_rp_grp: u16,
-    pub skip3: [u8; 2],
+    pub main_rp_grp: u32,
+    pub sub_a_rp_grp: u32,
+    pub sub_b_rp_grp: u32,
     pub item1: u16,
     pub item2: u16,
     pub item3: u16,

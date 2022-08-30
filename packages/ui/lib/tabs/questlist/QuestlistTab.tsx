@@ -15,7 +15,6 @@ export function QuestlistTab() {
     const quests = useWatch({ control: form.control, name: 'quests' });
 
     const onSearch = useCallback((key: keyof QuestInfoRow, value: string ) => {
-        console.log('search: ', key, value);
         if (value === null || value === '') {
             const { ...data } = query;
             delete data[key];

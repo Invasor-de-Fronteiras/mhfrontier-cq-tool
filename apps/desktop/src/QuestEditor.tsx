@@ -82,8 +82,6 @@ function QuestEditor({ children }: QuestEditorProps) {
       const filePath = await open({ multiple: false });
       if (!filePath) return;
 
-      console.log('reFrontier: ', reFrontier);
-      console.log('filePath: ', filePath);
       const response: string = await invoke("re_frontier", {
         event: JSON.stringify({
           filepath: filePath,

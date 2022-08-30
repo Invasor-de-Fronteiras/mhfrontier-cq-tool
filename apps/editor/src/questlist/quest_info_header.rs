@@ -21,10 +21,21 @@ impl QuestInfoHeader {
 
     pub fn new() -> QuestInfoHeader {
         QuestInfoHeader { 
-            unk0: [00, 00, 15], 
+            unk0: [
+                0,
+                0,
+                15
+            ], 
             max_players: 4,
             quest_category: 0x12,
-            unk1: [0; 6],
+            unk1: [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
             mark: 0,
             unk2: 0,
             unk3: 0,

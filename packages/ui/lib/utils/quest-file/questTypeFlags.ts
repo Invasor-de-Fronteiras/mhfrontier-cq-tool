@@ -91,11 +91,8 @@ export interface ForcedEquipment {
 export interface RewardsFocus {
   exp_type_maybe: number;
   main_rp_grp: number;
-  skip1: number[];
   sub_a_rp_grp: number;
-  skip2: number[];
   sub_b_rp_grp: number;
-  skip3: number[];
   item1: number;
   item2: number;
   item3: number;
