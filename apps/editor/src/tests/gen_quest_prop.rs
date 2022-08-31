@@ -1,6 +1,6 @@
 use crate::{
-    quest::offsets::GEN_QUEST_PROP_PRT,
     file::reader::FileReader,
+    quest::offsets::GEN_QUEST_PROP_PRT,
     quest::quest_type_flags::{GenQuestProp, Quantity},
 };
 

@@ -1,9 +1,9 @@
-use crate::file::reader::FileReader;
-use crate::file::writer::FileWriter;
-use super::file_end::{ FILE_END_P1, FILE_END_P2, FILE_END_P3 };
+use super::file_end::{FILE_END_P1, FILE_END_P2, FILE_END_P3};
 use super::quest_info::QuestInfo;
 use super::questlist_header::{QuestlistHeader, QUEST_END};
-use serde_derive::{ Deserialize, Serialize };
+use crate::file::reader::FileReader;
+use crate::file::writer::FileWriter;
+use serde_derive::{Deserialize, Serialize};
 use std::io::Result;
 use std::path::Path;
 
@@ -12,11 +12,10 @@ use std::path::Path;
 pub struct QuestlistFile {
     pub filename: String,
     pub header: QuestlistHeader,
-    pub quests: Vec<QuestInfo>
+    pub quests: Vec<QuestInfo>,
 }
 
 impl QuestlistFile {
-    
     pub fn from_path(filename: &str) -> Result<QuestlistFile> {
         let mut reader = FileReader::from_filename(filename)?;
         let header = reader.read_struct::<QuestlistHeader>()?;
@@ -25,7 +24,7 @@ impl QuestlistFile {
         let quest_count = header.quest_count;
 
         for i in 0..quest_count {
-            let quest = QuestInfo::from_questlist(&mut reader)?;        
+            let quest = QuestInfo::from_questlist(&mut reader)?;
             quests.push(quest);
 
             let current_ptr = reader.current_position()?;
@@ -47,7 +46,7 @@ impl QuestlistFile {
         Ok(QuestlistFile {
             filename: filename.to_string(),
             header,
-            quests
+            quests,
         })
     }
 
@@ -71,7 +70,7 @@ impl QuestlistFile {
                 writer.write_buffer(&QUEST_END)?;
             }
         }
-        
+
         writer.write_buffer(&FILE_END_P1)?;
         if !is_last {
             writer.write_buffer(&FILE_END_P2)?;

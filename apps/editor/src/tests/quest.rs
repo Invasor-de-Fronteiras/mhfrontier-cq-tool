@@ -1,6 +1,5 @@
 use crate::{
     quest::quest_file::QuestFile,
-    save_json::save_quest_to_json,
     quest::{
         header::{MapInfo, QuestFileHeader},
         monsters::{LargeMonsterPointers, LargeMonsterSpawn},
@@ -9,6 +8,7 @@ use crate::{
             QuestTypeFlags, RewardsFocus, Variants,
         },
     },
+    save_json::save_quest_to_json,
 };
 
 #[test]
@@ -169,11 +169,8 @@ fn reader_test() {
             rewards_focus: RewardsFocus {
                 exp_type_maybe: 0,
                 main_rp_grp: 530,
-                skip1: [0; 2],
                 sub_a_rp_grp: 80,
-                skip2: [0; 2],
                 sub_b_rp_grp: 80,
-                skip3: [0; 2],
                 item1: 532,
                 item2: 528,
                 item3: 473,
@@ -182,7 +179,7 @@ fn reader_test() {
                 monster_icon2: 0,
                 monster_icon3: 0,
                 monster_icon4: 0,
-                monster_icon5: 0
+                monster_icon5: 0,
             },
             skip3: [0; 6],
             quest_clears_allowed: 0,

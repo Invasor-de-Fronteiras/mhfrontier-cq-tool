@@ -31,13 +31,16 @@ pub struct QuestStrings {
 }
 
 impl QuestStrings {
-
     pub fn read_string(reader: &mut FileReader, pos: u32) -> Result<String> {
         reader.seek_start(pos as u64)?;
         reader.read_string()
     }
 
-    pub fn from_reader(reader: &mut FileReader, pos: u32, offset_strings: Option<u32>) -> Result<QuestStrings> {
+    pub fn from_reader(
+        reader: &mut FileReader,
+        pos: u32,
+        offset_strings: Option<u32>,
+    ) -> Result<QuestStrings> {
         let offset = offset_strings.unwrap_or(0);
         reader.seek_start(offset as u64 + pos as u64)?;
 
@@ -45,8 +48,10 @@ impl QuestStrings {
 
         let title = QuestStrings::read_string(reader, offset + string_ptr.title)?;
         let main_objective = QuestStrings::read_string(reader, offset + string_ptr.main_objective)?;
-        let sub_a_objective = QuestStrings::read_string(reader, offset + string_ptr.sub_a_objective)?;
-        let sub_b_objective = QuestStrings::read_string(reader, offset + string_ptr.sub_b_objective)?;
+        let sub_a_objective =
+            QuestStrings::read_string(reader, offset + string_ptr.sub_a_objective)?;
+        let sub_b_objective =
+            QuestStrings::read_string(reader, offset + string_ptr.sub_b_objective)?;
         let clear_reqs = QuestStrings::read_string(reader, offset + string_ptr.clear_reqs)?;
         let fail_reqs = QuestStrings::read_string(reader, offset + string_ptr.fail_reqs)?;
         let contractor = QuestStrings::read_string(reader, offset + string_ptr.contractor)?;
@@ -61,13 +66,13 @@ impl QuestStrings {
             fail_reqs,
             main_objective,
             sub_a_objective,
-            sub_b_objective
+            sub_b_objective,
         })
     }
 
     pub fn get_total_size(&self) -> u16 {
         let mut size: u16 = 0;
-        
+
         size += self.title.len() as u16;
         size += self.main_objective.len() as u16;
         size += self.sub_a_objective.len() as u16;
@@ -81,5 +86,4 @@ impl QuestStrings {
         // 8 bytes for each "end string byte" (0x00)
         return size + 8;
     }
-
 }

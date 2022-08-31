@@ -6,7 +6,7 @@ use crate::quest::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::quest::quest_type_flags::{GenQuestProp, QuestTypeFlags};
 use crate::quest::reward::{RewardItem, RewardTable, RewardTableHeader};
 use crate::quest::supply_items::SupplyItem;
-use serde_derive::{ Deserialize, Serialize };
+use serde_derive::{Deserialize, Serialize};
 use std::io::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

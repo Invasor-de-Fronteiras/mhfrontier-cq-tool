@@ -8,7 +8,7 @@
     "max_players": 4,
     "quest_category": 18,
     "unk1": [
-      0,
+      1,
       0,
       0,
       0,
@@ -132,20 +132,8 @@
     "rewards_focus": {
       "exp_type_maybe": 0,
       "main_rp_grp": 530,
-      "skip1": [
-        0,
-        0
-      ],
       "sub_a_rp_grp": 80,
-      "skip2": [
-        0,
-        0
-      ],
       "sub_b_rp_grp": 80,
-      "skip3": [
-        0,
-        0
-      ],
       "item1": 532,
       "item2": 528,
       "item3": 473,

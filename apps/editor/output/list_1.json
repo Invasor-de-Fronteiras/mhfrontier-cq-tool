@@ -142,20 +142,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1350,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 0,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 0,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -450,20 +438,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 920,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 450,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 800,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -758,20 +734,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1980,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1300,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1350,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -1066,20 +1030,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2650,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1750,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1700,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -1374,20 +1326,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3180,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2100,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1900,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -1682,20 +1622,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3450,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2060,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 2300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -1990,20 +1918,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2030,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1200,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -2298,20 +2214,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2530,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1500,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1600,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -2606,20 +2510,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3030,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1800,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1900,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -2914,20 +2806,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3530,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2100,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 2200,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -3222,20 +3102,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2000,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1100,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1100,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -3530,20 +3398,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2500,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1400,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1400,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -3838,20 +3694,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3000,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1700,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1700,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -4146,20 +3990,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3500,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2000,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 2000,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -4454,20 +4286,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2020,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1250,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1200,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -4762,20 +4582,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2520,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1550,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1500,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -5070,20 +4878,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3020,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1850,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1800,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -5378,20 +5174,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3520,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2150,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 2100,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -5686,20 +5470,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1920,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1160,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -5994,20 +5766,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2520,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1460,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1600,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -6302,20 +6062,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3120,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1760,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1900,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -6610,20 +6358,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 3520,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 2060,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 2200,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -6918,20 +6654,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 865,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 450,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 350,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -7226,20 +6950,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 730,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 400,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 450,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -7534,20 +7246,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1020,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 500,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 550,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -7842,20 +7542,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1020,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 700,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 550,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -8150,20 +7838,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1250,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 650,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1150,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -8458,20 +8134,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1320,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 600,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1250,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -8766,20 +8430,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1400,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 700,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1200,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -9074,20 +8726,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1320,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 750,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 800,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -9382,20 +9022,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1280,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 800,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 800,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -9690,20 +9318,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1350,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 700,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 800,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -9998,20 +9614,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1570,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 850,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1450,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -10306,20 +9910,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1570,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 800,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1500,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -10614,20 +10206,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1670,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 650,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1650,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -10922,20 +10502,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2170,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1000,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1450,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -11230,20 +10798,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2580,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1850,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1550,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -11538,20 +11094,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 1940,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1200,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -11846,20 +11390,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2370,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1600,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -12154,20 +11686,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2270,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1700,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1500,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -12462,20 +11982,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 2700,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 1600,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 1300,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 0,
           "item2": 0,
           "item3": 0,
@@ -12770,20 +12278,8 @@
         "rewards_focus": {
           "exp_type_maybe": 1,
           "main_rp_grp": 30000,
-          "skip1": [
-            0,
-            0
-          ],
           "sub_a_rp_grp": 10000,
-          "skip2": [
-            0,
-            0
-          ],
           "sub_b_rp_grp": 0,
-          "skip3": [
-            0,
-            0
-          ],
           "item1": 10585,
           "item2": 10586,
           "item3": 10587,

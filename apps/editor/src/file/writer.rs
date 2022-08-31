@@ -1,5 +1,5 @@
-use std::fs::{File, OpenOptions, remove_file };
-use std::io::{Result, Seek, SeekFrom, Write, Error, ErrorKind, Read};
+use std::fs::{remove_file, File, OpenOptions};
+use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::mem::{forget, size_of};
 use std::path::Path;
 use std::slice;
@@ -101,9 +101,10 @@ impl FileWriter {
     pub fn write_string(&mut self, value: &str) -> std::io::Result<()> {
         let (result, _enc, errors) = SHIFT_JIS.encode(value);
         if errors {
-            return Err(
-                Error::new(ErrorKind::Other, format!("Failed to convert {} to JIS", value))
-            );
+            return Err(Error::new(
+                ErrorKind::Other,
+                format!("Failed to convert {} to JIS", value),
+            ));
         }
 
         let mut buf = result.to_vec();
@@ -117,7 +118,7 @@ impl FileWriter {
         let mut reader = FileReader::from_filename(filename)?;
         let mut buffer = Vec::new();
         reader.reader.read_to_end(&mut buffer)?;
-        
+
         self.write_buffer(&buffer)?;
 
         Ok(())

@@ -1,4 +1,4 @@
-use serde_derive::{Serialize, Deserialize};
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -18,24 +18,12 @@ pub struct QuestInfoHeader {
 }
 
 impl QuestInfoHeader {
-
     pub fn new() -> QuestInfoHeader {
-        QuestInfoHeader { 
-            unk0: [
-                0,
-                0,
-                15
-            ], 
+        QuestInfoHeader {
+            unk0: [0, 0, 15],
             max_players: 4,
             quest_category: 0x12,
-            unk1: [
-                1,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
+            unk1: [1, 0, 0, 0, 0, 0],
             mark: 0,
             unk2: 0,
             unk3: 0,
@@ -53,9 +41,10 @@ impl QuestInfoHeader {
         self.length_lsb = buf[0];
         self.length_msb = buf[1];
     }
-
 }
 
 pub fn quest_header() -> [u8; 16] {
-    return [00, 00, 15, 04, 18, 01, 00, 00, 00, 00, 00, 00, 00, 00, 255, 255 ];
+    return [
+        00, 00, 15, 04, 18, 01, 00, 00, 00, 00, 00, 00, 00, 00, 255, 255,
+    ];
 }
