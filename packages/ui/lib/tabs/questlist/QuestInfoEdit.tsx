@@ -22,7 +22,11 @@ export function QuestInfoEdit({ questIndex, onClose }: QuestInfoEditProps) {
         name: 'quests',
     });
 
-    const quest = useMemo(() => quests[questIndex], [quests, questIndex]);
+    const quest = useMemo(() => {
+        const data = quests[questIndex];
+        console.log('quest: ', data);
+        return data;
+    }, [quests, questIndex]);
 
     return (
     <div className="flex flex-row flex-wrap gap-2">

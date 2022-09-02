@@ -42,6 +42,7 @@ export function QuestlistTable({ questlistIndex, onEdit, query }: QuestlistQuest
 
         return questlist.filter(quest => {
             if (query.title && !RegExp(query.title).test(quest.title)) return false;
+            if (query.questCategory && !RegExp(query.questCategory).test(quest.questCategory)) return false;
 
             return true;
         });

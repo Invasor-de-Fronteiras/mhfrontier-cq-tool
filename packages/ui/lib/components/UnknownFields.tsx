@@ -11,6 +11,15 @@ interface UnknownFieldProps<T> {
   initialHide?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const wrapOnChange = (onChange?: (...event: any[]) => void) => {
+  if (onChange) return (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(parseInt(e.target.value, 10))
+  }
+
+  return onChange;
+}
+
 export function UnknownField<T>({
   data,
   name,
@@ -55,7 +64,7 @@ export function UnknownField<T>({
                     <span className="text-sm">{key}</span>
                     {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
                     {/*@ts-ignore*/}
-                    <input className="border p-1" type="text" {...field} />
+                    <input className="border p-1" {...field} type="number" onChange={wrapOnChange(field.onChange)}/>
                   </label>
                 )}
               />

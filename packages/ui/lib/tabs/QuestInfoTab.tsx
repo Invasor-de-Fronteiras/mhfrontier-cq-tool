@@ -46,6 +46,11 @@ export function QuestInfoTab() {
           type="number"
           name="quest_type_flags.main_quest_prop.quest_time"
         />
+        <InputField
+          label="Locale flags"
+          type="number"
+          name="quest_type_flags.main_quest_prop.quest_locale_flags"
+        />
       </GroupCard>
       <GroupCard title="Objectives" >
         <div>

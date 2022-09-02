@@ -44,6 +44,11 @@ export function QuestlistTab() {
                     type="text"
                     onBlur={onInputChange('title')}
                 />
+                <Input
+                    label="Category"
+                    type="text"
+                    onBlur={onInputChange('questCategory')}
+                />
                 <Button type="button" onClick={onAddQuestFromFile} >Add Quest from file</Button>
                 Total: {quests.length}
             </GroupCard>
