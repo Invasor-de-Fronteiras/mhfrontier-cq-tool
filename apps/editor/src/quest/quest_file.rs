@@ -1,4 +1,5 @@
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
+use super::quest_end_flag::QuestEndFlag;
 use crate::file::reader::FileReader;
 use crate::file::writer::FileWriter;
 use crate::quest::header::{MapInfo, QuestFileHeader};
@@ -106,6 +107,7 @@ impl QuestFile {
 
     pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {
         let original = QuestFile::from_path(filename)?;
+        let mut end_flag = QuestEndFlag::from_path(filename)?;
         let mut writer = FileWriter::from_filename(filename)?;
 
         writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
@@ -125,14 +127,34 @@ impl QuestFile {
             writer.write_struct(&mut quest.large_monster_spawns[i])?;
         }
 
-        QuestFile::write_rewards(&mut writer, quest)?;
-
         // Write supply items
         writer.seek_start(quest.header.supply_box_ptr as u64)?;
         for i in 0..40 {
             writer.write_struct(&mut quest.supply_items[i])?;
         }
 
+
+        QuestFile::write_extra_data(&mut writer, quest, &mut end_flag)?;
+        // QuestFile::write_rewards(&mut writer, quest)?;
+
+        // writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
+        // writer.write_struct(&mut quest.gen_quest_prop)?;
+        Ok(())
+    }
+
+    pub fn write_extra_data(writer: &mut FileWriter, quest: &mut QuestFile, end_flag: &mut QuestEndFlag) -> Result<()> {
+        let have_sign = end_flag.is_valid();
+        
+        if have_sign {
+            writer.set_len(end_flag.start_ptr)?;
+        }
+
+        let mut new_end_flag = QuestEndFlag::new(writer.get_len()?);
+        writer.seek_start(new_end_flag.start_ptr)?;
+        QuestFile::write_rewards(writer, quest)?;
+
+        writer.write_struct(&mut new_end_flag)?;
+        
         Ok(())
     }
 
@@ -162,14 +184,35 @@ impl QuestFile {
     }
 
     pub fn write_rewards(writer: &mut FileWriter, data: &mut QuestFile) -> Result<()> {
+        // writer.seek_start(data.header.reward_ptr as u64)?;
+        data.header.reward_ptr = writer.current_position()? as u32;
+        writer.seek_start(0)?;
+        writer.write_struct(&mut data.header)?;
         writer.seek_start(data.header.reward_ptr as u64)?;
+        
         for reward_table in &mut data.rewards {
-            writer.seek_start(reward_table.table_header.table_offset as u64)?;
+            writer.write_struct(reward_table)?;
+        }
+        writer.write_u16(&0xFFFF)?;
+
+        for reward_table in &mut data.rewards {
+            reward_table.table_header.table_offset = writer.current_position()? as u32;
             for item in &mut reward_table.items {
                 writer.write_struct(item)?;
             }
+            writer.write_u16(&0xFFFF)?;
         }
+        
+        let rewards_end = writer.current_position()?;
+        writer.seek_start(data.header.reward_ptr as u64)?;
+        for reward_table in &mut data.rewards {
+            writer.write_struct(reward_table)?;
+        }
+
+        writer.seek_start(rewards_end)?;
 
         Ok(())
     }
+
+    
 }

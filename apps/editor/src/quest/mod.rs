@@ -6,3 +6,4 @@ pub mod quest_string;
 pub mod quest_type_flags;
 pub mod reward;
 pub mod supply_items;
+pub mod quest_end_flag;

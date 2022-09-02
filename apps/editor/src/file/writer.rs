@@ -123,4 +123,17 @@ impl FileWriter {
 
         Ok(())
     }
+
+    pub fn get_len(&mut self) -> Result<u64> {
+        let len = self.writer.metadata()?.len();
+
+        Ok(len)
+    }
+
+    pub fn set_len(&mut self, size: u64) -> Result<()> {
+        self.writer.set_len(size)?;
+
+        Ok(())
+    }
+
 }

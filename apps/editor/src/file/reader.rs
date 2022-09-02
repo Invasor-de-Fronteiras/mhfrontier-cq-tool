@@ -127,4 +127,9 @@ impl FileReader {
             Ok(res.to_string())
         }
     }
+
+    // pub fn get_len(&mut self) -> std::io::Result<u64> {
+    //     let current = self.reader.;
+    //     Ok(current)
+    // }
 }
