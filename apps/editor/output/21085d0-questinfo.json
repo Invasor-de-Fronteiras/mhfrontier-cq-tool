@@ -6,7 +6,7 @@
       15
     ],
     "max_players": 4,
-    "quest_category": 18,
+    "quest_category": 28,
     "unk1": [
       1,
       0,
@@ -73,10 +73,10 @@
       },
       "unk6": 2,
       "unk7": 0,
-      "join_rank_min": 31,
-      "join_rank_max": 0,
-      "post_rank_min": 31,
-      "post_rank_max": 0
+      "join_rank_min": 1,
+      "join_rank_max": 2,
+      "post_rank_min": 3,
+      "post_rank_max": 4
     },
     "skip1": [
       0,
@@ -89,10 +89,10 @@
       0
     ],
     "forced_equipement": {
-      "legs": 0,
-      "legs_attach1": 0,
-      "legs_attach2": 0,
-      "legs_attach3": 0,
+      "legs": 2,
+      "legs_attach1": 33932,
+      "legs_attach2": 33933,
+      "legs_attach3": 33934,
       "weapon": 0,
       "weapon_attach1or_bitmask": 0,
       "weapon_attach2": 0,
@@ -143,9 +143,9 @@
         0
       ],
       "monster_icon1": 48,
-      "monster_icon2": 0,
-      "monster_icon3": 0,
-      "monster_icon4": 0,
+      "monster_icon2": 174,
+      "monster_icon3": 79,
+      "monster_icon4": 1,
       "monster_icon5": 0
     },
     "skip3": [
@@ -157,7 +157,7 @@
       0
     ],
     "quest_clears_allowed": 0,
-    "quest_monster_icon": 0
+    "quest_monster_icon": 2
   },
   "unk_data": [
     0,
