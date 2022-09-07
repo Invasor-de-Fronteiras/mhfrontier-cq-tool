@@ -33,11 +33,11 @@ pub struct Quantity {
 pub struct MainQuestProp {
     pub unk0: u8,
     pub unk1: u8,
-    pub quest_locale_flags: u8,
+    pub quest_locale_flags: u8, // season / daytime
     pub unk2: u8,
     pub ranking_id: u8,
     pub unk3: u8,
-    pub unk4: u16,
+    pub course: u16,
     pub rank_band0: u16,
     pub untat_id: u8, // enum quest_type_id N,ka,zy,su,HC,HS,Rea,G
     pub skip1: u8,
@@ -116,17 +116,18 @@ pub struct ForcedEquipment {
 #[repr(C)]
 pub struct RewardsFocus {
     pub exp_type_maybe: u32,
-    pub main_rp_grp: u16,
-    pub skip1: [u8; 2],
-    pub sub_a_rp_grp: u16,
-    pub skip2: [u8; 2],
-    pub sub_b_rp_grp: u16,
-    pub skip3: [u8; 2],
+    pub main_rp_grp: u32,
+    pub sub_a_rp_grp: u32,
+    pub sub_b_rp_grp: u32,
     pub item1: u16,
     pub item2: u16,
     pub item3: u16,
     pub skip4: [u8; 3],
-    pub monster_id: u8,
+    pub monster_icon1: u8,
+    pub monster_icon2: u8,
+    pub monster_icon3: u8,
+    pub monster_icon4: u8,
+    pub monster_icon5: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -166,7 +167,7 @@ pub struct QuestTypeFlags {
     pub variants: Variants,
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8; 10],
+    pub skip3: [u8; 6],
     pub quest_clears_allowed: u32,
     pub quest_monster_icon: u8,
 }

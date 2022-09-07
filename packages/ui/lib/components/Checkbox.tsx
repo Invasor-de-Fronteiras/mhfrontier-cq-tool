@@ -20,7 +20,7 @@ export function Checkbox({ label, name, value, onChange, ...rest }: CheckboxProp
             value=""
             id={name}
         />
-        <label className="form-check-label inline-block text-gray-800" htmlFor={name}>
+        <label className="form-check-label inline-block text-gray-800 dark:text-white" htmlFor={name}>
             {label}
         </label>
     </div>

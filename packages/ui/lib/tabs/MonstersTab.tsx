@@ -18,12 +18,9 @@ export function MonstersTab() {
 
   const stages = useMemo(
     () => {
-      console.log('mapId: ', mapId);
       if (!mapId) return [];
       const map = findMap(mapId);
       if (!map) return [];
-
-      console.log('map: ', map);
 
       return map.stages.map((v, i) => ({
         value: v.id,
@@ -66,7 +63,7 @@ export function MonstersTab() {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="dark:text-white">
           {fields.map((monster, i) => {
             return (
               <tr

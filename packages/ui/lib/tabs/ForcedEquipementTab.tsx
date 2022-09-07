@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { createFilter } from "react-select";
+import { AllowedWeaponTypeField } from "../components/AllowedWeaponType";
 import { GroupCard } from "../components/CardGroup";
 import { Checkbox } from "../components/Checkbox";
 import { InputField } from "../components/Input";
@@ -179,10 +180,14 @@ export function ForcedEquipmentTab() {
             <Checkbox name="Waist" label="Waist" value={waist} onChange={onEnableWaist} />
             <Checkbox name="Legs" label="Legs" value={legs} onChange={onEnableLegs} />
           </div>
-                 
+        </GroupCard>
+        <GroupCard title="Disable Weapons type">
+          <AllowedWeaponTypeField
+            name="quest_type_flags.forced_equipement.weapon_attach1or_bitmask"
+            msFlag="quest_type_flags.skip3.0"
+          />
         </GroupCard>
         <GroupCard title="Weapon">
-          
           <Select
             label="Weapon Type"
             options={equipeTypes.map(v => ({ label: v, value: v }))}

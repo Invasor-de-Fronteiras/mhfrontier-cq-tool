@@ -1,14 +1,15 @@
 use crate::{
-    quest_file::QuestFile,
-    save_json::save_quest_to_json,
-    structs::{
+    quest::quest_file::QuestFile,
+    quest::{
         header::{MapInfo, QuestFileHeader},
         monsters::{LargeMonsterPointers, LargeMonsterSpawn},
+        quest_string::QuestStrings,
         quest_type_flags::{
             ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
             QuestTypeFlags, RewardsFocus, Variants,
         },
     },
+    save_json::save_quest_to_json,
 };
 
 #[test]
@@ -75,8 +76,8 @@ fn reader_test() {
                 quest_locale_flags: 10,
                 unk2: 0,
                 ranking_id: 6,
-                unk3: 5,
-                unk4: 19,
+                unk3: 19,
+                course: 5,
                 rank_band0: 31,
                 untat_id: 1, // enum quest_type_id N,ka,zy,su,HC,HS,Rea,G
                 skip1: 0,
@@ -169,18 +170,19 @@ fn reader_test() {
             rewards_focus: RewardsFocus {
                 exp_type_maybe: 0,
                 main_rp_grp: 530,
-                skip1: [0; 2],
                 sub_a_rp_grp: 80,
-                skip2: [0; 2],
                 sub_b_rp_grp: 80,
-                skip3: [0; 2],
                 item1: 532,
                 item2: 528,
                 item3: 473,
                 skip4: [0; 3],
-                monster_id: 48,
+                monster_icon1: 48,
+                monster_icon2: 0,
+                monster_icon3: 0,
+                monster_icon4: 0,
+                monster_icon5: 0,
             },
-            skip3: [0; 10],
+            skip3: [0; 6],
             quest_clears_allowed: 0,
             quest_monster_icon: 0,
         },
@@ -292,6 +294,7 @@ fn reader_test() {
         //     quantity: 1,
         // },
         supply_items: vec![],
+        strings: quest_file.strings,
     };
 
     assert_eq!(quest_file.header, expected.header, "Header");

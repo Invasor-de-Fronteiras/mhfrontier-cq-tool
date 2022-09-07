@@ -1,3 +1,6 @@
+extern crate encoding_rs;
+
+use encoding_rs::SHIFT_JIS;
 use std::fs::File;
 use std::io::{BufReader, Read, Result, Seek, SeekFrom};
 use std::mem::{forget, size_of, MaybeUninit};
@@ -52,6 +55,13 @@ impl FileReader {
         }
     }
 
+    pub fn read_custom_buffer(&mut self, size: u64) -> std::io::Result<Vec<u8>> {
+        let mut buffer = vec![0_u8; size as usize];
+        self.reader.read_exact(&mut buffer)?;
+
+        Ok(buffer)
+    }
+
     pub fn read_u32(&mut self) -> std::io::Result<u32> {
         let mut buffer = [0_u8; 4];
         self.reader.read_exact(&mut buffer)?;
@@ -97,4 +107,29 @@ impl FileReader {
         self.seek_start(current)?;
         Ok(result)
     }
+
+    pub fn read_string(&mut self) -> std::io::Result<String> {
+        let mut text: Vec<u8> = vec![];
+        let mut end_of_string = false;
+
+        while !end_of_string {
+            let value = self.read_u8()?;
+            end_of_string = value == 0;
+            if !end_of_string {
+                text.push(value);
+            }
+        }
+
+        let (res, _enc, errors) = SHIFT_JIS.decode(&text);
+        if errors {
+            Ok("invalid text".to_string())
+        } else {
+            Ok(res.to_string())
+        }
+    }
+
+    // pub fn get_len(&mut self) -> std::io::Result<u64> {
+    //     let current = self.reader.;
+    //     Ok(current)
+    // }
 }

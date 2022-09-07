@@ -80,7 +80,7 @@
       "unk2": 0,
       "ranking_id": 7,
       "unk3": 0,
-      "unk4": 18,
+      "course": 18,
       "rank_band0": 1,
       "untat_id": 7,
       "skip1": 0,
@@ -183,20 +183,8 @@
     "rewards_focus": {
       "exp_type_maybe": 1,
       "main_rp_grp": 1000,
-      "skip1": [
-        0,
-        0
-      ],
       "sub_a_rp_grp": 500,
-      "skip2": [
-        0,
-        0
-      ],
       "sub_b_rp_grp": 300,
-      "skip3": [
-        0,
-        0
-      ],
       "item1": 0,
       "item2": 0,
       "item3": 0,
@@ -205,7 +193,11 @@
         10,
         10
       ],
-      "monster_id": 146
+      "monster_icon1": 146,
+      "monster_icon2": 0,
+      "monster_icon3": 0,
+      "monster_icon4": 0,
+      "monster_icon5": 0
     },
     "skip3": [
       172,

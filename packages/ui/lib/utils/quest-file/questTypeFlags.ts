@@ -18,7 +18,7 @@ export interface MainQuestProp {
   unk2: number;
   ranking_id: number;
   unk3: number;
-  unk4: number;
+  course: number;
   rank_band0: number;
   untat_id: number;
   skip1: number;
@@ -91,16 +91,17 @@ export interface ForcedEquipment {
 export interface RewardsFocus {
   exp_type_maybe: number;
   main_rp_grp: number;
-  skip1: number[];
   sub_a_rp_grp: number;
-  skip2: number[];
   sub_b_rp_grp: number;
-  skip3: number[];
   item1: number;
   item2: number;
   item3: number;
   skip4: number[];
-  monster_id: number;
+  monster_icon1: number;
+  monster_icon2: number;
+  monster_icon3: number;
+  monster_icon4: number;
+  monster_icon5: number;
 }
 
 export interface QuestTypeFlags {
