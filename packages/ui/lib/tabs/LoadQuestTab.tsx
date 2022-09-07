@@ -1,8 +1,10 @@
-import { Button } from "ui";
+import { Button, useEditor } from "ui";
 import { Dropzone } from "../components/Dropzone";
 import { maps } from "../utils";
 
 export function LoadQuestTab() {
+  const { loadQuest } = useEditor();
+
   return (
     <div className="flex flex-col items-center justify-center mt-6 px-2">
       <div className="flex flex-col items-center justify-center p-6 border rounded w-full max-w-2xl">
@@ -14,7 +16,7 @@ export function LoadQuestTab() {
           <Card
             buttonText="Load file content"
             title="Select a quest file from your machine."
-            buttonDisabled
+            onClick={loadQuest}
           >
             <Dropzone />
           </Card>
@@ -43,16 +45,17 @@ export function LoadQuestTab() {
 interface CardProps {
   title: string;
   buttonText: string;
-  buttonDisabled?: boolean;
   children: React.ReactNode;
+  buttonDisabled?: boolean;
+  onClick?: () => void;
 }
 
-function Card({ title, buttonText, buttonDisabled, children }: CardProps) {
+function Card({ title, buttonText, onClick, buttonDisabled, children }: CardProps) {
   return (
     <div className="border px-2 py-3 w-full max-w-lg items-center flex flex-col">
       <h3 className="text-center">{title}</h3>
       <div className="flex-1 p-3 w-full h-full max-h-40">{children}</div>
-      <Button disabled={buttonDisabled}>{buttonText}</Button>
+      <Button type="button" onClick={onClick} disabled={buttonDisabled}>{buttonText}</Button>
     </div>
   );
 }

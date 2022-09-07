@@ -1,4 +1,8 @@
-use crate::{questlist::questlist_file::QuestlistFile, save_json::save_to_json};
+
+use crate::{
+    questlist::questlist_file::QuestlistFile,
+    save_json::save_to_json,
+};
 
 #[test]
 fn read_questlist() {

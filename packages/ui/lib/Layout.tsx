@@ -10,9 +10,11 @@ import {
   BsQuestion,
 } from "react-icons/bs";
 import { SiMonster } from "react-icons/si";
-import { GiArmorVest } from "react-icons/gi";
+import { IoMdFlag } from "react-icons/io";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { FiRefreshCw } from "react-icons/fi";
+import { HiTemplate } from "react-icons/hi";
+import { VscSymbolString } from "react-icons/vsc";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
 
@@ -75,6 +77,12 @@ export function Layout() {
               uri: "/quest-info",
             },
             {
+              name: "Strings",
+              icon: VscSymbolString,
+              disabled: !isLoadedFile,
+              uri: "/strings",
+            },
+            {
               name: "Monsters",
               icon: SiMonster,
               disabled: !isLoadedFile,
@@ -82,7 +90,7 @@ export function Layout() {
             },
             {
               name: "Forced Equipment",
-              icon: GiArmorVest,
+              icon: GiAbdominalArmor,
               disabled: !isLoadedFile,
               uri: "/equipment",
             },
@@ -97,6 +105,12 @@ export function Layout() {
               icon: BsFillAwardFill,
               disabled: !isLoadedFile,
               uri: "/rewards"
+            },
+            {
+              name: "Flags",
+              icon: IoMdFlag,
+              disabled: !isLoadedFile,
+              uri: "/flags"
             },
             {
               name: "Gathering",
@@ -117,12 +131,7 @@ export function Layout() {
               name: "Fishing",
               icon: GiFishingLure,
               disabled: !isLoadedFile || true,
-            },
-            {
-              name: "Forced Equipment",
-              icon: GiAbdominalArmor,
-              disabled: !isLoadedFile || true,
-            },
+            }
           ],
         },
         {
@@ -139,6 +148,12 @@ export function Layout() {
               icon: BsFillGeoFill,
               uri: "/map-position",
               disabled: false,
+            },
+            {
+              name: "Templates",
+              icon: HiTemplate,
+              disabled: !isLoadedFile,
+              uri: "/apply-templates",
             },
             {
               name: "Unknown",

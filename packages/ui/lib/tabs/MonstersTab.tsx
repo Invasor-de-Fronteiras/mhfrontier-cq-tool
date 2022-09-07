@@ -63,7 +63,7 @@ export function MonstersTab() {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="dark:text-white">
           {fields.map((monster, i) => {
             return (
               <tr

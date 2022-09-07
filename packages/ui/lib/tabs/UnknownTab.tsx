@@ -4,6 +4,15 @@ import { useState } from "react";
 import { isObject } from "../utils/util";
 import { Controller, useWatch } from "react-hook-form";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const wrapOnChange = (onChange?: (...event: any[]) => void) => {
+  if (onChange) return (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(parseInt(e.target.value, 10))
+  }
+
+  return onChange;
+}
+
 export function UnknownTab() {
   const { form } = useEditor();
   const data = useWatch({ control: form.control });
@@ -37,7 +46,7 @@ function UnknownField({
       </legend>
       {!hide && (
         <div className="flex flex-row flex-wrap gap-2">
-          {Object.keys(data).map((key) => {
+          {Object.keys(data).sort().map((key) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             /** @ts-ignore */
             const value = data[key];
@@ -56,7 +65,7 @@ function UnknownField({
                     <span className="text-sm">{key}</span>
                     {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
                     {/*@ts-ignore*/}
-                    <input className="border p-1" type="text" {...field} />
+                    <input className="border p-1" {...field} type="number" onChange={wrapOnChange(field.onChange)} />
                   </label>
                 )}
               />

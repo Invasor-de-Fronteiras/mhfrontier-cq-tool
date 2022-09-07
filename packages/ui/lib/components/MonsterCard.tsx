@@ -104,15 +104,6 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
             type="number"
             name={`large_monster_spawns.${index}.spawn_amount`}
           />
-          {index >= 0 && index <= 2 && (
-            <InputField
-              label="Monster variant"
-              type="number"
-              name={`quest_type_flags.variants.monster_variant${
-                index as 0 | 1 | 2
-              }`}
-            />
-          )}
         </fieldset>
       </div>
     </div>

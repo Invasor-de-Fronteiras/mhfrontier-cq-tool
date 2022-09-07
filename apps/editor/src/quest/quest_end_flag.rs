@@ -1,24 +1,24 @@
-use std::{io::{Read, Result}, mem::size_of};
+use std::{
+    io::{Read, Result},
+    mem::size_of,
+};
 
-use serde_derive::{ Serialize, Deserialize };
+use serde_derive::{Deserialize, Serialize};
 
 use crate::file::reader::FileReader;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct QuestEndFlag {
-    pub start_ptr: u64,
+    pub start_ptr: u32,
     pub sign: [u8; 4],
-    pub end_bytes: [u8; 2]
 }
 
 impl QuestEndFlag {
-    
-    pub fn new(start_ptr: u64) -> QuestEndFlag {
-        QuestEndFlag { 
+    pub fn new(start_ptr: u32) -> QuestEndFlag {
+        QuestEndFlag {
             start_ptr,
             sign: [0x41, 0x52, 0x43, 0x41],
-            end_bytes: [0, 0]
         }
     }
 
@@ -37,11 +37,9 @@ impl QuestEndFlag {
     }
 
     pub fn is_valid(&self) -> bool {
-        return  self.sign[0] == 0x41 &&
-            self.sign[1] == 0x52 &&
-            self.sign[2] == 0x43 &&
-            self.sign[3] == 0x41
+        return self.sign[0] == 0x41
+            && self.sign[1] == 0x52
+            && self.sign[2] == 0x43
+            && self.sign[3] == 0x41;
     }
-
 }
-

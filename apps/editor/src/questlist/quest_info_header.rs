@@ -22,7 +22,7 @@ impl QuestInfoHeader {
         QuestInfoHeader {
             unk0: [0, 0, 15],
             max_players: 4,
-            quest_category: 0x12,
+            quest_category: 0x1C,
             unk1: [1, 0, 0, 0, 0, 0],
             mark: 0,
             unk2: 0,

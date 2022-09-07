@@ -29,3 +29,15 @@ pub struct QuestlistHeader {
     pub unk2: u16,
     pub unk3: u16,
 }
+
+impl QuestlistHeader {
+    pub fn new_last() -> QuestlistHeader {
+        QuestlistHeader {
+            unk0: 0x00,
+            quest_count: 0x26,
+            unk1: 0x340D,
+            unk2: 0xA594,
+            unk3: 0,
+        }
+    }
+}

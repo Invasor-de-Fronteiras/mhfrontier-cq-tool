@@ -15,7 +15,7 @@ export const quest_type_options: SelectOption[] = quest_type.map(
   (type, index) => ({
     label: type,
     value: index,
-}));
+  }));
 
 
 export const quest_category = [
@@ -54,3 +54,25 @@ export const quest_mark = [
 ].map((v, i) => ({ label: v, value: i }));
 
 export const getQuestMark = (id: number) => quest_mark[id]?.label || '???';
+
+
+export const locale_flags = [
+  { value: 0, label: "Based on season and daytime in town." },
+  { value: 10, label: "Warm/Day" },
+  { value: 18, label: "Warm/Night" },
+  { value: 12, label: "Cold/Day" },
+  { value: 20, label: "Cold/Night" },
+  { value: 9, label: "Breeding/Day" },
+  { value: 17, label: "Breeding/Night" },
+  { value: 64, label: "Based on season and daytime in town." },
+  { value: 74, label: "Warm/Day/Master" },
+  { value: 82, label: "Warm/Night/Master" },
+  { value: 76, label: "Cold/Day/Master" },
+  { value: 84, label: "Cold/Night/Master" },
+  { value: 73, label: "Breed/Day/Master" },
+  { value: 81, label: "Breed/Night/Master" },
+  { value: 209, label: "Breed/Day/Master" },
+  { value: 26, label: "Warm/Day" },
+  { value: 90, label: "Warm/Day/Master" },
+  { value: 201, label: "Breed/Day/Master" }
+]

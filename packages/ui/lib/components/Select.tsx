@@ -54,7 +54,7 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
   return (
     <label className={classNames("flex flex-col w-full max-w-xs m-2", className)}>
       {label && (
-        <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        <span className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2">
           {label}
         </span>
       )}

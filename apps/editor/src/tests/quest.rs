@@ -6,7 +6,7 @@ use crate::{
         quest_type_flags::{
             ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
             QuestTypeFlags, RewardsFocus, Variants,
-        },
+        }, quest_string::QuestStrings,
     },
     save_json::save_quest_to_json,
 };
@@ -293,6 +293,7 @@ fn reader_test() {
         //     quantity: 1,
         // },
         supply_items: vec![],
+        strings: quest_file.strings
     };
 
     assert_eq!(quest_file.header, expected.header, "Header");

@@ -12,6 +12,7 @@ interface EditorContextState {
   };
   handleSaveQuest: (data: QuestFile) => void;
   reFrontier?: () => void;
+  loadQuest: () => void;
   form: UseFormReturn<QuestFile>;
   isLoadedFile: boolean;
 }

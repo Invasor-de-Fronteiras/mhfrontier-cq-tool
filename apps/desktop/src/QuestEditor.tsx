@@ -33,13 +33,16 @@ function QuestEditor({ children }: QuestEditorProps) {
       ),
       rewards: data.rewards,
       supply_items: data.supply_items,
+      strings: data.strings,
     };
+    console.log('save: ', quest);
 
     const payload: SaveQuestPayload = { filepath: questPath, quest };
 
     const response: string = await invoke("save_quest_file", {
       event: JSON.stringify(payload),
     });
+    console.log('response: ', response);
 
     const resData = JSON.parse(response);
     if (resData?.error) {
@@ -67,6 +70,7 @@ function QuestEditor({ children }: QuestEditorProps) {
         console.error("response ", response);
         return;
       }
+      console.log('quest: ', quest);
 
       setFile(quest as QuestFile);
       setQuestPath(path as string);
@@ -108,6 +112,7 @@ function QuestEditor({ children }: QuestEditorProps) {
     <EditorContextProvider
       data={file}
       handleSaveQuest={handleChangeSave}
+      loadQuest={onReadFile}
       reFrontier={reFrontier}
       isLoadedFile={!!file}
       uploadFile={{

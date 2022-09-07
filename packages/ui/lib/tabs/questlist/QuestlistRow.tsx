@@ -44,7 +44,7 @@ export const ActionButton = ({ children, ...props }: ComponentProps<"button"> & 
 
 export const QuestlistRow = ({ quest, onEdit, onChangePosition, onDelete }: QuestlistRowProps) => {
     return <tr
-            className={classNames("hover:bg-emerald-300 cursor-pointer")}
+            className={classNames("hover:bg-emerald-300 cursor-pointer dark:text-white")}
         >
             <td className="px-6 py-4">{quest.index}</td>
             <td className="px-6 py-4">{quest.title}</td>

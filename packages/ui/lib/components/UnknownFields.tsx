@@ -39,7 +39,7 @@ export function UnknownField<T>({
       </legend>
       {!hide && (
         <div className="flex flex-row flex-wrap gap-2">
-          {Object.keys(data).map((key) => {
+          {Object.keys(data).sort().map((key) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             /** @ts-ignore */
             const value = data[key];

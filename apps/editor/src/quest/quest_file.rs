@@ -1,5 +1,6 @@
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use super::quest_end_flag::QuestEndFlag;
+use super::quest_string::QuestStrings;
 use crate::file::reader::FileReader;
 use crate::file::writer::FileWriter;
 use crate::quest::header::{MapInfo, QuestFileHeader};
@@ -23,6 +24,7 @@ pub struct QuestFile {
     pub rewards: Vec<RewardTable>,
     // supply items are a fixed-size array of 40 item slots
     pub supply_items: Vec<SupplyItem>,
+    pub strings: QuestStrings,
 }
 
 impl QuestFile {
@@ -30,6 +32,8 @@ impl QuestFile {
         let mut reader = FileReader::from_filename(filename)?;
 
         let header = reader.read_struct::<QuestFileHeader>()?;
+
+        println!("rewards: {}", header.reward_ptr);
 
         reader.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         let gen_quest_prop = reader.read_struct::<GenQuestProp>()?;
@@ -66,6 +70,12 @@ impl QuestFile {
 
         let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
 
+        let strings = QuestStrings::from_reader(
+            &mut reader,
+            quest_type_flags.main_quest_prop.quest_strings_ptr,
+            None,
+        )?;
+
         Ok(QuestFile {
             header,
             gen_quest_prop,
@@ -76,6 +86,7 @@ impl QuestFile {
             large_monster_spawns,
             rewards,
             supply_items,
+            strings,
         })
     }
 
@@ -133,28 +144,34 @@ impl QuestFile {
             writer.write_struct(&mut quest.supply_items[i])?;
         }
 
-
         QuestFile::write_extra_data(&mut writer, quest, &mut end_flag)?;
-        // QuestFile::write_rewards(&mut writer, quest)?;
 
-        // writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
-        // writer.write_struct(&mut quest.gen_quest_prop)?;
         Ok(())
     }
 
-    pub fn write_extra_data(writer: &mut FileWriter, quest: &mut QuestFile, end_flag: &mut QuestEndFlag) -> Result<()> {
+    pub fn write_extra_data(
+        writer: &mut FileWriter,
+        quest: &mut QuestFile,
+        end_flag: &mut QuestEndFlag,
+    ) -> Result<()> {
         let have_sign = end_flag.is_valid();
-        
         if have_sign {
-            writer.set_len(end_flag.start_ptr)?;
+            writer.set_len(end_flag.start_ptr as u64)?;
         }
 
-        let mut new_end_flag = QuestEndFlag::new(writer.get_len()?);
-        writer.seek_start(new_end_flag.start_ptr)?;
+        let mut new_end_flag = QuestEndFlag::new(writer.get_len()? as u32);
+
+        writer.seek_start(new_end_flag.start_ptr as u64)?;
+
         QuestFile::write_rewards(writer, quest)?;
+        quest.quest_type_flags.main_quest_prop.quest_strings_ptr =
+            writer.current_position()? as u32;
+        writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
+        quest.strings.write(writer)?;
 
         writer.write_struct(&mut new_end_flag)?;
-        
+        writer.write_u8(&0)?;
+
         Ok(())
     }
 
@@ -189,9 +206,9 @@ impl QuestFile {
         writer.seek_start(0)?;
         writer.write_struct(&mut data.header)?;
         writer.seek_start(data.header.reward_ptr as u64)?;
-        
+
         for reward_table in &mut data.rewards {
-            writer.write_struct(reward_table)?;
+            writer.write_struct(&mut reward_table.table_header)?;
         }
         writer.write_u16(&0xFFFF)?;
 
@@ -202,17 +219,15 @@ impl QuestFile {
             }
             writer.write_u16(&0xFFFF)?;
         }
-        
+
         let rewards_end = writer.current_position()?;
         writer.seek_start(data.header.reward_ptr as u64)?;
         for reward_table in &mut data.rewards {
-            writer.write_struct(reward_table)?;
+            writer.write_struct(&mut reward_table.table_header)?;
         }
 
         writer.seek_start(rewards_end)?;
 
         Ok(())
     }
-
-    
 }

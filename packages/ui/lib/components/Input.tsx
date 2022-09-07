@@ -18,6 +18,7 @@ const wrapOnChange = (type: string, onChange?: (...event: any[]) => void) => {
     return onChange;
 }
 
+
 export function Input({
   label,
   placeholder,
@@ -28,12 +29,12 @@ export function Input({
   return (
     <label className={classNames('m-2',  className)}>
       {label && (
-        <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        <span className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2">
           {label}
         </span>
       )}
       <input
-        className="appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 leading-tight focus:border-emerald-500 outline-none"
+        className="appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 dark:text-black leading-tight focus:border-emerald-500 outline-none"
         type={type}
         placeholder={placeholder}
         {...props}

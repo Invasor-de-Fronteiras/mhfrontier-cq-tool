@@ -24,10 +24,10 @@ export function QuestlistTab() {
     }, [query, setQuery]);
 
     const onAddQuestFromFile = useCallback(async () => {
-        const quest = await getQuestFromFile();
-        if (!quest) return;
+        const items = await getQuestFromFile();
+        if (!items) return;
 
-        form.setValue('quests', [quest, ...quests]);
+        form.setValue('quests', [...items, ...quests]);
     }, [form, quests, getQuestFromFile]);
 
     const onInputChange = useCallback((key: keyof QuestInfoRow) => (e: React.FocusEvent<HTMLInputElement, Element>) => {

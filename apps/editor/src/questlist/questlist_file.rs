@@ -1,4 +1,7 @@
 use super::file_end::{FILE_END_P1, FILE_END_P2, FILE_END_P3};
+use super::last_file_end::last_file_end_p1::LAST_FILE_END_P1;
+use super::last_file_end::last_file_end_p2::LAST_FILE_END_P2;
+use super::last_file_end::last_file_end_p3::LAST_FILE_END_P3;
 use super::quest_info::QuestInfo;
 use super::questlist_header::{QuestlistHeader, QUEST_END};
 use crate::file::reader::FileReader;
@@ -59,6 +62,10 @@ impl QuestlistFile {
             42
         };
 
+        if is_last {
+            questlist.header = QuestlistHeader::new_last();
+        }
+
         questlist.header.quest_count = quest_count;
 
         writer.write_struct(&mut questlist.header)?;
@@ -71,8 +78,12 @@ impl QuestlistFile {
             }
         }
 
-        writer.write_buffer(&FILE_END_P1)?;
-        if !is_last {
+        if is_last {
+            writer.write_buffer(&LAST_FILE_END_P1)?;
+            writer.write_buffer(&LAST_FILE_END_P2)?;
+            writer.write_buffer(&LAST_FILE_END_P3)?;
+        } else {
+            writer.write_buffer(&FILE_END_P1)?;
             writer.write_buffer(&FILE_END_P2)?;
             writer.write_buffer(&FILE_END_P3)?;
         }

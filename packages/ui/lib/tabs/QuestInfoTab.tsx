@@ -1,28 +1,11 @@
-import { useMemo } from "react";
-import { useWatch } from "react-hook-form";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
 import { SelectField } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
-import { quest_type_options } from "../utils";
+import { locale_flags, quest_type_options } from "../utils";
+import { requirements } from "../utils/requirements";
 
 export function QuestInfoTab() {
-  const { form } = useEditor();
-
-  const monster_class_id = useWatch({
-    name: "gen_quest_prop.monster_class_id",
-    control: form.control,
-  });
-
-  const monsterClassIdSelected = useMemo(
-    () =>
-      quest_type_options.find(
-        (option) => option.value === monster_class_id
-      ),
-    [monster_class_id]
-  );
-
   return (
     <div className="flex flex-row flex-wrap gap-2">
       <GroupCard title="Quest">
@@ -47,9 +30,24 @@ export function QuestInfoTab() {
           name="quest_type_flags.main_quest_prop.quest_time"
         />
         <InputField
-          label="Locale flags"
+          label="Post rank min"
           type="number"
+          name="quest_type_flags.main_quest_prop.post_rank_min"
+        />
+        <InputField
+          label="Join rank min"
+          type="number"
+          name="quest_type_flags.main_quest_prop.join_rank_min"
+        />
+        <SelectField
+          label="Locale flags"
+          options={locale_flags}
           name="quest_type_flags.main_quest_prop.quest_locale_flags"
+        />
+        <SelectField
+          label="Requirement"
+          options={requirements}
+          name="quest_type_flags.main_quest_prop.unkk"
         />
       </GroupCard>
       <GroupCard title="Objectives" >
@@ -59,7 +57,7 @@ export function QuestInfoTab() {
           <ObjectiveCard objective={3} />
         </div>
       </GroupCard>
-      <GroupCard title="Points">
+      <GroupCard title="Reward Points">
         <InputField
           label="Main rank points"
           type="number"
@@ -101,7 +99,6 @@ export function QuestInfoTab() {
           label="Monster class id"
           options={quest_type_options}
           name="gen_quest_prop.monster_class_id"
-          value={monsterClassIdSelected}
         />
       </GroupCard>
     </div>

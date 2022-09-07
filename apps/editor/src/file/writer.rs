@@ -61,6 +61,16 @@ impl FileWriter {
         }
     }
 
+    pub fn write_struct_on<T>(&mut self, data: &mut T, pos: u64) -> std::io::Result<()> {
+        let current = self.current_position()?;
+
+        self.seek_start(pos)?;
+        self.write_struct(data)?;
+        self.seek_start(current)?;
+
+        Ok(())
+    }
+
     pub fn write_buffer(&mut self, buffer: &[u8]) -> std::io::Result<()> {
         self.writer.write(&buffer)?;
         Ok(())
@@ -135,5 +145,4 @@ impl FileWriter {
 
         Ok(())
     }
-
 }

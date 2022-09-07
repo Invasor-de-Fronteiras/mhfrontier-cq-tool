@@ -19,12 +19,12 @@ export function TextArea({
   return (
     <label className={classNames('m-2',  className)}>
       {label && (
-        <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        <span className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2">
           {label}
         </span>
       )}
       <textarea
-        className="appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 leading-tight focus:border-emerald-500 outline-none"
+        className="appearance-none w-full border-gray-200 dark:text-black border-2 rounded py-3 px-4 leading-tight focus:border-emerald-500 outline-none"
         placeholder={placeholder}
         {...props}
       />

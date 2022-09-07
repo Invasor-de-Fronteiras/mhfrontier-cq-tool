@@ -2,7 +2,7 @@ use std::io::Result;
 
 use serde_derive::{Deserialize, Serialize};
 
-use crate::file::reader::FileReader;
+use crate::file::{reader::FileReader, writer::FileWriter};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -68,6 +68,37 @@ impl QuestStrings {
             sub_a_objective,
             sub_b_objective,
         })
+    }
+
+    pub fn write(&mut self, writer: &mut FileWriter) -> Result<()> {
+        let strings_ptr = writer.current_position()?;
+        writer.write_struct(&mut self.pointers)?;
+
+        // write strings
+        self.pointers.title = writer.current_position()? as u32;
+        writer.write_string(&self.title)?;
+        self.pointers.main_objective = writer.current_position()? as u32;
+        writer.write_string(&self.main_objective)?;
+        self.pointers.sub_a_objective = writer.current_position()? as u32;
+        writer.write_string(&self.sub_a_objective)?;
+        self.pointers.sub_b_objective = writer.current_position()? as u32;
+        writer.write_string(&self.sub_b_objective)?;
+        self.pointers.clear_reqs = writer.current_position()? as u32;
+        writer.write_string(&self.clear_reqs)?;
+        self.pointers.fail_reqs = writer.current_position()? as u32;
+        writer.write_string(&self.fail_reqs)?;
+        self.pointers.contractor = writer.current_position()? as u32;
+        writer.write_string(&self.contractor)?;
+        self.pointers.description = writer.current_position()? as u32;
+        writer.write_string(&self.description)?;
+
+        let end_ptr = writer.current_position()?;
+
+        writer.seek_start(strings_ptr)?;
+        writer.write_struct(&mut self.pointers)?;
+        writer.seek_start(end_ptr)?;
+
+        Ok(())
     }
 
     pub fn get_total_size(&self) -> u16 {

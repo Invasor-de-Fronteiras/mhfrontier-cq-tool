@@ -73,3 +73,6 @@ enum SeasonDaytime {
 // 53228n1 
 
 Quest Type Flags.unkk = 189 // n pode nada
+Quest Type Flags.unkk = 130 // sem rasta parça
+quest_type_flags.main.unk2 = 32 // 20s pra retornar
+quest_type_flags.main.monster_variant0 = 2 // reward fixed

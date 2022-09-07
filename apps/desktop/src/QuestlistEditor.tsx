@@ -90,11 +90,8 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
     }
   };
 
-  const getQuestFromFile = async (): Promise<QuestInfo | null> => {
+  const getQuestFromFile = async (path: string): Promise<QuestInfo | null> => {
     try {
-      const path = await open({ multiple: false });
-      if (!path) return null;
-
       const response: string = await invoke("read_questinfo", {
         event: path,
       });
@@ -112,13 +109,31 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
     return null;
   }
 
+  const getQuests = async (): Promise<QuestInfo[]> => {
+    try {
+      const path = await open({ multiple: true });
+      if (!path) return [];
+      const paths = Array.isArray(path) ? path : [path];
+      const quests: QuestInfo[] = [];
+      for (let i=0; i < paths.length; i+=1) {
+        const quest = await getQuestFromFile(paths[i]);
+        if (quest) quests.push(quest);
+      }
+
+      return quests;
+    } catch (error) {
+      console.error("error ", error);
+    }
+    return [];
+  }
+
   return (
     <QuestlistEditorContextProvider
       data={data}
       handleSaveQuestlist={handleSaveQuestlist}
       isLoadedQuestlists={!!quests}
       loadQuestlists={loadQuestlists}
-      getQuestFromFile={getQuestFromFile}
+      getQuestFromFile={getQuests}
     >
       {children}
     </QuestlistEditorContextProvider>
