@@ -1,12 +1,12 @@
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use super::quest_end_flag::QuestEndFlag;
 use super::quest_string::QuestStrings;
+use super::reward::Rewards;
 use crate::file::reader::FileReader;
 use crate::file::writer::FileWriter;
 use crate::quest::header::{MapInfo, QuestFileHeader};
 use crate::quest::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::quest::quest_type_flags::{GenQuestProp, QuestTypeFlags};
-use crate::quest::reward::{RewardItem, RewardTable, RewardTableHeader};
 use crate::quest::supply_items::SupplyItem;
 use serde_derive::{Deserialize, Serialize};
 use std::io::Result;
@@ -21,7 +21,7 @@ pub struct QuestFile {
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
-    pub rewards: Vec<RewardTable>,
+    pub rewards: Rewards,
     // supply items are a fixed-size array of 40 item slots
     pub supply_items: Vec<SupplyItem>,
     pub strings: QuestStrings,
@@ -32,8 +32,6 @@ impl QuestFile {
         let mut reader = FileReader::from_filename(filename)?;
 
         let header = reader.read_struct::<QuestFileHeader>()?;
-
-        println!("rewards: {}", header.reward_ptr);
 
         reader.seek_start(GEN_QUEST_PROP_PRT as u64)?;
         let gen_quest_prop = reader.read_struct::<GenQuestProp>()?;
@@ -65,8 +63,8 @@ impl QuestFile {
             large_monster_spawns.push(monster_spawn);
         }
 
-        let rewards: Vec<RewardTable> =
-            QuestFile::read_rewards(&mut reader, header.reward_ptr as u64)?;
+        reader.seek_start(header.reward_ptr as u64)?;
+        let rewards: Rewards = reader.read_custom::<Rewards>()?;
 
         let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
 
@@ -121,11 +119,8 @@ impl QuestFile {
         let mut end_flag = QuestEndFlag::from_path(filename)?;
         let mut writer = FileWriter::from_filename(filename)?;
 
-        writer.seek_start(GEN_QUEST_PROP_PRT as u64)?;
-        writer.write_struct(&mut quest.gen_quest_prop)?;
-
-        writer.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
-        writer.write_struct(&mut quest.quest_type_flags)?;
+        writer.write_struct_on(&mut quest.gen_quest_prop, GEN_QUEST_PROP_PRT as u64)?;
+        writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
 
         writer.seek_start(original.large_monster_pointers.large_monster_ids as u64)?;
 
@@ -163,70 +158,14 @@ impl QuestFile {
 
         writer.seek_start(new_end_flag.start_ptr as u64)?;
 
-        QuestFile::write_rewards(writer, quest)?;
-        quest.quest_type_flags.main_quest_prop.quest_strings_ptr =
-            writer.current_position()? as u32;
-        writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
-        quest.strings.write(writer)?;
+        quest.header.reward_ptr = writer.write_custom(&mut quest.rewards)? as u32;
+        quest.quest_type_flags.main_quest_prop.quest_strings_ptr = writer.write_custom(&mut quest.strings)? as u32;
 
+        writer.write_struct_on(&mut quest.header, 0)?;
+        writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
+        
         writer.write_struct(&mut new_end_flag)?;
         writer.write_u8(&0)?;
-
-        Ok(())
-    }
-
-    pub fn read_rewards(reader: &mut FileReader, reward_ptr: u64) -> Result<Vec<RewardTable>> {
-        let mut rewards: Vec<RewardTable> = vec![];
-
-        reader.seek_start(reward_ptr)?;
-        while reader.read_current_u16()? != 0xFFFF {
-            let table_header = reader.read_struct::<RewardTableHeader>()?;
-            let next_table = reader.current_position()?;
-            let mut reward_table = RewardTable {
-                table_header,
-                items: vec![],
-            };
-
-            reader.seek_start(reward_table.table_header.table_offset as u64)?;
-            while reader.read_current_u16()? != 0xFFFF {
-                let item = reader.read_struct::<RewardItem>()?;
-                reward_table.items.push(item);
-            }
-
-            rewards.push(reward_table);
-            reader.seek_start(next_table)?;
-        }
-
-        Ok(rewards)
-    }
-
-    pub fn write_rewards(writer: &mut FileWriter, data: &mut QuestFile) -> Result<()> {
-        // writer.seek_start(data.header.reward_ptr as u64)?;
-        data.header.reward_ptr = writer.current_position()? as u32;
-        writer.seek_start(0)?;
-        writer.write_struct(&mut data.header)?;
-        writer.seek_start(data.header.reward_ptr as u64)?;
-
-        for reward_table in &mut data.rewards {
-            writer.write_struct(&mut reward_table.table_header)?;
-        }
-        writer.write_u16(&0xFFFF)?;
-
-        for reward_table in &mut data.rewards {
-            reward_table.table_header.table_offset = writer.current_position()? as u32;
-            for item in &mut reward_table.items {
-                writer.write_struct(item)?;
-            }
-            writer.write_u16(&0xFFFF)?;
-        }
-
-        let rewards_end = writer.current_position()?;
-        writer.seek_start(data.header.reward_ptr as u64)?;
-        for reward_table in &mut data.rewards {
-            writer.write_struct(&mut reward_table.table_header)?;
-        }
-
-        writer.seek_start(rewards_end)?;
 
         Ok(())
     }

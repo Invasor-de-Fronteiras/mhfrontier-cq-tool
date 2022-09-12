@@ -2,7 +2,7 @@ use std::io::Result;
 
 use serde_derive::{Deserialize, Serialize};
 
-use crate::file::{reader::FileReader, writer::FileWriter};
+use crate::file::{reader::FileReader, writer::{FileWriter, CustomWriter}};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -70,7 +70,26 @@ impl QuestStrings {
         })
     }
 
-    pub fn write(&mut self, writer: &mut FileWriter) -> Result<()> {
+    pub fn get_total_size(&self) -> u16 {
+        let mut size: u16 = 0;
+
+        size += self.title.len() as u16;
+        size += self.main_objective.len() as u16;
+        size += self.sub_a_objective.len() as u16;
+        size += self.sub_b_objective.len() as u16;
+
+        size += self.clear_reqs.len() as u16;
+        size += self.fail_reqs.len() as u16;
+        size += self.contractor.len() as u16;
+        size += self.description.len() as u16;
+
+        // 8 bytes for each "end string byte" (0x00)
+        return size + 8;
+    }
+}
+
+impl CustomWriter for QuestStrings {
+    fn write(&mut self, writer: &mut FileWriter) -> Result<u64> {
         let strings_ptr = writer.current_position()?;
         writer.write_struct(&mut self.pointers)?;
 
@@ -98,23 +117,6 @@ impl QuestStrings {
         writer.write_struct(&mut self.pointers)?;
         writer.seek_start(end_ptr)?;
 
-        Ok(())
-    }
-
-    pub fn get_total_size(&self) -> u16 {
-        let mut size: u16 = 0;
-
-        size += self.title.len() as u16;
-        size += self.main_objective.len() as u16;
-        size += self.sub_a_objective.len() as u16;
-        size += self.sub_b_objective.len() as u16;
-
-        size += self.clear_reqs.len() as u16;
-        size += self.fail_reqs.len() as u16;
-        size += self.contractor.len() as u16;
-        size += self.description.len() as u16;
-
-        // 8 bytes for each "end string byte" (0x00)
-        return size + 8;
+        Ok(strings_ptr)
     }
 }
