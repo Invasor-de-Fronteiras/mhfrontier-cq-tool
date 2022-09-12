@@ -7,6 +7,15 @@ interface PosInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const wrapOnChange = (onChange?: (...event: any[]) => void) => {
+  if (onChange) return (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(parseInt(e.target.value, 10))
+  }
+
+  return onChange;
+}
+
 export function PosInput({ label, ...props }: PosInputProps) {
   return (
     <label className=" p-1 relative flex items-center">
@@ -44,5 +53,5 @@ export function PosInputField<T>({
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return <PosInput label={label} {...props} {...field} />;
+  return <PosInput label={label} {...props} {...field} onChange={wrapOnChange(field.onChange)}  />;
 }

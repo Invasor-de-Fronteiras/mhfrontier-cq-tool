@@ -12,6 +12,12 @@ pub struct FileWriter {
     pub writer: File,
 }
 
+pub trait CustomWriter
+where Self: Sized,
+{
+    fn write(&mut self, writer: &mut FileWriter) -> Result<u64>;
+}
+
 impl FileWriter {
     pub fn from_filename(filename: &str) -> Result<FileWriter> {
         let filename = Path::new(filename);
@@ -69,6 +75,10 @@ impl FileWriter {
         self.seek_start(current)?;
 
         Ok(())
+    }
+
+    pub fn write_custom<T: CustomWriter>(&mut self, data: &mut T) -> std::io::Result<u64> {
+        data.write(self)
     }
 
     pub fn write_buffer(&mut self, buffer: &[u8]) -> std::io::Result<()> {

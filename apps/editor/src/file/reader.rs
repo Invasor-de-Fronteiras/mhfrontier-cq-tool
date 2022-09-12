@@ -11,6 +11,12 @@ pub struct FileReader {
     pub reader: BufReader<File>,
 }
 
+pub trait CustomReader
+where Self: Sized,
+{
+    fn read(reader: &mut FileReader) -> Result<Self>;
+}
+
 impl FileReader {
     pub fn from_filename(filename: &str) -> Result<FileReader> {
         let filename = Path::new(filename);
@@ -53,6 +59,10 @@ impl FileReader {
                 }
             }
         }
+    }
+
+    pub fn read_custom<T: CustomReader>(&mut self) -> std::io::Result<T> {
+        T::read(self)
     }
 
     pub fn read_custom_buffer(&mut self, size: u64) -> std::io::Result<Vec<u8>> {
@@ -128,8 +138,4 @@ impl FileReader {
         }
     }
 
-    // pub fn get_len(&mut self) -> std::io::Result<u64> {
-    //     let current = self.reader.;
-    //     Ok(current)
-    // }
 }
