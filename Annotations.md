@@ -23,6 +23,7 @@ b = asa
 quest_variant_2 = 34 // perdeu o halk irmão
 
 quest_type_flags.skip3[0] = 64 // bloqueia a magnetic
+quest_type_flags.skip3[4] = 0-99 // quest limitada 
 
 ALLOWED EQUIPEMENT = 131071 // só arma zenith 
 1 = TOWER
@@ -40,39 +41,16 @@ ALLOWED EQUIPEMENT = 131071 // só arma zenith
 4096 = 
 8192 = 
 
-quest_type_flags.main.quest_locale_flags // SeasonDaytime
-as quests master é com subs obrigatória
-enum SeasonDaytime {
-    00 = Based on season and daytime in town.
-    0A = Warm/Day
-    12 = Warm/Night
-    0C = Cold/Day
-    14 = Cold/Night
-    09 = Breeding/Day
-    11 = Breeding/Night
-    40 = Based on season and daytime in town.
-    4A = Warm/Day/Master
-    52 = Warm/Night/Master
-    4C = Cold/Day/Master
-    54 = Cold/Night/Master
-    49 = Breed/Day/Master
-    51 = Breed/Night/Master
-    D1 = Breed/Day/Master
-    1A = Warm/Day
-    5A = Warm/Day/Master
-    C9 = Breed/Day/Master
-}
-
-56112d0
-1 = head
-2 = wings / arms
-3 = back
-4 = tail
-
-
-// 53228n1 
-
 Quest Type Flags.unkk = 189 // n pode nada
 Quest Type Flags.unkk = 130 // sem rasta parça
 quest_type_flags.main.unk2 = 32 // 20s pra retornar
 quest_type_flags.main.monster_variant0 = 2 // reward fixed
+quest_type_flags.main.quest_variant3 = 2 // require GR 
+1 = disable reward bonus
+2 = require gr
+4 = contador de quest
+8 = ?
+16 = zenith
+32 = ?
+64 = ?
+128 = ?

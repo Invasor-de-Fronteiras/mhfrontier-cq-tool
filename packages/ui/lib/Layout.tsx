@@ -220,7 +220,8 @@ export function Layout() {
   return (
     <SharedLayout>
       <LayoutNavbar>
-        <Select options={tools} label="Tool" className="w-full" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
+        <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Tool</h4>
+        <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
             {group.options.map((option) =>

@@ -8,7 +8,7 @@ interface GroupCardProps {
 }
 
 export const GroupCard: React.FC<GroupCardProps> = ({ title, contentClass, children }) => (
-  <div className="drop-shadow-sm border rounded px-2 py-3 flex flex-col w-full ">
+  <div className="border rounded px-2 py-3 flex flex-col w-full ">
     <div className="px-2 py-1">
       <div className="font-bold text-xl dark:text-white">{title}</div>
     </div>

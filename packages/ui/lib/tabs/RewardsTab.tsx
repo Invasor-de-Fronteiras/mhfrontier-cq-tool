@@ -86,8 +86,8 @@ export function RewardsTab() {
           className="mt-2 px-2"
           filterOption={createFilter({ ignoreAccents: false })}
         />
-        <Button type="button" onClick={onAddTable()}>Add Table</Button>
-        <Button type="button" onClick={onReorder}>Reorder</Button>
+        <Button type="button" className="mt-5 mx-4" onClick={onAddTable()}>Add Table</Button>
+        <Button type="button" className="mt-5 mr-4" onClick={onReorder}>Reorder</Button>
       </GroupCard>
       {rewardsTables.map((table, tableIndex) => (
         <GroupCard

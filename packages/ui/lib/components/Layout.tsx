@@ -161,14 +161,14 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
   return (
     <nav
       className={classnames(
-        "w-full h-screen max-w-xs border-r border-t dark:border-slate-800 md:block ",
+        "h-screen flex flex-col max-w-xs border-r border-t dark:border-slate-800 relative ",
         {
           "max-w-min": !isOpen,
           "z-20 md:z-auto fixed md:relative block": isOpen,
         }
       )}
     >
-      <div className="border-b dark:border-slate-800 h-14 flex items-center justify-center text-center p-1">
+      <div className="border-b dark:border-slate-800 min-h-14 h-14 flex items-center justify-center text-center p-1">
         {isOpen && (
           <h2 className="font-semibold flex-1 text-center dark:text-white">
             MHFrontier CQ Editor ({VERSION})
@@ -181,7 +181,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
           {isOpen ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
         </div>
       </div>
-      <ul className="w-full max-w-max pt-3">{children}</ul>
+      <ul className="w-full overflow-y-auto pt-3">{children}</ul>
     </nav>
   );
 }
@@ -197,7 +197,7 @@ export function LayoutBody({
   const { isOpen, onToggle } = useContext(context);
 
   return (
-    <div className="w-full h-full border-t rounded-y rounded-r dark:border-slate-800">
+    <div className="w-full border-t flex flex-col h-screen rounded-y rounded-r dark:border-slate-800">
       <div className="border-b dark:border-slate-800 h-14 flex items-center  px-4">
         <div
           className="p-2 border-2 rounded hover:border-emerald-500 hover:text-emerald-500 cursor-pointer md:hidden "

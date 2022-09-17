@@ -16,7 +16,7 @@ export type SelectOption = {
   value: number;
 };
 
-const height = 35;
+const itemHeight = 35;
 
 function MenuList<T>({
   options,
@@ -25,7 +25,12 @@ function MenuList<T>({
   getValue,
 }: MenuListProps<T>) {
   const [value] = getValue();
-  const initialOffset = options.indexOf(value) * height;
+  const initialOffset = useMemo(() => {
+    const offset = options.indexOf(value) * itemHeight;
+    const height = itemHeight * (children?.length || 0);
+
+    return height > maxHeight ? offset : 0;
+  }, [value]);
 
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,7 +41,7 @@ function MenuList<T>({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       itemCount={children.length}
-      itemSize={height}
+      itemSize={itemHeight}
       initialScrollOffset={initialOffset}
     >
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
@@ -50,9 +55,9 @@ interface SelectProps<T = SelectOption> extends Props<T, false, GroupBase<T>> {
   label?: string;
 }
 
-export function Select<T>({ label, className, ...props }: SelectProps<T>) {
+export function Select<T>({ label, className='m-2', ...props }: SelectProps<T>) {
   return (
-    <label className={classNames("flex flex-col w-full max-w-xs m-2", className)}>
+    <label className={classNames(className, "flex flex-col w-full max-w-xs")}>
       {label && (
         <span className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2">
           {label}
@@ -62,8 +67,6 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
         {...props}
         // https://github.com/JedWatson/react-select/issues/1537#issuecomment-868383410
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        menuPortalTarget={document.body}
         theme={(theme) => ({
           ...theme,
           colors: {
@@ -74,11 +77,16 @@ export function Select<T>({ label, className, ...props }: SelectProps<T>) {
             primary25: "rgb(167 243 208 / 1)", // text-emerald-200
           },
         })}
+        styles={{
+          menu: (menuProps) => ({
+            ...menuProps,
+            marginBottom: '2rem'
+          }),
+        }}
         filterOption={createFilter({ ignoreAccents: false })}
         components={{
           MenuList,
         }}
-        {...props}
       />
     </label>
   );

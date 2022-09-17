@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "MHFrontier CQ Editor",
-    "version": "0.2.0"
+    "version": "1.3.0"
   },
   "tauri": {
     "allowlist": {
@@ -63,10 +63,10 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Quest Editor",
-        "height": 940,
-        "width": 1480,
-        "minHeight": 720,
-        "minWidth": 1280
+        "height": 720,
+        "width": 1280,
+        "minHeight": 600,
+        "minWidth": 800
       }
     ]
   }
