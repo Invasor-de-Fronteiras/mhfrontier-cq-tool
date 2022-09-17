@@ -27,6 +27,8 @@ function MenuList<T>({
   const [value] = getValue();
   const initialOffset = useMemo(() => {
     const offset = options.indexOf(value) * itemHeight;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const height = itemHeight * (children?.length || 0);
 
     return height > maxHeight ? offset : 0;
