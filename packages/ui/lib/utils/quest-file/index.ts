@@ -1,5 +1,5 @@
 import { GenQuestProp } from './genQuestProp';
-import { QuestFileHeader } from './header';
+import { LoadedStage, QuestFileHeader } from './header';
 import { MapInfo } from './map';
 import { LargeMonsterPointers, LargeMonsterSpawn } from './monsters';
 import { QuestStrings } from './questStrings';
@@ -23,5 +23,6 @@ export interface QuestFile {
     large_monster_spawns: LargeMonsterSpawn[];
     rewards: RewardTable[];
     supply_items: SupplyItem[];
+    loaded_stages: LoadedStage[];
     strings: QuestStrings;
 }

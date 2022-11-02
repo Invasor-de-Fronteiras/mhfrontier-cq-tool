@@ -36,15 +36,15 @@ export const maps: Map[] = [
     name: "Forest and Hills Day",
     stages: [
       { id: 21, areaNumber: 0 },
-      { id: 32, areaNumber: 1 },
-      { id: 33, areaNumber: 2 },
-      { id: 34, areaNumber: 3 },
-      { id: 35, areaNumber: 4 },
-      { id: 36, areaNumber: 5 },
-      { id: 37, areaNumber: 6 },
-      { id: 38, areaNumber: 7 },
-      { id: 39, areaNumber: 8 },
-      { id: 40, areaNumber: 9 },
+      { id: 39, areaNumber: 1 },
+      { id: 38, areaNumber: 2 },
+      { id: 33, areaNumber: 3 },
+      { id: 37, areaNumber: 4 },
+      { id: 40, areaNumber: 5 },
+      { id: 32, areaNumber: 6 },
+      { id: 34, areaNumber: 7 },
+      { id: 35, areaNumber: 8 },
+      { id: 36, areaNumber: 9 },
       { id: 41, areaNumber: 10 },
       { id: 42, areaNumber: 11 },
       { id: 43, areaNumber: 12 },
@@ -55,17 +55,17 @@ export const maps: Map[] = [
     name: "Desert Day",
     stages: [
       { id: 140, areaNumber: 0 },
-      { id: 141, areaNumber: 1 },
-      { id: 142, areaNumber: 2 },
+      { id: 145, areaNumber: 1 },
+      { id: 141, areaNumber: 2 },
       { id: 143, areaNumber: 3 },
-      { id: 144, areaNumber: 4 },
-      { id: 145, areaNumber: 5 },
-      { id: 146, areaNumber: 6 },
-      { id: 147, areaNumber: 7 },
+      { id: 147, areaNumber: 4 },
+      { id: 146, areaNumber: 5 },
+      { id: 144, areaNumber: 6 },
+      { id: 142, areaNumber: 7 },
       { id: 148, areaNumber: 8 },
       { id: 149, areaNumber: 9 },
       { id: 150, areaNumber: 10 },
-      { id: 7, areaNumber: 11 },
+      { id: 7, areaNumber: 11 },  // secret
     ],
   },
   {
@@ -76,13 +76,13 @@ export const maps: Map[] = [
       { id: 152, areaNumber: 1 },
       { id: 153, areaNumber: 2 },
       { id: 154, areaNumber: 3 },
-      { id: 155, areaNumber: 4 },
-      { id: 156, areaNumber: 5 },
+      { id: 160, areaNumber: 4 },
+      { id: 158, areaNumber: 5 },
       { id: 157, areaNumber: 6 },
-      { id: 158, areaNumber: 7 },
-      { id: 159, areaNumber: 8 },
-      { id: 160, areaNumber: 9 },
-      { id: 9, areaNumber: 10 },
+      { id: 159, areaNumber: 7 },
+      { id: 156, areaNumber: 8 },
+      { id: 155, areaNumber: 9 },
+      { id: 9, areaNumber: 10 }, // secret
     ],
   },
   {
@@ -90,13 +90,13 @@ export const maps: Map[] = [
     name: "Volcano Day",
     stages: [
       { id: 161, areaNumber: 0 },
-      { id: 162, areaNumber: 1 },
-      { id: 163, areaNumber: 2 },
-      { id: 164, areaNumber: 3 },
-      { id: 165, areaNumber: 4 },
-      { id: 166, areaNumber: 5 },
-      { id: 167, areaNumber: 6 },
-      { id: 168, areaNumber: 7 },
+      { id: 164, areaNumber: 1 },
+      { id: 165, areaNumber: 2 },
+      { id: 166, areaNumber: 3 },
+      { id: 162, areaNumber: 4 },
+      { id: 163, areaNumber: 5 },
+      { id: 168, areaNumber: 6 },
+      { id: 167, areaNumber: 7 },
       { id: 169, areaNumber: 8 },
       { id: 74, areaNumber: 9 },
     ],
@@ -108,7 +108,6 @@ export const maps: Map[] = [
       {
         id: 110,
         areaNumber: 0,
-
         calculationX: {
           a: 100,
           b: 2846.875,
@@ -123,19 +122,7 @@ export const maps: Map[] = [
       { id: 113, areaNumber: 3 },
       { id: 114, areaNumber: 4 },
       { id: 115, areaNumber: 5 },
-      { id: 116, areaNumber: 6 },
-      {
-        id: 117,
-        areaNumber: 8,
-        calculationX: {
-          a: 50,
-          b: 11398.4375,
-        },
-        calculationY: {
-          a: 83.26315789473684,
-          b: -175.26315789473665,
-        },
-      },
+      { id: 119, areaNumber: 6 },
       {
         id: 118,
         areaNumber: 7,
@@ -148,12 +135,24 @@ export const maps: Map[] = [
           b: -1065.3684210526317,
         },
       },
-      { id: 119, areaNumber: 9 },
+      {
+        id: 117,
+        areaNumber: 8,
+        calculationX: {
+          a: 50,
+          b: 11398.4375,
+        },
+        calculationY: {
+          a: 83.26315789473684,
+          b: -175.26315789473665,
+        },
+      },
+      { id: 116, areaNumber: 9 },
       { id: 120, areaNumber: 10 },
     ],
   },
   {
-    id: 7,
+    id: 7, // n verificado
     name: "Castle Schrade",
     stages: [
       { id: 25, areaNumber: 0 },
@@ -161,7 +160,7 @@ export const maps: Map[] = [
     ],
   },
   {
-    id: 8,
+    id: 8,  // n verificado
     name: "Crimson Battleground",
     stages: [
       { id: 8, areaNumber: 0 },
@@ -169,7 +168,7 @@ export const maps: Map[] = [
     ],
   },
   {
-    id: 9,
+    id: 9,  // n verificado
     name: "Arena with Ledge Day",
     stages: [
       { id: 89, areaNumber: 0 },
@@ -177,7 +176,7 @@ export const maps: Map[] = [
     ],
   },
   {
-    id: 10,
+    id: 10,  // n verificado
     name: "Arena with Pillar Day",
     stages: [
       { id: 89, areaNumber: 0 },
@@ -189,20 +188,20 @@ export const maps: Map[] = [
     name: "Snowy Mountains Day",
     stages: [
       { id: 98, areaNumber: 0 },
-      { id: 92, areaNumber: 1 },
-      { id: 93, areaNumber: 2 },
+      { id: 99, areaNumber: 1 },
+      { id: 95, areaNumber: 2 },
       { id: 94, areaNumber: 3 },
-      { id: 95, areaNumber: 4 },
-      { id: 96, areaNumber: 5 },
-      { id: 97, areaNumber: 6 },
-      { id: 99, areaNumber: 7 },
-      { id: 100, areaNumber: 8 },
-      { id: 6, areaNumber: 9 },
+      { id: 92, areaNumber: 4 },
+      { id: 93, areaNumber: 5 },
+      { id: 100, areaNumber: 6 },
+      { id: 96, areaNumber: 7 },
+      { id: 97, areaNumber: 8 },
+      { id: 6, areaNumber: 9 }, // secret
     ],
   },
-  {
+  { 
     id: 12,
-    name: "Town Siege Day",
+    name: "Town Siege Day", //paramos aqui
     stages: [
       { id: 179, areaNumber: 0 },
       { id: 176, areaNumber: 1 },
@@ -238,15 +237,15 @@ export const maps: Map[] = [
     id: 15,
     name: "Tower 3",
     stages: [
-      { id: 83, areaNumber: 0 },
-      { id: 84, areaNumber: 1 },
-      { id: 122, areaNumber: 2 },
-      { id: 123, areaNumber: 3 },
-      { id: 124, areaNumber: 4 },
-      { id: 125, areaNumber: 5 },
-      { id: 127, areaNumber: 6 },
-      { id: 128, areaNumber: 7 },
-      { id: 129, areaNumber: 8 },
+      { id: 83, areaNumber: 0 }, // , areaName: '8'
+      { id: 84, areaNumber: 1 }, // , areaName: '9'
+      { id: 122, areaNumber: 2 }, // , areaName: '1'
+      { id: 123, areaNumber: 3 }, // , areaName: '2'
+      { id: 124, areaNumber: 4 }, // , areaName: '10'
+      { id: 125, areaNumber: 5 }, // , areaName: '6'
+      { id: 127, areaNumber: 6 }, // , areaName: '7'
+      { id: 128, areaNumber: 7 }, // , areaName: '5'
+      { id: 129, areaNumber: 8, },
       { id: 130, areaNumber: 9 },
     ],
   },

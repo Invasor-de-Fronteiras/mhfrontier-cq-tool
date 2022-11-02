@@ -15,17 +15,12 @@
 
 8191 / 0b1111111111111 = Magnetic
 
-32768 = negate
-
-a = cabeça
-b = asa
-
-quest_variant_2 = 34 // perdeu o halk irmão
+quest_variant_2 = 34 // desabilita halk potion
 
 quest_type_flags.skip3[0] = 64 // bloqueia a magnetic
 quest_type_flags.skip3[4] = 0-99 // quest limitada 
 
-ALLOWED EQUIPEMENT = 131071 // só arma zenith 
+ALLOWED EQUIPEMENT = 131071 // só arma zenith
 1 = TOWER
 2 = EVOLOTION WEAP
 4 = 
@@ -41,9 +36,10 @@ ALLOWED EQUIPEMENT = 131071 // só arma zenith
 4096 = 
 8192 = 
 
-Quest Type Flags.unkk = 189 // n pode nada
-Quest Type Flags.unkk = 130 // sem rasta parça
+Quest Type Flags.unkk = 189 // desabilita tudo
+Quest Type Flags.unkk = 130 // desabilita rasta
 quest_type_flags.main.unk2 = 32 // 20s pra retornar
+quest_type_flags.main.unk3 = 0 // 
 quest_type_flags.main.monster_variant0 = 2 // reward fixed
 quest_type_flags.main.quest_variant3 = 2 // require GR 
 1 = disable reward bonus
@@ -54,3 +50,5 @@ quest_type_flags.main.quest_variant3 = 2 // require GR
 32 = ?
 64 = ?
 128 = ?
+
+monster_spawn.unk8 = 11776 (rotacao do monstro)

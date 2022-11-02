@@ -12,7 +12,7 @@ import { QuestlistTab } from "./tabs/questlist/QuestlistTab";
 import { RewardsTab } from "./tabs/RewardsTab";
 import { QuestStringTab } from "./tabs/StringsTab";
 import { SupplyItemTab } from "./tabs/SupplyItemTab";
-import { ApplyTemplateTab } from "./tabs/TemplateTab";
+import { ApplyTemplateTab } from "./tabs/template/TemplateTab";
 import { UnknownTab } from "./tabs/UnknownTab";
 
 export function Ui() {

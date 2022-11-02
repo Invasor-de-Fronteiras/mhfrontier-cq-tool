@@ -15,6 +15,32 @@ export function MonstersTab() {
     name: "large_monster_spawns",
   });
 
+  const onAddMonster = () => {
+    form.setValue(`large_monster_spawns`, [
+      ...fields,
+      { 
+        monster_id: 0,
+        spawn_amount: 1,
+        spawn_stage: 0,
+        unk10: 0,
+        unk11: 0,
+        unk12: 0,
+        unk4: 0,
+        unk5: 0,
+        unk6: 0,
+        unk7: 0,
+        unk8: 0,
+        unk9: 0,
+        x_position: 0,
+        y_position: 0,
+        z_position: 0,
+      },
+    ]);
+  };
+
+  const onRemoveMonster = (index: number) => {
+    form.setValue('large_monster_spawns', fields.filter((v, i) => i !== index));
+  };
 
   const stages = useMemo(
     () => {
@@ -35,7 +61,10 @@ export function MonstersTab() {
   if (!fields) return null;
 
   return (
-    <div className="flex h-full w-full">
+    <div className="relative">
+      <div>
+        <button type="button" onClick={onAddMonster}>Add Monster</button>
+      </div>
       <table
         aria-label="Quest monsters"
         className="shadow-sm  w-full text-sm text-left"
@@ -61,6 +90,9 @@ export function MonstersTab() {
             <th role="columnheader" scope="col" className="px-6 py-4">
               Amount
             </th>
+            <th role="columnheader" scope="col" className="px-6 py-4">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody className="dark:text-white">
@@ -71,7 +103,11 @@ export function MonstersTab() {
                 className={classNames("hover:bg-emerald-300 cursor-pointer", {
                   "bg-emerald-300": i === selectedIndex,
                 })}
-                onClick={() => setSelectedIndex(i === selectedIndex ? null : i)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelectedIndex(i === selectedIndex ? null : i);
+                }}
               >
                 <th className="px-6 py-4" scope="row">
                   {monsters[monster!.monster_id!] ?? "--"}
@@ -83,13 +119,23 @@ export function MonstersTab() {
                 <td className="px-6 py-4">{monster.y_position}</td>
                 <td className="px-6 py-4">{monster.z_position}</td>
                 <td className="px-6 py-4">{monster.spawn_amount}</td>
+                <td className="px-6 py-4">
+                  <button 
+                    type="button" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onRemoveMonster(i);
+                    }}
+                  >Remove</button>
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
       {selectedIndex !== null && (
-        <div className="absolute right-0">
+        <div className="absolute right-0 top-0">
           <MonsterCard
             index={selectedIndex}
             key={selectedIndex}

@@ -1,6 +1,7 @@
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
+import { PlayerSpawn } from "../components/PlayerSpawn";
 import { SelectField } from "../components/Select";
 import { locale_flags, quest_type_options } from "../utils";
 import { requirements } from "../utils/requirements";
@@ -73,6 +74,9 @@ export function QuestInfoTab() {
           type="number"
           name="gen_quest_prop.sub_brank_points"
         />
+      </GroupCard>
+      <GroupCard title="Player Spawn">
+        <PlayerSpawn />
       </GroupCard>
       <GroupCard title="Monsters">
         <InputField

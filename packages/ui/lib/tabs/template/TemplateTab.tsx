@@ -1,20 +1,13 @@
 import classNames from "classnames";
-import { Button } from "../components/Button";
-import { GroupCard } from "../components/CardGroup";
-import { useEditor } from "../context/EditorContext";
+import { Button } from "../../components/Button";
+import { GroupCard } from "../../components/CardGroup";
+import { useEditor } from "../../context/EditorContext";
+import { LargeMonsterSpawn, maps } from "../../utils";
 
 export function ApplyTemplateTab() {
   const { form } = useEditor();
 
-  const applyTemplate1 = () => {
-    form.setValue('quest_type_flags.variants.quest_variant2', 34);
-    form.setValue('quest_type_flags.skip3.0', 64);
-    form.setValue('quest_type_flags.allowed_equipment_bitmask', 2);
-    form.setValue('quest_type_flags.main_quest_prop.unkk', 130);
-    form.setValue('quest_type_flags.variants.monster_variant0', 2);
-
-    form.setValue('quest_type_flags.main_quest_prop.quest_time', 27000);
-
+  const applyTextTemplate = () => {
     form.setValue('strings.title', "≪G★7 UL Sigil Quest≫\nMostre seu valor com [SNS]");
     form.setValue('strings.clear_reqs', "Achieve All Objectives");
     form.setValue('strings.contractor', "Arca");
@@ -23,6 +16,16 @@ export function ApplyTemplateTab() {
     form.setValue('strings.main_objective', "Hunt１Anorupatisu");
     form.setValue('strings.sub_a_objective', "None");
     form.setValue('strings.sub_b_objective', "None");
+  }
+
+  const applySigilTemplate = () => {
+    form.setValue('quest_type_flags.variants.quest_variant2', 34);
+    form.setValue('quest_type_flags.skip3.0', 64);
+    form.setValue('quest_type_flags.allowed_equipment_bitmask', 2);
+    form.setValue('quest_type_flags.main_quest_prop.unkk', 130);
+    form.setValue('quest_type_flags.variants.monster_variant0', 2);
+
+    form.setValue('quest_type_flags.main_quest_prop.quest_time', 27000);
 
     form.setValue('rewards', [
       {
@@ -96,7 +99,42 @@ export function ApplyTemplateTab() {
           ]
       }
     ]);
+  }
 
+  const disableNpcsAndHalk = () => {
+    form.setValue('quest_type_flags.variants.quest_variant2', 34);
+    form.setValue('quest_type_flags.main_quest_prop.unkk', 130);
+  }
+
+  const addMassiveMonsters = () => {
+    const monsters: LargeMonsterSpawn[] = [];
+    const map = maps[2];
+    
+    map.stages.forEach(v => {
+        if (v.areaNumber >= 10) {
+            for (let i=0; i < v.areaNumber; i+=1) {
+                monsters.push({
+                    monster_id: 22,
+                    spawn_amount: 1,
+                    spawn_stage: v.id,
+                    unk4: 0,
+                    unk5: 0,
+                    unk6: 0,
+                    unk7: 0,
+                    unk8: 51638,
+                    unk9: 0,
+                    unk10: 0,
+                    unk11: 0,
+                    unk12: 0,
+                    x_position: 10000 + (i * 75),
+                    y_position: 0,
+                    z_position: 10000,
+                });
+            }
+        }
+    });
+
+    form.setValue(`large_monster_spawns`, monsters);
   }
 
   return (
@@ -121,9 +159,22 @@ export function ApplyTemplateTab() {
                     <td className="px-6 py-4" scope="row">
                         <Button
                             type="button"
-                            onClick={applyTemplate1}
+                            onClick={applyTextTemplate}
                         >
-                            Apply Sigil Quest
+                            Apply Text Template
+                        </Button>
+                    </td>
+                    <td className="px-6 py-4">
+                        <p>Template for text (titles, descript, etc...)</p>
+                    </td>
+                </tr>
+                <tr className={classNames("hover:bg-emerald-300 cursor-pointer")}>
+                    <td className="px-6 py-4" scope="row">
+                        <Button
+                            type="button"
+                            onClick={applySigilTemplate}
+                        >
+                            Apply Sigil Template
                         </Button>
                     </td>
                     <td className="px-6 py-4">
@@ -132,6 +183,33 @@ export function ApplyTemplateTab() {
                         <p>Disable Halk Potion</p>
                         <p>Disable Ravient Weapons</p>
                         <p>Time 15min</p>
+                    </td>
+                </tr>
+                <tr className={classNames("hover:bg-emerald-300 cursor-pointer")}>
+                    <td className="px-6 py-4" scope="row">
+                        <Button
+                            type="button"
+                            onClick={disableNpcsAndHalk}
+                        >
+                            Disable npcs and halk potion
+                        </Button>
+                    </td>
+                    <td className="px-6 py-4">
+                        <p>Disable npcs</p>
+                        <p>Disable Halk Potion</p>
+                    </td>
+                </tr>
+                <tr className={classNames("hover:bg-emerald-300 cursor-pointer hidden")}>
+                    <td className="px-6 py-4" scope="row">
+                        <Button
+                            type="button"
+                            onClick={addMassiveMonsters}
+                        >
+                            Add 200 Velocidrome
+                        </Button>
+                    </td>
+                    <td className="px-6 py-4">
+                        <p>Add 200 Velocidrome</p>
                     </td>
                 </tr>
             </tbody>
