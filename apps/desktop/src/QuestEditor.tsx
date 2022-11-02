@@ -33,6 +33,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       ),
       rewards: data.rewards,
       supply_items: data.supply_items,
+      loaded_stages: data.loaded_stages,
       strings: data.strings,
     };
     console.log('save: ', quest);
@@ -70,7 +71,7 @@ function QuestEditor({ children }: QuestEditorProps) {
         console.error("response ", response);
         return;
       }
-      console.log('quest: ', quest);
+      console.log('quest: ', response);
 
       setFile(quest as QuestFile);
       setQuestPath(path as string);
