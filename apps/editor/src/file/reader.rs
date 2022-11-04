@@ -118,6 +118,13 @@ impl FileReader {
         Ok(result)
     }
 
+    pub fn read_current_u32(&mut self) -> std::io::Result<u32> {
+        let current = self.reader.stream_position()?;
+        let result = self.read_u32()?;
+        self.seek_start(current)?;
+        Ok(result)
+    }
+
     pub fn read_string(&mut self) -> std::io::Result<String> {
         let mut text: Vec<u8> = vec![];
         let mut end_of_string = false;
