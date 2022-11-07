@@ -10,6 +10,7 @@ import { QuestInfoTab } from "./tabs/QuestInfoTab";
 import { LoadQuestlistTab } from "./tabs/questlist/LoadQuestlistTab";
 import { QuestlistTab } from "./tabs/questlist/QuestlistTab";
 import { RewardsTab } from "./tabs/RewardsTab";
+import { SmallMonsterTab } from "./tabs/SmallMonsterTab";
 import { QuestStringTab } from "./tabs/StringsTab";
 import { SupplyItemTab } from "./tabs/SupplyItemTab";
 import { ApplyTemplateTab } from "./tabs/template/TemplateTab";
@@ -21,6 +22,7 @@ export function Ui() {
       <Route element={<Layout />}>
         <Route path="/" element={<LoadQuestTab />} />
         <Route path="/monsters" element={<MonstersTab />} />
+        <Route path="/small-monsters" element={<SmallMonsterTab />} />
         <Route path="/equipment" element={<ForcedEquipmentTab />} />
         <Route path="/quest-info" element={<QuestInfoTab />} />
         <Route path="/map-position" element={<MapPositionTab />} />

@@ -1,4 +1,5 @@
 use super::header::LoadedStage;
+use super::map_zones::{MapZones, self};
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use super::quest_end_flag::QuestEndFlag;
 use super::quest_string::QuestStrings;
@@ -19,6 +20,7 @@ pub struct QuestFile {
     pub gen_quest_prop: GenQuestProp,
     pub quest_type_flags: QuestTypeFlags,
     pub map_info: MapInfo,
+    pub map_zones: MapZones,
     pub large_monster_pointers: LargeMonsterPointers,
     pub large_monster_ids: Vec<u32>,
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
@@ -75,6 +77,9 @@ impl QuestFile {
         reader.seek_start(header.reward_ptr as u64)?;
         let rewards: Rewards = reader.read_custom::<Rewards>()?;
 
+        reader.seek_start(header.quest_area_ptr as u64)?;
+        let map_zones = reader.read_custom::<MapZones>()?;
+
         let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
 
         let strings = QuestStrings::from_reader(
@@ -88,6 +93,7 @@ impl QuestFile {
             gen_quest_prop,
             quest_type_flags,
             map_info,
+            map_zones,
             large_monster_pointers,
             large_monster_ids,
             large_monster_spawns,
@@ -168,6 +174,7 @@ impl QuestFile {
 
         quest.header.reward_ptr = writer.write_custom(&mut quest.rewards)? as u32;
         quest.quest_type_flags.main_quest_prop.quest_strings_ptr = writer.write_custom(&mut quest.strings)? as u32;
+        quest.header.quest_area_ptr = writer.write_custom(&mut quest.map_zones)? as u32;
         let (large_monster_ids_ptr, large_monster_spawn_ptr) = QuestFile::write_monster_spawn(writer, quest)?;
         quest.large_monster_pointers.large_monster_ids = large_monster_ids_ptr as u32;
         quest.large_monster_pointers.large_monster_spawns = large_monster_spawn_ptr as u32;

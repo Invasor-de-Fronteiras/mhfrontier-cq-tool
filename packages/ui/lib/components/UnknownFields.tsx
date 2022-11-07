@@ -1,5 +1,5 @@
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { isObject } from "../utils/util";
 import { Control, Controller } from "react-hook-form";
 
@@ -29,6 +29,14 @@ export function UnknownField<T>({
 }: UnknownFieldProps<T>) {
   const [hide, setHide] = useState(initialHide);
 
+  const keys = useMemo(() => {
+    if (Array.isArray(data)) return Object.keys(data).map(v => parseInt(v, 10)).sort((a, b) => a - b);
+
+    return Object.keys(data).sort();
+  }, [data]);
+
+  console.log('keys: ', keys);
+
   return (
     <fieldset className="border p-2 w-full">
       <legend
@@ -39,7 +47,7 @@ export function UnknownField<T>({
       </legend>
       {!hide && (
         <div className="flex flex-row flex-wrap gap-2">
-          {Object.keys(data).sort().map((key) => {
+          {keys.map((key) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             /** @ts-ignore */
             const value = data[key];

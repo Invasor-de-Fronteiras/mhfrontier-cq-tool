@@ -89,6 +89,12 @@ export function Layout() {
               uri: "/monsters",
             },
             {
+              name: "Small Monsters",
+              icon: SiMonster,
+              disabled: !isLoadedFile,
+              uri: "/small-monsters",
+            },
+            {
               name: "Forced Equipment",
               icon: GiAbdominalArmor,
               disabled: !isLoadedFile,

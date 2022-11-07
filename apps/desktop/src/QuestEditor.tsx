@@ -4,6 +4,7 @@ import { EditorContextProvider, QuestFile } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
+import { MapZones } from "ui/lib/utils/quest-file/mapZones";
 
 interface SaveQuestPayload {
   filepath: string;
@@ -12,6 +13,21 @@ interface SaveQuestPayload {
 
 interface QuestEditorProps {
     children: React.ReactNode;
+}
+
+const prepareMapZones = (mapZones: MapZones) => {
+  mapZones.map_zones.forEach(mapZone => {
+    mapZone.map_sections.forEach(mapSection => {
+      const monsterIds = mapSection.small_monster_spawns.reduce<Record<number, boolean>>((acc, cur) => {
+        acc[cur.monster_id] = true;
+        return acc;
+      }, {});
+
+      mapSection.monster_ids = Object.keys(monsterIds).map(v => parseInt(v, 10));
+    })
+  });
+
+  return mapZones;
 }
 
 function QuestEditor({ children }: QuestEditorProps) {
@@ -26,6 +42,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       gen_quest_prop: data.gen_quest_prop,
       quest_type_flags: data.quest_type_flags,
       map_info: data.map_info,
+      map_zones: prepareMapZones(data.map_zones),
       large_monster_pointers: data.large_monster_pointers,
       large_monster_spawns: data.large_monster_spawns,
       large_monster_ids: data.large_monster_spawns.map((v) =>
@@ -71,7 +88,7 @@ function QuestEditor({ children }: QuestEditorProps) {
         console.error("response ", response);
         return;
       }
-      console.log('quest: ', response);
+      console.log('quest: ', quest);
 
       setFile(quest as QuestFile);
       setQuestPath(path as string);

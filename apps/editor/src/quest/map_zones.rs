@@ -1,11 +1,12 @@
 use std::collections::HashMap;
+use std::mem::size_of;
 
 use serde_derive::{ Serialize, Deserialize };
 
 use crate::file::reader::{ CustomReader, FileReader };
 use crate::file::writer::{ CustomWriter, FileWriter };
 
-use super::map_section::MapSection;
+use super::map_section::{ MapSection, MapSectionHeader };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapZone {
@@ -19,7 +20,7 @@ pub struct MapZone {
 
 impl CustomReader for MapZone {
     fn read(reader: &mut FileReader) -> std::io::Result<Self> {
-        let map_zone_ptr = reader.read_current_u32()?;
+        let map_zone_ptr = reader.current_position()?;
         let mut map_sections: Vec<MapSection> = vec![];
 
         while reader.read_current_u32()? != 0 {
@@ -33,7 +34,7 @@ impl CustomReader for MapZone {
         let unk3 = reader.read_current_u32()?;
 
         Ok(MapZone {
-            map_zone_ptr,
+            map_zone_ptr: map_zone_ptr as u32,
             map_sections,
             unk0,
             unk1,
@@ -43,10 +44,51 @@ impl CustomReader for MapZone {
     }
 }
 
+impl CustomWriter for MapZone {
+    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+        let map_zone_ptr = writer.current_position()?;
+        let section_header_size = size_of::<MapSectionHeader>();
+
+        for map_section in &mut self.map_sections {
+            writer.write_struct(&mut map_section.header)?;
+        }
+
+        writer.write_u32(&0)?;
+        writer.write_u32(&self.unk1)?;
+        writer.write_u32(&self.unk2)?;
+        writer.write_u32(&self.unk3)?;
+
+        for (i, map_section) in self.map_sections.iter_mut().enumerate() {
+            let monster_ids_ptr = writer.current_position()?;
+
+            for monster_id in &map_section.monster_ids {
+                writer.write_u32(monster_id)?;
+            }
+            writer.write_u32(&0xFFFFFFFF)?;
+
+            let small_monster_spawns_ptr = writer.current_position()?;
+
+            for small_monster_spawn in &mut map_section.small_monster_spawns {
+                writer.write_struct(small_monster_spawn)?;
+            }
+            writer.write_u16(&0xFFFF)?;
+
+            let end_section = writer.current_position()?;
+            writer.seek_start(map_zone_ptr + (i * section_header_size) as u64)?;
+            map_section.header.spawn_types_ptr = monster_ids_ptr as u32;
+            map_section.header.spawn_stats_ptr = small_monster_spawns_ptr as u32;
+            writer.write_struct(&mut map_section.header)?;
+            writer.seek_start(end_section)?;
+        }
+
+        Ok(map_zone_ptr)
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapZones {
-    map_zone_ptrs: Vec<u32>,
-    map_zones: Vec<MapZone>
+    pub map_zone_ptrs: Vec<u32>,
+    pub map_zones: Vec<MapZone>
 }
 
 impl CustomReader for MapZones {
@@ -72,5 +114,33 @@ impl CustomReader for MapZones {
             map_zone_ptrs,
             map_zones:  map_zones.into_values().collect()
         })
+    }
+}
+
+impl CustomWriter for MapZones {
+    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+        let map_zones_ptr = writer.current_position()?;
+
+        for map_zone_ptr in &self.map_zone_ptrs {
+            writer.write_u32(map_zone_ptr)?;
+        }
+        writer.write_u32(&0)?;
+
+        for map_zone in &mut self.map_zones {
+            let new_map_zone_ptr = writer.write_custom(map_zone)?;
+            let end_section = writer.current_position()?;
+            writer.seek_start(map_zones_ptr)?;
+            
+            for map_zone_ptr in &self.map_zone_ptrs {
+                if map_zone_ptr == &map_zone.map_zone_ptr {
+                    writer.write_u32(&(new_map_zone_ptr as u32))?;
+                } else {
+                    let next_ptr = writer.current_position()? + 4;
+                    writer.seek_start(next_ptr)?;
+                }
+            }
+            writer.seek_start(end_section)?;
+        }
+        Ok(map_zones_ptr)
     }
 }
