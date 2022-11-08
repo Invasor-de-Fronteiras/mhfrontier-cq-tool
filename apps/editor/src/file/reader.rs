@@ -12,7 +12,8 @@ pub struct FileReader {
 }
 
 pub trait CustomReader
-where Self: Sized,
+where
+    Self: Sized,
 {
     fn read(reader: &mut FileReader) -> Result<Self>;
 }
@@ -151,5 +152,4 @@ impl FileReader {
             Ok(res.to_string())
         }
     }
-
 }

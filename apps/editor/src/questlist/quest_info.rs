@@ -8,7 +8,7 @@ use crate::quest::{
 };
 use std::io::{Read, Result};
 
-use super::quest_info_header::{ QuestInfoHeader, QuestInfoHeaderOld };
+use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
 use super::questlist_header::QUEST_UNK_END;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -19,7 +19,7 @@ pub struct QuestInfo {
     pub unk_data: Vec<u8>, // 112 bytes
     pub strings: QuestStrings,
     pub unk0_len: u8,
-    pub unk0: Vec<u8>
+    pub unk0: Vec<u8>,
 }
 
 impl QuestInfo {
@@ -43,7 +43,7 @@ impl QuestInfo {
             unk_data,
             strings,
             unk0_len: 0x12,
-            unk0: QUEST_UNK_END.to_vec()
+            unk0: QUEST_UNK_END.to_vec(),
         })
     }
 
@@ -66,14 +66,14 @@ impl QuestInfo {
         reader.seek_start(data_ptr as u64 + header.get_length() as u64)?;
         let unk0_len = reader.read_u8()?;
         let unk0 = reader.read_custom_buffer(unk0_len as u64)?;
-        
+
         Ok(QuestInfo {
             header,
             quest_type_flags,
             unk_data,
             strings,
             unk0_len,
-            unk0
+            unk0,
         })
     }
 
@@ -100,7 +100,7 @@ impl QuestInfo {
             unk_data,
             strings,
             unk0_len: 0x12,
-            unk0: QUEST_UNK_END.to_vec()
+            unk0: QUEST_UNK_END.to_vec(),
         })
     }
 

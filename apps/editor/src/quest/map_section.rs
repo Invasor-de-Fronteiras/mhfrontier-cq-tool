@@ -1,6 +1,6 @@
-use serde_derive::{ Serialize, Deserialize };
+use serde_derive::{Deserialize, Serialize};
 
-use crate::file::reader::{ CustomReader, FileReader };
+use crate::file::reader::{CustomReader, FileReader};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -11,28 +11,28 @@ pub struct SmallMonsterSpawn {
     pub spawn_amount: u32,
     pub unk1: u32,
     pub size: u16,
-    pub skip0: [u8;14], // null in working example
+    pub skip0: [u8; 14], // null in working example
     pub unk2: u32,
     pub x_position: f32,
     pub y_position: f32,
     pub z_position: f32,
-    pub skip1: [u8;16]
+    pub skip1: [u8; 16],
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct MapSectionHeader {
-    pub loaded_stage: u32, 
+    pub loaded_stage: u32,
     pub unk0: u32,
     pub spawn_types_ptr: u32,
-    pub spawn_stats_ptr: u32
+    pub spawn_stats_ptr: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapSection {
     pub header: MapSectionHeader,
     pub monster_ids: Vec<u32>,
-    pub small_monster_spawns: Vec<SmallMonsterSpawn>
+    pub small_monster_spawns: Vec<SmallMonsterSpawn>,
 }
 
 impl CustomReader for MapSection {
@@ -58,7 +58,7 @@ impl CustomReader for MapSection {
         Ok(MapSection {
             header,
             monster_ids,
-            small_monster_spawns
+            small_monster_spawns,
         })
     }
 }

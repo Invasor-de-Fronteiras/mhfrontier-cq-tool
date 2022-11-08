@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use std::mem::size_of;
 
-use serde_derive::{ Serialize, Deserialize };
+use serde_derive::{Deserialize, Serialize};
 
-use crate::file::reader::{ CustomReader, FileReader };
-use crate::file::writer::{ CustomWriter, FileWriter };
+use crate::file::reader::{CustomReader, FileReader};
+use crate::file::writer::{CustomWriter, FileWriter};
 
-use super::map_section::{ MapSection, MapSectionHeader };
+use super::map_section::{MapSection, MapSectionHeader};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapZone {
@@ -39,7 +39,7 @@ impl CustomReader for MapZone {
             unk0,
             unk1,
             unk2,
-            unk3
+            unk3,
         })
     }
 }
@@ -88,7 +88,7 @@ impl CustomWriter for MapZone {
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapZones {
     pub map_zone_ptrs: Vec<u32>,
-    pub map_zones: Vec<MapZone>
+    pub map_zones: Vec<MapZone>,
 }
 
 impl CustomReader for MapZones {
@@ -109,10 +109,10 @@ impl CustomReader for MapZones {
                 map_zones.insert(map_zone_ptr, map_zone);
             }
         }
-        
+
         Ok(MapZones {
             map_zone_ptrs,
-            map_zones:  map_zones.into_values().collect()
+            map_zones: map_zones.into_values().collect(),
         })
     }
 }
@@ -130,7 +130,7 @@ impl CustomWriter for MapZones {
             let new_map_zone_ptr = writer.write_custom(map_zone)?;
             let end_section = writer.current_position()?;
             writer.seek_start(map_zones_ptr)?;
-            
+
             for map_zone_ptr in &self.map_zone_ptrs {
                 if map_zone_ptr == &map_zone.map_zone_ptr {
                     writer.write_u32(&(new_map_zone_ptr as u32))?;

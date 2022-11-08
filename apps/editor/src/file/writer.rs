@@ -13,7 +13,8 @@ pub struct FileWriter {
 }
 
 pub trait CustomWriter
-where Self: Sized,
+where
+    Self: Sized,
 {
     fn write(&mut self, writer: &mut FileWriter) -> Result<u64>;
 }
@@ -49,7 +50,7 @@ impl FileWriter {
     pub fn write_struct<T>(&mut self, data: &mut T) -> std::io::Result<()> {
         // calculando o tamanho da struct em bytes
         let num_bytes = size_of::<T>();
-        
+
         unsafe {
             // Vamos criar um buffer dividindo nossa struct em um array de bytes
             // esse buffer é um espelho da nossa instancia, ou seja, eles compartilham o mesmo endereço na memória

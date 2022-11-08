@@ -51,7 +51,7 @@ impl QuestlistFile {
             let mut quest = &mut questlist.quests[i as usize];
             QuestInfo::write_on_questlist(&mut writer, &mut quest)?;
         }
-       
+
         writer.write_u16(&0)?;
         writer.write_u16(&0)?;
         writer.write_u16(&0)?;
@@ -161,7 +161,7 @@ impl QuestlistFile {
         Ok(QuestlistFile {
             filename: filename.to_string(),
             offset,
-            quests
+            quests,
         })
     }
 }
