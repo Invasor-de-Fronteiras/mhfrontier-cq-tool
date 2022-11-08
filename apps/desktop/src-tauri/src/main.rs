@@ -53,6 +53,12 @@ fn read_all_questlist(event: String) -> String {
 }
 
 #[tauri::command]
+fn read_all_questlist_old(event: String) -> String {
+  let result = QuestlistFile::read_all_questlist_old(&event);
+  wrap_json_result(result)
+}
+
+#[tauri::command]
 fn read_questinfo(event: String) -> String {
   let result = QuestInfo::from_questfile(&event);
   wrap_json_result(result)
@@ -114,6 +120,7 @@ fn main() {
       read_quest_file,
       save_quest_file,
       read_all_questlist,
+      read_all_questlist_old,
       read_questinfo,
       save_all_questlists,
       re_frontier

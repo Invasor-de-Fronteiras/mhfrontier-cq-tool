@@ -49,7 +49,7 @@ impl FileWriter {
     pub fn write_struct<T>(&mut self, data: &mut T) -> std::io::Result<()> {
         // calculando o tamanho da struct em bytes
         let num_bytes = size_of::<T>();
-
+        
         unsafe {
             // Vamos criar um buffer dividindo nossa struct em um array de bytes
             // esse buffer é um espelho da nossa instancia, ou seja, eles compartilham o mesmo endereço na memória
@@ -95,6 +95,13 @@ impl FileWriter {
 
     pub fn write_u16(&mut self, value: &u16) -> std::io::Result<()> {
         let mut buffer = value.to_le_bytes();
+        self.writer.write(&mut buffer)?;
+
+        Ok(())
+    }
+
+    pub fn write_u16_be(&mut self, value: &u16) -> std::io::Result<()> {
+        let mut buffer = value.to_be_bytes();
         self.writer.write(&mut buffer)?;
 
         Ok(())

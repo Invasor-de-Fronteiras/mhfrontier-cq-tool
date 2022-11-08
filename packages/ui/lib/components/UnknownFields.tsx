@@ -56,7 +56,7 @@ export function UnknownField<T>({
             return isObject(value) ? (
               <UnknownField
                 data={value}
-                name={key}
+                name={key as string}
                 key={key}
                 path={newPath}
                 control={control}

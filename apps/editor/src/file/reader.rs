@@ -86,6 +86,13 @@ impl FileReader {
         Ok(u16::from_le_bytes(buffer))
     }
 
+    pub fn read_u16_be(&mut self) -> std::io::Result<u16> {
+        let mut buffer = [0_u8; 2];
+        self.reader.read_exact(&mut buffer)?;
+
+        Ok(u16::from_be_bytes(buffer))
+    }
+
     pub fn read_u8(&mut self) -> std::io::Result<u8> {
         let mut buffer = [0_u8; 1];
         self.reader.read_exact(&mut buffer)?;
