@@ -2,8 +2,8 @@ use crate::{
     quest::quest_file::QuestFile,
     quest::{
         header::{MapInfo, QuestFileHeader},
+        map_zones::MapZones,
         monsters::{LargeMonsterPointers, LargeMonsterSpawn},
-        quest_string::QuestStrings,
         quest_type_flags::{
             ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
             QuestTypeFlags, RewardsFocus, Variants,
@@ -289,10 +289,11 @@ fn reader_test() {
             },
         ],
         rewards: vec![],
-        // supply_items_box: SupplyItemBox {
-        //     unk: 657,
-        //     quantity: 1,
-        // },
+        loaded_stages: vec![],
+        map_zones: MapZones {
+            map_zone_ptrs: vec![],
+            map_zones: vec![],
+        },
         supply_items: vec![],
         strings: quest_file.strings,
     };
