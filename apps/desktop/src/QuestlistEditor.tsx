@@ -33,13 +33,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
 
       questlists.push({
         filename: `list_${i}`,
-        header: { 
-          quest_count: items.length,
-          unk0: 0,
-          unk1: 38685,
-          unk2: 61732,
-          unk3: 0
-        },
+        offset: i,
         quests: items
       });
 
@@ -70,6 +64,32 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       if (!path) return;
 
       const response: string = await invoke("read_all_questlist", {
+        event: path,
+      });
+
+      const questlists = JSON.parse(response);
+      if (questlists && questlists.error) {
+        toast.error(`Failed to read file: ${questlists.error}`);
+        return;
+      }
+
+      setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
+        acc.push(...cur.quests);
+        return acc;
+      }, []));
+      setQuestlistPath(path as string);
+      toast.success('Quest file read successfully!');
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
+  const loadQuestlistsOld = async () => {
+    try {
+      const path = await open({ multiple: false, directory: true });
+      if (!path) return;
+
+      const response: string = await invoke("read_all_questlist_old", {
         event: path,
       });
 
@@ -133,6 +153,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       handleSaveQuestlist={handleSaveQuestlist}
       isLoadedQuestlists={!!quests}
       loadQuestlists={loadQuestlists}
+      loadQuestlistsOld={loadQuestlistsOld}
       getQuestFromFile={getQuests}
     >
       {children}

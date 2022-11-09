@@ -1,4 +1,6 @@
 pub mod header;
+pub mod map_section;
+pub mod map_zones;
 pub mod monsters;
 pub mod offsets;
 pub mod quest_end_flag;

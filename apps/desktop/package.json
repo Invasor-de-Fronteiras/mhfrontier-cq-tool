@@ -22,6 +22,7 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "icon": "npx @tauri-apps/tauricon .",
     "tauri": "tauri",
     "vite-tauri": "vite-tauri",
     "lint": "eslint \"**/*.{ts,tsx}\"",
