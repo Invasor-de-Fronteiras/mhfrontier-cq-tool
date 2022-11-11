@@ -34,6 +34,13 @@ impl FileReader {
         Ok(result)
     }
 
+    pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
+        let mut buffer = Vec::<u8>::new();
+        self.reader.read_to_end(&mut buffer)?;
+
+        Ok(buffer)
+    }
+
     /**
      * Função que le uma struct de um arquivo
      * T => struct que será usada para ler o arquivo

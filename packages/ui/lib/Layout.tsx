@@ -5,6 +5,7 @@ import {
   BsInfoCircle,
   BsMinecartLoaded,
   BsSave,
+  BsArrowUp,
   BsUmbrella,
   BsUpload,
   BsQuestion,
@@ -49,7 +50,7 @@ interface NavbarGroup {
 export function Layout() {
   const location = useLocation();
   const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
-  const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
+  const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
   const [tool, setTool] = useState('QuestEditor');
 
   const groups = useMemo<NavbarGroup[]>(
@@ -183,6 +184,13 @@ export function Layout() {
               disabled: !isLoadedQuestlists,
               onClick: questlistSubmit
             },
+            {
+              name: "Import Questlist",
+              icon: BsArrowUp,
+              isSubmit: false,
+              disabled: false,
+              onClick: importQuestlists
+            }
           ],
         },
         {

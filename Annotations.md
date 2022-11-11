@@ -52,3 +52,5 @@ quest_type_flags.main.quest_variant3 = 2 // require GR
 128 = ?
 
 monster_spawn.unk8 = 11776 (rotacao do monstro)
+
+stage mezfest = 462

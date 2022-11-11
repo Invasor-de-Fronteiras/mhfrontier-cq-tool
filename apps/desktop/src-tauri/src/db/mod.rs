@@ -1,28 +1,43 @@
-use crate::utils::{wrap_json_result, wrap_result};
+use crate::utils::{ wrap_result, CustomResult, wrap_json_result };
 
 pub mod config;
-pub mod api;
-pub mod result;
+pub mod db;
 
-use api::Api;
+use db::DB;
 use serde::{Serialize, Deserialize};
 
+use self::config::{DBConfig, Config};
+
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct GetQuestPayload {
-    quest: String
+pub struct ImportQuestlistPayload {
+    db_config: DBConfig,
+    filepath: String
+}
+
+async fn import_questlist(event: String) -> CustomResult<()> {
+    let payload = serde_json::from_str::<ImportQuestlistPayload>(&event)?;
+    let db = DB::new(payload.db_config).await?;
+
+    db.import_questlist(payload.filepath).await?;
+
+    Ok(())
 }
 
 #[tauri::command]
-pub async fn db_save_quest() -> String {
-    "No implemented".to_string()
+pub async fn db_import_questlist(event: String) -> String {
+  match import_questlist(event).await {
+    Ok(_) => String::from("{ \"status\": \"Success\" }"),
+    Err(error) => wrap_result(error.to_string(), true)
+  }
 }
 
 #[tauri::command]
-pub async fn db_quest_list() -> String {
-    "No implemented".to_string()
-}
-
-#[tauri::command]
-pub async fn db_quest_download() -> String {
-    "No implemented".to_string()
+pub fn get_config() -> String {
+  match Config::from_file() {
+    Some(config) => match serde_json::to_string_pretty(&config) {
+        Ok(result) => result,
+        Err(error) => wrap_result(error.to_string(), true)
+    },
+    None => "".to_string()
+  }
 }

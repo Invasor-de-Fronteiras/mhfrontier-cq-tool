@@ -4,6 +4,7 @@ import { QuestInfo, QuestlistEditorContextProvider, QuestlistFile } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
+import { getConfig, importQuestlists } from "./events";
 
 interface SaveQuestlistPayload {
   folder: string;
@@ -129,6 +130,30 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
     return null;
   }
 
+  const onImportQuestlists = async (): Promise<void> => {
+    try {
+      const config = await getConfig();
+      if (
+        !config ||
+        (!config.dbs || config.dbs.length === 0)
+      ) {
+        return;
+      }
+  
+      const path = await open({ multiple: false, directory: true });
+      if (!path) return;
+
+      await importQuestlists({
+        db_config: config.dbs[0],
+        filepath: path as string
+      });
+
+      toast.success('Quest file read successfully!');
+    } catch (error) {
+      toast.error(`Failed to read file: ${error}`);
+    }
+  }
+
   const getQuests = async (): Promise<QuestInfo[]> => {
     try {
       const path = await open({ multiple: true });
@@ -155,6 +180,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       loadQuestlists={loadQuestlists}
       loadQuestlistsOld={loadQuestlistsOld}
       getQuestFromFile={getQuests}
+      importQuestlists={onImportQuestlists}
     >
       {children}
     </QuestlistEditorContextProvider>
