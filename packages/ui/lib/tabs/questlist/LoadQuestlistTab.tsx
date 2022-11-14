@@ -1,7 +1,7 @@
 import { Button, useQuestlistEditor } from "ui";
 
 export function LoadQuestlistTab() {
-  const { loadQuestlists, loadQuestlistsOld } = useQuestlistEditor();
+  const { loadQuestlists } = useQuestlistEditor();
   return (
     <div className="flex flex-col items-center justify-center mt-6 px-2">
       <div className="flex flex-col items-center justify-center p-6 border rounded w-full max-w-2xl">
@@ -14,11 +14,6 @@ export function LoadQuestlistTab() {
             buttonText="Load folder"
             title="Select a questlist folder from your machine."
             onClick={loadQuestlists}
-          />
-          <Card
-            buttonText="Load folder (old)"
-            title="Load old version of questlist."
-            onClick={loadQuestlistsOld}
           />
           <Card
             buttonText="Create questlist"

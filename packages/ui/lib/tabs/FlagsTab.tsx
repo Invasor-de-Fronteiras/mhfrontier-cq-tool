@@ -88,6 +88,11 @@ export function FlagsTab() {
           name="quest_type_flags.variants.quest_variant1"
         />
         <InputField
+          label="Ranking/Star"
+          type="number"
+          name="quest_type_flags.main_quest_prop.ranking_id"
+        />
+        <InputField
           label="Quest Variant 2"
           type="number"
           name="quest_type_flags.variants.quest_variant2"

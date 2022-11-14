@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
 import { Button } from "../../components/Button";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
 import { useEditor } from "../../context/EditorContext";
 import { findMap, findStage } from "../../utils";
 import { MapSection } from "./MapSection";
@@ -43,6 +45,13 @@ export function SmallMonsterTab() {
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
+      <GroupCard title="Monsters">
+        <InputField
+          label="Small Monster Status table"
+          type="number"
+          name="gen_quest_prop.little_mons_stat_table"
+        />
+      </GroupCard>
       <Button type="button" className="mt-5 mr-4" onClick={onReorder}>Reorder</Button>
       {mapZones.map((mapZone, mapZoneIndex) => <div className="flex flex-row flex-wrap gap-2">
         {mapZone.map_sections.map((map_section, mapSectionIndex) =>

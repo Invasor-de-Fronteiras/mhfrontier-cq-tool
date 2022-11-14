@@ -2,9 +2,9 @@ import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { createFilter } from "react-select";
 import { AllowedWeaponTypeField } from "../components/AllowedWeaponType";
+import { BitFlagsField } from "../components/BitFlags";
 import { GroupCard } from "../components/CardGroup";
 import { Checkbox } from "../components/Checkbox";
-import { InputField } from "../components/Input";
 import { Select, SelectField, SelectOption } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
 import { arms_options, chest_options, equipeTypes, head_options, legs_options, melee, meleeTypes, range, rangeTypes, waist_options } from "../utils/equips";
@@ -164,12 +164,33 @@ export function ForcedEquipmentTab() {
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
-        <GroupCard title="Main">
-          <InputField
-            label="Allowed equipment bitmask"
-            type="number"
-            name="quest_type_flags.allowed_equipment_bitmask"
+        <GroupCard title="Banned weapons">
+          <BitFlagsField
+            label="Banned weapons"
+            name="qquest_type_flags.allowed_equipment_bitmask"
+            options={[
+              { bitValue: 1, label: "Tower Weap" },
+              { bitValue: 2, label: "Evolution Weapon (Ravi)" },
+              { bitValue: 4, label: "Master's Weap" },
+              { bitValue: 8, label: "HC Weap" },
+              { bitValue: 16, label: "SP Weap" },
+              { bitValue: 32, label: "RNGou Weap" },
+              { bitValue: 64, label: "Gou Weap" },
+              { bitValue: 128, label: "Heaven Weap" },
+              { bitValue: 256, label: "Supremacy Weap" },
+              { bitValue: 512, label: "G Supremacy Weap" },
+              { bitValue: 1024, label: "Burst Weap" },
+              { bitValue: 2048, label: "G Rank Weap" },
+              { bitValue: 4096, label: "G Level Weap" },
+              { bitValue: 8192, label: "Origin Weap" },
+              { bitValue: 16384, label: "Other Weap" },
+              { bitValue: 32768, label: "Exotic Weap" },
+              { bitValue: 65536, label: "Prayer Weap" },
+              { bitValue: 131072, label: "Zenith Weap" },
+            ]}
           />
+        </GroupCard>
+        <GroupCard title="Forced Equipment">
           <div className="right-0 mt-3 mr-4">
             <Checkbox name="Weapon" label="Weapon" value={weapon} onChange={onEnableWeapon} />
             <Checkbox name="Head" label="Head" value={head} onChange={onEnableHead} />

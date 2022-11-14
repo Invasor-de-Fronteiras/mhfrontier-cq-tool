@@ -3,7 +3,7 @@ import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
 import { PlayerSpawn } from "../components/PlayerSpawn";
 import { SelectField } from "../components/Select";
-import { locale_flags, quest_type_options } from "../utils";
+import { locale_flags } from "../utils";
 import { requirements } from "../utils/requirements";
 
 export function QuestInfoTab() {
@@ -58,7 +58,22 @@ export function QuestInfoTab() {
           <ObjectiveCard objective={3} />
         </div>
       </GroupCard>
-      <GroupCard title="Reward Points">
+      <GroupCard title="Reward">
+        <InputField
+          label="Reward Main"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_main"
+        />
+        <InputField
+          label="Reward A"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_a"
+        />
+        <InputField
+          label="Reward B"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_b"
+        />
         <InputField
           label="Main rank points"
           type="number"
@@ -77,33 +92,6 @@ export function QuestInfoTab() {
       </GroupCard>
       <GroupCard title="Player Spawn">
         <PlayerSpawn />
-      </GroupCard>
-      <GroupCard title="Monsters">
-        <InputField
-          label="Monster size multiplier"
-          type="number"
-          name="gen_quest_prop.big_monster_size_multi"
-        />
-        <InputField
-          label="Monster size range"
-          type="number"
-          name="gen_quest_prop.size_range"
-        />
-        <InputField
-          label="Monster Status table"
-          type="number"
-          name="gen_quest_prop.mons_stat_table1"
-        />
-        <InputField
-          label="Small Monster Status table"
-          type="number"
-          name="gen_quest_prop.little_mons_stat_table"
-        />
-        <SelectField
-          label="Monster class id"
-          options={quest_type_options}
-          name="gen_quest_prop.monster_class_id"
-        />
       </GroupCard>
     </div>
   );

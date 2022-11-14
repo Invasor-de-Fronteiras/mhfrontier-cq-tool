@@ -18,11 +18,13 @@ interface QuestlistEditorProps {
 function QuestlistEditor({ children }: QuestlistEditorProps) {
   const [questlistPath, setQuestlistPath] = useState<string | null>(null);
   const [quests, setQuests] = useState<QuestInfo[] | undefined>(undefined);
+  const [lastQuestlistFolder, setLastQuestlistFolder] = useState<string | undefined>(undefined);
+  const [lastQuestFolder, setlastQuestFolder] = useState<string | undefined>(undefined);
   const data = useMemo(() => ({ quests: quests || [] }), [quests]);
 
   const handleSaveQuestlist = async (values: QuestInfo[]) => {
     if (!questlistPath || !values) return;
-    const folder = await open({ multiple: false, directory: true }) as string;
+    const folder = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder }) as string;
     if (!folder) return;
 
     const data = [...values];
@@ -61,7 +63,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
 
   const loadQuestlists = async () => {
     try {
-      const path = await open({ multiple: false, directory: true });
+      const path = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder });
       if (!path) return;
 
       const response: string = await invoke("read_all_questlist", {
@@ -74,10 +76,12 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
         return;
       }
 
+      console.log('questlists: ', questlists);
       setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
         acc.push(...cur.quests);
         return acc;
       }, []));
+      setLastQuestlistFolder(path as string);
       setQuestlistPath(path as string);
       toast.success('Quest file read successfully!');
     } catch (error) {
@@ -156,7 +160,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
 
   const getQuests = async (): Promise<QuestInfo[]> => {
     try {
-      const path = await open({ multiple: true });
+      const path = await open({ multiple: true, defaultPath: lastQuestFolder });
       if (!path) return [];
       const paths = Array.isArray(path) ? path : [path];
       const quests: QuestInfo[] = [];
@@ -165,6 +169,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
         if (quest) quests.push(quest);
       }
 
+      setlastQuestFolder(paths[0].substring(0, paths[0].lastIndexOf("\\")));
       return quests;
     } catch (error) {
       console.error("error ", error);
