@@ -51,9 +51,9 @@ export function MonstersTab() {
       const map = findMap(mapId);
       if (!map) return [];
 
-      return map.stages.map((v, i) => ({
+      return map.stages.map((v) => ({
         value: v.id,
-        label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
+        label: v.areaNumber,
       }));
     },
     [mapId]

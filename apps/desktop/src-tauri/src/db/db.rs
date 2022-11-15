@@ -11,9 +11,9 @@ use super::config::Config;
 use super::config::DBConfig;
 
 pub struct DB {
-    db_config: DBConfig,
-    pool: Pool<Postgres>,
-    config: Option<Config>
+    pub db_config: DBConfig,
+    pub pool: Pool<Postgres>,
+    pub config: Option<Config>
 }
 
 impl DB {

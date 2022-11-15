@@ -1,9 +1,9 @@
 24=Desert Secret (N)
 57=Arena mhdos + dragonator (N)
-66=Areana dos gatos mhfu (N)
+66=Arena dos gatos mhfu (N)
 70=Swamp Area 8 (N)
 71=Swamp Area 6 (N)
-72=Swamp Area 2 (N)
+72=Swamp Area 5 (N)
 76=Base Lao
 77=area 2 ou 4 do Lao (N)
 78=area 5 do Lao (N)

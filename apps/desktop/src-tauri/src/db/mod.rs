@@ -20,6 +20,7 @@ async fn import_questlist(event: String) -> CustomResult<()> {
 
     db.import_questlist(payload.filepath).await?;
 
+    db.pool.close().await;
     Ok(())
 }
 

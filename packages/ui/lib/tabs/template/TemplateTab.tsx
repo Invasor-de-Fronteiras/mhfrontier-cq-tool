@@ -117,9 +117,9 @@ export function ApplyTemplateTab() {
     const monsters: LargeMonsterSpawn[] = [];
     const map = maps[2];
     
-    map.stages.forEach(v => {
-        if (v.areaNumber >= 10) {
-            for (let i=0; i < v.areaNumber; i+=1) {
+    map.stages.forEach((v, areaIndex) => {
+        if (areaIndex >= 10) {
+            for (let i=0; i < areaIndex; i+=1) {
                 monsters.push({
                     monster_id: 22,
                     spawn_amount: 1,
