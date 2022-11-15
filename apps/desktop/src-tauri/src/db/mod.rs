@@ -2,6 +2,7 @@ use crate::utils::{ wrap_result, CustomResult, wrap_json_result };
 
 pub mod config;
 pub mod db;
+pub mod enums;
 
 use db::DB;
 use serde::{Serialize, Deserialize};

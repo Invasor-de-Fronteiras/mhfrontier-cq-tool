@@ -2,9 +2,20 @@ use std::fmt::Display;
 
 use serde::Serialize;
 
+#[derive(Serialize)]
+pub struct ErrorResponse {
+  error: String
+}
+
 pub fn wrap_result(message: String, has_error: bool) -> String {
     if has_error {
-      return format!("{{ \"error\": \"{}\" }}", message);
+      let error = ErrorResponse { error: message };
+      
+      if let Ok(result) = serde_json::to_string_pretty(&error) {
+        return result;
+      } else {
+        return "{ \"error\": \"unexpected error\" }".to_string();
+      }
     }
 
     message

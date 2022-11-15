@@ -43,6 +43,7 @@ export const importQuestlists = async (payload: ImportQuestlistPayload): Promise
         event: JSON.stringify(payload)
     });
 
+    console.log('response: ', response);
     try {
         if (!response) {
             throw Error("No response!");

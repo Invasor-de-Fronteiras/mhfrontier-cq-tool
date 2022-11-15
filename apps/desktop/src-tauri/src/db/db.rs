@@ -6,9 +6,12 @@ use sqlx::Pool;
 use sqlx::Postgres;
 use sqlx::Result;
 use sqlx::postgres::PgPoolOptions;
+use sqlx::types::Json;
 
 use super::config::Config;
 use super::config::DBConfig;
+use super::enums::PERIOD;
+use super::enums::SEASON;
 
 pub struct DB {
     pub db_config: DBConfig,
@@ -61,18 +64,15 @@ impl DB {
 
     pub async fn insert_quest(&self, quest_info: &mut QuestInfo) -> Result<()> {     
         let quest_list_bin = quest_info.get_buffer()?;
-        let quest_list_bin_len = quest_list_bin.len() as i32;
-        let name = quest_info.strings.title.clone();
-        let objective = quest_info.strings.main_objective.clone();
-        let category = quest_info.header.quest_category as i32;
-        let period = quest_info.quest_type_flags.get_periot().to_string();
-        let season = quest_info.quest_type_flags.get_season() as i16;
+        let period = quest_info.quest_type_flags.get_periot();
+        let season = quest_info.quest_type_flags.get_season();
         let quest_id = quest_info.quest_type_flags.main_quest_prop.quest_id as i32;
 
         let filename = format!("{}{}{}", quest_id, period, season);
         let quest_bin = self.get_quest_buffer(filename);
-        let quest_bin_size: i32 = if let Some(buffer) = &quest_bin { buffer.len() as i32 } else { 0 };
-
+        let period_str = PERIOD::from_char(period).as_str();
+        let season_str = SEASON::from_u8(season).as_str();
+        
         sqlx::query("
             INSERT INTO quests (
                 quest_id,
@@ -81,12 +81,9 @@ impl DB {
                 name,
                 objective,
                 category,
-                enabled,
-                metadata,
+                enable,
                 quest_bin,
-                quest_bin_size,
-                quest_list_bin,
-                quest_list_bin_size
+                quest_list_bin
             ) VALUES (
                 $1,
                 $2,
@@ -96,24 +93,18 @@ impl DB {
                 $6,
                 $7,
                 $8,
-                $9, 
-                $10,
-                $11,
-                $12
+                $9
             )
         ")
             .bind(quest_id)
-            .bind(period)
-            .bind(season)
-            .bind(name)
-            .bind(objective)
-            .bind(category)
+            .bind(PERIOD::from_char(period) as PERIOD)
+            .bind(SEASON::from_u8(season) as SEASON)
+            .bind(&quest_info.strings.title)
+            .bind(&quest_info.strings.main_objective)
+            .bind(quest_info.header.quest_category as i32)
             .bind(true)
-            .bind("")
-            .bind(quest_bin)
-            .bind(quest_bin_size)
+            .bind(&quest_bin)
             .bind(&quest_list_bin)
-            .bind(quest_list_bin_len)
             .execute(&self.pool)
             .await?;
 
