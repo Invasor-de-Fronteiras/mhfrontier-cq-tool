@@ -1,14 +1,17 @@
 import { Ui } from "ui";
+import ConfigEditor from "./ConfigEditor";
 import QuestEditor from "./QuestEditor";
 import QuestlistEditor from "./QuestlistEditor";
 
 function App() {
   return (
-    <QuestEditor>
-      <QuestlistEditor>
-        <Ui />
-      </QuestlistEditor>
-    </QuestEditor>
+    <ConfigEditor>
+      <QuestEditor>
+        <QuestlistEditor>
+          <Ui />
+        </QuestlistEditor>
+      </QuestEditor>
+    </ConfigEditor>
   );
 }
 

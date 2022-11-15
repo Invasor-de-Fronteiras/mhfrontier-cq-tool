@@ -1,19 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-
-interface DBConfig {
-    name: string;
-    host: string;
-    port: number;
-    user: string;
-    password: string;
-    database: string;
-}
-
-interface Config {
-    dbs: DBConfig[];
-    bin_path: string;
-}
-
+import { Config, DBConfig } from "ui";
 interface ImportQuestlistPayload {
     db_config: DBConfig;
     filepath: string;

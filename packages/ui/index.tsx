@@ -6,4 +6,5 @@ export * from "./lib/components/Select";
 export * from "./lib/utils";
 export * from "./lib/context/EditorContext";
 export * from "./lib/context/QuestlistEditorContext";
+export * from "./lib/context/ConfigContext";
 export * from "./lib/ui";

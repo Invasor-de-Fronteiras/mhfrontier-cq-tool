@@ -28,6 +28,7 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
+  useConfig
 } from "ui";
 import { useEffect, useMemo, useState } from "react";
 import { IconType } from "react-icons";
@@ -37,6 +38,7 @@ interface NavbarItem {
   icon: IconType;
   uri?: string;
   disabled?: boolean;
+  hide?: boolean;
   onClick?: () => void;
   isSubmit?: boolean;
   type?: boolean;
@@ -52,6 +54,7 @@ export function Layout() {
   const nav = useNavigate();
   const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
   const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
+  const { config } = useConfig();
   const [tool, setTool] = useState('QuestEditor');
 
   useEffect(() => {
@@ -198,7 +201,8 @@ export function Layout() {
               icon: BsArrowUp,
               isSubmit: false,
               disabled: false,
-              onClick: importQuestlists
+              onClick: importQuestlists,
+              hide: !config
             }
           ],
         },
@@ -247,7 +251,7 @@ export function Layout() {
         <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
-            {group.options.map((option) =>
+            {group.options.filter(v => !v.hide).map((option) =>
               option.uri && !option.disabled ? (
                 <Link to={option.uri} key={option.name}>
                   <LayoutNavbarItem {...option} />
