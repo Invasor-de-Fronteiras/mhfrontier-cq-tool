@@ -580,7 +580,7 @@ export const maps: Map[] = [
       { id: 127, areaNumber: "Area 6" },
       { id: 125, areaNumber: "Area 7" },
       { id: 126, areaNumber: "Area 8" },
-      { id: 139, areaNumber: "Secret" },
+      { id: 139, areaNumber: "Area 9" },
     ],
   },
   {
