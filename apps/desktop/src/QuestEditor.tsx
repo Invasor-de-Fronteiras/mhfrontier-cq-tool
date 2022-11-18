@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { EditorContextProvider, QuestFile } from "ui";
+import { EditorContextProvider, QuestFile, QuestInfo } from "ui";
 import { invoke } from "@tauri-apps/api";
-import { open } from "@tauri-apps/api/dialog";
+import { open, save } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
 import { MapZones } from "ui/lib/utils/quest-file/mapZones";
+import { exportQuestInfo, getConfig, updateQuest } from "./events";
 
 interface SaveQuestPayload {
   filepath: string;
@@ -52,6 +53,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       supply_items: data.supply_items,
       loaded_stages: data.loaded_stages,
       strings: data.strings,
+      unk_data: data.unk_data
     };
     console.log('save: ', quest);
 
@@ -125,12 +127,48 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   };
 
+  const handleExportQuestInfo = async (data: QuestInfo) => {
+    try {
+      if (!questPath) return;
+      const filepath = await save({ defaultPath: questPath.replace('.bin', '-info.bin') });
+      if (!filepath) return;
+
+      await exportQuestInfo({ quest_info: data, filepath: filepath as string });
+      toast.success('Quest exported successfully!');
+    } catch (error) {
+      toast.error(`Failed to export quest info: ${error}`);
+    }
+  }
+
+  const handleUpdateQuest = async (data: QuestInfo) => {
+    try {
+      const config = await getConfig();
+      if (
+        !config ||
+        (!config.dbs || config.dbs.length === 0)
+      ) {
+        return;
+      }
+
+      await updateQuest({
+        db_config: config.dbs[0],
+        quest: data
+      });
+
+      toast.success('Quest updated successfully!');
+    } catch (error) {
+      toast.error(`Failed update quest: ${error}`);
+    }
+  }
+
 
   return (
     <EditorContextProvider
       data={file}
       handleSaveQuest={handleChangeSave}
       loadQuest={onReadFile}
+      handleExportQuestInfo={handleExportQuestInfo}
+      handleUpdateQuest={handleUpdateQuest}
       reFrontier={reFrontier}
       isLoadedFile={!!file}
       uploadFile={{

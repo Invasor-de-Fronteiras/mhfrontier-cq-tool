@@ -34,6 +34,7 @@ export function ObjectiveCard({ objective }: ObjectiveCardProps) {
         ObjectiveType.Damage,
         ObjectiveType.Hunt,
         ObjectiveType.Slay,
+        ObjectiveType.Slay_All,
         ObjectiveType.Slay_or_Damage,
     ].includes(data.quest_objective), [data.quest_objective]);
 

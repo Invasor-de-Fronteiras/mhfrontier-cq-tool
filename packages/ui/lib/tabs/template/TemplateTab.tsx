@@ -220,7 +220,7 @@ export function ApplyTemplateTab() {
                         <p>Template for text (titles, descript, etc...)</p>
                     </td>
                 </tr>
-                <tr className={classNames("hover:bg-emerald-300 cursor-pointer")}>
+                <tr className={classNames("hover:bg-emerald-300 cursor-pointer hidden")}>
                     <td className="px-6 py-4" scope="row">
                         <Button
                             type="button"

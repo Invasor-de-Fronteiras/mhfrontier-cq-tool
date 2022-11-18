@@ -165,4 +165,13 @@ impl QuestInfo {
 
         Ok(())
     }
+
+    pub fn save_to(&mut self, filename: &str) -> Result<()> {
+        let mut writer = FileWriter::from_new_filename(filename)?;
+
+        let buffer = self.get_buffer()?;
+        writer.write_buffer(&buffer)?;
+
+        Ok(())
+    }
 }

@@ -1,9 +1,11 @@
+import { createFilter } from "react-select";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
 import { PlayerSpawn } from "../components/PlayerSpawn";
 import { SelectField } from "../components/Select";
 import { locale_flags } from "../utils";
+import { item_options } from "../utils/items";
 import { requirements } from "../utils/requirements";
 
 export function QuestInfoTab() {
@@ -44,11 +46,6 @@ export function QuestInfoTab() {
           label="Locale flags"
           options={locale_flags}
           name="quest_type_flags.main_quest_prop.quest_locale_flags"
-        />
-        <SelectField
-          label="Requirement"
-          options={requirements}
-          name="quest_type_flags.main_quest_prop.unkk"
         />
       </GroupCard>
       <GroupCard title="Objectives" >
@@ -92,6 +89,25 @@ export function QuestInfoTab() {
       </GroupCard>
       <GroupCard title="Player Spawn">
         <PlayerSpawn />
+      </GroupCard>
+      <GroupCard title="Requirements">
+        <SelectField
+          label="Requirement"
+          options={requirements}
+          name="quest_type_flags.main_quest_prop.unkk"
+        />
+        <SelectField
+          label="Required Item"
+          name="quest_type_flags.variants.required_item_type"
+          options={item_options}
+          className="mt-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <InputField
+          label="Required count"
+          type="number"
+          name="quest_type_flags.variants.required_item_count"
+        />
       </GroupCard>
     </div>
   );

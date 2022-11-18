@@ -78,6 +78,13 @@ export function Layout() {
               isSubmit: true,
               disabled: !isLoadedFile,
             },
+            {
+              name: "Export quest",
+              icon: BsUpload,
+              isSubmit: true,
+              disabled: !isLoadedFile,
+              uri: 'export-quest-info'
+            }
           ],
         },
         {

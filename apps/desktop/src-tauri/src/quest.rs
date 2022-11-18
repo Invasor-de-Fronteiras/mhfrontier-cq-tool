@@ -1,6 +1,6 @@
 use std::io::Result;
 
-use editor::quest::quest_file::QuestFile;
+use editor::{quest::quest_file::QuestFile, questlist::quest_info::QuestInfo};
 use serde::{Serialize, Deserialize};
 
 use crate::utils::{wrap_result, wrap_json_result};
@@ -9,6 +9,12 @@ use crate::utils::{wrap_result, wrap_json_result};
 struct SaveQuestPayload {
   filepath: String,
   quest: QuestFile
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+struct ExportQuestInfoPayload {
+  filepath: String,
+  quest_info: QuestInfo
 }
 
 #[tauri::command]
@@ -30,4 +36,19 @@ pub fn save_quest_file(event: String) -> String {
 pub fn read_quest_file(event: String) -> String {
   let result = QuestFile::from_path(&event);
   wrap_json_result(result)
+}
+
+#[tauri::command]
+pub fn export_quest_info(event: String) -> String {
+  let result = || -> Result<String> {
+    let mut payload = serde_json::from_str::<ExportQuestInfoPayload>(&event)?;
+    payload.quest_info.save_to(&payload.filepath)?;
+
+    Ok(String::from("{ \"status\": \"Success\" }"))
+  };
+  
+  match result() {
+    Ok(response) => response,
+    Err(error) => wrap_result(error.to_string(), true)
+  }
 }

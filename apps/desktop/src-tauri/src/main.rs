@@ -10,10 +10,10 @@ mod re_frontier;
 mod db;
 
 use tauri;
-use quest::{ read_quest_file, save_quest_file };
+use quest::{ read_quest_file, save_quest_file, export_quest_info };
 use questlist::{ read_all_questlist, read_all_questlist_old, read_questinfo, save_all_questlists };
 use re_frontier::re_frontier;
-use db::{ db_import_questlist, get_config };
+use db::{ db_import_questlist, db_update_quest, get_config };
 
 #[tokio::main]
 async fn main() {
@@ -22,12 +22,14 @@ async fn main() {
     .invoke_handler(tauri::generate_handler![
       read_quest_file,
       save_quest_file,
+      export_quest_info,
       read_all_questlist,
       read_all_questlist_old,
       read_questinfo,
       save_all_questlists,
       re_frontier,
       db_import_questlist,
+      db_update_quest,
       get_config
     ])
     .run(tauri::generate_context!())

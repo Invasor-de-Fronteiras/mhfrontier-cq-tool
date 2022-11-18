@@ -167,7 +167,7 @@ export function ForcedEquipmentTab() {
         <GroupCard title="Banned weapons">
           <BitFlagsField
             label="Banned weapons"
-            name="qquest_type_flags.allowed_equipment_bitmask"
+            name="quest_type_flags.allowed_equipment_bitmask"
             options={[
               { bitValue: 1, label: "Tower Weap" },
               { bitValue: 2, label: "Evolution Weapon (Ravi)" },

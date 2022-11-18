@@ -111,6 +111,36 @@ impl DB {
         Ok(())
     }
 
+    pub async fn update_quest(&self, quest_info: &mut QuestInfo) -> Result<()> {     
+        let quest_list_bin = quest_info.get_buffer()?;
+        let period = quest_info.quest_type_flags.get_periot();
+        let season = quest_info.quest_type_flags.get_season();
+        let quest_id = quest_info.quest_type_flags.main_quest_prop.quest_id as i32;
+
+        let filename = format!("{}{}{}", quest_id, period, season);
+        let quest_bin = self.get_quest_buffer(filename);
+        
+        sqlx::query("
+            UPDATE quests
+            SET name=$1, objective=$2, category=$3, enable=$4, quest_bin=$5, quest_list_bin=$6
+            WHERE quest_id=$7 AND period=$8 AND season=$9;
+        ")
+            
+            .bind(&quest_info.strings.title)
+            .bind(&quest_info.strings.main_objective)
+            .bind(quest_info.header.quest_category as i32)
+            .bind(true)
+            .bind(&quest_bin)
+            .bind(&quest_list_bin)
+            .bind(quest_id)
+            .bind(PERIOD::from_char(period) as PERIOD)
+            .bind(SEASON::from_u8(season) as SEASON)
+            .execute(&self.pool)
+            .await?;
+
+        Ok(())
+    }
+
     pub async fn debug(&self, filepath: String) -> Result<()> {
         let filename = "";
         let mut quest = QuestFile::from_path(filename)?;
