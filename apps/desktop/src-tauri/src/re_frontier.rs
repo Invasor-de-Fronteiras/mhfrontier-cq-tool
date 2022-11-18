@@ -21,7 +21,7 @@ pub fn re_frontier(event: String) -> String {
       return Ok(String::from("{ \"message\": \"This feature only works on Windows\" }"))
     }
 
-    let output = Command::new(payload.re_frontier_path)
+    let output = Command::new("./ReFrontier/ReFrontier.exe")
       .args([payload.filepath])
       .output()?;
 
