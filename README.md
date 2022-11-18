@@ -1,61 +1,55 @@
-![Dark theme preview](http://invidget.switchblade.xyz/967058504403808356)
+<h1 align="center">
+  <img src="./screenshots/logo.png" alt="Clash" width="128" />
+  <br>
+  MHFrontier CQ Tool
+  <br>
+</h1>
 
-# MHFrontier-CQ-Tool
+MHFrontier CQ Tool is a free and open-source solution to edit and create quests for Monster Hunter Frontier Z
 
-MHFrontier-CQ-Tool is a editor of custom quests for Monster Hunter Frontier Z.
+### Table of Contents
 
-## Table of Contents
-
-- [Contributing](#contributing)
-- [Local development](#local-development)
-- [Load Quest](#load-quest)
-- [Manager questlist](#manager-questlist)
-- [Manager questlist in 9.1](#manager-questlist-in-91)
-- [Credits](#credits)
+- [Install](#install)
+- [Instructions](#instructions)
+- [Contributions](#contributions)
 - [License](#license)
 
-## Requirements
+## Install
 
-- [WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)
-- [ReFrontier](https://github.com/mhvuze/ReFrontier)
+Download them from the [Github Release](https://github.com/Invasor-de-Fronteiras/mhfrontier-cq-tool/releases) for Windows, Linux and Mac.
 
-## How to use
+## Instructions
 
-First of all, it's not possible to create quest from scratch, we need to copie one quest as base and edit from it.
+> If you are using [Erupe](https://github.com/ZeruLight/Erupe), set `DevMode` and `QuestDebugTools` to **true** on `config.json`. It shows the quest filename on console logs.
 
-## Load Quest
+### Decompress the Quest
 
-To find quest file which you want you can does this enabling the options **DevMode** and **QuestDebugTools** on config.json to show quest filename on console logs.
+It is required to decompress the quest file so the editor can read it. Use [ReFrontier](https://github.com/mhvuze/ReFrontier) for that. If [ReFrontier](https://github.com/mhvuze/ReFrontier) is inside the editor folder it can be used directly from the editor.
 
-To load quests it's necessary to execute [ReFrontier](https://github.com/mhvuze/ReFrontier) in quest file.
+<img src="./screenshots/refrontier.png" alt="Quest" width="300" />
 
-Rename file for one **quest_id** (without the last two characters) which is not being used in folder **/bin/quests** and put file in **/bin/quests** (Example: 64555d0.bin). 
-I strongly recommend to choose based in quest map because its not possible to change map.
+### Quest File
 
-After that you load the quest and change **Quest ID** in Quest Information to choosed id and do the quests changes as your desire and save it.
+The quest is currently a binary file, [Erupe](https://github.com/ZeruLight/Erupe) does not implement each part of the quest, it reads all file content and sends it to the client.
 
-## Manager questlist
+The quest’s file name is not random, it is composed of the quest ID, in-game daytime and in-game season. Below is an example of how it looks:
 
-To quest show in game it's necessary to add quest in questlist, for its you need to change the selected tool **QuestEditor** to **QuestlistEditor**.
+<img src="./screenshots/quest-id.png" alt="Quest" width="300" />
 
-![SelectTool](./screenshots/select_tool.png)
+It's important to understand this so you can get the quests on your server and on your quest list.
 
-Now you click in **Load Folder** and select questlist folder, after this you can manager your quests in menu **Questlist** and add quests clicking on **Add Quest from file**.
+### New Quest
 
-After all you can save questlist in **Save Questlist**.
+> Currently, the editor does not support creating a quest from scratch, because it is not possible to edit a 100% map yet.
 
-### Manager questlist in 9.1
+To create a new quest, copy an existing one, [decompress](#decompress-the-quest) it and rename the [quest id](#quest-file) to an id that is not already being used in your server. Open the quest in the editor and change the **Quest Id** in **Quest Information** to chosen id.
 
-After update 9.1 from [Erupe CE](https://github.com/ZeruLight/Erupe) the questlist files are removed and now we need to export a template from questfile to folder **/bin/events**.
+Nice! Now do the quest changes as your desire and save it.
 
-To do this just go to **Export quest** in QuestEditor and choose questlist options.
+## Contributions
 
-![ExportQuest](./screenshots/export_quest.png)
-
-## Contributing
-
-If your contribution is an advance for Erupe, prefer to send it to the [main community repository](#here-are-the-main-repositories-maintained-by-the-community-that-this-code-is-based-on), but otherwise, feel the advantage for any contributions! If you have any questions, don't hesitate to join [our community]() server and ask as many questions as you like.
+Issue and PR welcome!
 
 ## License
 
-Licensed under [MIT](/LICENSE).
+GPL-3.0 License. See the [License here](/LICENSE) for details.
