@@ -20,7 +20,7 @@ Download them from the [Github Release](https://github.com/Invasor-de-Fronteiras
 
 ## Instructions
 
-> If you are using Erupe, set `DevMode` and `QuestDebugTools` to **true** on `config.json`. It shows the quest filename on console logs.
+> If you are using [Erupe](https://github.com/ZeruLight/Erupe), set `DevMode` and `QuestDebugTools` to **true** on `config.json`. It shows the quest filename on console logs.
 
 ### Decompress the Quest
 
@@ -30,7 +30,7 @@ It is required to decompress the quest file so the editor can read it. Use [ReFr
 
 ### Quest File
 
-The quest is currently a binary file, Erupe server does not implement each part of the quest, it reads all file content and sends it to the client.
+The quest is currently a binary file, [Erupe](https://github.com/ZeruLight/Erupe) does not implement each part of the quest, it reads all file content and sends it to the client.
 
 The quest’s file name is not random, it is composed of the quest ID, in-game daytime and in-game season. Below is an example of how it looks:
 
