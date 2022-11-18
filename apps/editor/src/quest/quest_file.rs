@@ -26,6 +26,7 @@ pub struct QuestFile {
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
     pub rewards: Rewards,
     pub loaded_stages: Vec<LoadedStage>,
+    pub unk_data: Vec<u8>,
     // supply items are a fixed-size array of 40 item slots
     pub supply_items: Vec<SupplyItem>,
     pub strings: QuestStrings,
@@ -42,6 +43,8 @@ impl QuestFile {
 
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
+
+        let unk_data: Vec<u8> = reader.read_custom_buffer(112)?;
 
         // Read mapinfo
         reader.seek_start(header.map_info as u64)?;
@@ -100,6 +103,7 @@ impl QuestFile {
             rewards,
             supply_items,
             loaded_stages,
+            unk_data,
             strings,
         })
     }

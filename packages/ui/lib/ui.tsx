@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./Layout";
 import { MapPositionTab } from "./tabs/develop/MapPosition";
+import { ExportToQuestlistTab } from "./tabs/ExportToQuestlistTab";
 import { FlagsTab } from "./tabs/FlagsTab";
 import { ForcedEquipmentTab } from "./tabs/ForcedEquipementTab";
 import { LoadQuestTab } from "./tabs/LoadQuestTab";
@@ -25,6 +26,7 @@ export function Ui() {
         <Route path="/small-monsters" element={<SmallMonsterTab />} />
         <Route path="/equipment" element={<ForcedEquipmentTab />} />
         <Route path="/quest-info" element={<QuestInfoTab />} />
+        <Route path="/export-quest-info" element={<ExportToQuestlistTab />} />
         <Route path="/map-position" element={<MapPositionTab />} />
         <Route path="/strings" element={<QuestStringTab />} />
         <Route path="/apply-templates" element={<ApplyTemplateTab />} />

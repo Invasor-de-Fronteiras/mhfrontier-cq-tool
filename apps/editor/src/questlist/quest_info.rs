@@ -1,12 +1,12 @@
 use serde_derive::{Deserialize, Serialize};
 
+use crate::file::cursor::WriteCursor;
 use crate::file::reader::FileReader;
 use crate::file::writer::FileWriter;
-use crate::quest::header;
 use crate::quest::{
     offsets::MAIN_QUEST_PROP_PRT, quest_string::QuestStrings, quest_type_flags::QuestTypeFlags,
 };
-use std::io::{Read, Result};
+use std::io::{Cursor, Read, Result};
 
 use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
 use super::questlist_header::QUEST_UNK_END;
@@ -104,55 +104,67 @@ impl QuestInfo {
         })
     }
 
-    pub fn write_on_questlist(writer: &mut FileWriter, quest_info: &mut QuestInfo) -> Result<()> {
-        quest_info
-            .quest_type_flags
-            .main_quest_prop
-            .quest_strings_ptr = 0x140;
+    pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
+        let mut buffer: Cursor<Vec<u8>> = Cursor::new(vec![]);
 
-        writer.write_u32(&(quest_info.quest_type_flags.main_quest_prop.quest_id as u32))?;
-        writer.write_buffer(&[0x00, 0x00])?;
-        let header_ptr = writer.current_position()?;
-        writer.write_struct(&mut quest_info.header)?;
-        let start_ptr = writer.current_position()?;
-        writer.write_struct(&mut quest_info.quest_type_flags)?;
-        writer.write_buffer(&quest_info.unk_data)?;
-        let strings_ptr = writer.current_position()?;
-        writer.write_struct(&mut quest_info.strings.pointers)?;
+        self.quest_type_flags.main_quest_prop.quest_strings_ptr = 0x140;
+
+        buffer.write_u32(&(self.quest_type_flags.main_quest_prop.quest_id as u32))?;
+        buffer.write_buffer(&[0x00, 0x00])?;
+        let header_ptr = buffer.current_position()?;
+        buffer.write_struct(&mut self.header)?;
+        let start_ptr = buffer.current_position()?;
+        buffer.write_struct(&mut self.quest_type_flags)?;
+        buffer.write_buffer(&self.unk_data)?;
+        let strings_ptr = buffer.current_position()?;
+        buffer.write_struct(&mut self.strings.pointers)?;
 
         // write strings
-        quest_info.strings.pointers.title = (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.title)?;
-        quest_info.strings.pointers.main_objective =
-            (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.main_objective)?;
-        quest_info.strings.pointers.sub_a_objective =
-            (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.sub_a_objective)?;
-        quest_info.strings.pointers.sub_b_objective =
-            (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.sub_b_objective)?;
-        quest_info.strings.pointers.clear_reqs = (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.clear_reqs)?;
-        quest_info.strings.pointers.fail_reqs = (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.fail_reqs)?;
-        quest_info.strings.pointers.contractor = (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.contractor)?;
-        quest_info.strings.pointers.description = (writer.current_position()? - start_ptr) as u32;
-        writer.write_string(&quest_info.strings.description)?;
+        self.strings.pointers.title = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.title)?;
+        self.strings.pointers.main_objective = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.main_objective)?;
+        self.strings.pointers.sub_a_objective = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.sub_a_objective)?;
+        self.strings.pointers.sub_b_objective = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.sub_b_objective)?;
+        self.strings.pointers.clear_reqs = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.clear_reqs)?;
+        self.strings.pointers.fail_reqs = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.fail_reqs)?;
+        self.strings.pointers.contractor = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.contractor)?;
+        self.strings.pointers.description = (buffer.current_position()? - start_ptr) as u32;
+        buffer.write_string(&self.strings.description)?;
 
-        let end_ptr = writer.current_position()?;
+        let end_ptr = buffer.current_position()?;
 
-        quest_info.header.set_length((end_ptr - start_ptr) as u16);
-        writer.seek_start(header_ptr)?;
-        writer.write_struct(&mut quest_info.header)?;
+        self.header.set_length((end_ptr - start_ptr) as u16);
+        buffer.seek_start(header_ptr)?;
+        buffer.write_struct(&mut self.header)?;
 
-        writer.seek_start(strings_ptr)?;
-        writer.write_struct(&mut quest_info.strings.pointers)?;
-        writer.seek_start(end_ptr)?;
+        buffer.seek_start(strings_ptr)?;
+        buffer.write_struct(&mut self.strings.pointers)?;
+        buffer.seek_start(end_ptr)?;
 
-        writer.write_u8(&quest_info.unk0_len)?;
-        writer.write_buffer(&quest_info.unk0)?;
+        buffer.write_u8(&self.unk0_len)?;
+        buffer.write_buffer(&self.unk0)?;
+
+        Ok(buffer.into_inner())
+    }
+
+    pub fn write_on_questlist(writer: &mut FileWriter, quest_info: &mut QuestInfo) -> Result<()> {
+        let buffer = quest_info.get_buffer()?;
+        writer.write_buffer(&buffer)?;
+
+        Ok(())
+    }
+
+    pub fn save_to(&mut self, filename: &str) -> Result<()> {
+        let mut writer = FileWriter::from_new_filename(filename)?;
+
+        let buffer = self.get_buffer()?;
+        writer.write_buffer(&buffer)?;
 
         Ok(())
     }

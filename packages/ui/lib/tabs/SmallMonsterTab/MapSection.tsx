@@ -67,7 +67,7 @@ export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster
 
       if (!result) return null;
       
-      return result.areaNumber === 0 ? "Base" : `Area ${result.areaNumber}`;
+      return result.areaNumber;
     },
     [mapId, mapSection]
   );

@@ -197,7 +197,7 @@ export function LayoutBody({
   const { isOpen, onToggle } = useContext(context);
 
   return (
-    <div className="w-full border-t flex flex-col h-screen rounded-y rounded-r dark:border-slate-800">
+    <div className="flex-1 overflow-x-auto border-t flex flex-col h-screen rounded-y rounded-r dark:border-slate-800">
       <div className="border-b dark:border-slate-800 h-14 flex items-center  px-4">
         <div
           className="p-2 border-2 rounded hover:border-emerald-500 hover:text-emerald-500 cursor-pointer md:hidden "

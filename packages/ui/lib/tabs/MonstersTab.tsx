@@ -1,9 +1,13 @@
 import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
+import { Button } from "../components/Button";
+import { GroupCard } from "../components/CardGroup";
+import { InputField } from "../components/Input";
 import { MonsterCard } from "../components/MonsterCard";
+import { SelectField } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
-import { findMap, getStageName, monsters } from "../utils";
+import { findMap, getStageName, monsters, quest_type_options } from "../utils";
 
 export function MonstersTab() {
   const { form } = useEditor();
@@ -48,9 +52,9 @@ export function MonstersTab() {
       const map = findMap(mapId);
       if (!map) return [];
 
-      return map.stages.map((v, i) => ({
+      return map.stages.map((v) => ({
         value: v.id,
-        label: v.areaNumber === 0 ? "Base" : `Area ${i}`,
+        label: v.areaNumber,
       }));
     },
     [mapId]
@@ -62,8 +66,30 @@ export function MonstersTab() {
 
   return (
     <div className="relative">
+      <GroupCard title="Monsters">
+        <InputField
+          label="Monster size multiplier"
+          type="number"
+          name="gen_quest_prop.big_monster_size_multi"
+        />
+        <InputField
+          label="Monster size range"
+          type="number"
+          name="gen_quest_prop.size_range"
+        />
+        <InputField
+          label="Monster Status table"
+          type="number"
+          name="gen_quest_prop.mons_stat_table1"
+        />
+        <SelectField
+          label="Monster class id"
+          options={quest_type_options}
+          name="gen_quest_prop.monster_class_id"
+        />
+      </GroupCard>
       <div>
-        <button type="button" onClick={onAddMonster}>Add Monster</button>
+        <Button type="button" className="mt-5 mr-4" onClick={onAddMonster}>Add Monster</Button>
       </div>
       <table
         aria-label="Quest monsters"

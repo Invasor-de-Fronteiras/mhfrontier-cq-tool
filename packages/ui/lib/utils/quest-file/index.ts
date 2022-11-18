@@ -27,4 +27,5 @@ export interface QuestFile {
     supply_items: SupplyItem[];
     loaded_stages: LoadedStage[];
     strings: QuestStrings;
+    unk_data: number[];
 }

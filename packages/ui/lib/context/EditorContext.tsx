@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { createContext } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { QuestFile } from "../utils";
+import { QuestFile, QuestInfo } from "../utils";
 
 interface EditorContextState {
   uploadFile: {
@@ -11,6 +11,8 @@ interface EditorContextState {
     isDragActive: boolean;
   };
   handleSaveQuest: (data: QuestFile) => void;
+  handleExportQuestInfo: (data: QuestInfo) => void;
+  handleUpdateQuest: (data: QuestInfo) => void;
   reFrontier?: () => void;
   loadQuest: () => void;
   form: UseFormReturn<QuestFile>;

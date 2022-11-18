@@ -1,3 +1,5 @@
+use std::vec;
+
 use crate::{
     quest::quest_file::QuestFile,
     quest::{
@@ -182,7 +184,7 @@ fn reader_test() {
                 monster_icon4: 0,
                 monster_icon5: 0,
             },
-            skip3: [0; 6],
+            skip3: [0; 8],
             quest_clears_allowed: 0,
             quest_monster_icon: 0,
         },
@@ -289,6 +291,7 @@ fn reader_test() {
             },
         ],
         rewards: vec![],
+        unk_data: vec![],
         loaded_stages: vec![],
         map_zones: MapZones {
             map_zone_ptrs: vec![],
