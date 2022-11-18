@@ -6,7 +6,7 @@ use crate::file::writer::FileWriter;
 use crate::quest::{
     offsets::MAIN_QUEST_PROP_PRT, quest_string::QuestStrings, quest_type_flags::QuestTypeFlags,
 };
-use std::io::{Read, Result, Cursor};
+use std::io::{Cursor, Read, Result};
 
 use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
 use super::questlist_header::QUEST_UNK_END;
@@ -107,10 +107,7 @@ impl QuestInfo {
     pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
         let mut buffer: Cursor<Vec<u8>> = Cursor::new(vec![]);
 
-        self
-            .quest_type_flags
-            .main_quest_prop
-            .quest_strings_ptr = 0x140;
+        self.quest_type_flags.main_quest_prop.quest_strings_ptr = 0x140;
 
         buffer.write_u32(&(self.quest_type_flags.main_quest_prop.quest_id as u32))?;
         buffer.write_buffer(&[0x00, 0x00])?;
@@ -125,14 +122,11 @@ impl QuestInfo {
         // write strings
         self.strings.pointers.title = (buffer.current_position()? - start_ptr) as u32;
         buffer.write_string(&self.strings.title)?;
-        self.strings.pointers.main_objective =
-            (buffer.current_position()? - start_ptr) as u32;
+        self.strings.pointers.main_objective = (buffer.current_position()? - start_ptr) as u32;
         buffer.write_string(&self.strings.main_objective)?;
-        self.strings.pointers.sub_a_objective =
-            (buffer.current_position()? - start_ptr) as u32;
+        self.strings.pointers.sub_a_objective = (buffer.current_position()? - start_ptr) as u32;
         buffer.write_string(&self.strings.sub_a_objective)?;
-        self.strings.pointers.sub_b_objective =
-            (buffer.current_position()? - start_ptr) as u32;
+        self.strings.pointers.sub_b_objective = (buffer.current_position()? - start_ptr) as u32;
         buffer.write_string(&self.strings.sub_b_objective)?;
         self.strings.pointers.clear_reqs = (buffer.current_position()? - start_ptr) as u32;
         buffer.write_string(&self.strings.clear_reqs)?;

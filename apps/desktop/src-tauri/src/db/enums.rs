@@ -1,4 +1,3 @@
-
 #[derive(sqlx::Type)]
 #[sqlx(type_name = "QuestPeriod")]
 pub enum PERIOD {
@@ -11,15 +10,14 @@ impl PERIOD {
         match value {
             'd' => PERIOD::DAY,
             'n' => PERIOD::NIGHT,
-            _ => PERIOD::DAY
+            _ => PERIOD::DAY,
         }
     }
-
 
     pub fn as_str(&self) -> &'static str {
         match self {
             PERIOD::DAY => "DAY",
-            PERIOD::NIGHT => "NIGHT"
+            PERIOD::NIGHT => "NIGHT",
         }
     }
 }
@@ -38,7 +36,7 @@ impl SEASON {
             0 => SEASON::WARM,
             1 => SEASON::COLD,
             2 => SEASON::BREED,
-            _ => SEASON::WARM
+            _ => SEASON::WARM,
         }
     }
 
@@ -50,4 +48,3 @@ impl SEASON {
         }
     }
 }
-

@@ -1,7 +1,7 @@
 // use std::{io::Write, io::Seek};
+use std::io::{Cursor, Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::mem::{forget, size_of};
 use std::slice;
-use std::io::{Error, ErrorKind, Read, Result, Write, Seek, SeekFrom, Cursor};
 
 use encoding_rs::SHIFT_JIS;
 
@@ -15,11 +15,10 @@ where
     fn write<W: WriteCursor + ?Sized>(&mut self, writer: &mut W) -> Result<u64>;
 }
 
-pub trait WriteCursor 
+pub trait WriteCursor
 where
-    Self: Write + Seek
+    Self: Write + Seek,
 {
-    
     fn seek_start(&mut self, pos: u64) -> Result<u64> {
         let result = self.seek(SeekFrom::Start(pos))?;
 
@@ -136,6 +135,4 @@ where
     }
 }
 
-impl WriteCursor for Cursor<Vec<u8>> {
-    
-}
+impl WriteCursor for Cursor<Vec<u8>> {}

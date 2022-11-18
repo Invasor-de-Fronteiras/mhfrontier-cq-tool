@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
+import { Button } from "../components/Button";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { MonsterCard } from "../components/MonsterCard";
@@ -88,7 +89,7 @@ export function MonstersTab() {
         />
       </GroupCard>
       <div>
-        <button type="button" onClick={onAddMonster}>Add Monster</button>
+        <Button type="button" className="mt-5 mr-4" onClick={onAddMonster}>Add Monster</Button>
       </div>
       <table
         aria-label="Quest monsters"

@@ -1,6 +1,6 @@
-use std::{fs::File};
+use std::fs::File;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgConnectOptions;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
@@ -16,11 +16,10 @@ pub struct DBConfig {
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct Config {
     pub dbs: Vec<DBConfig>,
-    pub bin_path: String
+    pub bin_path: String,
 }
 
 impl Config {
-
     pub fn from_file() -> Option<Config> {
         let file = File::open("config.json");
         if let Ok(data) = file {
@@ -32,11 +31,12 @@ impl Config {
     }
 }
 
-
 impl DBConfig {
-    
     pub fn get_string_connection(&self) -> String {
-        format!("postgres://{}:{}@{}:{}/{}", self.user, self.password, self.host, self.port, self.database)
+        format!(
+            "postgres://{}:{}@{}:{}/{}",
+            self.user, self.password, self.host, self.port, self.database
+        )
     }
 
     pub fn get_connection_options(&self) -> PgConnectOptions {
