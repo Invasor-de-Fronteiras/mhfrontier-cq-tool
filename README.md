@@ -24,13 +24,15 @@ Download them from the [Github Release](https://github.com/Invasor-de-Fronteiras
 
 ### Decompress the Quest
 
-The quests required to decompress the quest to the editor read it. For it, we recommend you execute the [ReFrontier](https://github.com/mhvuze/ReFrontier) in the quest. The editor understands the existence of [ReFrontier](https://github.com/mhvuze/ReFrontier), just move the [ReFrontier](https://github.com/mhvuze/ReFrontier) to the same folder as the editor.
+It is required to decompress the quest file so the editor can read it. Use [ReFrontier](https://github.com/mhvuze/ReFrontier) for that. If [ReFrontier](https://github.com/mhvuze/ReFrontier) is inside the editor folder it can be used directly from the editor.
+
+<img src="./screenshots/refrontier.png" alt="Quest" width="300" />
 
 ### Quest File
 
-The quest file is binary because currently, the Erupe server does not implement each part of the quest, it reads all file content and sent to the client.
+The quest is currently a binary file, Erupe server does not implement each part of the quest, it reads all file content and sends it to the client.
 
-the name of the quest file is not random, it is composed of the quest id, time of day in-game and season in-game. We demonstrate how to separate this in the image below:
+The quest’s file name is not random, it is composed of the quest ID, in-game daytime and in-game season. Below is an example of how it looks:
 
 <img src="./screenshots/quest-id.png" alt="Quest" width="300" />
 
@@ -38,9 +40,9 @@ It's important to understand this so you can get the quests on your server and o
 
 ### New Quest
 
-> Currently, the editor does not support the creation of a quest from scratch, because the editor is not yet possible to edit a 100% map.
+> Currently, the editor does not support creating a quest from scratch, because it is not possible to edit a 100% map yet.
 
-For creating a new quest, copy an existing quest, [decompress](#decompress-the-quest) the quest and rename the [quest id](#quest-file) to an id that is not already being used in your server. Open the quest in the editor and change the **Quest Id** in **Quest Information** to chosen id.
+To create a new quest, copy an existing one, [decompress](#decompress-the-quest) it and rename the [quest id](#quest-file) to an id that is not already being used in your server. Open the quest in the editor and change the **Quest Id** in **Quest Information** to chosen id.
 
 Nice! Now do the quest changes as your desire and save it.
 
