@@ -46,7 +46,7 @@ To create a new quest, copy an existing one, [decompress](#decompress-the-quest)
 
 Nice! Now do the quest changes as your desire and save it.
 
-### Manager questlist
+### Quest List Manager
 
 To show quest in game it's necessary to add quest in questlist, for its you need to change the selected tool **QuestEditor** to **QuestlistEditor**.
 
