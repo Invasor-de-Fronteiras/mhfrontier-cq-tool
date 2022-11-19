@@ -56,9 +56,9 @@ Now you click in **Load Folder** and select questlist folder, after this you can
 
 After all you can save questlist in **Save Questlist**.
 
-### Manager questlist in 9.1
+### Manager Quest List in [Erupe 9.1](https://github.com/ZeruLight/Erupe/releases/tag/v9.1.0)
 
-After update 9.1 from [Erupe CE](https://github.com/ZeruLight/Erupe) the questlist files are removed and now we need to export a template from questfile to folder **/bin/events**.
+After update [9.1](https://github.com/ZeruLight/Erupe/releases/tag/v9.1.0), the quest list files were removed and now we require to export a template from the quest file to folder **/bin/events**.
 
 To do this just go to **Export quest** in QuestEditor and choose questlist options.
 
