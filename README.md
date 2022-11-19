@@ -46,6 +46,24 @@ To create a new quest, copy an existing one, [decompress](#decompress-the-quest)
 
 Nice! Now do the quest changes as your desire and save it.
 
+### Quest List Manager
+
+To show quest in game it's necessary to add quest in questlist, for its you need to change the selected tool **QuestEditor** to **QuestlistEditor**.
+
+![SelectTool](./screenshots/select_tool.png)
+
+Now you click in **Load Folder** and select questlist folder, after this you can manager your quests in menu **Questlist** and add quests clicking on **Add Quest from file**.
+
+After all you can save questlist in **Save Questlist**.
+
+#### Quest List Manager for [Erupe 9.1](https://github.com/ZeruLight/Erupe/releases/tag/v9.1.0)
+
+After update [9.1](https://github.com/ZeruLight/Erupe/releases/tag/v9.1.0), the quest list files were removed and now we require to export a template from the quest file to folder **/bin/events**.
+
+To do this just go to **Export quest** in QuestEditor and choose questlist options.
+
+![ExportQuest](./screenshots/export_quest.png)
+
 ## Contributions
 
 Issue and PR welcome!
