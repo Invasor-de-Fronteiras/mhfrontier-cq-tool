@@ -124,7 +124,7 @@ fn quest_type_flags() {
             monster_icon4: 0,
             monster_icon5: 0,
         },
-        skip3: [0; 6],
+        skip3: [0; 8],
         quest_clears_allowed: 0,
         quest_monster_icon: 0,
     };

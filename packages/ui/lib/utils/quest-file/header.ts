@@ -19,3 +19,10 @@ export interface QuestFileHeader {
   fixed_cords2: number;
   fixed_inf: number;
 }
+
+export interface LoadedStage {
+  stage_id: number;
+  unk1: number;
+  unk2: number;
+  unk3: number;
+}

@@ -4,6 +4,7 @@ import { QuestInfo, QuestlistEditorContextProvider, QuestlistFile } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
+import { getConfig, importQuestlists } from "./events";
 
 interface SaveQuestlistPayload {
   folder: string;
@@ -17,11 +18,13 @@ interface QuestlistEditorProps {
 function QuestlistEditor({ children }: QuestlistEditorProps) {
   const [questlistPath, setQuestlistPath] = useState<string | null>(null);
   const [quests, setQuests] = useState<QuestInfo[] | undefined>(undefined);
+  const [lastQuestlistFolder, setLastQuestlistFolder] = useState<string | undefined>(undefined);
+  const [lastQuestFolder, setlastQuestFolder] = useState<string | undefined>(undefined);
   const data = useMemo(() => ({ quests: quests || [] }), [quests]);
 
   const handleSaveQuestlist = async (values: QuestInfo[]) => {
     if (!questlistPath || !values) return;
-    const folder = await open({ multiple: false, directory: true }) as string;
+    const folder = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder }) as string;
     if (!folder) return;
 
     const data = [...values];
@@ -33,13 +36,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
 
       questlists.push({
         filename: `list_${i}`,
-        header: { 
-          quest_count: items.length,
-          unk0: 0,
-          unk1: 38685,
-          unk2: 61732,
-          unk3: 0
-        },
+        offset: i,
         quests: items
       });
 
@@ -66,10 +63,38 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
 
   const loadQuestlists = async () => {
     try {
-      const path = await open({ multiple: false, directory: true });
+      const path = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder });
       if (!path) return;
 
       const response: string = await invoke("read_all_questlist", {
+        event: path,
+      });
+
+      const questlists = JSON.parse(response);
+      if (questlists && questlists.error) {
+        toast.error(`Failed to read file: ${questlists.error}`);
+        return;
+      }
+
+      console.log('questlists: ', questlists);
+      setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
+        acc.push(...cur.quests);
+        return acc;
+      }, []));
+      setLastQuestlistFolder(path as string);
+      setQuestlistPath(path as string);
+      toast.success('Quest file read successfully!');
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
+  const loadQuestlistsOld = async () => {
+    try {
+      const path = await open({ multiple: false, directory: true });
+      if (!path) return;
+
+      const response: string = await invoke("read_all_questlist_old", {
         event: path,
       });
 
@@ -109,9 +134,33 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
     return null;
   }
 
+  const onImportQuestlists = async (): Promise<void> => {
+    try {
+      const config = await getConfig();
+      if (
+        !config ||
+        (!config.dbs || config.dbs.length === 0)
+      ) {
+        return;
+      }
+  
+      const path = await open({ multiple: false, directory: true });
+      if (!path) return;
+
+      await importQuestlists({
+        db_config: config.dbs[0],
+        filepath: path as string
+      });
+
+      toast.success('Quest file read successfully!');
+    } catch (error) {
+      toast.error(`Failed to read file: ${error}`);
+    }
+  }
+
   const getQuests = async (): Promise<QuestInfo[]> => {
     try {
-      const path = await open({ multiple: true });
+      const path = await open({ multiple: true, defaultPath: lastQuestFolder });
       if (!path) return [];
       const paths = Array.isArray(path) ? path : [path];
       const quests: QuestInfo[] = [];
@@ -120,6 +169,7 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
         if (quest) quests.push(quest);
       }
 
+      setlastQuestFolder(paths[0].substring(0, paths[0].lastIndexOf("\\")));
       return quests;
     } catch (error) {
       console.error("error ", error);
@@ -133,7 +183,9 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       handleSaveQuestlist={handleSaveQuestlist}
       isLoadedQuestlists={!!quests}
       loadQuestlists={loadQuestlists}
+      loadQuestlistsOld={loadQuestlistsOld}
       getQuestFromFile={getQuests}
+      importQuestlists={onImportQuestlists}
     >
       {children}
     </QuestlistEditorContextProvider>

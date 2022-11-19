@@ -12,7 +12,8 @@ pub struct FileReader {
 }
 
 pub trait CustomReader
-where Self: Sized,
+where
+    Self: Sized,
 {
     fn read(reader: &mut FileReader) -> Result<Self>;
 }
@@ -31,6 +32,13 @@ impl FileReader {
         let result = self.reader.seek(SeekFrom::Start(pos))?;
 
         Ok(result)
+    }
+
+    pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
+        let mut buffer = Vec::<u8>::new();
+        self.reader.read_to_end(&mut buffer)?;
+
+        Ok(buffer)
     }
 
     /**
@@ -86,6 +94,13 @@ impl FileReader {
         Ok(u16::from_le_bytes(buffer))
     }
 
+    pub fn read_u16_be(&mut self) -> std::io::Result<u16> {
+        let mut buffer = [0_u8; 2];
+        self.reader.read_exact(&mut buffer)?;
+
+        Ok(u16::from_be_bytes(buffer))
+    }
+
     pub fn read_u8(&mut self) -> std::io::Result<u8> {
         let mut buffer = [0_u8; 1];
         self.reader.read_exact(&mut buffer)?;
@@ -118,6 +133,13 @@ impl FileReader {
         Ok(result)
     }
 
+    pub fn read_current_u32(&mut self) -> std::io::Result<u32> {
+        let current = self.reader.stream_position()?;
+        let result = self.read_u32()?;
+        self.seek_start(current)?;
+        Ok(result)
+    }
+
     pub fn read_string(&mut self) -> std::io::Result<String> {
         let mut text: Vec<u8> = vec![];
         let mut end_of_string = false;
@@ -137,5 +159,4 @@ impl FileReader {
             Ok(res.to_string())
         }
     }
-
 }

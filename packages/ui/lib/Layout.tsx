@@ -5,6 +5,7 @@ import {
   BsInfoCircle,
   BsMinecartLoaded,
   BsSave,
+  BsArrowUp,
   BsUmbrella,
   BsUpload,
   BsQuestion,
@@ -15,7 +16,7 @@ import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { FiRefreshCw } from "react-icons/fi";
 import { HiTemplate } from "react-icons/hi";
 import { VscSymbolString } from "react-icons/vsc";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
 
 import {
@@ -27,8 +28,9 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
+  useConfig
 } from "ui";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IconType } from "react-icons";
 
 interface NavbarItem {
@@ -36,6 +38,7 @@ interface NavbarItem {
   icon: IconType;
   uri?: string;
   disabled?: boolean;
+  hide?: boolean;
   onClick?: () => void;
   isSubmit?: boolean;
   type?: boolean;
@@ -48,9 +51,19 @@ interface NavbarGroup {
 
 export function Layout() {
   const location = useLocation();
+  const nav = useNavigate();
   const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
-  const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
+  const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
+  const { config } = useConfig();
   const [tool, setTool] = useState('QuestEditor');
+
+  useEffect(() => {
+    if (tool === 'QuestEditor') {
+      nav('/');
+    } else {
+      nav('/questlist-load');
+    }
+  }, [tool]);
 
   const groups = useMemo<NavbarGroup[]>(
     () => {
@@ -65,6 +78,13 @@ export function Layout() {
               isSubmit: true,
               disabled: !isLoadedFile,
             },
+            {
+              name: "Export quest",
+              icon: BsUpload,
+              isSubmit: true,
+              disabled: !isLoadedFile,
+              uri: 'export-quest-info'
+            }
           ],
         },
         {
@@ -87,6 +107,12 @@ export function Layout() {
               icon: SiMonster,
               disabled: !isLoadedFile,
               uri: "/monsters",
+            },
+            {
+              name: "Small Monsters",
+              icon: SiMonster,
+              disabled: !isLoadedFile,
+              uri: "/small-monsters",
             },
             {
               name: "Forced Equipment",
@@ -177,6 +203,14 @@ export function Layout() {
               disabled: !isLoadedQuestlists,
               onClick: questlistSubmit
             },
+            {
+              name: "Import Questlist",
+              icon: BsArrowUp,
+              isSubmit: false,
+              disabled: false,
+              onClick: importQuestlists,
+              hide: !config
+            }
           ],
         },
         {
@@ -224,7 +258,7 @@ export function Layout() {
         <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
-            {group.options.map((option) =>
+            {group.options.filter(v => !v.hide).map((option) =>
               option.uri && !option.disabled ? (
                 <Link to={option.uri} key={option.name}>
                   <LayoutNavbarItem {...option} />

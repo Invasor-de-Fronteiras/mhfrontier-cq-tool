@@ -1,8 +1,11 @@
+import { createFilter } from "react-select";
 import { GroupCard } from "../components/CardGroup";
 import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
+import { PlayerSpawn } from "../components/PlayerSpawn";
 import { SelectField } from "../components/Select";
-import { locale_flags, quest_type_options } from "../utils";
+import { locale_flags } from "../utils";
+import { item_options } from "../utils/items";
 import { requirements } from "../utils/requirements";
 
 export function QuestInfoTab() {
@@ -44,11 +47,6 @@ export function QuestInfoTab() {
           options={locale_flags}
           name="quest_type_flags.main_quest_prop.quest_locale_flags"
         />
-        <SelectField
-          label="Requirement"
-          options={requirements}
-          name="quest_type_flags.main_quest_prop.unkk"
-        />
       </GroupCard>
       <GroupCard title="Objectives" >
         <div>
@@ -57,7 +55,22 @@ export function QuestInfoTab() {
           <ObjectiveCard objective={3} />
         </div>
       </GroupCard>
-      <GroupCard title="Reward Points">
+      <GroupCard title="Reward">
+        <InputField
+          label="Reward Main"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_main"
+        />
+        <InputField
+          label="Reward A"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_a"
+        />
+        <InputField
+          label="Reward B"
+          type="number"
+          name="quest_type_flags.main_quest_prop.reward_b"
+        />
         <InputField
           label="Main rank points"
           type="number"
@@ -74,31 +87,26 @@ export function QuestInfoTab() {
           name="gen_quest_prop.sub_brank_points"
         />
       </GroupCard>
-      <GroupCard title="Monsters">
-        <InputField
-          label="Monster size multiplier"
-          type="number"
-          name="gen_quest_prop.big_monster_size_multi"
-        />
-        <InputField
-          label="Monster size range"
-          type="number"
-          name="gen_quest_prop.size_range"
-        />
-        <InputField
-          label="Monster Status table"
-          type="number"
-          name="gen_quest_prop.mons_stat_table1"
-        />
-        <InputField
-          label="Small Monster Status table"
-          type="number"
-          name="gen_quest_prop.little_mons_stat_table"
+      <GroupCard title="Player Spawn">
+        <PlayerSpawn />
+      </GroupCard>
+      <GroupCard title="Requirements">
+        <SelectField
+          label="Requirement"
+          options={requirements}
+          name="quest_type_flags.main_quest_prop.unkk"
         />
         <SelectField
-          label="Monster class id"
-          options={quest_type_options}
-          name="gen_quest_prop.monster_class_id"
+          label="Required Item"
+          name="quest_type_flags.variants.required_item_type"
+          options={item_options}
+          className="mt-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <InputField
+          label="Required count"
+          type="number"
+          name="quest_type_flags.variants.required_item_count"
         />
       </GroupCard>
     </div>

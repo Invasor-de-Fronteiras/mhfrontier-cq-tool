@@ -10,6 +10,8 @@ interface QuestlistForm {
 interface QuestlistEditorContextState {
   getQuestFromFile: () => Promise<QuestInfo[] | null>;
   loadQuestlists: () => void;
+  loadQuestlistsOld: () => void;
+  importQuestlists: () => void;
   handleSaveQuestlist: (data: QuestInfo[]) => void;
   questlistSubmit: () => void;
   form: UseFormReturn<QuestlistForm>;

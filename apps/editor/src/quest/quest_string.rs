@@ -2,7 +2,10 @@ use std::io::Result;
 
 use serde_derive::{Deserialize, Serialize};
 
-use crate::file::{reader::FileReader, writer::{FileWriter, CustomWriter}};
+use crate::file::{
+    reader::FileReader,
+    writer::{CustomWriter, FileWriter},
+};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]

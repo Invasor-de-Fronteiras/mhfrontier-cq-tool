@@ -2,7 +2,10 @@ use std::io::Result;
 
 use serde_derive::{Deserialize, Serialize};
 
-use crate::file::{reader::{CustomReader, FileReader}, writer::{CustomWriter, FileWriter}};
+use crate::file::{
+    reader::{CustomReader, FileReader},
+    writer::{CustomWriter, FileWriter},
+};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -30,7 +33,6 @@ pub struct RewardTable {
 pub type Rewards = Vec<RewardTable>;
 
 impl CustomReader for Rewards {
-    
     fn read(reader: &mut FileReader) -> Result<Vec<RewardTable>> {
         let mut rewards: Vec<RewardTable> = vec![];
 
@@ -54,12 +56,9 @@ impl CustomReader for Rewards {
 
         Ok(rewards)
     }
-
-    
 }
 
 impl CustomWriter for Rewards {
-
     fn write(&mut self, writer: &mut FileWriter) -> Result<u64> {
         let reward_ptr = writer.current_position()?;
 

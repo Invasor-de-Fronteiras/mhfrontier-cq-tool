@@ -83,19 +83,41 @@ export function FlagsTab() {
           name="quest_type_flags.variants.quest_variant1"
         />
         <InputField
+          label="Ranking/Star"
+          type="number"
+          name="quest_type_flags.main_quest_prop.ranking_id"
+        />
+      </GroupCard>
+      <GroupCard title="Quest Variant 1">
+        <BitFlagsField
           label="Quest Variant 1"
-          type="number"
           name="quest_type_flags.variants.quest_variant1"
+          options={[
+            { label: 'SR/Changeable', bitValue: 1 },
+            { label: 'HC Fixed', bitValue: 2 },
+            { label: 'Toggle HC/UL', bitValue: 4 },
+            { label: 'G Rank', bitValue: 8 },
+            { label: 'Unk', bitValue: 16 },
+            { label: 'Unk', bitValue: 32 },
+            { label: 'Unk', bitValue: 64 },
+            { label: 'UL Fixed', bitValue: 128 }
+          ]}
         />
-        <InputField
+      </GroupCard>
+      <GroupCard title="Quest Variant 2">
+        <BitFlagsField
           label="Quest Variant 2"
-          type="number"
           name="quest_type_flags.variants.quest_variant2"
-        />
-        <InputField
-          label="Quest Variant 4"
-          type="number"
-          name="quest_type_flags.variants.quest_variant4"
+          options={[
+            { label: 'LV 1', bitValue: 1 },
+            { label: 'Disable Halk Potion', bitValue: 2 },
+            { label: 'Disable Halk & Poogie', bitValue: 4 },
+            { label: 'Timer', bitValue: 8 },
+            { label: 'Disable Active Feature', bitValue: 16 },
+            { label: 'Fixed Difficulty', bitValue: 32 },
+            { label: 'LV 9999', bitValue: 64 },
+            { label: 'Road', bitValue: 128 }
+          ]}
         />
       </GroupCard>
       <GroupCard title="Quest Variant 3">
@@ -105,9 +127,28 @@ export function FlagsTab() {
           options={[
             { label: 'Disable Reward Bonus', bitValue: 1 },
             { label: 'Require GR', bitValue: 2 },
-            { label: 'Quest counter', bitValue: 4 },
+            { label: 'Unk', bitValue: 4 },
             { label: 'Unk', bitValue: 8 },
-            { label: 'Zenith', bitValue: 16 }
+            { label: 'Zenith', bitValue: 16 },
+            { label: 'Diva Defense', bitValue: 32 },
+            { label: 'Course???', bitValue: 64 },
+            { label: 'Sigil not allowed', bitValue: 128 }
+          ]}
+        />
+      </GroupCard>
+      <GroupCard title="Quest Variant 4">
+        <BitFlagsField
+          label="Quest Variant 4"
+          name="quest_type_flags.variants.quest_variant4"
+          options={[
+            { label: 'Unk', bitValue: 1 },
+            { label: 'Unk', bitValue: 2 },
+            { label: 'Unk', bitValue: 4 },
+            { label: 'Unk', bitValue: 8 },
+            { label: 'Unk', bitValue: 16 },
+            { label: 'Unk', bitValue: 32 },
+            { label: 'Unk', bitValue: 64 },
+            { label: 'Unk', bitValue: 128 }
           ]}
         />
       </GroupCard>

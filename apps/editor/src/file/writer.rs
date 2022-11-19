@@ -13,7 +13,8 @@ pub struct FileWriter {
 }
 
 pub trait CustomWriter
-where Self: Sized,
+where
+    Self: Sized,
 {
     fn write(&mut self, writer: &mut FileWriter) -> Result<u64>;
 }
@@ -95,6 +96,13 @@ impl FileWriter {
 
     pub fn write_u16(&mut self, value: &u16) -> std::io::Result<()> {
         let mut buffer = value.to_le_bytes();
+        self.writer.write(&mut buffer)?;
+
+        Ok(())
+    }
+
+    pub fn write_u16_be(&mut self, value: &u16) -> std::io::Result<()> {
+        let mut buffer = value.to_be_bytes();
         self.writer.write(&mut buffer)?;
 
         Ok(())

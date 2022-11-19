@@ -1,9 +1,11 @@
+use std::vec;
+
 use crate::{
     quest::quest_file::QuestFile,
     quest::{
         header::{MapInfo, QuestFileHeader},
+        map_zones::MapZones,
         monsters::{LargeMonsterPointers, LargeMonsterSpawn},
-        quest_string::QuestStrings,
         quest_type_flags::{
             ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
             QuestTypeFlags, RewardsFocus, Variants,
@@ -182,7 +184,7 @@ fn reader_test() {
                 monster_icon4: 0,
                 monster_icon5: 0,
             },
-            skip3: [0; 6],
+            skip3: [0; 8],
             quest_clears_allowed: 0,
             quest_monster_icon: 0,
         },
@@ -289,10 +291,12 @@ fn reader_test() {
             },
         ],
         rewards: vec![],
-        // supply_items_box: SupplyItemBox {
-        //     unk: 657,
-        //     quantity: 1,
-        // },
+        unk_data: vec![],
+        loaded_stages: vec![],
+        map_zones: MapZones {
+            map_zone_ptrs: vec![],
+            map_zones: vec![],
+        },
         supply_items: vec![],
         strings: quest_file.strings,
     };

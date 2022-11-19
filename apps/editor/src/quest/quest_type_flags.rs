@@ -167,7 +167,29 @@ pub struct QuestTypeFlags {
     pub variants: Variants,
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8; 6],
+    pub skip3: [u8; 8],
     pub quest_clears_allowed: u32,
     pub quest_monster_icon: u8,
+}
+
+impl QuestTypeFlags {
+    pub fn get_periot(&self) -> char {
+        if (self.main_quest_prop.quest_locale_flags & 0b1000) > 0 {
+            return 'd';
+        }
+
+        'n'
+    }
+
+    pub fn get_season(&self) -> u8 {
+        if self.main_quest_prop.quest_locale_flags & 0b010 > 0 {
+            return 0;
+        }
+
+        if self.main_quest_prop.quest_locale_flags & 0b001 > 0 {
+            return 2;
+        }
+
+        return 1;
+    }
 }

@@ -54,7 +54,7 @@ export function MapPositionTab() {
 
     return map.stages.map((v) => ({
       value: v.id,
-      label: v.areaNumber === 0 ? "Base" : `Area ${v.areaNumber}`,
+      label: v.areaNumber,
     }));
   }, [selectedMap, selectedMapId]);
 

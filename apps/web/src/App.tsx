@@ -19,6 +19,8 @@ function App() {
       isLoadedFile={quest !== null}
       handleSaveQuest={(data) => setQuest(data)}
       loadQuest={() => null}
+      handleExportQuestInfo={() => null}
+      handleUpdateQuest={() => null}
       uploadFile={{
         dragSupport: true,
         isDragActive,
