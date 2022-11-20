@@ -13,8 +13,7 @@ pub struct ReFrontierPayload {
 #[tauri::command]
 pub fn re_frontier(event: String) -> String {
     let result = || -> Result<String> {
-        let mut payload = serde_json::from_str::<ReFrontierPayload>(&event)?;
-
+        let payload = serde_json::from_str::<ReFrontierPayload>(&event)?;
         let is_windows = cfg!(target_os = "windows");
 
         if !is_windows {

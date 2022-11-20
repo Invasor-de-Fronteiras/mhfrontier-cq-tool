@@ -3,7 +3,6 @@ use editor::quest::quest_file::QuestFile;
 use editor::questlist::quest_info::QuestInfo;
 use editor::questlist::questlist_file::QuestlistFile;
 use sqlx::postgres::PgPoolOptions;
-use sqlx::types::Json;
 use sqlx::Pool;
 use sqlx::Postgres;
 use sqlx::Result;

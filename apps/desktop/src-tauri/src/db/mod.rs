@@ -1,4 +1,4 @@
-use crate::utils::{wrap_json_result, wrap_result, CustomResult};
+use crate::utils::{wrap_result, CustomResult};
 
 pub mod config;
 pub mod db;

@@ -1,5 +1,5 @@
 use super::header::LoadedStage;
-use super::map_zones::{self, MapZones};
+use super::map_zones::MapZones;
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use super::quest_end_flag::QuestEndFlag;
 use super::quest_string::QuestStrings;
