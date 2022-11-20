@@ -28,7 +28,7 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
-  useConfig
+  useConfig,
 } from "ui";
 import { useEffect, useMemo, useState } from "react";
 import { IconType } from "react-icons";
@@ -53,21 +53,22 @@ export function Layout() {
   const location = useLocation();
   const nav = useNavigate();
   const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
-  const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
+  const { isLoadedQuestlists, questlistSubmit, importQuestlists } =
+    useQuestlistEditor();
   const { config } = useConfig();
-  const [tool, setTool] = useState('QuestEditor');
+  const [tool, setTool] = useState("QuestEditor");
 
   useEffect(() => {
-    if (tool === 'QuestEditor') {
-      nav('/');
+    if (tool === "QuestEditor") {
+      nav("/");
     } else {
-      nav('/questlist-load');
+      nav("/questlist-load");
     }
   }, [tool]);
 
-  const groups = useMemo<NavbarGroup[]>(
-    () => {
-      if (tool === 'QuestEditor') return [
+  const groups = useMemo<NavbarGroup[]>(() => {
+    if (tool === "QuestEditor")
+      return [
         {
           name: "File",
           options: [
@@ -83,8 +84,8 @@ export function Layout() {
               icon: BsUpload,
               isSubmit: true,
               disabled: !isLoadedFile,
-              uri: 'export-quest-info'
-            }
+              uri: "export-quest-info",
+            },
           ],
         },
         {
@@ -130,13 +131,13 @@ export function Layout() {
               name: "Rewards",
               icon: BsFillAwardFill,
               disabled: !isLoadedFile,
-              uri: "/rewards"
+              uri: "/rewards",
             },
             {
               name: "Flags",
               icon: IoMdFlag,
               disabled: !isLoadedFile,
-              uri: "/flags"
+              uri: "/flags",
             },
             {
               name: "Gathering",
@@ -157,7 +158,7 @@ export function Layout() {
               name: "Fishing",
               icon: GiFishingLure,
               disabled: !isLoadedFile || true,
-            }
+            },
           ],
         },
         {
@@ -167,7 +168,7 @@ export function Layout() {
               name: "ReFrontier",
               icon: FiRefreshCw,
               disabled: false,
-              onClick: reFrontier
+              onClick: reFrontier,
             },
             {
               name: "Map Position",
@@ -191,17 +192,23 @@ export function Layout() {
         },
       ];
 
-      if (tool === 'QuestlistEditor') return [
+    if (tool === "QuestlistEditor")
+      return [
         {
           name: "File",
           options: [
-            { name: "Load Questlist", icon: BsUpload, disabled: false, uri: "/questlist-load" },
+            {
+              name: "Load Questlist",
+              icon: BsUpload,
+              disabled: false,
+              uri: "/questlist-load",
+            },
             {
               name: "Save Questlist",
               icon: BsSave,
               isSubmit: false,
               disabled: !isLoadedQuestlists,
-              onClick: questlistSubmit
+              onClick: questlistSubmit,
             },
             {
               name: "Import Questlist",
@@ -209,8 +216,8 @@ export function Layout() {
               isSubmit: false,
               disabled: false,
               onClick: importQuestlists,
-              hide: !config
-            }
+              hide: !config,
+            },
           ],
         },
         {
@@ -221,54 +228,72 @@ export function Layout() {
               icon: BsInfoCircle,
               disabled: !isLoadedQuestlists,
               uri: "/questlist",
-            }
-          ]
-        }
+            },
+          ],
+        },
       ];
 
-      return [];
-    },
-    [isLoadedFile, handleSaveQuest, questlistSubmit, tool, isLoadedQuestlists]
-  );
+    return [];
+  }, [
+    isLoadedFile,
+    handleSaveQuest,
+    questlistSubmit,
+    tool,
+    isLoadedQuestlists,
+  ]);
 
   const route = useMemo(
     () =>
-      groups.reduce<null | string>(
-        (acc, group) => {
-          if (acc) return acc;
-          const option = group.options.find((option) => option.uri === location.pathname);
-          return option?.name || null;
-        },
-        null
-      ) ?? "Unknown",
+      groups.reduce<null | string>((acc, group) => {
+        if (acc) return acc;
+        const option = group.options.find(
+          (option) => option.uri === location.pathname
+        );
+        return option?.name || null;
+      }, null) ?? "Unknown",
     [location.pathname, groups]
   );
 
-  const tools = useMemo(() => ([
-    { value: 'QuestEditor', label: 'QuestEditor' },
-    { value: 'QuestlistEditor', label: 'QuestlistEditor' },
-  ]), []);
+  const tools = useMemo(
+    () => [
+      { value: "QuestEditor", label: "QuestEditor" },
+      { value: "QuestlistEditor", label: "QuestlistEditor" },
+    ],
+    []
+  );
 
-  const seletedTool = useMemo(() => tools.find(v => v.value === tool), [tools, tool]);
+  const seletedTool = useMemo(
+    () => tools.find((v) => v.value === tool),
+    [tools, tool]
+  );
 
   return (
     <SharedLayout>
       <LayoutNavbar>
-        <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Tool</h4>
-        <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
+        <h4 className="px-3 font-semibold text-gray-600 dark:text-white">
+          Tool
+        </h4>
+        <Select
+          options={tools}
+          className="w-full m-0 p-4"
+          value={seletedTool}
+          onChange={(item) => setTool(item?.value as string)}
+        />
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
-            {group.options.filter(v => !v.hide).map((option) =>
-              option.uri && !option.disabled ? (
-                <Link to={option.uri} key={option.name}>
-                  <LayoutNavbarItem {...option} />
-                </Link>
-              ) : (option.onClick || option.isSubmit) ? (
-                <LayoutNavbarItemButton {...option} key={option.name} />
-              ) : (
-                <LayoutNavbarItem {...option} key={option.name} />
-              )
-            )}
+            {group.options
+              .filter((v) => !v.hide)
+              .map((option) =>
+                option.uri && !option.disabled ? (
+                  <Link to={option.uri} key={option.name}>
+                    <LayoutNavbarItem {...option} />
+                  </Link>
+                ) : option.onClick || option.isSubmit ? (
+                  <LayoutNavbarItemButton {...option} key={option.name} />
+                ) : (
+                  <LayoutNavbarItem {...option} key={option.name} />
+                )
+              )}
           </LayoutNavbarGroup>
         ))}
       </LayoutNavbar>
