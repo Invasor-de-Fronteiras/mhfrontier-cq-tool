@@ -36,7 +36,7 @@ The quest’s file name is not random, it is composed of the quest ID, in-game d
 
 <img src="./screenshots/quest-id.png" alt="Quest" width="300" />
 
-It's important to understand this so you can get the quests on your server and on your quest list.
+It's important to understand this so you can get the quests on your server and your quest list.
 
 ### New Quest
 
@@ -48,7 +48,7 @@ Nice! Now do the quest changes as your desire and save it.
 
 ### Quest List Manager
 
-To show quest in game it's necessary to add quest in questlist, for its you need to change the selected tool **QuestEditor** to **QuestlistEditor**.
+To show quest in game it's necessary to add quest in questlist, for it's you need to change the selected tool **QuestEditor** to **QuestlistEditor**.
 
 ![SelectTool](./screenshots/select_tool.png)
 
