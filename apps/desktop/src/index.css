@@ -3,5 +3,17 @@
 @tailwind utilities;
 
 body {
-    overflow: hidden;
+  overflow: hidden;
+}
+
+.scrollbar::-webkit-scrollbar {
+  @apply w-1; /* width of the entire scrollbar */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent; /* color of the tracking area */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-emerald-500;
 }

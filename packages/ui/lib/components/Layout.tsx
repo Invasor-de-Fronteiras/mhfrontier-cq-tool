@@ -181,7 +181,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
           {isOpen ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
         </div>
       </div>
-      <ul className="w-full overflow-y-auto pt-3">{children}</ul>
+      <ul className="w-full scrollbar overflow-y-auto pt-3">{children}</ul>
     </nav>
   );
 }
@@ -215,7 +215,7 @@ export function LayoutBody({
           {theme === "dark" ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
         </div>
       </div>
-      <div className="px-3 pt-3 pb-20 h-full max-h-screen overflow-auto">
+      <div className="px-3 pt-3 pb-20 h-full max-h-screen overflow-auto scrollbar">
         {children}
       </div>
     </div>
