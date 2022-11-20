@@ -101,7 +101,7 @@ export function LayoutNavbarItemButton({
   return (
     <li key={name}>
       <button
-        type={isSubmit ? 'submit' : 'button'}
+        type={isSubmit ? "submit" : "button"}
         className={classnames(
           "font-semibold flex flex-row items-center p-2 m-2 rounded gap-3",
           {
@@ -168,7 +168,7 @@ export function LayoutNavbar({ children }: { children: React.ReactNode }) {
         }
       )}
     >
-      <div className="border-b dark:border-slate-800 min-h-14 h-14 flex items-center justify-center text-center p-1">
+      <div className="border-b dark:border-slate-800 h-full max-h-14 px-4 flex items-center justify-center text-center">
         {isOpen && (
           <h2 className="font-semibold flex-1 text-center dark:text-white">
             MHFrontier CQ Editor ({VERSION})
@@ -198,7 +198,7 @@ export function LayoutBody({
 
   return (
     <div className="flex-1 overflow-x-auto border-t flex flex-col h-screen rounded-y rounded-r dark:border-slate-800">
-      <div className="border-b dark:border-slate-800 h-14 flex items-center  px-4">
+      <div className="border-b dark:border-slate-800 h-full max-h-14 flex items-center  px-4">
         <div
           className="p-2 border-2 rounded hover:border-emerald-500 hover:text-emerald-500 cursor-pointer md:hidden "
           onClick={onToggle}
