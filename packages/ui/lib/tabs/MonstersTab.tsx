@@ -24,6 +24,9 @@ export function MonstersTab() {
       ...fields,
       { 
         monster_id: 0,
+        unk0: 0,
+        unk1: 0,
+        unk2: 0,
         spawn_amount: 1,
         spawn_stage: 0,
         unk10: 0,
