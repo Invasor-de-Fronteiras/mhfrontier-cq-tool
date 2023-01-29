@@ -122,6 +122,9 @@ export function ApplyTemplateTab() {
             for (let i=0; i < areaIndex; i+=1) {
                 monsters.push({
                     monster_id: 22,
+                    unk0: 0,
+                    unk1: 0,
+                    unk2: 0,
                     spawn_amount: 1,
                     spawn_stage: v.id,
                     unk4: 0,
@@ -146,8 +149,7 @@ export function ApplyTemplateTab() {
 
   const addMassiveSmallMonsters = () => {
     let toggle = 0;
-    let sizea = 20;
-    let sizeb = 0;
+    let size = 0;
     let y = 0;
 
     mapZones.map((mapZone, mapZoneIndex) => {
@@ -159,11 +161,11 @@ export function ApplyTemplateTab() {
                 for (let i=0; i < 20; i+=1) {
                     monsters.push({
                         monster_id: 7,
-                        skip0: [sizea, sizeb, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        skip0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         skip1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         spawn_amount: 1,
                         spawn_toggle: toggle,
-                        size: 0,
+                        size: size,
                         unk0: 0,
                         unk1: 0,
                         unk2: 0,
@@ -172,12 +174,8 @@ export function ApplyTemplateTab() {
                         z_position: 9000 - (i * 75),
                     });
                     toggle += 1;
-                    sizea += 20;
+                    size += 20;
                     y += 200;
-                    if (sizea > 255) {
-                        sizea = 0;
-                        sizeb += 1;
-                    }
                 }
             }
 

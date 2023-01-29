@@ -1,7 +1,7 @@
 import { SelectOption } from "../components/Select";
 
 export const monsters = [
-  "UNK",
+  "None",
   "Rathian",
   "Fatalis",
   "Kelbi",

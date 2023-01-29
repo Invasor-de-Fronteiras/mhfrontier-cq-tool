@@ -11,6 +11,9 @@ export interface LargeMonsterPointers {
 
 export interface LargeMonsterSpawn {
   monster_id: number;
+  unk0: number;
+  unk1: number;
+  unk2: number;
   spawn_amount: number;
   spawn_stage: number;
 

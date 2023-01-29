@@ -197,7 +197,10 @@ pub struct LargeMonsterPointers {
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
 pub struct LargeMonsterSpawn {
-    pub monster_id: u32,
+    pub monster_id: u8,
+    pub unk0: u8,
+    pub unk1: u8,
+    pub unk2: u8,
     pub spawn_amount: u32,
     pub spawn_stage: u32,
 

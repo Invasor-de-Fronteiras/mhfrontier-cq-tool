@@ -59,7 +59,7 @@ export function RewardsTab() {
     <div className="flex flex-row flex-wrap gap-2">
       <GroupCard title="Rewards Focus">
         <SelectField
-          name="quest_type_flags.rewards_focus.monster_id"
+          name="quest_type_flags.rewards_focus.monster_icon1"
           label="Monster"
           options={monster_options}
           className="mt-2 px-2"

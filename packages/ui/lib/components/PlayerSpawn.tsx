@@ -43,7 +43,14 @@ export function PlayerSpawn() {
                 control={form.control}
                 name={`loaded_stages.${i}.stage_id`}
             />)}
-
+            <SelectField
+                label={`Player base camp return`}
+                options={stages}
+                isClearable
+                onClearValue={0}
+                control={form.control}
+                name={`map_info.return_bc_id`}
+            />
         </div>
     );
 }

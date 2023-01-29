@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { Config, DBConfig, QuestInfo } from "ui";
+import { Config, DBConfig, QuestFile, QuestInfo } from "ui";
 
 interface ImportQuestlistPayload {
     db_config: DBConfig;
@@ -88,3 +88,45 @@ export const updateQuest = async (payload: UpdateQuestPayload): Promise<void> =>
         throw error;
     }
 }
+
+export const refrontier = async (filepath: string): Promise<string> => {
+    const response: string = await invoke("re_frontier", {
+        event: JSON.stringify({
+            filepath,
+            re_frontier_path: "./ReFrontier/ReFrontier.exe",
+        })
+    });
+    
+    try {
+        if (!response) {
+            throw Error("No response!");
+        }
+
+        const result = JSON.parse(response) as { message: string, error?: string };
+
+        if (result.error) {
+            throw Error(`Failed to execute ReFrontier: ${result.error}`);
+        }
+
+        return result.message;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const readQuest = async (path: string): Promise<QuestFile> => {
+    try {
+      const response: string = await invoke("read_quest_file", {
+        event: path,
+      });
+
+      const quest = JSON.parse(response);
+      if (quest && quest.error) {
+        throw Error(`Failed to read file: ${quest.error}`);
+      }
+
+      return quest as QuestFile;
+    } catch (error) {
+    throw error;
+    }
+};

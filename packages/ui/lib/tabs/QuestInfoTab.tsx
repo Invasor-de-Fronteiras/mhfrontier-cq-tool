@@ -4,7 +4,7 @@ import { InputField } from "../components/Input";
 import { ObjectiveCard } from "../components/Objective";
 import { PlayerSpawn } from "../components/PlayerSpawn";
 import { SelectField } from "../components/Select";
-import { locale_flags } from "../utils";
+import { locale_flags, monster_options } from "../utils";
 import { item_options } from "../utils/items";
 import { requirements } from "../utils/requirements";
 
@@ -89,6 +89,43 @@ export function QuestInfoTab() {
       </GroupCard>
       <GroupCard title="Player Spawn">
         <PlayerSpawn />
+      </GroupCard>
+      <GroupCard title="Monster Icons (Only for Diva Defense)">
+        <SelectField
+          name="quest_type_flags.rewards_focus.monster_icon1"
+          label="Monster"
+          options={monster_options}
+          className="mt-2 px-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <SelectField
+          name="quest_type_flags.rewards_focus.monster_icon2"
+          label="Monster"
+          options={monster_options}
+          className="mt-2 px-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <SelectField
+          name="quest_type_flags.rewards_focus.monster_icon3"
+          label="Monster"
+          options={monster_options}
+          className="mt-2 px-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <SelectField
+          name="quest_type_flags.rewards_focus.monster_icon4"
+          label="Monster"
+          options={monster_options}
+          className="mt-2 px-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
+        <SelectField
+          name="quest_type_flags.rewards_focus.monster_icon5"
+          label="Monster"
+          options={monster_options}
+          className="mt-2 px-2"
+          filterOption={createFilter({ ignoreAccents: false })}
+        />
       </GroupCard>
       <GroupCard title="Requirements">
         <SelectField

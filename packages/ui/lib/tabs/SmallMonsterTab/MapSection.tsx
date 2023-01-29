@@ -15,9 +15,10 @@ interface MapSectionProps {
   mapZoneIndex: number;
   mapSectionIndex: number;
   onSelectSmallMonster: (value: SmallMonsterIndex) => void;
+  onRemoveSection: (zone: number, section: number) => void;
 }
 
-export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster }: MapSectionProps) {
+export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster, onRemoveSection }: MapSectionProps) {
   const { form } = useEditor();
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
 
@@ -36,11 +37,11 @@ export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster
       ...smallMonsters,
       { 
         monster_id: 0,
-        skip0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        skip0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         skip1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         spawn_amount: 1,
         spawn_toggle: 0,
-        size: 0,
+        size: 100,
         unk0: 0,
         unk1: 0,
         unk2: 0,
@@ -72,12 +73,38 @@ export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster
     [mapId, mapSection]
   );
 
+  const stages = useMemo(
+    () => {
+        if (!mapId) return [];
+        const map = findMap(mapId);
+        if (!map) return [];
+
+        return map.stages.map((v) => ({
+            value: v.id,
+            label: v.areaNumber,
+        }));
+    },
+    [mapId]
+  );
 
   return (
-    <GroupCard title={stage || 'Unknow'}>
+    <GroupCard title={stage || 'Unknow'} className="relative mb-4">
+      <div className="mt-5 mr-4 mb-2 flex w-full justify-end items-center absolute right-0 top-0">
+        <SelectField
+          label=""
+          options={stages}
+          isClearable
+          onClearValue={0}
+          control={form.control}
+          name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.header.loaded_stage`}
+        />
+        <ActionButton onClick={() => onRemoveSection(mapZoneIndex, mapSectionIndex)}>
+          <MdDelete size={16} />
+        </ActionButton>
+      </div>
       <table
         aria-label="Quest monsters"
-        className="shadow-sm  w-full text-sm text-left"
+        className="shadow-sm w-full text-sm text-left mt-6"
       >
         <caption>click on which monster you want to edit</caption>
         <thead className="text-xs uppercase">
