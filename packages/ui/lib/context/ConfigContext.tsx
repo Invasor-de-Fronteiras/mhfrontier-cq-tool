@@ -17,7 +17,7 @@ export interface Config {
 
 export interface ConfigState {
     config?: Config | null;
-    dbSelected?: DBConfig;
+    dbSelected?: DBConfig | null;
 }
 
 interface ConfigContextProps extends ConfigState {
@@ -36,3 +36,9 @@ export function ConfigContextProvider({
 }
 
 export const useConfig = () => useContext(context);
+
+export const useDatabaseSelected = (): DBConfig | null => {
+  const { dbSelected } = useConfig();
+
+  return dbSelected || null;
+}

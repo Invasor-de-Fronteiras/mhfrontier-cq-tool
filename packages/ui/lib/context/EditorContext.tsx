@@ -12,9 +12,9 @@ interface EditorContextState {
   };
   handleSaveQuest: (data: QuestFile) => void;
   handleExportQuestInfo: (data: QuestInfo) => void;
-  handleUpdateQuest: (data: QuestInfo) => void;
+  insertOrUpdateQuest: (data: QuestFile) => Promise<void>;
   reFrontier?: () => void;
-  loadQuest: () => void;
+  loadQuest: (filepath?: string) => Promise<void>;
   form: UseFormReturn<QuestFile>;
   isLoadedFile: boolean;
 }
@@ -38,8 +38,13 @@ export function EditorContextProvider({
     form.reset(props.data);
   }, [props.data]);
 
+  const insertOrUpdateQuest = async () => {
+    const values = form.getValues();
+    props.insertOrUpdateQuest(values);
+  }
+
   return (
-    <context.Provider value={{ form, ...props }}>{children}</context.Provider>
+    <context.Provider value={{ form, ...props, insertOrUpdateQuest }}>{children}</context.Provider>
   );
 }
 

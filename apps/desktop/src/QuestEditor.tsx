@@ -1,82 +1,40 @@
 import { useState } from "react";
 
-import { EditorContextProvider, QuestFile, QuestInfo } from "ui";
+import { EditorContextProvider, getPeriotFromQuestTypeFlags, getSeasonFromQuestTypeFlags, QuestFile, QuestInfo, useDatabaseSelected } from "ui";
 import { invoke } from "@tauri-apps/api";
 import { open, save } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
-import { MapZones } from "ui/lib/utils/quest-file/mapZones";
-import { exportQuestInfo, getConfig, updateQuest } from "./events";
-
-interface SaveQuestPayload {
-  filepath: string;
-  quest: QuestFile;
-}
+import { exportQuestInfo } from "./events";
+import * as db from './events/db';
+import * as questEvents from './events/quest';
 
 interface QuestEditorProps {
     children: React.ReactNode;
 }
 
-const prepareMapZones = (mapZones: MapZones) => {
-  mapZones.map_zones.forEach(mapZone => {
-    mapZone.map_sections.forEach(mapSection => {
-      const monsterIds = mapSection.small_monster_spawns.reduce<Record<number, boolean>>((acc, cur) => {
-        acc[cur.monster_id] = true;
-        return acc;
-      }, {});
-
-      mapSection.monster_ids = Object.keys(monsterIds).map(v => parseInt(v, 10));
-    })
-  });
-
-  return mapZones;
-}
-
 function QuestEditor({ children }: QuestEditorProps) {
   const [questPath, setQuestPath] = useState<string | null>(null);
   const [file, setFile] = useState<QuestFile | undefined>(undefined);
+  const dbSelected = useDatabaseSelected();
 
   const handleChangeSave = async (data: QuestFile) => {
     if (!questPath || !data) return;
 
-    const quest: QuestFile = {
-      header: data.header,
-      gen_quest_prop: data.gen_quest_prop,
-      quest_type_flags: data.quest_type_flags,
-      map_info: data.map_info,
-      map_zones: prepareMapZones(data.map_zones),
-      large_monster_pointers: data.large_monster_pointers,
-      large_monster_spawns: data.large_monster_spawns,
-      large_monster_ids: data.large_monster_spawns.map((v) =>
-        v.monster_id >= 255 ? 0 : v.monster_id
-      ),
-      rewards: data.rewards,
-      supply_items: data.supply_items,
-      loaded_stages: data.loaded_stages,
-      strings: data.strings,
-      unk_data: data.unk_data
-    };
-    console.log('save: ', quest);
+    try {
+      await questEvents.saveQuest({
+        filepath: questPath,
+        quest: data
+      });
 
-    const payload: SaveQuestPayload = { filepath: questPath, quest };
-
-    const response: string = await invoke("save_quest_file", {
-      event: JSON.stringify(payload),
-    });
-    console.log('response: ', response);
-
-    const resData = JSON.parse(response);
-    if (resData?.error) {
-      console.error("error: ", resData.error);
-      toast.error(`Failed to save file: ${resData.error}`);
-      return;
+      toast.success('Successfully saved quest file!');
+    } catch(err) {
+      toast.error(`Failed to save file: ${err}`);
     }
-
-    toast.success('Successfully saved quest file!');
   };
 
-  const onReadFile = async () => {
+  const onReadFile = async (filepath?: string) => {
     try {
-      const path = await open({ multiple: false });
+      const path = filepath || await open({ multiple: false });
       if (!path) return;
 
       const response: string = await invoke("read_quest_file", {
@@ -95,7 +53,6 @@ function QuestEditor({ children }: QuestEditorProps) {
       setFile(quest as QuestFile);
       setQuestPath(path as string);
       toast.success('Quest file read successfully!');
-      // setResult(quest);
     } catch (error) {
       console.error("error ", error);
     }
@@ -140,20 +97,51 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   }
 
-  const handleUpdateQuest = async (data: QuestInfo) => {
-    try {
-      const config = await getConfig();
-      if (
-        !config ||
-        (!config.dbs || config.dbs.length === 0)
-      ) {
-        return;
-      }
+  const insertOrUpdateQuest = async (data: QuestFile) => {
+    if (!questPath || !data) return;
+    if (!dbSelected) {
+      return;
+    }
 
-      await updateQuest({
-        db_config: config.dbs[0],
+    try {
+      await questEvents.saveQuest({
+        filepath: questPath,
         quest: data
       });
+
+      const period = getPeriotFromQuestTypeFlags(data.quest_type_flags);
+      const season = getSeasonFromQuestTypeFlags(data.quest_type_flags);
+
+      await db.insertOrUpdateQuest({
+        db_config: dbSelected,
+        quest_id: data.quest_type_flags.main_quest_prop.quest_id,
+        period,
+        season,
+        quest_filepath: questPath
+      });
+
+      const questlist = await db.getQuestInfo({
+        db_config: dbSelected,
+        quest_id: data.quest_type_flags.main_quest_prop.quest_id,
+        period,
+        season
+      });
+
+      if (questlist) {
+        await db.insertOrUpdateQuestlist({
+          db_config: dbSelected,
+          options: {
+            enable: questlist.enable,
+            only_dev: questlist.only_dev,
+            position: questlist.position
+          },
+          quest_info: {
+            ...questlist.quest_info,
+            quest_type_flags: data.quest_type_flags,
+            strings: data.strings
+          }
+        });
+      }
 
       toast.success('Quest updated successfully!');
     } catch (error) {
@@ -161,24 +149,23 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   }
 
-
   return (
     <EditorContextProvider
       data={file}
       handleSaveQuest={handleChangeSave}
       loadQuest={onReadFile}
       handleExportQuestInfo={handleExportQuestInfo}
-      handleUpdateQuest={handleUpdateQuest}
       reFrontier={reFrontier}
       isLoadedFile={!!file}
+      insertOrUpdateQuest={insertOrUpdateQuest}
       uploadFile={{
         dragSupport: false,
         isDragActive: false,
         uploadFileInputProps: () => ({
-          onClick: onReadFile,
+          onClick: () => onReadFile(),
         }),
         uploadFileContainerProps: () => ({
-          onClick: onReadFile,
+          onClick: () => onReadFile(),
         }),
       }}
     >

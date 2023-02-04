@@ -5,7 +5,6 @@ import {
   BsInfoCircle,
   BsMinecartLoaded,
   BsSave,
-  BsArrowUp,
   BsUmbrella,
   BsUpload,
   BsQuestion,
@@ -28,9 +27,9 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
-  useConfig
+  useTool
 } from "ui";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { IconType } from "react-icons";
 
 interface NavbarItem {
@@ -53,9 +52,8 @@ export function Layout() {
   const location = useLocation();
   const nav = useNavigate();
   const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
-  const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
-  const { config } = useConfig();
-  const [tool, setTool] = useState('QuestEditor');
+  const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
+  const { tool, setTool } = useTool();
 
   useEffect(() => {
     if (tool === 'QuestEditor') {
@@ -202,14 +200,6 @@ export function Layout() {
               isSubmit: false,
               disabled: !isLoadedQuestlists,
               onClick: questlistSubmit
-            },
-            {
-              name: "Import Questlist",
-              icon: BsArrowUp,
-              isSubmit: false,
-              disabled: false,
-              onClick: importQuestlists,
-              hide: !config
             }
           ],
         },
@@ -221,7 +211,33 @@ export function Layout() {
               icon: BsInfoCircle,
               disabled: !isLoadedQuestlists,
               uri: "/questlist",
-            }
+            },
+            {
+              name: "Questlist Remote",
+              icon: BsInfoCircle,
+              disabled: false,
+              uri: "/questlist/remote",
+            },
+          ]
+        }
+      ];
+
+      if (tool === 'RemoteEditor') return [
+        {
+          name: "Remote Editor",
+          options: [
+            {
+              name: "Quests",
+              icon: BsInfoCircle,
+              disabled: false,
+              uri: "/remote/quests",
+            },
+            {
+              name: "Questlist",
+              icon: BsInfoCircle,
+              disabled: false,
+              uri: "/remote/questlist",
+            },
           ]
         }
       ];
@@ -247,6 +263,7 @@ export function Layout() {
   const tools = useMemo(() => ([
     { value: 'QuestEditor', label: 'QuestEditor' },
     { value: 'QuestlistEditor', label: 'QuestlistEditor' },
+    { value: 'RemoteEditor', label: 'RemoteEditor' },
   ]), []);
 
   const seletedTool = useMemo(() => tools.find(v => v.value === tool), [tools, tool]);

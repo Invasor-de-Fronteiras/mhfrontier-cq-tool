@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
-import { useQuestlistEditor } from "../../context/QuestlistEditorContext";
-import { getQuestCategory, getQuestMark } from "../../utils";
+import { useQuestlistEditor } from "../../../context/QuestlistEditorContext";
+import { getQuestCategory, getQuestMark } from "../../../utils";
 import { QuestInfoRow, QuestlistRow } from "./QuestlistRow";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {

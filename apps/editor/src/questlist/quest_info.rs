@@ -1,6 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::file::cursor::WriteCursor;
 use crate::file::reader::FileReader;
 use crate::file::writer::FileWriter;
 use crate::quest::{
@@ -12,7 +11,6 @@ use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
 use super::questlist_header::QUEST_UNK_END;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
 pub struct QuestInfo {
     pub header: QuestInfoHeader,
     pub quest_type_flags: QuestTypeFlags,
@@ -32,6 +30,65 @@ impl QuestInfo {
         reader.reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
+            &mut reader,
+            quest_type_flags.main_quest_prop.quest_strings_ptr,
+            None,
+        )?;
+
+        Ok(QuestInfo {
+            header: QuestInfoHeader::new(),
+            quest_type_flags,
+            unk_data,
+            strings,
+            unk0_len: 0x12,
+            unk0: QUEST_UNK_END.to_vec(),
+        })
+    }
+
+    pub fn from_buffer(buffer: Vec<u8>) -> Result<QuestInfo> {
+        use crate::file::read_cursor::ReadCursor;
+
+        let mut reader: Cursor<Vec<u8>> = Cursor::new(buffer);
+        let current = reader.current_position()?;
+        reader.seek_start(current + 6)?;
+        let header = reader.read_struct::<QuestInfoHeader>()?;
+        let data_ptr = reader.current_position()? as u32;
+
+        let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
+        let mut unk_data: Vec<u8> = vec![0; 112];
+        reader.read_exact(&mut unk_data)?;
+
+        let strings = QuestStrings::from_cursor(
+            &mut reader,
+            quest_type_flags.main_quest_prop.quest_strings_ptr,
+            Some(data_ptr),
+        )?;
+
+        reader.seek_start(data_ptr as u64 + header.get_length() as u64)?;
+        let unk0_len = reader.read_u8()?;
+        let unk0 = reader.read_custom_buffer(unk0_len as u64)?;
+
+        Ok(QuestInfo {
+            header,
+            quest_type_flags,
+            unk_data,
+            strings,
+            unk0_len,
+            unk0,
+        })
+    }
+
+    pub fn from_quest_buffer(buffer: Vec<u8>) -> Result<QuestInfo> {
+        use crate::file::read_cursor::ReadCursor;
+
+        let mut reader: Cursor<Vec<u8>> = Cursor::new(buffer);
+        reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
+
+        let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
+        let mut unk_data: Vec<u8> = vec![0; 112];
+        reader.read_exact(&mut unk_data)?;
+
+        let strings = QuestStrings::from_cursor(
             &mut reader,
             quest_type_flags.main_quest_prop.quest_strings_ptr,
             None,
@@ -77,34 +134,9 @@ impl QuestInfo {
         })
     }
 
-    pub fn from_questlist_old(reader: &mut FileReader) -> Result<QuestInfo> {
-        let header_old = reader.read_struct::<QuestInfoHeaderOld>()?;
-        let mut header = QuestInfoHeader::from_old(header_old);
-        let data_ptr = reader.current_position()? as u32;
-
-        let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
-        let mut unk_data: Vec<u8> = vec![0; 112];
-        reader.reader.read_exact(&mut unk_data)?;
-
-        let strings = QuestStrings::from_reader(
-            reader,
-            quest_type_flags.main_quest_prop.quest_strings_ptr,
-            Some(data_ptr),
-        )?;
-
-        reader.seek_start(data_ptr as u64 + header.get_length() as u64)?;
-
-        Ok(QuestInfo {
-            header,
-            quest_type_flags,
-            unk_data,
-            strings,
-            unk0_len: 0x12,
-            unk0: QUEST_UNK_END.to_vec(),
-        })
-    }
-
     pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
+        use crate::file::write_cursor::WriteCursor;
+
         let mut buffer: Cursor<Vec<u8>> = Cursor::new(vec![]);
 
         self.quest_type_flags.main_quest_prop.quest_strings_ptr = 0x140;

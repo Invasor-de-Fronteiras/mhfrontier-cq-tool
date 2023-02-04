@@ -7,6 +7,7 @@ import { QuestFile } from "../utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  inputClassName?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,6 +25,7 @@ export function Input({
   placeholder,
   type,
   className,
+  inputClassName,
   ...props
 }: InputProps) {
   return (
@@ -34,7 +36,7 @@ export function Input({
         </span>
       )}
       <input
-        className="appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 dark:text-black leading-tight focus:border-emerald-500 outline-none"
+        className={classNames("appearance-none w-full border-gray-200 border-2 rounded py-3 px-4 dark:text-black leading-tight focus:border-emerald-500 outline-none", inputClassName)}
         type={type}
         placeholder={placeholder}
         {...props}

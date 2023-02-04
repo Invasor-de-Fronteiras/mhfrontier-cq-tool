@@ -10,6 +10,7 @@ import { MonstersTab } from "./tabs/MonstersTab";
 import { QuestInfoTab } from "./tabs/QuestInfoTab";
 import { LoadQuestlistTab } from "./tabs/questlist/LoadQuestlistTab";
 import { QuestlistTab } from "./tabs/questlist/QuestlistTab";
+import { RemoteQuestTab } from "./tabs/remote/quest/RemoteQuestTab";
 import { RewardsTab } from "./tabs/RewardsTab";
 import { SmallMonsterTab } from "./tabs/SmallMonsterTab";
 import { QuestStringTab } from "./tabs/StringsTab";
@@ -36,6 +37,8 @@ export function Ui() {
         <Route path="/supply-items" element={<SupplyItemTab />} />
         <Route path="/questlist-load" element={<LoadQuestlistTab />} />
         <Route path="/questlist" element={<QuestlistTab />} />
+        <Route path="/remote/quests" element={<RemoteQuestTab />} />
+        {/* <Route path="/remote/questlist" element={<RemoteQuestlistTab />} /> */}
       </Route>
     </Routes>
   );
