@@ -60,7 +60,6 @@ export const QuestlistRow = ({ quest, onEdit, onChangePosition, onDelete }: Ques
                     <BsFillSkipBackwardFill size={16} />
                 </ActionButton>
                 <ActionButton onClick={() => onChangePosition(quest.index, quest.index + 1)}>
-    
                     <BsFillSkipForwardFill size={16} />
                 </ActionButton>
                 <ActionButton onClick={() => onChangePosition(quest.index, -1)}>

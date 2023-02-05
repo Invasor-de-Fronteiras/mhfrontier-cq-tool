@@ -190,7 +190,7 @@ pub async fn get_questlist_info(event: String) -> CustomResult<Option<QuestlistD
             title: questlist.title,
             position: questlist.position,
             only_dev: questlist.only_dev,
-            quest_info: quest_info 
+            quest_info: quest_info
         }));
     }
 

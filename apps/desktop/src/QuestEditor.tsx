@@ -32,10 +32,10 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   };
 
-  const onReadFile = async (filepath?: string) => {
+  const onReadFile = async (filepath?: string): Promise<boolean> => {
     try {
       const path = filepath || await open({ multiple: false });
-      if (!path) return;
+      if (!path) return false;
 
       const response: string = await invoke("read_quest_file", {
         event: path,
@@ -46,16 +46,20 @@ function QuestEditor({ children }: QuestEditorProps) {
         toast.error(`Failed to read file: ${quest.error}`);
         // setError(quest.error);
         console.error("response ", response);
-        return;
+        return false;
       }
       console.log('quest: ', quest);
 
       setFile(quest as QuestFile);
       setQuestPath(path as string);
       toast.success('Quest file read successfully!');
+      return true;
     } catch (error) {
       console.error("error ", error);
+      toast.error(`Failed to read quest: ${error}`);
     }
+
+    return false;
   };
 
   const reFrontier = async () => {

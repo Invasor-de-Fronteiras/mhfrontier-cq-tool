@@ -11,6 +11,7 @@ use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
 use super::questlist_header::QUEST_UNK_END;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[repr(C)]
 pub struct QuestInfo {
     pub header: QuestInfoHeader,
     pub quest_type_flags: QuestTypeFlags,

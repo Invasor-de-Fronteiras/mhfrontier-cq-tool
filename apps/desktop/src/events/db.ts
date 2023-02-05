@@ -85,7 +85,7 @@ export const getQuestInfo = async (payload: GetQuestInfoPayload): Promise<Questl
     }
 
     const result = JSON.parse(response);
-    if ((result as Result).error) {
+    if (result && (result as Result).error) {
         throw Error(result.error);
     }
 
@@ -102,7 +102,7 @@ export const getQuestInfoFromQuest = async (payload: GetQuestInfoPayload): Promi
     }
 
     const result = JSON.parse(response);
-    if ((result as Result).error) {
+    if (result && (result as Result).error) {
         throw Error(result.error);
     }
 

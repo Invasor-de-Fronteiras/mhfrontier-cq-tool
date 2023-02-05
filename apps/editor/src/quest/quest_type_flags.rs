@@ -63,6 +63,8 @@ pub struct MainQuestProp {
     pub join_rank_max: u16,
     pub post_rank_min: u16,
     pub post_rank_max: u16,
+    pub unk12: u8,
+    pub unk13: u8
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

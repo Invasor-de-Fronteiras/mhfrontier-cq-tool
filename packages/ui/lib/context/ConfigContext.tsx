@@ -18,13 +18,14 @@ export interface Config {
 export interface ConfigState {
     config?: Config | null;
     dbSelected?: DBConfig | null;
+    setDBSelected: (db: DBConfig | null) => void;
 }
 
 interface ConfigContextProps extends ConfigState {
   children: React.ReactNode;
 }
 
-const context = createContext<ConfigState>({});
+const context = createContext<ConfigState>({} as ConfigState);
 
 export function ConfigContextProvider({
   children,

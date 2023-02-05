@@ -61,7 +61,9 @@ export const Pagination: React.FC<PaginationProps> = ({
     className
 }) => {
     const [pageInput, setPageInput] = useState(page);
-    const totalPages = useMemo(() => Math.ceil(total / perPage), [total, perPage]);
+    const totalPages = useMemo(() => {
+        return Math.ceil(total / perPage);
+    }, [total, perPage]);
 
     useEffect(() => {
         setPageInput(page);

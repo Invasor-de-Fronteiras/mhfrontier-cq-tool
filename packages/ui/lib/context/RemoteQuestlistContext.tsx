@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { createContext } from "react";
-import { QuestInfo, QuestlistDB, QuestlistDBOptions, QuestlistDBQueryOptions } from "../utils";
+import { QuestInfo, QuestlistDB, QuestlistDBOptions, QuestlistDBQueryOptions, QuestlistDBWithInfo } from "../utils";
 
 interface RemoteQuestlistContextState {
   getQuestlists: (options: QuestlistDBQueryOptions) => Promise<QuestlistDB[]>;
   countQuestlists: (options: QuestlistDBQueryOptions) => Promise<number>;
+  getQuestInfo: (quest_id: number, period: string, season: number) => Promise<QuestlistDBWithInfo | null>;
   insertOrUpdateQuestlist: (quest_info: QuestInfo, options: QuestlistDBOptions) => Promise<void>;
   importQuestlists: () => Promise<void>;
   updateQuestlistOptions: (quest_id: number, period: string, season: number, options: QuestlistDBOptions) => Promise<void>;

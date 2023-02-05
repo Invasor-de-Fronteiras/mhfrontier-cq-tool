@@ -1,4 +1,4 @@
-import { useDatabaseSelected, RemoteQuestlistContextProvider, QuestlistDBQueryOptions, QuestlistDB, QuestInfo, QuestlistDBOptions } from "ui";
+import { useDatabaseSelected, RemoteQuestlistContextProvider, QuestlistDBQueryOptions, QuestlistDB, QuestInfo, QuestlistDBOptions, QuestlistDBWithInfo } from "ui";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
 import * as db from './events/db';
@@ -75,6 +75,8 @@ function RemoteQuestlist({ children }: RemoteQuestlistProps) {
         quest_info,
         options
       });
+
+      toast.success('Questlist updated successfully!');
     } catch (error) {
       toast.error(`Failed to insert or update questlist: ${error}`);
     }
@@ -98,6 +100,24 @@ function RemoteQuestlist({ children }: RemoteQuestlistProps) {
     }
   }
 
+  const getQuestInfo = async (quest_id: number, period: string, season: number): Promise<QuestlistDBWithInfo | null> => {
+    try {
+      if (!dbSelected) {
+        return null;
+      }
+
+      return db.getQuestInfo({
+        db_config: dbSelected,
+        quest_id,
+        period,
+        season
+      });
+    } catch (error) {
+      toast.error(`Failed to update questlists options: ${error}`);
+    }
+    return null;
+  }
+
   return (
     <RemoteQuestlistContextProvider
       importQuestlists={onImportQuestlists}
@@ -105,6 +125,7 @@ function RemoteQuestlist({ children }: RemoteQuestlistProps) {
       countQuestlists={countQuestlists}
       insertOrUpdateQuestlist={insertOrUpdateQuestlist}
       updateQuestlistOptions={updateQuestlistOptions}
+      getQuestInfo={getQuestInfo}
     >
       {children}
     </RemoteQuestlistContextProvider>

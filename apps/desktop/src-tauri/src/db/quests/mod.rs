@@ -51,7 +51,6 @@ pub async fn count_quests(db: &DB, options: QuestDBQueryOptions) -> Result<u32> 
     if let Some(title) = options.title {
         query.push(" AND title like ");
         query.push_bind(title);
-        query.push("% ");
     }
 
     if let Some(main_objective) = options.main_objective {
@@ -99,7 +98,7 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
             SELECT
                 quest_id, period, season, title, main_objective, sub_a_objective, sub_b_objective, reward_item1, reward_item2, reward_item3
             FROM quests
-            where 1=1
+            WHERE 1=1
         ");
 
     if let Some(quest_id) = options.quest_id {
@@ -120,7 +119,6 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
     if let Some(title) = options.title {
         query.push(" AND title like ");
         query.push_bind(title);
-        query.push("% ");
     }
 
     if let Some(main_objective) = options.main_objective {
@@ -131,13 +129,11 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
     if let Some(sub_a_objective) = options.sub_a_objective {
         query.push(" AND sub_a_objective like ");
         query.push_bind(sub_a_objective);
-        query.push("% ");
     }
 
     if let Some(sub_b_objective) = options.sub_b_objective {
         query.push(" AND sub_b_objective like ");
         query.push_bind(sub_b_objective);
-        query.push("% ");
     }
 
     if let Some(reward_item1) = options.reward_item1 {
@@ -155,15 +151,15 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
         query.push_bind(reward_item3);
     }
 
-    if let Some(per_page) = options.per_page {
-        query.push(" LIMIT ");
-        query.push_bind(per_page as i32);
-    }
+    query.push(" ORDER BY quest_id ASC");
 
-    if let Some(page) = options.page {
-        query.push(" OFFSET ");
-        query.push_bind(page as i32);
-    }
+    let per_page = options.per_page.unwrap_or(15);
+    query.push(" LIMIT ");
+    query.push_bind(per_page as i32);
+
+    let page= options.page.unwrap_or(0);
+    query.push(" OFFSET ");
+    query.push_bind((page * per_page) as i32 );
 
     let quests = query
         .build_query_as::<QuestDB>()

@@ -4,6 +4,7 @@ import { AiOutlineDownload } from "react-icons/ai";
 import { periodToString, QuestDB, seasonToNumber } from "../../../utils";
 import { useRemoteQuest } from "../../../context/RemoteQuestContext";
 import { MdOutlineAdd } from "react-icons/md";
+import { items } from "../../../utils/items";
 
 interface RemoteQuestRowProps {
     quest: QuestDB;
@@ -30,7 +31,7 @@ export const RemoteQuestRow = ({ quest, onAddToQuestlist }: RemoteQuestRowProps)
     const { downloadQuest } = useRemoteQuest();
 
     return <tr
-            className={classNames("hover:bg-emerald-300 cursor-pointer dark:text-white")}
+            className={classNames("hover:bg-gray-700 cursor-pointer dark:text-white")}
         >
             {/* <td className="px-6 py-4"><Checkbox label="" name="" value={quest.enable} /></td> */}
             <td className="px-6 py-4">{quest.quest_id}</td>
@@ -40,9 +41,9 @@ export const RemoteQuestRow = ({ quest, onAddToQuestlist }: RemoteQuestRowProps)
             <td className="px-6 py-4">{quest.main_objective}</td>
             <td className="px-6 py-4">{quest.sub_a_objective}</td>
             <td className="px-6 py-4">{quest.sub_b_objective}</td>
-            <td className="px-6 py-4">{quest.reward_item1}</td>
-            <td className="px-6 py-4">{quest.reward_item2}</td>
-            <td className="px-6 py-4">{quest.reward_item3}</td>
+            <td className="px-6 py-4">{`${quest.reward_item1} - ${items[quest.reward_item1].name_en}`}</td>
+            <td className="px-6 py-4">{items[quest.reward_item2].name_en}</td>
+            <td className="px-6 py-4">{items[quest.reward_item3].name_en}</td>
             <td className="px-6 py-4 flex">
                 <ActionButton onClick={() => downloadQuest(quest.quest_id, periodToString(quest.period), seasonToNumber(quest.season))}>
                     <AiOutlineDownload size={16} />

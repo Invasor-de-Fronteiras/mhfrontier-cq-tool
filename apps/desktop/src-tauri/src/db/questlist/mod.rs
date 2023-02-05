@@ -1,3 +1,4 @@
+use editor::file::writer::FileWriter;
 use editor::questlist::quest_info::QuestInfo;
 use editor::questlist::questlist_file::QuestlistFile;
 use sqlx::QueryBuilder;
@@ -65,7 +66,6 @@ pub async fn count_questlist(db: &DB, options: QuestlistDBQueryOptions) -> Resul
     if let Some(title) = options.title {
         query.push(" AND title like ");
         query.push_bind(title);
-        query.push("% ");
     }
 
     if let Some(category) = options.category {
@@ -99,9 +99,9 @@ pub async fn count_questlist(db: &DB, options: QuestlistDBQueryOptions) -> Resul
 pub async fn get_questlists(db: &DB, options: QuestlistDBQueryOptions) -> Result<Vec<QuestlistDB>> {
     let mut query = QueryBuilder::new("
             SELECT
-                quest_id, period, season, category, title, only_dev, enable, priority
+                quest_id, period, season, category, title, only_dev, enable, position
             FROM questlist
-            where 1=1
+            WHERE 1=1
         ");
 
     if let Some(quest_id) = options.quest_id {
@@ -122,7 +122,6 @@ pub async fn get_questlists(db: &DB, options: QuestlistDBQueryOptions) -> Result
     if let Some(title) = options.title {
         query.push(" AND title like ");
         query.push_bind(title);
-        query.push("% ");
     }
 
     if let Some(category) = options.category {
@@ -145,15 +144,15 @@ pub async fn get_questlists(db: &DB, options: QuestlistDBQueryOptions) -> Result
         query.push_bind(position);
     }
 
-    if let Some(per_page) = options.per_page {
-        query.push(" LIMIT ");
-        query.push_bind(per_page as i32);
-    }
+    query.push(" ORDER BY position, quest_id");
 
-    if let Some(page) = options.page {
-        query.push(" OFFSET ");
-        query.push_bind(page as i32);
-    }
+    let per_page = options.per_page.unwrap_or(15);
+    query.push(" LIMIT ");
+    query.push_bind(per_page as i32);
+
+    let page= options.page.unwrap_or(0);
+    query.push(" OFFSET ");
+    query.push_bind((page * per_page) as i32 );
 
     let quests = query
         .build_query_as::<QuestlistDB>()
@@ -172,7 +171,7 @@ pub async fn get_questlist_bin(
     let quest = sqlx::query_as::<_, QuestlistBinDB>(
         "
             SELECT
-            quest_id, period, season, category, title, only_dev, enable, priority, quest_list_bin
+            quest_id, period, season, category, title, only_dev, enable, position, questlist_bin
             FROM questlist
             WHERE quest_id = $1 AND period = $2 AND season = $3
         ",
@@ -207,8 +206,6 @@ pub async fn questlist_exists(
     .bind(season)
     .fetch_optional(&db.pool)
     .await?;
-
-    println!("questlist_exists: finish");
 
     match result {
         None => Ok(false),
@@ -311,7 +308,7 @@ pub async fn update_questlist(
                 enable = $3,
                 position = $4,
                 only_dev = $5,
-                questlist_bin = $6,
+                questlist_bin = $6
             WHERE quest_id=$7 AND period=$8 AND season=$9;
         ",
     )

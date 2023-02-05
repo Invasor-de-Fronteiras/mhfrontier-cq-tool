@@ -14,6 +14,8 @@ import { IoMdFlag } from "react-icons/io";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { FiRefreshCw } from "react-icons/fi";
 import { HiTemplate } from "react-icons/hi";
+import { RiUploadCloudFill } from "react-icons/ri";
+import { FaFileExport } from "react-icons/fa";
 import { VscSymbolString } from "react-icons/vsc";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
@@ -27,7 +29,8 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
-  useTool
+  useTool,
+  useConfig
 } from "ui";
 import { useEffect, useMemo } from "react";
 import { IconType } from "react-icons";
@@ -51,9 +54,10 @@ interface NavbarGroup {
 export function Layout() {
   const location = useLocation();
   const nav = useNavigate();
-  const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
+  const { isLoadedFile, handleSaveQuest, insertOrUpdateQuest, reFrontier } = useEditor();
   const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
   const { tool, setTool } = useTool();
+  const { config, dbSelected, setDBSelected } = useConfig();
 
   useEffect(() => {
     if (tool === 'QuestEditor') {
@@ -77,12 +81,20 @@ export function Layout() {
               disabled: !isLoadedFile,
             },
             {
+              name: "Save and Upload",
+              icon: RiUploadCloudFill,
+              isSubmit: false,
+              disabled: !isLoadedFile,
+              onClick: insertOrUpdateQuest,
+              hide: !config || !dbSelected
+            },
+            {
               name: "Export quest",
-              icon: BsUpload,
-              isSubmit: true,
+              icon: FaFileExport,
+              isSubmit: false,
               disabled: !isLoadedFile,
               uri: 'export-quest-info'
-            }
+            },
           ],
         },
         {
@@ -211,13 +223,7 @@ export function Layout() {
               icon: BsInfoCircle,
               disabled: !isLoadedQuestlists,
               uri: "/questlist",
-            },
-            {
-              name: "Questlist Remote",
-              icon: BsInfoCircle,
-              disabled: false,
-              uri: "/questlist/remote",
-            },
+            }
           ]
         }
       ];
@@ -273,6 +279,17 @@ export function Layout() {
       <LayoutNavbar>
         <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Tool</h4>
         <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
+        {config?.dbs && <>
+          <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Database</h4>
+          <Select
+            options={config.dbs}
+            className="w-full m-0 p-4"
+            value={dbSelected}
+            getOptionLabel={item => item.name}
+            getOptionValue={item => item.name}
+            onChange={(item) => setDBSelected(item)}
+          />
+        </>}
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
             {group.options.filter(v => !v.hide).map((option) =>

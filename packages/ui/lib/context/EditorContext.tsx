@@ -12,15 +12,16 @@ interface EditorContextState {
   };
   handleSaveQuest: (data: QuestFile) => void;
   handleExportQuestInfo: (data: QuestInfo) => void;
-  insertOrUpdateQuest: (data: QuestFile) => Promise<void>;
+  insertOrUpdateQuest: () => Promise<void>;
   reFrontier?: () => void;
-  loadQuest: (filepath?: string) => Promise<void>;
+  loadQuest: (filepath?: string) => Promise<boolean>;
   form: UseFormReturn<QuestFile>;
   isLoadedFile: boolean;
 }
 
-interface EditorContextProps extends Omit<EditorContextState, "form"> {
+interface EditorContextProps extends Omit<EditorContextState, "form" | "insertOrUpdateQuest"> {
   children: React.ReactNode;
+  insertOrUpdateQuest: (data: QuestFile) => Promise<void>;
   data?: QuestFile;
 }
 

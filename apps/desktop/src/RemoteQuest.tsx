@@ -66,10 +66,12 @@ function RemoteQuest({ children }: RemoteQuestProps) {
         season
       });
 
-      await loadQuest();
+      const isLoaded = await loadQuest(filepath);
 
-      nav('/quest-info');
-      setTool('QuestEditor');
+      if (isLoaded) {
+        setTool('QuestEditor');
+        nav('/');
+      }
     } catch (error) {
       toast.error(`Failed to get quests from db: ${error}`);
     }
@@ -96,54 +98,71 @@ function RemoteQuest({ children }: RemoteQuestProps) {
     return null;
   }
  
-  const uploadQuest = async (): Promise<void> => {
+  const uploadQuest = async (path: string): Promise<void> => {
+    if (!dbSelected) {
+      return;
+    }
+
+    const questInfo = await quests.readQuestInfo(path as string);
+    const period = getPeriotFromQuestTypeFlags(questInfo.quest_type_flags);
+    const season = getSeasonFromQuestTypeFlags(questInfo.quest_type_flags);
+
+    await db.insertOrUpdateQuest({
+      db_config: dbSelected,
+      quest_filepath: path as string,
+      quest_id: questInfo?.quest_type_flags.main_quest_prop.quest_id,
+      period,
+      season
+    });
+
+    const questlist = await db.getQuestInfo({
+      db_config: dbSelected,
+      quest_id: questInfo.quest_type_flags.main_quest_prop.quest_id,
+      period,
+      season
+    });
+
+    if (questlist) {
+      await db.insertOrUpdateQuestlist({
+        db_config: dbSelected,
+        options: {
+          enable: questlist.enable,
+          only_dev: questlist.only_dev,
+          position: questlist.position
+        },
+        quest_info: {
+          ...questlist.quest_info,
+          quest_type_flags: questInfo.quest_type_flags,
+          strings: questInfo.strings
+        }
+      });
+    }
+  }
+
+  const uploadQuests = async (): Promise<void> => {
     if (!dbSelected) {
       return;
     }
 
     try {
 
-      const path = await open({ multiple: false });
+      const path = await open({ multiple: true });
       if (!path) return;
 
-      const questInfo = await quests.readQuestInfo(path as string);
-      const period = getPeriotFromQuestTypeFlags(questInfo.quest_type_flags);
-      const season = getSeasonFromQuestTypeFlags(questInfo.quest_type_flags);
+      const paths = Array.isArray(path) ? path : [path];
 
-      await db.insertOrUpdateQuest({
-        db_config: dbSelected,
-        quest_filepath: path as string,
-        quest_id: questInfo?.quest_type_flags.main_quest_prop.quest_id,
-        period,
-        season
-      });
-
-      const questlist = await db.getQuestInfo({
-        db_config: dbSelected,
-        quest_id: questInfo.quest_type_flags.main_quest_prop.quest_id,
-        period,
-        season
-      });
-
-      if (questlist) {
-        await db.insertOrUpdateQuestlist({
-          db_config: dbSelected,
-          options: {
-            enable: questlist.enable,
-            only_dev: questlist.only_dev,
-            position: questlist.position
-          },
-          quest_info: {
-            ...questlist.quest_info,
-            quest_type_flags: questInfo.quest_type_flags,
-            strings: questInfo.strings
-          }
-        });
+      for (let i=0; i < paths.length; i+=1) {
+        try {
+          await uploadQuest(paths[i]);
+        } catch(error) {
+          toast.error(`Failed upload quest ${paths[i]}: ${error}`);
+          return;
+        }
       }
 
       toast.success('Quest uploaded successfully!');
     } catch (error) {
-      toast.error(`Failed update quest: ${error}`);
+      toast.error(`Failed upload quest: ${error}`);
     }
   }
 
@@ -153,7 +172,7 @@ function RemoteQuest({ children }: RemoteQuestProps) {
       countQuests={countQuestsFromDb}
       downloadQuest={downloadQuest}
       getQuestInfoFromQuest={getQuestInfoFromQuest}
-      uploadQuest={uploadQuest}
+      uploadQuests={uploadQuests}
     >
       {children}
     </RemoteQuestContextProvider>

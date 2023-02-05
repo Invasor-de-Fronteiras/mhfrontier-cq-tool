@@ -6,7 +6,7 @@ interface RemoteQuestContextState {
   getQuests: (options: QuestDBQueryOptions) => Promise<QuestDB[]>;
   countQuests: (options: QuestDBQueryOptions) => Promise<number>;
   getQuestInfoFromQuest: (quest_id: number, period: string, season: number) => Promise<QuestInfo | null>;
-  uploadQuest: () => Promise<void>;
+  uploadQuests: () => Promise<void>;
   downloadQuest: (quest_id: number, period: string, season: number) => Promise<void>;
 }
 

@@ -6,7 +6,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3002,
+    port: 3000,
   },
   publicDir: path.resolve(__dirname, "..", "..", "resources"),
 });

@@ -6,17 +6,16 @@ import { GroupCard } from "../../../components/CardGroup";
 import { InputField } from "../../../components/Input";
 import { SelectField } from "../../../components/Select";
 import { UnknownField } from "../../../components/UnknownFields";
-import { useRemoteQuest } from "../../../context/RemoteQuestContext";
 import { useRemoteQuestlist } from "../../../context/RemoteQuestlistContext";
 import {
-  QuestDB,
-  QuestInfo,
   QuestInfoHeader,
   QuestlistDBOptions,
   quest_category,
   quest_mark,
   periodToString,
-  seasonToNumber
+  seasonToNumber,
+  QuestlistDB,
+  QuestlistDBWithInfo
 } from "../../../utils";
 import { toast } from 'react-toastify';
 import { CheckboxField } from "../../../components/Checkbox";
@@ -26,9 +25,10 @@ interface AddQuestForm {
   options: QuestlistDBOptions;
 }
 
-export interface AddQuestToListProps {
-  quest: QuestDB;
+export interface RemoteQuestlistEditProps {
+  quest: QuestlistDB;
   onClose: () => void;
+  onRefresh: () => void;
 }
 
 const defaultHeader: QuestInfoHeader = {
@@ -44,11 +44,9 @@ const defaultHeader: QuestInfoHeader = {
   quest_id: 0
 };
 
-export const AddQuestToList: React.FC<AddQuestToListProps> = ({ quest, onClose }) => {
-  // const { form, handleExportQuestInfo } = useEditor();
-  const { insertOrUpdateQuestlist } = useRemoteQuestlist();
-  const { getQuestInfoFromQuest } = useRemoteQuest();
-  const [questInfo, setQuestInfo] = useState<QuestInfo | null>(null);
+export const RemoteQuestlistEdit: React.FC<RemoteQuestlistEditProps> = ({ quest, onRefresh, onClose }) => {
+  const { insertOrUpdateQuestlist, getQuestInfo } = useRemoteQuestlist();
+  const [questlist, setQuestlist] = useState<QuestlistDBWithInfo  | null>(null);
 
   const form = useForm<AddQuestForm>({
     defaultValues: {
@@ -56,34 +54,40 @@ export const AddQuestToList: React.FC<AddQuestToListProps> = ({ quest, onClose }
         ...defaultHeader,
         quest_id: quest.quest_id
       },
-      options: { enable: true, only_dev: false, position: 1 },
+      options: { enable: quest.enable, only_dev: quest.only_dev, position: quest.position },
     },
   });
 
   useEffect(() => {
-    getQuestInfoFromQuest(quest.quest_id, periodToString(quest.period), seasonToNumber(quest.season))
+    getQuestInfo(quest.quest_id, periodToString(quest.period), seasonToNumber(quest.season))
       .then(v => {
-        console.log('questInfo: ', v);
-        setQuestInfo(v);
+        setQuestlist(v);
       });
   }, [quest]);
 
-  const addQuestToList = async () => {
-    if (!questInfo) {
+  useEffect(() => {
+    if (!questlist) return;
+    form.setValue('header', questlist.quest_info.header);
+  }, [questlist]);
+
+  const onSaveQuestlist = async () => {
+    if (!questlist) {
       toast.error('Quest not found!');
       return;
     }
 
+    const { quest_info } = questlist;
     const values = form.getValues();
     await insertOrUpdateQuestlist({
       header: values.header,
-      quest_type_flags: questInfo.quest_type_flags,
-      strings: questInfo.strings,
-      unk0: questInfo.unk0,
-      unk0_len: questInfo.unk0_len,
-      unk_data: questInfo.unk_data,
+      quest_type_flags: quest_info.quest_type_flags,
+      strings: quest_info.strings,
+      unk0: quest_info.unk0,
+      unk0_len: quest_info.unk0_len,
+      unk_data: quest_info.unk_data,
     }, values.options);
 
+    onRefresh();
     onClose();
   }
 
@@ -94,7 +98,7 @@ export const AddQuestToList: React.FC<AddQuestToListProps> = ({ quest, onClose }
         onClick={onClose}
       />
       <div>
-        <Button type="button" className="mt-5 mx-4" onClick={addQuestToList}>Add to questlist</Button>
+        <Button type="button" className="mt-5 mx-4" onClick={onSaveQuestlist}>Save questlist</Button>
       </div>
       <GroupCard title="Options">
         <div>

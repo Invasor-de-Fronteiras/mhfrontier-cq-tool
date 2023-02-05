@@ -30,6 +30,7 @@ function ConfigEditor({ children }: ConfigEditorProps) {
     <ConfigContextProvider
       config={config}
       dbSelected={dbSelected}
+      setDBSelected={setDBSelected}
     >
       {children}
     </ConfigContextProvider>
