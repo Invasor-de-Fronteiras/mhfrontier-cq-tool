@@ -1,3 +1,8 @@
+use std::fs;
+use std::sync::Arc;
+use tokio::sync::Mutex;
+use std::time::Instant;
+
 use editor::file::reader::FileReader;
 use editor::questlist::quest_info::QuestInfo;
 use sqlx::QueryBuilder;
@@ -22,6 +27,76 @@ fn get_quest_buffer(filepath: &str) -> CustomResult<Vec<u8>> {
     let result = reader.get_buffer()?;
 
     Ok(result)
+}
+
+pub async fn import_quest(db: &DB, filepath: String) -> CustomResult<()> {
+    let filename = filepath.split("\\").collect::<Vec<&str>>().pop().unwrap();
+    let quest_id = filename[0..5].parse::<i32>().unwrap();
+    let period = filename.chars().nth(5).unwrap();
+    let season = filename.chars().nth(6).unwrap().to_string().parse::<u8>().unwrap();
+
+    insert_or_update_quest(
+        db,
+        quest_id,
+        PERIOD::from_char(period),
+        SEASON::from_u8(season),
+        filepath
+    ).await?;
+
+    Ok(())
+}
+
+pub async fn import_quest_thread(db: DB, files: Arc<Mutex<Vec<String>>>) {
+    loop {
+        let mut files_lock = files.lock().await;
+        let file = files_lock.pop();
+        drop(files_lock);
+
+        if let Some(filepath) = file {
+            if let Err(err) = import_quest(&db, filepath.clone()).await {
+                println!("Failed to import quest {}:{}", filepath, err);
+            }
+        } else {
+            break;
+        }
+    }
+}
+
+async fn do_it_in_parallel(db: &DB, files: Vec<String>) -> Result<()> {
+    let files = Arc::new(Mutex::new(files));
+
+    let iter =  0..db.max_connections;
+    let futures: Vec<_> = iter
+        .map(|_| {
+            let files_ref = Arc::clone(&files);
+            return tokio::spawn(import_quest_thread( db.clone(), files_ref));
+        })
+        .collect();
+
+    let futures = futures;
+
+    for f in futures.into_iter() {
+        f.await.unwrap();
+    }
+    Ok(())
+}
+
+pub async fn import_quests(db: &DB, folderpath: String) -> Result<()> {
+    let files = fs::read_dir(folderpath)?;
+    let files: Vec<String> = files
+        .map(|f| {
+            f.unwrap()
+            .path()
+            .to_str()
+            .unwrap()
+            .to_string()
+        })
+        .collect();
+
+    let now = Instant::now();
+    do_it_in_parallel(db, files).await?;
+    println!("{}", now.elapsed().as_secs());
+    Ok(())
 }
 
 pub async fn count_quests(db: &DB, options: QuestDBQueryOptions) -> Result<u32> {
@@ -151,7 +226,7 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
         query.push_bind(reward_item3);
     }
 
-    query.push(" ORDER BY quest_id ASC");
+    query.push(" ORDER BY quest_id DESC");
 
     let per_page = options.per_page.unwrap_or(15);
     query.push(" LIMIT ");

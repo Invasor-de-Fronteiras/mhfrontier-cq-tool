@@ -8,7 +8,7 @@ pub mod quests;
 pub mod questlist;
 
 use self::config::Config;
-use self::commands::{import_questlist, get_quests, insert_or_update_quest, download_quest, count_quests, get_questlists, count_questlist, insert_or_update_questlist, get_questlist_info, get_quest_info_from_quest, update_questlist_options};
+use self::commands::{import_questlist, get_quests, insert_or_update_quest, download_quest, count_quests, get_questlists, count_questlist, insert_or_update_questlist, get_questlist_info, get_quest_info_from_quest, update_questlist_options, import_quests};
 
 #[tauri::command]
 pub fn get_config() -> String {
@@ -24,6 +24,14 @@ pub fn get_config() -> String {
 #[tauri::command]
 pub async fn db_import_questlist(event: String) -> String {
     match import_questlist(event).await {
+        Ok(_) => String::from("{ \"status\": \"Success\" }"),
+        Err(error) => wrap_result(error.to_string(), true),
+    }
+}
+
+#[tauri::command]
+pub async fn db_import_quests(event: String) -> String {
+    match import_quests(event).await {
         Ok(_) => String::from("{ \"status\": \"Success\" }"),
         Err(error) => wrap_result(error.to_string(), true),
     }

@@ -12,6 +12,7 @@ mod utils;
 use db::{
     get_config,
     db_import_questlist,
+    db_import_quests,
     db_download_quest,
     db_get_quests,
     db_count_quests,
@@ -42,6 +43,7 @@ async fn main() {
             re_frontier,
             get_config,
             db_import_questlist,
+            db_import_quests,
             db_download_quest,
             db_get_quests,
             db_count_quests,

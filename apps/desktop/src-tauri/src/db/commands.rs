@@ -28,6 +28,22 @@ pub async fn import_questlist(event: String) -> CustomResult<()> {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
+pub struct ImportQuestsPayload {
+    db_config: DBConfig,
+    folderpath: String,
+}
+
+pub async fn import_quests(event: String) -> CustomResult<()> {
+    let payload = serde_json::from_str::<ImportQuestsPayload>(&event)?;
+    let db = DB::new_with_max_connections(payload.db_config, 50).await?;
+
+    quests::import_quests(&db, payload.folderpath).await?;
+
+    db.pool.close().await;
+    Ok(())
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct DownloadQuestPayload {
     db_config: DBConfig,
     filepath: String,

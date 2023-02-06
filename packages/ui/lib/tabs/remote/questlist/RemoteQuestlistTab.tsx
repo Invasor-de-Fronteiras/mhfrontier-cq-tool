@@ -27,7 +27,7 @@ function reorder(list: QuestlistDB[], startIndex: number, endIndex: number): Que
 }
 
 export function RemoteQuestlistTab() {
-    const { countQuestlists, getQuestlists, updateQuestlistOptions } = useRemoteQuestlist();
+    const { countQuestlists, getQuestlists, updateQuestlistOptions, importQuestlists } = useRemoteQuestlist();
     const [quests, setQuests] = useState<QuestlistDB[]>([]);
     const [page, setPage] = useState<number>(1);
     const [perPage] = useState<number>(10);
@@ -164,6 +164,9 @@ export function RemoteQuestlistTab() {
                 />
                 <div className="justify-center items-center flex pt-6">
                     <Button type="button" onClick={onReorder} > Reorder</Button>
+                </div>
+                <div className="justify-center items-center flex pt-6">
+                    <Button type="button" onClick={importQuestlists} >Import questlist</Button>
                 </div>
             </GroupCard>
             <GroupCard title="Filters">

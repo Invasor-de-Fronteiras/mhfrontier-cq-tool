@@ -8,6 +8,7 @@ interface RemoteQuestContextState {
   getQuestInfoFromQuest: (quest_id: number, period: string, season: number) => Promise<QuestInfo | null>;
   uploadQuests: () => Promise<void>;
   downloadQuest: (quest_id: number, period: string, season: number) => Promise<void>;
+  onImportQuests: () => Promise<void>;
 }
 
 interface RemoteQuestContextProps extends RemoteQuestContextState {

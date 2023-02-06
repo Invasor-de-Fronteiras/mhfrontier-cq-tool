@@ -43,6 +43,26 @@ export const importQuestlists = async (payload: ImportQuestlistPayload): Promise
     }
 }
 
+interface ImportQuestsPayload {
+    db_config: DBConfig;
+    folderpath: string;
+}
+
+export const importQuests = async (payload: ImportQuestsPayload): Promise<void> => {
+    const response: string = await invoke("db_import_quests", {
+        event: JSON.stringify(payload)
+    });
+
+    if (!response) {
+        throw Error("No response!");
+    }
+
+    const result = JSON.parse(response) as Result;
+    if (result.status !== "Success" || result.error) {
+        throw Error(result.error);
+    }
+}
+
 interface DownloadQuestPayload {
     db_config: DBConfig;
     filepath: string;

@@ -12,7 +12,7 @@ import { AddQuestToList } from "./AddQuestToList";
 import { RemoteQuestTable } from "./RemoteQuestTable";
 
 export function RemoteQuestTab() {
-    const { countQuests, getQuests, uploadQuests } = useRemoteQuest();
+    const { countQuests, getQuests, uploadQuests, onImportQuests } = useRemoteQuest();
     const { dbSelected } = useConfig();
     const [quests, setQuests] = useState<QuestDB[]>([]);
     const [page, setPage] = useState<number>(1);
@@ -75,6 +75,7 @@ export function RemoteQuestTab() {
         <div className="flex flex-row flex-wrap gap-2">
             <GroupCard title="Control">
                 <Button type="button" onClick={uploadQuestFromFile} > Upload quest from file</Button>
+                <Button type="button" onClick={onImportQuests} > Upload all quests from folder</Button>                
             </GroupCard>
             <GroupCard title="Filters">
                 <Input

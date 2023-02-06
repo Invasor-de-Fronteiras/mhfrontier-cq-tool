@@ -15,6 +15,28 @@ function RemoteQuest({ children }: RemoteQuestProps) {
   const { loadQuest } = useEditor();
   const { setTool } = useTool();
 
+  const onImportQuests = async (): Promise<void> => {
+    try {
+      if (!dbSelected) {
+        return;
+      }
+  
+      const path = await open({ multiple: false, directory: true });
+      if (!path) return;
+
+      const start = Date.now();
+      await db.importQuests({
+        db_config: dbSelected,
+        folderpath: path as string
+      });
+      const time = Math.floor((Date.now() - start) / 1000);
+
+      toast.success(`Quests imported successfully in ${time}s`);
+    } catch (error) {
+      toast.error(`Failed to import quests: ${error}`);
+    }
+  }
+
   const getQuestsFromDb = async (options: QuestDBQueryOptions): Promise<QuestDB[]> => {
     try {
       if (!dbSelected) {
@@ -173,6 +195,7 @@ function RemoteQuest({ children }: RemoteQuestProps) {
       downloadQuest={downloadQuest}
       getQuestInfoFromQuest={getQuestInfoFromQuest}
       uploadQuests={uploadQuests}
+      onImportQuests={onImportQuests}
     >
       {children}
     </RemoteQuestContextProvider>

@@ -20,6 +20,7 @@ use super::types::SEASON;
 
 pub async fn import_questlist(db: &DB, filepath: String) -> Result<()> {
     let mut questlists = QuestlistFile::read_all_questlist(&filepath)?;
+    let mut position = 0;
 
     for questlist in questlists.iter_mut() {
         for quest in questlist.quests.iter_mut() {
@@ -27,12 +28,14 @@ pub async fn import_questlist(db: &DB, filepath: String) -> Result<()> {
                 db,
                 quest,
                 QuestlistDBOptions {
-                    position: 0,
+                    position,
                     enable: true,
                     only_dev: false
                 },
             )
             .await?;
+
+            position += 1;
         }
     }
 
