@@ -5,7 +5,6 @@ import {
   BsInfoCircle,
   BsMinecartLoaded,
   BsSave,
-  BsArrowUp,
   BsUmbrella,
   BsUpload,
   BsQuestion,
@@ -15,6 +14,8 @@ import { IoMdFlag } from "react-icons/io";
 import { GiAbdominalArmor, GiFishingLure } from "react-icons/gi";
 import { FiRefreshCw } from "react-icons/fi";
 import { HiTemplate } from "react-icons/hi";
+import { RiUploadCloudFill } from "react-icons/ri";
+import { FaFileExport } from "react-icons/fa";
 import { VscSymbolString } from "react-icons/vsc";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEditor } from "./context/EditorContext";
@@ -28,9 +29,10 @@ import {
   LayoutNavbarGroup,
   Select,
   useQuestlistEditor,
+  useTool,
   useConfig
 } from "ui";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { IconType } from "react-icons";
 
 interface NavbarItem {
@@ -52,10 +54,10 @@ interface NavbarGroup {
 export function Layout() {
   const location = useLocation();
   const nav = useNavigate();
-  const { isLoadedFile, handleSaveQuest, reFrontier } = useEditor();
-  const { isLoadedQuestlists, questlistSubmit, importQuestlists } = useQuestlistEditor();
-  const { config } = useConfig();
-  const [tool, setTool] = useState('QuestEditor');
+  const { isLoadedFile, handleSaveQuest, insertOrUpdateQuest, reFrontier } = useEditor();
+  const { isLoadedQuestlists, questlistSubmit } = useQuestlistEditor();
+  const { tool, setTool } = useTool();
+  const { config, dbSelected, setDBSelected } = useConfig();
 
   useEffect(() => {
     if (tool === 'QuestEditor') {
@@ -79,12 +81,20 @@ export function Layout() {
               disabled: !isLoadedFile,
             },
             {
+              name: "Save and Upload",
+              icon: RiUploadCloudFill,
+              isSubmit: false,
+              disabled: !isLoadedFile,
+              onClick: insertOrUpdateQuest,
+              hide: !config || !dbSelected
+            },
+            {
               name: "Export quest",
-              icon: BsUpload,
-              isSubmit: true,
+              icon: FaFileExport,
+              isSubmit: false,
               disabled: !isLoadedFile,
               uri: 'export-quest-info'
-            }
+            },
           ],
         },
         {
@@ -202,14 +212,6 @@ export function Layout() {
               isSubmit: false,
               disabled: !isLoadedQuestlists,
               onClick: questlistSubmit
-            },
-            {
-              name: "Import Questlist",
-              icon: BsArrowUp,
-              isSubmit: false,
-              disabled: false,
-              onClick: importQuestlists,
-              hide: !config
             }
           ],
         },
@@ -222,6 +224,26 @@ export function Layout() {
               disabled: !isLoadedQuestlists,
               uri: "/questlist",
             }
+          ]
+        }
+      ];
+
+      if (tool === 'RemoteEditor') return [
+        {
+          name: "Remote Editor",
+          options: [
+            {
+              name: "Quests",
+              icon: BsInfoCircle,
+              disabled: false,
+              uri: "/remote/quests",
+            },
+            {
+              name: "Questlist",
+              icon: BsInfoCircle,
+              disabled: false,
+              uri: "/remote/questlist",
+            },
           ]
         }
       ];
@@ -247,6 +269,7 @@ export function Layout() {
   const tools = useMemo(() => ([
     { value: 'QuestEditor', label: 'QuestEditor' },
     { value: 'QuestlistEditor', label: 'QuestlistEditor' },
+    { value: 'RemoteEditor', label: 'RemoteEditor' },
   ]), []);
 
   const seletedTool = useMemo(() => tools.find(v => v.value === tool), [tools, tool]);
@@ -256,6 +279,17 @@ export function Layout() {
       <LayoutNavbar>
         <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Tool</h4>
         <Select options={tools} className="w-full m-0 p-4" value={seletedTool} onChange={(item) => setTool(item?.value as string)} />
+        {config?.dbs && <>
+          <h4 className="px-3 font-semibold text-gray-600 dark:text-white">Database</h4>
+          <Select
+            options={config.dbs}
+            className="w-full m-0 p-4"
+            value={dbSelected}
+            getOptionLabel={item => item.name}
+            getOptionValue={item => item.name}
+            onChange={(item) => setDBSelected(item)}
+          />
+        </>}
         {groups.map((group) => (
           <LayoutNavbarGroup name={group.name} key={group.name}>
             {group.options.filter(v => !v.hide).map((option) =>

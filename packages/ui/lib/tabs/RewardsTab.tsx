@@ -9,7 +9,7 @@ import { SelectField } from "../components/Select";
 import { useEditor } from "../context/EditorContext";
 import { monster_options } from "../utils";
 import { item_options } from "../utils/items";
-import { ActionButton } from "./questlist/QuestlistRow";
+import { ActionButton } from "./questlist/QuestlistTab/QuestlistRow";
 
 export function RewardsTab() {
   const { form } = useEditor();

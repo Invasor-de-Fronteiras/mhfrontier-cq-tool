@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 import { useWatch } from "react-hook-form";
-import { Button } from "../../components/Button";
-import { GroupCard } from "../../components/CardGroup";
-import { Input } from "../../components/Input";
-import { useQuestlistEditor } from "../../context/QuestlistEditorContext";
+import { Button } from "../../../components/Button";
+import { GroupCard } from "../../../components/CardGroup";
+import { Input } from "../../../components/Input";
+import { useQuestlistEditor } from "../../../context/QuestlistEditorContext";
 import { QuestInfoEdit } from "./QuestInfoEdit";
 import { QuestInfoRow } from "./QuestlistRow";
 import { QuestlistTable } from "./QuestlistTable";
 
 export function QuestlistTab() {
-    const { form, getQuestFromFile } = useQuestlistEditor();
+    const { form, getQuestsFromFile } = useQuestlistEditor();
     const [selected, setSelected] = useState<null | number>(null);
     const [query, setQuery] = useState<Partial<QuestInfoRow>>({});
     const quests = useWatch({ control: form.control, name: 'quests' });
@@ -24,11 +24,11 @@ export function QuestlistTab() {
     }, [query, setQuery]);
 
     const onAddQuestFromFile = useCallback(async () => {
-        const items = await getQuestFromFile();
+        const items = await getQuestsFromFile();
         if (!items) return;
 
         form.setValue('quests', [...items, ...quests]);
-    }, [form, quests, getQuestFromFile]);
+    }, [form, quests, getQuestsFromFile]);
 
     const onInputChange = useCallback((key: keyof QuestInfoRow) => (e: React.FocusEvent<HTMLInputElement, Element>) => {
         onSearch(key, e.target.value);

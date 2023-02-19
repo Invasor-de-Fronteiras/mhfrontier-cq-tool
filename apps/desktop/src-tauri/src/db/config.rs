@@ -3,7 +3,7 @@ use std::fs::File;
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgConnectOptions;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct DBConfig {
     pub name: String,
     pub host: String,
@@ -13,7 +13,7 @@ pub struct DBConfig {
     pub database: String,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Config {
     pub dbs: Vec<DBConfig>,
     pub bin_path: String,

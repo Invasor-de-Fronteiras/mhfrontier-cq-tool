@@ -12,15 +12,16 @@ interface EditorContextState {
   };
   handleSaveQuest: (data: QuestFile) => void;
   handleExportQuestInfo: (data: QuestInfo) => void;
-  handleUpdateQuest: (data: QuestInfo) => void;
+  insertOrUpdateQuest: () => Promise<void>;
   reFrontier?: () => void;
-  loadQuest: () => void;
+  loadQuest: (filepath?: string) => Promise<boolean>;
   form: UseFormReturn<QuestFile>;
   isLoadedFile: boolean;
 }
 
-interface EditorContextProps extends Omit<EditorContextState, "form"> {
+interface EditorContextProps extends Omit<EditorContextState, "form" | "insertOrUpdateQuest"> {
   children: React.ReactNode;
+  insertOrUpdateQuest: (data: QuestFile) => Promise<void>;
   data?: QuestFile;
 }
 
@@ -38,8 +39,13 @@ export function EditorContextProvider({
     form.reset(props.data);
   }, [props.data]);
 
+  const insertOrUpdateQuest = async () => {
+    const values = form.getValues();
+    props.insertOrUpdateQuest(values);
+  }
+
   return (
-    <context.Provider value={{ form, ...props }}>{children}</context.Provider>
+    <context.Provider value={{ form, ...props, insertOrUpdateQuest }}>{children}</context.Provider>
   );
 }
 

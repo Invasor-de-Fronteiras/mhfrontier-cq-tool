@@ -1,4 +1,3 @@
-// use std::{io::Write, io::Seek};
 use std::io::{Cursor, Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::mem::{forget, size_of};
 use std::slice;
@@ -7,7 +6,6 @@ use encoding_rs::SHIFT_JIS;
 
 use super::reader::FileReader;
 
-// use super::writer::CustomWriter;
 pub trait CustomWriter
 where
     Self: Sized,

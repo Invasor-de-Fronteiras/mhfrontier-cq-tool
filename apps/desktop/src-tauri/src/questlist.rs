@@ -18,12 +18,6 @@ pub fn read_all_questlist(event: String) -> String {
 }
 
 #[tauri::command]
-pub fn read_all_questlist_old(event: String) -> String {
-    let result = QuestlistFile::read_all_questlist_old(&event);
-    wrap_json_result(result)
-}
-
-#[tauri::command]
 pub fn read_questinfo(event: String) -> String {
     let result = QuestInfo::from_questfile(&event);
     wrap_json_result(result)

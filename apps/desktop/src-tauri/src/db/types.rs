@@ -1,4 +1,6 @@
-#[derive(sqlx::Type)]
+use serde::{Deserialize, Serialize};
+
+#[derive(sqlx::Type, Serialize, Deserialize, Debug, PartialEq)]
 #[sqlx(type_name = "QuestPeriod")]
 pub enum PERIOD {
     DAY,
@@ -22,7 +24,7 @@ impl PERIOD {
     }
 }
 
-#[derive(sqlx::Type)]
+#[derive(sqlx::Type, Serialize, Deserialize, Debug, PartialEq)]
 #[sqlx(type_name = "QuestSeason")]
 pub enum SEASON {
     WARM,
@@ -47,4 +49,9 @@ impl SEASON {
             SEASON::BREED => "BREED",
         }
     }
+}
+
+#[derive(sqlx::FromRow)]
+pub struct CountResult {
+    pub count: i64,
 }

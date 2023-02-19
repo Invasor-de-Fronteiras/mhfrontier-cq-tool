@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
-import { Button } from "../../components/Button";
-import { GroupCard } from "../../components/CardGroup";
-import { InputField } from "../../components/Input";
-import { SelectField } from "../../components/Select";
-import { TextAreaField } from "../../components/TextArea";
-import { UnknownField } from "../../components/UnknownFields";
-import { useQuestlistEditor } from "../../context/QuestlistEditorContext";
-import { quest_category, quest_mark } from "../../utils";
+import { Button } from "../../../components/Button";
+import { GroupCard } from "../../../components/CardGroup";
+import { InputField } from "../../../components/Input";
+import { SelectField } from "../../../components/Select";
+import { TextAreaField } from "../../../components/TextArea";
+import { UnknownField } from "../../../components/UnknownFields";
+import { useQuestlistEditor } from "../../../context/QuestlistEditorContext";
+import { quest_category, quest_mark } from "../../../utils";
 
 export interface QuestInfoEditProps {
     questIndex: number;

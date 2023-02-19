@@ -16,7 +16,7 @@ export function LoadQuestTab() {
           <Card
             buttonText="Load file content"
             title="Select a quest file from your machine."
-            onClick={loadQuest}
+            onClick={() => loadQuest()}
           >
             <Dropzone />
           </Card>

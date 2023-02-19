@@ -8,7 +8,7 @@ import { InputField } from "../../components/Input";
 import { SelectField } from "../../components/Select";
 import { useEditor } from "../../context/EditorContext";
 import { findMap, monster_options } from "../../utils";
-import { ActionButton } from "../questlist/QuestlistRow";
+import { ActionButton } from "../questlist/QuestlistTab/QuestlistRow";
 import { SmallMonsterIndex } from "./SmallMonsterEdit";
 
 interface MapSectionProps {

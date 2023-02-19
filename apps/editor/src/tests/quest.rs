@@ -124,6 +124,8 @@ fn reader_test() {
                 join_rank_max: 0,
                 post_rank_min: 31,
                 post_rank_max: 0,
+                unk12: 0,
+                unk13: 0,
             },
             skip1: [0; 8],
             forced_equipement: ForcedEquipment {

@@ -1,4 +1,4 @@
-use std::io::Result;
+use std::io::{Cursor, Result};
 
 use serde_derive::{Deserialize, Serialize};
 
@@ -59,6 +59,53 @@ impl QuestStrings {
         let fail_reqs = QuestStrings::read_string(reader, offset + string_ptr.fail_reqs)?;
         let contractor = QuestStrings::read_string(reader, offset + string_ptr.contractor)?;
         let description = QuestStrings::read_string(reader, offset + string_ptr.description)?;
+
+        Ok(QuestStrings {
+            pointers: string_ptr,
+            title,
+            clear_reqs,
+            contractor,
+            description,
+            fail_reqs,
+            main_objective,
+            sub_a_objective,
+            sub_b_objective,
+        })
+    }
+
+    pub fn read_string_from_cursor(reader: &mut Cursor<Vec<u8>>, pos: u32) -> Result<String> {
+        use crate::file::read_cursor::ReadCursor;
+
+        reader.seek_start(pos as u64)?;
+        reader.read_string()
+    }
+
+    pub fn from_cursor(
+        reader: &mut Cursor<Vec<u8>>,
+        pos: u32,
+        offset_strings: Option<u32>,
+    ) -> Result<QuestStrings> {
+        use crate::file::read_cursor::ReadCursor;
+        let offset = offset_strings.unwrap_or(0);
+        reader.seek_start(offset as u64 + pos as u64)?;
+
+        let string_ptr = reader.read_struct::<QuestStringsPointers>()?;
+
+        let title = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.title)?;
+        let main_objective =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.main_objective)?;
+        let sub_a_objective =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.sub_a_objective)?;
+        let sub_b_objective =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.sub_b_objective)?;
+        let clear_reqs =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.clear_reqs)?;
+        let fail_reqs =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.fail_reqs)?;
+        let contractor =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.contractor)?;
+        let description =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.description)?;
 
         Ok(QuestStrings {
             pointers: string_ptr,

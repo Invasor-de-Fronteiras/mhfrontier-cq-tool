@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@tauri-apps/api": "^1.0.0-rc.6",
+    "@tauri-apps/api": "^1.2.0",
     "classnames": "^2.3.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -15,22 +15,22 @@
     "react-window": "^1.8.7",
     "typescript": "^4.7.2",
     "ui": "*",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "vite-plugin-tauri": "^3.1.0"
   },
   "scripts": {
-    "dev": "vite-tauri dev",
+    "dev": "tauri dev",
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "icon": "npx @tauri-apps/tauricon .",
-    "tauri": "tauri",
     "vite-tauri": "vite-tauri",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "lint>fix": "eslint --fix \"**/*.{ts,tsx}\"",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-rc.13",
+    "@tauri-apps/cli": "^1.2.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -40,7 +40,7 @@
     "@types/react-dom": "^18.0.5",
     "@types/react-modal": "^3.13.1",
     "@types/react-window": "^1.8.5",
-    "@vitejs/plugin-react": "^1.3.0",
+    "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.7",
     "config": "*",
     "cross-env": "^7.0.3",
@@ -49,7 +49,6 @@
     "react-icons": "^4.4.0",
     "tailwindcss": "^3.0.24",
     "tsconfig": "*",
-    "vite": "^2.9.9",
-    "vite-plugin-tauri": "^2.0.0"
+    "vite": "^4.1.1"
   }
 }

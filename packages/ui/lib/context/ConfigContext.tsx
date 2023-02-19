@@ -17,14 +17,15 @@ export interface Config {
 
 export interface ConfigState {
     config?: Config | null;
-    dbSelected?: DBConfig;
+    dbSelected?: DBConfig | null;
+    setDBSelected: (db: DBConfig | null) => void;
 }
 
 interface ConfigContextProps extends ConfigState {
   children: React.ReactNode;
 }
 
-const context = createContext<ConfigState>({});
+const context = createContext<ConfigState>({} as ConfigState);
 
 export function ConfigContextProvider({
   children,
@@ -36,3 +37,9 @@ export function ConfigContextProvider({
 }
 
 export const useConfig = () => useContext(context);
+
+export const useDatabaseSelected = (): DBConfig | null => {
+  const { dbSelected } = useConfig();
+
+  return dbSelected || null;
+}
