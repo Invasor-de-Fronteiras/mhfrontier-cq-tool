@@ -18,9 +18,11 @@ function App() {
       data={quest || undefined}
       isLoadedFile={quest !== null}
       handleSaveQuest={(data) => setQuest(data)}
-      loadQuest={() => null}
+      loadQuest={async () => false}
       handleExportQuestInfo={() => null}
-      handleUpdateQuest={() => null}
+      insertOrUpdateQuest={async () => {
+        // update quest
+      }}
       uploadFile={{
         dragSupport: true,
         isDragActive,
