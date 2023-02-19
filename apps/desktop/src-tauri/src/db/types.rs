@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(sqlx::Type, Serialize, Deserialize, Debug, PartialEq)]
 #[sqlx(type_name = "QuestPeriod")]
@@ -53,5 +53,5 @@ impl SEASON {
 
 #[derive(sqlx::FromRow)]
 pub struct CountResult {
-    pub count: i64
+    pub count: i64,
 }

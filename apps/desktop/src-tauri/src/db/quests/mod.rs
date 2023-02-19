@@ -1,7 +1,7 @@
 use std::fs;
 use std::sync::Arc;
-use tokio::sync::Mutex;
 use std::time::Instant;
+use tokio::sync::Mutex;
 
 use editor::file::reader::FileReader;
 use editor::questlist::quest_info::QuestInfo;
@@ -33,15 +33,22 @@ pub async fn import_quest(db: &DB, filepath: String) -> CustomResult<()> {
     let filename = filepath.split("\\").collect::<Vec<&str>>().pop().unwrap();
     let quest_id = filename[0..5].parse::<i32>().unwrap();
     let period = filename.chars().nth(5).unwrap();
-    let season = filename.chars().nth(6).unwrap().to_string().parse::<u8>().unwrap();
+    let season = filename
+        .chars()
+        .nth(6)
+        .unwrap()
+        .to_string()
+        .parse::<u8>()
+        .unwrap();
 
     insert_or_update_quest(
         db,
         quest_id,
         PERIOD::from_char(period),
         SEASON::from_u8(season),
-        filepath
-    ).await?;
+        filepath,
+    )
+    .await?;
 
     Ok(())
 }
@@ -65,11 +72,11 @@ pub async fn import_quest_thread(db: DB, files: Arc<Mutex<Vec<String>>>) {
 async fn do_it_in_parallel(db: &DB, files: Vec<String>) -> Result<()> {
     let files = Arc::new(Mutex::new(files));
 
-    let iter =  0..db.max_connections;
+    let iter = 0..db.max_connections;
     let futures: Vec<_> = iter
         .map(|_| {
             let files_ref = Arc::clone(&files);
-            return tokio::spawn(import_quest_thread( db.clone(), files_ref));
+            return tokio::spawn(import_quest_thread(db.clone(), files_ref));
         })
         .collect();
 
@@ -84,13 +91,7 @@ async fn do_it_in_parallel(db: &DB, files: Vec<String>) -> Result<()> {
 pub async fn import_quests(db: &DB, folderpath: String) -> Result<()> {
     let files = fs::read_dir(folderpath)?;
     let files: Vec<String> = files
-        .map(|f| {
-            f.unwrap()
-            .path()
-            .to_str()
-            .unwrap()
-            .to_string()
-        })
+        .map(|f| f.unwrap().path().to_str().unwrap().to_string())
         .collect();
 
     let now = Instant::now();
@@ -230,9 +231,9 @@ pub async fn get_quests(db: &DB, options: QuestDBQueryOptions) -> Result<Vec<Que
     query.push(" LIMIT ");
     query.push_bind(per_page as i32);
 
-    let page= options.page.unwrap_or(0);
+    let page = options.page.unwrap_or(0);
     query.push(" OFFSET ");
-    query.push_bind((page * per_page) as i32 );
+    query.push_bind((page * per_page) as i32);
 
     let quests = query
         .build_query_as::<QuestDB>()

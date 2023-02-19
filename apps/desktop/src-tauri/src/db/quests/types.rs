@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::db::types::{PERIOD, SEASON};
 
@@ -13,7 +13,7 @@ pub struct QuestDB {
     pub sub_b_objective: String,
     pub reward_item1: i32,
     pub reward_item2: i32,
-    pub reward_item3: i32
+    pub reward_item3: i32,
 }
 
 #[derive(sqlx::FromRow, Serialize, Deserialize, Debug, PartialEq)]
@@ -37,5 +37,5 @@ pub struct QuestDBQueryOptions {
     pub sub_b_objective: Option<String>,
     pub reward_item1: Option<i32>,
     pub reward_item2: Option<i32>,
-    pub reward_item3: Option<i32>
+    pub reward_item3: Option<i32>,
 }

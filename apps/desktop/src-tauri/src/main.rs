@@ -10,25 +10,15 @@ mod re_frontier;
 mod utils;
 
 use db::{
+    db_count_questlist, db_count_quests, db_download_quest, db_get_quest_info_from_quest,
+    db_get_questlist_info, db_get_questlists, db_get_quests, db_import_questlist, db_import_quests,
+    db_insert_or_update_quest, db_insert_or_update_questlist, db_update_questlist_options,
     get_config,
-    db_import_questlist,
-    db_import_quests,
-    db_download_quest,
-    db_get_quests,
-    db_count_quests,
-    db_insert_or_update_quest,
-    db_get_questlists,
-    db_count_questlist,
-    db_insert_or_update_questlist,
-    db_get_questlist_info,
-    db_get_quest_info_from_quest,
-    db_update_questlist_options
 };
 use quest::{export_quest_info, read_quest_file, save_quest_file};
 use questlist::{read_all_questlist, read_questinfo, save_all_questlists};
 use re_frontier::re_frontier;
 use tauri;
-
 
 #[tokio::main]
 async fn main() {
@@ -51,7 +41,7 @@ async fn main() {
             db_get_questlists,
             db_count_questlist,
             db_insert_or_update_questlist,
-            db_get_questlist_info ,
+            db_get_questlist_info,
             db_get_quest_info_from_quest,
             db_update_questlist_options
         ])

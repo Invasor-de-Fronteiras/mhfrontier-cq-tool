@@ -11,7 +11,7 @@ pub struct DB {
     pub db_config: DBConfig,
     pub pool: Pool<Postgres>,
     pub config: Option<Config>,
-    pub max_connections: u32
+    pub max_connections: u32,
 }
 
 impl DB {
@@ -32,7 +32,7 @@ impl DB {
             config,
             db_config,
             pool,
-            max_connections
+            max_connections,
         })
     }
 }

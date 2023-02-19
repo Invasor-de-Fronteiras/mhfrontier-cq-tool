@@ -1,4 +1,4 @@
-use std::io::{Result, Cursor};
+use std::io::{Cursor, Result};
 
 use serde_derive::{Deserialize, Serialize};
 
@@ -78,7 +78,7 @@ impl QuestStrings {
 
         reader.seek_start(pos as u64)?;
         reader.read_string()
-    }    
+    }
 
     pub fn from_cursor(
         reader: &mut Cursor<Vec<u8>>,
@@ -92,15 +92,20 @@ impl QuestStrings {
         let string_ptr = reader.read_struct::<QuestStringsPointers>()?;
 
         let title = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.title)?;
-        let main_objective = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.main_objective)?;
+        let main_objective =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.main_objective)?;
         let sub_a_objective =
             QuestStrings::read_string_from_cursor(reader, offset + string_ptr.sub_a_objective)?;
         let sub_b_objective =
             QuestStrings::read_string_from_cursor(reader, offset + string_ptr.sub_b_objective)?;
-        let clear_reqs = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.clear_reqs)?;
-        let fail_reqs = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.fail_reqs)?;
-        let contractor = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.contractor)?;
-        let description = QuestStrings::read_string_from_cursor(reader, offset + string_ptr.description)?;
+        let clear_reqs =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.clear_reqs)?;
+        let fail_reqs =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.fail_reqs)?;
+        let contractor =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.contractor)?;
+        let description =
+            QuestStrings::read_string_from_cursor(reader, offset + string_ptr.description)?;
 
         Ok(QuestStrings {
             pointers: string_ptr,

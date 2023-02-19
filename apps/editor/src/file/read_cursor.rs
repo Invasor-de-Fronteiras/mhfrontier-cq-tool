@@ -15,7 +15,6 @@ pub trait ReadCursor
 where
     Self: Read + Seek,
 {
-
     fn seek_start(&mut self, pos: u64) -> Result<u64> {
         let result = self.seek(SeekFrom::Start(pos))?;
 
@@ -147,7 +146,6 @@ where
             Ok(res.to_string())
         }
     }
-
 }
 
 impl ReadCursor for Cursor<Vec<u8>> {}

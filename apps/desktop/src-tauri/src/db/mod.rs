@@ -1,14 +1,18 @@
 use crate::utils::wrap_result;
 
+pub mod commands;
 pub mod config;
 pub mod db;
-pub mod types;
-pub mod commands;
-pub mod quests;
 pub mod questlist;
+pub mod quests;
+pub mod types;
 
+use self::commands::{
+    count_questlist, count_quests, download_quest, get_quest_info_from_quest, get_questlist_info,
+    get_questlists, get_quests, import_questlist, import_quests, insert_or_update_quest,
+    insert_or_update_questlist, update_questlist_options,
+};
 use self::config::Config;
-use self::commands::{import_questlist, get_quests, insert_or_update_quest, download_quest, count_quests, get_questlists, count_questlist, insert_or_update_questlist, get_questlist_info, get_quest_info_from_quest, update_questlist_options, import_quests};
 
 #[tauri::command]
 pub fn get_config() -> String {
@@ -46,7 +50,7 @@ pub async fn db_download_quest(event: String) -> String {
             } else {
                 String::from("{ \"status\": \"Quest not found\" }")
             }
-        },
+        }
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
@@ -54,11 +58,10 @@ pub async fn db_download_quest(event: String) -> String {
 #[tauri::command]
 pub async fn db_get_quests(event: String) -> String {
     match get_quests(event).await {
-        Ok(quests) => 
-            match serde_json::to_string_pretty(&quests) {
-                Ok(result) => result,
-                Err(error) => wrap_result(error.to_string(), true),
-            },
+        Ok(quests) => match serde_json::to_string_pretty(&quests) {
+            Ok(result) => result,
+            Err(error) => wrap_result(error.to_string(), true),
+        },
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
@@ -82,11 +85,10 @@ pub async fn db_insert_or_update_quest(event: String) -> String {
 #[tauri::command]
 pub async fn db_get_questlists(event: String) -> String {
     match get_questlists(event).await {
-        Ok(quests) => 
-            match serde_json::to_string_pretty(&quests) {
-                Ok(result) => result,
-                Err(error) => wrap_result(error.to_string(), true),
-            },
+        Ok(quests) => match serde_json::to_string_pretty(&quests) {
+            Ok(result) => result,
+            Err(error) => wrap_result(error.to_string(), true),
+        },
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
@@ -110,11 +112,10 @@ pub async fn db_insert_or_update_questlist(event: String) -> String {
 #[tauri::command]
 pub async fn db_get_questlist_info(event: String) -> String {
     match get_questlist_info(event).await {
-        Ok(quests) => 
-            match serde_json::to_string_pretty(&quests) {
-                Ok(result) => result,
-                Err(error) => wrap_result(error.to_string(), true),
-            },
+        Ok(quests) => match serde_json::to_string_pretty(&quests) {
+            Ok(result) => result,
+            Err(error) => wrap_result(error.to_string(), true),
+        },
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
@@ -122,11 +123,10 @@ pub async fn db_get_questlist_info(event: String) -> String {
 #[tauri::command]
 pub async fn db_get_quest_info_from_quest(event: String) -> String {
     match get_quest_info_from_quest(event).await {
-        Ok(quest_info) => 
-            match serde_json::to_string_pretty(&quest_info) {
-                Ok(result) => result,
-                Err(error) => wrap_result(error.to_string(), true),
-            },
+        Ok(quest_info) => match serde_json::to_string_pretty(&quest_info) {
+            Ok(result) => result,
+            Err(error) => wrap_result(error.to_string(), true),
+        },
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
@@ -138,4 +138,3 @@ pub async fn db_update_questlist_options(event: String) -> String {
         Err(error) => wrap_result(error.to_string(), true),
     }
 }
-

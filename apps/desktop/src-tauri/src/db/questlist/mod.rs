@@ -16,8 +16,6 @@ use super::types::CountResult;
 use super::types::PERIOD;
 use super::types::SEASON;
 
-
-
 pub async fn import_questlist(db: &DB, filepath: String) -> Result<()> {
     let mut questlists = QuestlistFile::read_all_questlist(&filepath)?;
     let mut position = 0;
@@ -30,7 +28,7 @@ pub async fn import_questlist(db: &DB, filepath: String) -> Result<()> {
                 QuestlistDBOptions {
                     position,
                     enable: true,
-                    only_dev: false
+                    only_dev: false,
                 },
             )
             .await?;
@@ -100,12 +98,14 @@ pub async fn count_questlist(db: &DB, options: QuestlistDBQueryOptions) -> Resul
 }
 
 pub async fn get_questlists(db: &DB, options: QuestlistDBQueryOptions) -> Result<Vec<QuestlistDB>> {
-    let mut query = QueryBuilder::new("
+    let mut query = QueryBuilder::new(
+        "
             SELECT
                 quest_id, period, season, category, title, only_dev, enable, position
             FROM questlist
             WHERE 1=1
-        ");
+        ",
+    );
 
     if let Some(quest_id) = options.quest_id {
         query.push(" AND quest_id = ");
@@ -153,9 +153,9 @@ pub async fn get_questlists(db: &DB, options: QuestlistDBQueryOptions) -> Result
     query.push(" LIMIT ");
     query.push_bind(per_page as i32);
 
-    let page= options.page.unwrap_or(0);
+    let page = options.page.unwrap_or(0);
     query.push(" OFFSET ");
-    query.push_bind((page * per_page) as i32 );
+    query.push_bind((page * per_page) as i32);
 
     let quests = query
         .build_query_as::<QuestlistDB>()
@@ -194,7 +194,6 @@ pub async fn questlist_exists(
     period: PERIOD,
     season: SEASON,
 ) -> Result<bool> {
-
     let result = sqlx::query(
         "
             SELECT

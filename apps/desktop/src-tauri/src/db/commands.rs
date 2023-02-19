@@ -1,15 +1,17 @@
-use editor::{questlist::quest_info::QuestInfo, file::writer::FileWriter};
-use serde::{Serialize, Deserialize};
+use editor::{file::writer::FileWriter, questlist::quest_info::QuestInfo};
+use serde::{Deserialize, Serialize};
 
 use crate::utils::CustomResult;
 
 use super::config::DBConfig;
-use super::questlist::types::{QuestlistDBQueryOptions, QuestlistDB, QuestlistDBOptions, QuestlistDBWithInfo};
-use super::quests::types::{QuestDBQueryOptions, QuestDB};
-use super::types::{PERIOD, SEASON};
 use super::db::DB;
-use super::quests;
 use super::questlist;
+use super::questlist::types::{
+    QuestlistDB, QuestlistDBOptions, QuestlistDBQueryOptions, QuestlistDBWithInfo,
+};
+use super::quests;
+use super::quests::types::{QuestDB, QuestDBQueryOptions};
+use super::types::{PERIOD, SEASON};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct ImportQuestlistPayload {
@@ -49,7 +51,7 @@ pub struct DownloadQuestPayload {
     filepath: String,
     quest_id: u32,
     period: char,
-    season: u8
+    season: u8,
 }
 
 pub async fn download_quest(event: String) -> CustomResult<bool> {
@@ -60,8 +62,9 @@ pub async fn download_quest(event: String) -> CustomResult<bool> {
         &db,
         payload.quest_id,
         PERIOD::from_char(payload.period),
-        SEASON::from_u8(payload.season)
-    ).await?;
+        SEASON::from_u8(payload.season),
+    )
+    .await?;
 
     db.pool.close().await;
 
@@ -107,7 +110,7 @@ pub struct InsertOrUpdateQuestPayload {
     quest_id: u32,
     period: char,
     season: u8,
-    quest_filepath: String
+    quest_filepath: String,
 }
 
 pub async fn insert_or_update_quest(event: String) -> CustomResult<()> {
@@ -119,8 +122,9 @@ pub async fn insert_or_update_quest(event: String) -> CustomResult<()> {
         payload.quest_id as i32,
         PERIOD::from_char(payload.period),
         SEASON::from_u8(payload.season),
-        payload.quest_filepath
-    ).await?;
+        payload.quest_filepath,
+    )
+    .await?;
 
     db.pool.close().await;
     Ok(())
@@ -156,7 +160,7 @@ pub async fn count_questlist(event: String) -> CustomResult<u32> {
 pub struct InsertOrUpdateQuestlistPayload {
     pub db_config: DBConfig,
     pub quest_info: QuestInfo,
-    pub options: QuestlistDBOptions
+    pub options: QuestlistDBOptions,
 }
 
 pub async fn insert_or_update_questlist(event: String) -> CustomResult<()> {
@@ -164,11 +168,7 @@ pub async fn insert_or_update_questlist(event: String) -> CustomResult<()> {
 
     let db = DB::new(payload.db_config).await?;
 
-    questlist::insert_or_update_questlist(
-        &db,
-        &mut payload.quest_info,
-        payload.options
-    ).await?;
+    questlist::insert_or_update_questlist(&db, &mut payload.quest_info, payload.options).await?;
 
     db.pool.close().await;
     Ok(())
@@ -179,7 +179,7 @@ pub struct GetQuestInfoPayload {
     db_config: DBConfig,
     quest_id: u32,
     period: char,
-    season: u8
+    season: u8,
 }
 
 pub async fn get_questlist_info(event: String) -> CustomResult<Option<QuestlistDBWithInfo>> {
@@ -190,14 +190,15 @@ pub async fn get_questlist_info(event: String) -> CustomResult<Option<QuestlistD
         &db,
         payload.quest_id,
         PERIOD::from_char(payload.period),
-        SEASON::from_u8(payload.season)
-    ).await?;
+        SEASON::from_u8(payload.season),
+    )
+    .await?;
 
     if let Some(questlist) = questlist_bin {
         let quest_info = QuestInfo::from_buffer(questlist.questlist_bin)?;
         db.pool.close().await;
 
-        return Ok(Some(QuestlistDBWithInfo { 
+        return Ok(Some(QuestlistDBWithInfo {
             quest_id: questlist.quest_id,
             period: questlist.period,
             season: questlist.season,
@@ -206,7 +207,7 @@ pub async fn get_questlist_info(event: String) -> CustomResult<Option<QuestlistD
             title: questlist.title,
             position: questlist.position,
             only_dev: questlist.only_dev,
-            quest_info: quest_info
+            quest_info: quest_info,
         }));
     }
 
@@ -222,8 +223,9 @@ pub async fn get_quest_info_from_quest(event: String) -> CustomResult<Option<Que
         &db,
         payload.quest_id,
         PERIOD::from_char(payload.period),
-        SEASON::from_u8(payload.season)
-    ).await?;
+        SEASON::from_u8(payload.season),
+    )
+    .await?;
 
     if let Some(quest) = quest {
         let quest_info = QuestInfo::from_quest_buffer(quest.quest_bin)?;
@@ -242,7 +244,7 @@ pub struct UpdateQuestlistOptionsPayload {
     quest_id: u32,
     period: char,
     season: u8,
-    options: QuestlistDBOptions
+    options: QuestlistDBOptions,
 }
 
 pub async fn update_questlist_options(event: String) -> CustomResult<()> {
@@ -254,9 +256,9 @@ pub async fn update_questlist_options(event: String) -> CustomResult<()> {
         payload.quest_id,
         PERIOD::from_char(payload.period),
         SEASON::from_u8(payload.season),
-        payload.options
-
-    ).await?;
+        payload.options,
+    )
+    .await?;
 
     db.pool.close().await;
     Ok(())

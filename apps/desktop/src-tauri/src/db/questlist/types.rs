@@ -1,5 +1,5 @@
 use editor::questlist::quest_info::QuestInfo;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::db::types::{PERIOD, SEASON};
 
@@ -12,7 +12,7 @@ pub struct QuestlistDB {
     pub category: i32,
     pub title: String,
     pub position: i32,
-    pub only_dev: bool
+    pub only_dev: bool,
 }
 
 #[derive(sqlx::FromRow, Serialize, Deserialize, Debug, PartialEq)]
