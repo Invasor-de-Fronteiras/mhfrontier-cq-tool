@@ -136,13 +136,11 @@ pub async fn count_quests(db: &DB, options: QuestDBQueryOptions) -> Result<u32> 
     if let Some(sub_a_objective) = options.sub_a_objective {
         query.push(" AND sub_a_objective like ");
         query.push_bind(sub_a_objective);
-        query.push("% ");
     }
 
     if let Some(sub_b_objective) = options.sub_b_objective {
         query.push(" AND sub_b_objective like ");
         query.push_bind(sub_b_objective);
-        query.push("% ");
     }
 
     if let Some(reward_item1) = options.reward_item1 {
