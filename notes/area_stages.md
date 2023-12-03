@@ -156,7 +156,7 @@
 462=Mezfes Closed
 463=Mezfes - Minigame de corrida com blocos de brinquedo
 464=Mezfes - Minigame de tiro ao alvo
-465=Mezfes - Minigame dos peixeis (camera bugada)
+465=Mezfes - Minigame dos peixes (camera bugada)
 466=Mezfes - Minigame teatrinho (camera bugada)
 467=Tudo preto
 468=Tudo preto
