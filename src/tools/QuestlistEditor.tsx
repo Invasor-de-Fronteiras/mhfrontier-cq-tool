@@ -1,0 +1,143 @@
+import { useMemo, useState } from "react";
+
+import { invoke } from "@tauri-apps/api";
+import { open } from "@tauri-apps/api/dialog";
+import { toast } from 'react-toastify';
+import { QuestInfo, QuestlistFile } from "../utils";
+import { QuestlistEditorContextProvider } from "../context/QuestlistEditorContext";
+
+interface SaveQuestlistPayload {
+  folder: string;
+  questlists: QuestlistFile[];
+}
+
+interface QuestlistEditorProps {
+    children: React.ReactNode;
+}
+
+function QuestlistEditor({ children }: QuestlistEditorProps) {
+  const [questlistPath, setQuestlistPath] = useState<string | null>(null);
+  const [quests, setQuests] = useState<QuestInfo[] | undefined>(undefined);
+  const [lastQuestlistFolder, setLastQuestlistFolder] = useState<string | undefined>(undefined);
+  const [lastQuestFolder, setlastQuestFolder] = useState<string | undefined>(undefined);
+  const data = useMemo(() => ({ quests: quests || [] }), [quests]);
+
+  const handleSaveQuestlist = async (values: QuestInfo[]) => {
+    if (!questlistPath || !values) return;
+    const folder = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder }) as string;
+    if (!folder) return;
+
+    const data = [...values];
+    const questlists: QuestlistFile[] = [];
+
+    let i = 0;
+    while (data.length > 0) {
+      const items = data.splice(0, 42);
+
+      questlists.push({
+        filename: `list_${i}`,
+        offset: i,
+        quests: items
+      });
+
+      i += 42;
+    }
+
+    const payload: SaveQuestlistPayload = {
+      folder,
+      questlists
+    };
+
+    const response: string = await invoke("save_all_questlists", {
+      event: JSON.stringify(payload),
+    });
+
+    const resData = JSON.parse(response);
+    if (resData?.error) {
+      toast.error(`Failed to save questlists: ${resData.error}`);
+      return;
+    }
+
+    toast.success('Successfully saved questlist!');
+  };
+
+  const loadQuestlists = async () => {
+    try {
+      const path = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder });
+      if (!path) return;
+
+      const response: string = await invoke("read_all_questlist", {
+        event: path,
+      });
+
+      const questlists = JSON.parse(response);
+      if (questlists && questlists.error) {
+        toast.error(`Failed to read file: ${questlists.error}`);
+        return;
+      }
+
+      console.log('questlists: ', questlists);
+      setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
+        acc.push(...cur.quests);
+        return acc;
+      }, []));
+      setLastQuestlistFolder(path as string);
+      setQuestlistPath(path as string);
+      toast.success('Quest file read successfully!');
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
+  const getQuestFromFile = async (path: string): Promise<QuestInfo | null> => {
+    try {
+      const response: string = await invoke("read_questinfo", {
+        event: path,
+      });
+
+      const questInfo = JSON.parse(response);
+      if (questInfo && questInfo.error) {
+        toast.error(`Failed to read file: ${questInfo.error}`);
+        return null;
+      }
+      toast.success('Quest file read successfully!');
+      return questInfo;
+    } catch (error) {
+      console.error("error ", error);
+    }
+    return null;
+  }
+
+  const getQuestsFromFile = async (): Promise<QuestInfo[]> => {
+    try {
+      const path = await open({ multiple: true, defaultPath: lastQuestFolder });
+      if (!path) return [];
+      const paths = Array.isArray(path) ? path : [path];
+      const quests: QuestInfo[] = [];
+      for (let i=0; i < paths.length; i+=1) {
+        const quest = await getQuestFromFile(paths[i]);
+        if (quest) quests.push(quest);
+      }
+
+      setlastQuestFolder(paths[0].substring(0, paths[0].lastIndexOf("\\")));
+      return quests;
+    } catch (error) {
+      console.error("error ", error);
+    }
+    return [];
+  }
+
+  return (
+    <QuestlistEditorContextProvider
+      data={data}
+      handleSaveQuestlist={handleSaveQuestlist}
+      isLoadedQuestlists={!!quests}
+      loadQuestlists={loadQuestlists}
+      getQuestsFromFile={getQuestsFromFile}
+    >
+      {children}
+    </QuestlistEditorContextProvider>
+  );
+}
+
+export default QuestlistEditor;
