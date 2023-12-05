@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Button } from "../components/Button";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { SelectField } from "../components/Select";
-import { UnknownField } from "../components/UnknownFields";
-import { useEditor } from "../context/EditorContext";
-import { QuestInfoHeader, quest_category, quest_mark } from "../utils";
+import { Button } from "../../components/Button";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { SelectField } from "../../components/Select";
+import { UnknownField } from "../../components/UnknownFields";
+import { useEditor } from "../../context/EditorContext";
+import { QuestInfoHeader, quest_category, quest_mark } from "../../utils";
 
 export function ExportToQuestlistTab() {
   const { form, handleExportQuestInfo } = useEditor();

@@ -2,14 +2,14 @@ import classNames from "classnames";
 import { useWatch } from "react-hook-form";
 import { MdDelete } from "react-icons/md";
 import { createFilter } from "react-select";
-import { Button } from "../components/Button";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { SelectField } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
-import { monster_options } from "../utils";
-import { item_options } from "../utils/items";
-import { ActionButton } from "./questlist/QuestlistTab/QuestlistRow";
+import { Button } from "../../components/Button";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { SelectField } from "../../components/Select";
+import { useEditor } from "../../context/EditorContext";
+import { monster_options } from "../../utils";
+import { item_options } from "../../utils/items";
+import { ActionButton } from "../questlist/QuestlistTab/QuestlistRow";
 
 export function RewardsTab() {
   const { form } = useEditor();

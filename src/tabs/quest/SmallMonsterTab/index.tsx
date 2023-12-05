@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
-import { Button } from "../../components/Button";
-import { GroupCard } from "../../components/CardGroup";
-import { InputField } from "../../components/Input";
-import { useEditor } from "../../context/EditorContext";
-import { findMap } from "../../utils";
+import { Button } from "../../../components/Button";
+import { GroupCard } from "../../../components/CardGroup";
+import { InputField } from "../../../components/Input";
+import { useEditor } from "../../../context/EditorContext";
+import { findMap } from "../../../utils";
 import { MapSection } from "./MapSection";
 import { SmallMonsterEdit, SmallMonsterIndex } from "./SmallMonsterEdit";
 

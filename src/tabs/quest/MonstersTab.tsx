@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
-import { Button } from "../components/Button";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { MonsterCard } from "../components/MonsterCard";
-import { SelectField } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
-import { findMap, getStageName, monsters, quest_type_options } from "../utils";
+import { Button } from "../../components/Button";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { MonsterCard } from "../../components/MonsterCard";
+import { SelectField } from "../../components/Select";
+import { useEditor } from "../../context/EditorContext";
+import { findMap, getStageName, monsters, quest_type_options } from "../../utils";
 
 export function MonstersTab() {
   const { form } = useEditor();

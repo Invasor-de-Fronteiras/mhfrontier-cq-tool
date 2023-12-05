@@ -1,11 +1,11 @@
 import { useWatch } from "react-hook-form";
 import { createFilter } from "react-select";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { SelectField } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { SelectField } from "../../components/Select";
+import { useEditor } from "../../context/EditorContext";
 
-import { item_options } from "../utils/items";
+import { item_options } from "../../utils/items";
 
 export function SupplyItemTab() {
   const { form } = useEditor();

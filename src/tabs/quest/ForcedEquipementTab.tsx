@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { createFilter } from "react-select";
-import { AllowedWeaponTypeField } from "../components/AllowedWeaponType";
-import { BitFlagsField } from "../components/BitFlags";
-import { GroupCard } from "../components/CardGroup";
-import { Checkbox } from "../components/Checkbox";
-import { Select, SelectField, SelectOption } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
-import { arms_options, chest_options, equipeTypes, head_options, legs_options, melee, meleeTypes, range, rangeTypes, waist_options } from "../utils/equips";
-import { item_options } from "../utils/items";
+import { AllowedWeaponTypeField } from "../../components/AllowedWeaponType";
+import { BitFlagsField } from "../../components/BitFlags";
+import { GroupCard } from "../../components/CardGroup";
+import { Checkbox } from "../../components/Checkbox";
+import { Select, SelectField, SelectOption } from "../../components/Select";
+import { useEditor } from "../../context/EditorContext";
+import { arms_options, chest_options, equipeTypes, head_options, legs_options, melee, meleeTypes, range, rangeTypes, waist_options } from "../../utils/equips";
+import { item_options } from "../../utils/items";
 
 const getFormValue = (option: SelectOption) => option.value + 0x8000;
 

@@ -62,9 +62,9 @@ export function Layout() {
 
   useEffect(() => {
     if (tool === 'QuestEditor') {
-      nav('/');
+      nav('/quest');
     } else {
-      nav('/questlist-load');
+      nav('/questlist/load');
     }
   }, [tool]);
 
@@ -74,7 +74,7 @@ export function Layout() {
         {
           name: "File",
           options: [
-            { name: "Load Quest", icon: BsUpload, disabled: false, uri: "/" },
+            { name: "Load Quest", icon: BsUpload, disabled: false, uri: "/quest" },
             {
               name: "Save Quest",
               icon: BsSave,
@@ -94,7 +94,7 @@ export function Layout() {
               icon: FaFileExport,
               isSubmit: false,
               disabled: !isLoadedFile,
-              uri: 'export-quest-info'
+              uri: '/quest/export-quest-info'
             },
           ],
         },
@@ -105,49 +105,49 @@ export function Layout() {
               name: "Quest Information",
               icon: BsInfoCircle,
               disabled: !isLoadedFile,
-              uri: "/quest-info",
+              uri: "/quest/quest-info",
             },
             {
               name: "Strings",
               icon: VscSymbolString,
               disabled: !isLoadedFile,
-              uri: "/strings",
+              uri: "/quest/strings",
             },
             {
               name: "Monsters",
               icon: SiMonster,
               disabled: !isLoadedFile,
-              uri: "/monsters",
+              uri: "/quest/monsters",
             },
             {
               name: "Small Monsters",
               icon: SiMonster,
               disabled: !isLoadedFile,
-              uri: "/small-monsters",
+              uri: "/quest/small-monsters",
             },
             {
               name: "Forced Equipment",
               icon: GiAbdominalArmor,
               disabled: !isLoadedFile,
-              uri: "/equipment",
+              uri: "/quest/equipment",
             },
             {
               name: "Supply Items",
               icon: BsFillWalletFill,
-              uri: "/supply-items",
+              uri: "/quest/supply-items",
               disabled: !isLoadedFile,
             },
             {
               name: "Rewards",
               icon: BsFillAwardFill,
               disabled: !isLoadedFile,
-              uri: "/rewards"
+              uri: "/quest/rewards"
             },
             {
               name: "Flags",
               icon: IoMdFlag,
               disabled: !isLoadedFile,
-              uri: "/flags"
+              uri: "/quest/flags"
             },
             {
               name: "Gathering",
@@ -183,19 +183,19 @@ export function Layout() {
             {
               name: "Map Position",
               icon: BsFillGeoFill,
-              uri: "/map-position",
+              uri: "/quest/map-position",
               disabled: false,
             },
             {
               name: "Templates",
               icon: HiTemplate,
               disabled: !isLoadedFile,
-              uri: "/apply-templates",
+              uri: "/quest/apply-templates",
             },
             {
               name: "Unknown",
               icon: BsQuestion,
-              uri: "/unknown",
+              uri: "/quest/unknown",
               disabled: !isLoadedFile,
             },
           ],
@@ -206,7 +206,7 @@ export function Layout() {
         {
           name: "File",
           options: [
-            { name: "Load Questlist", icon: BsUpload, disabled: false, uri: "/questlist-load" },
+            { name: "Load Questlist", icon: BsUpload, disabled: false, uri: "/questlist/load" },
             {
               name: "Save Questlist",
               icon: BsSave,

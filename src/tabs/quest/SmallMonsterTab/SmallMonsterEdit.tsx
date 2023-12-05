@@ -1,11 +1,11 @@
 import { useWatch } from "react-hook-form";
-import { Button } from "../../components/Button";
-import { GroupCard } from "../../components/CardGroup";
-import { InputField } from "../../components/Input";
-import { SelectField } from "../../components/Select";
-import { UnknownField } from "../../components/UnknownFields";
-import { useEditor } from "../../context/EditorContext";
-import { monster_options } from "../../utils";
+import { Button } from "../../../components/Button";
+import { GroupCard } from "../../../components/CardGroup";
+import { InputField } from "../../../components/Input";
+import { SelectField } from "../../../components/Select";
+import { UnknownField } from "../../../components/UnknownFields";
+import { useEditor } from "../../../context/EditorContext";
+import { monster_options } from "../../../utils";
 
 export interface SmallMonsterIndex {
   mapZoneIndex: number;

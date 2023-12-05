@@ -1,7 +1,7 @@
-import { Button } from "../components/Button";
-import { Dropzone } from "../components/Dropzone";
-import { useEditor } from "../context/EditorContext";
-import { maps } from "../utils";
+import { Button } from "../../components/Button";
+import { Dropzone } from "../../components/Dropzone";
+import { useEditor } from "../../context/EditorContext";
+import { maps } from "../../utils";
 
 export function LoadQuestTab() {
   const { loadQuest } = useEditor();

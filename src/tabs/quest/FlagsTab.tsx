@@ -1,9 +1,9 @@
 import { useWatch } from "react-hook-form";
-import { BitFlagsField } from "../components/BitFlags";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { SelectField } from "../components/Select";
-import { useEditor } from "../context/EditorContext";
+import { BitFlagsField } from "../../components/BitFlags";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { SelectField } from "../../components/Select";
+import { useEditor } from "../../context/EditorContext";
 
 const questTypeRaw = [
   "HR",

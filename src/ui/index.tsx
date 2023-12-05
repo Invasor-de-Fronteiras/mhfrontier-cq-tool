@@ -2,42 +2,42 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./Layout";
 import { MapPositionTab } from "../tabs/develop/MapPosition";
-import { ExportToQuestlistTab } from "../tabs/ExportToQuestlistTab";
-import { FlagsTab } from "../tabs/FlagsTab";
-import { ForcedEquipmentTab } from "../tabs/ForcedEquipementTab";
-import { LoadQuestTab } from "../tabs/LoadQuestTab";
-import { MonstersTab } from "../tabs/MonstersTab";
-import { QuestInfoTab } from "../tabs/QuestInfoTab";
+import { ExportToQuestlistTab } from "../tabs/quest/ExportToQuestlistTab";
+import { FlagsTab } from "../tabs/quest/FlagsTab";
+import { ForcedEquipmentTab } from "../tabs/quest/ForcedEquipementTab";
+import { LoadQuestTab } from "../tabs/quest/LoadQuestTab";
+import { MonstersTab } from "../tabs/quest/MonstersTab";
+import { QuestInfoTab } from "../tabs/quest/QuestInfoTab";
 import { LoadQuestlistTab } from "../tabs/questlist/LoadQuestlistTab";
 import { QuestlistTab } from "../tabs/questlist/QuestlistTab";
 import { RemoteQuestTab } from "../tabs/remote/quest/RemoteQuestTab";
 import { RemoteQuestlistTab } from "../tabs/remote/questlist/RemoteQuestlistTab";
-import { RewardsTab } from "../tabs/RewardsTab";
-import { SmallMonsterTab } from "../tabs/SmallMonsterTab";
-import { QuestStringTab } from "../tabs/StringsTab";
-import { SupplyItemTab } from "../tabs/SupplyItemTab";
+import { RewardsTab } from "../tabs/quest/RewardsTab";
+import { SmallMonsterTab } from "../tabs/quest/SmallMonsterTab";
+import { QuestStringTab } from "../tabs/quest/StringsTab";
+import { SupplyItemTab } from "../tabs/quest/SupplyItemTab";
 import { ApplyTemplateTab } from "../tabs/template/TemplateTab";
-import { UnknownTab } from "../tabs/UnknownTab";
+import { UnknownTab } from "../tabs/quest/UnknownTab";
 
 export function Ui() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<LoadQuestTab />} />
-        <Route path="/monsters" element={<MonstersTab />} />
-        <Route path="/small-monsters" element={<SmallMonsterTab />} />
-        <Route path="/equipment" element={<ForcedEquipmentTab />} />
-        <Route path="/quest-info" element={<QuestInfoTab />} />
-        <Route path="/export-quest-info" element={<ExportToQuestlistTab />} />
-        <Route path="/map-position" element={<MapPositionTab />} />
-        <Route path="/strings" element={<QuestStringTab />} />
-        <Route path="/apply-templates" element={<ApplyTemplateTab />} />
-        <Route path="/flags" element={<FlagsTab />} />
-        <Route path="/rewards" element={<RewardsTab />} />
-        <Route path="/unknown" element={<UnknownTab />} />
-        <Route path="/supply-items" element={<SupplyItemTab />} />
-        <Route path="/questlist-load" element={<LoadQuestlistTab />} />
+        <Route path="/quest" element={<LoadQuestTab />} />
+        <Route path="/quest/monsters" element={<MonstersTab />} />
+        <Route path="/quest/small-monsters" element={<SmallMonsterTab />} />
+        <Route path="/quest/equipment" element={<ForcedEquipmentTab />} />
+        <Route path="/quest/quest-info" element={<QuestInfoTab />} />
+        <Route path="/quest/export-quest-info" element={<ExportToQuestlistTab />} />
+        <Route path="/quest/map-position" element={<MapPositionTab />} />
+        <Route path="/quest/strings" element={<QuestStringTab />} />
+        <Route path="/quest/apply-templates" element={<ApplyTemplateTab />} />
+        <Route path="/quest/flags" element={<FlagsTab />} />
+        <Route path="/quest/rewards" element={<RewardsTab />} />
+        <Route path="/quest/unknown" element={<UnknownTab />} />
+        <Route path="/quest/supply-items" element={<SupplyItemTab />} />
         <Route path="/questlist" element={<QuestlistTab />} />
+        <Route path="/questlist/load" element={<LoadQuestlistTab />} />
         <Route path="/remote/quests" element={<RemoteQuestTab />} />
         <Route path="/remote/questlist" element={<RemoteQuestlistTab />} />
       </Route>

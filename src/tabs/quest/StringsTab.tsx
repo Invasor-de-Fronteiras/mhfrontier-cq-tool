@@ -1,6 +1,6 @@
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { TextAreaField } from "../components/TextArea";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { TextAreaField } from "../../components/TextArea";
 
 export function QuestStringTab() {
     return (

@@ -2,13 +2,13 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { Button } from "../../components/Button";
-import { GroupCard } from "../../components/CardGroup";
-import { InputField } from "../../components/Input";
-import { SelectField } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
-import { findMap, monster_options } from "../../utils";
-import { ActionButton } from "../questlist/QuestlistTab/QuestlistRow";
+import { Button } from "../../../components/Button";
+import { GroupCard } from "../../../components/CardGroup";
+import { InputField } from "../../../components/Input";
+import { SelectField } from "../../../components/Select";
+import { useEditor } from "../../../context/EditorContext";
+import { findMap, monster_options } from "../../../utils";
+import { ActionButton } from "../../questlist/QuestlistTab/QuestlistRow";
 import { SmallMonsterIndex } from "./SmallMonsterEdit";
 
 interface MapSectionProps {

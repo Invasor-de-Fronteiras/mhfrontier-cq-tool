@@ -1,7 +1,7 @@
-import { useEditor } from "../context/EditorContext";
+import { useEditor } from "../../context/EditorContext";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
-import { isObject } from "../utils/util";
+import { isObject } from "../../utils/util";
 import { Controller, useWatch } from "react-hook-form";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,12 +1,12 @@
 import { createFilter } from "react-select";
-import { GroupCard } from "../components/CardGroup";
-import { InputField } from "../components/Input";
-import { ObjectiveCard } from "../components/Objective";
-import { PlayerSpawn } from "../components/PlayerSpawn";
-import { SelectField } from "../components/Select";
-import { locale_flags, monster_options } from "../utils";
-import { item_options } from "../utils/items";
-import { requirements } from "../utils/requirements";
+import { GroupCard } from "../../components/CardGroup";
+import { InputField } from "../../components/Input";
+import { ObjectiveCard } from "../../components/Objective";
+import { PlayerSpawn } from "../../components/PlayerSpawn";
+import { SelectField } from "../../components/Select";
+import { locale_flags, monster_options } from "../../utils";
+import { item_options } from "../../utils/items";
+import { requirements } from "../../utils/requirements";
 
 export function QuestInfoTab() {
   return (
