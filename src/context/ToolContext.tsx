@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { createContext } from "react";
 
 export interface ToolState {
     tool: string;
     setTool: (value: string) => void;
+    tools: string[];
 }
 
 interface ToolContextProps {
@@ -16,9 +17,15 @@ export function ToolContextProvider({
   children,
 }: ToolContextProps) {
   const [tool, setTool] = useState('QuestEditor');
+
+  const tools = useMemo(() => ([
+    'QuestEditor',
+    'QuestlistEditor',
+    'RemoteEditor',
+  ]), []);
   
   return (
-    <context.Provider value={{ tool, setTool }}>{children}</context.Provider>
+    <context.Provider value={{ tool, setTool, tools }}>{children}</context.Provider>
   );
 }
 

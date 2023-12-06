@@ -1,6 +1,6 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { Layout } from "./Layout";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { Layout } from "./Layout/Layout";
 import { MapPositionTab } from "../tabs/develop/MapPosition";
 import { ExportToQuestlistTab } from "../tabs/quest/ExportToQuestlistTab";
 import { FlagsTab } from "../tabs/quest/FlagsTab";
@@ -18,11 +18,13 @@ import { QuestStringTab } from "../tabs/quest/StringsTab";
 import { SupplyItemTab } from "../tabs/quest/SupplyItemTab";
 import { ApplyTemplateTab } from "../tabs/template/TemplateTab";
 import { UnknownTab } from "../tabs/quest/UnknownTab";
+import { MenuProvider } from "./Menu/MenuContext";
 
 export function Ui() {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={<MenuProvider><Layout /></MenuProvider>}>
+        <Route path="/" element={<Navigate to="/" replace />} />
         <Route path="/quest" element={<LoadQuestTab />} />
         <Route path="/quest/monsters" element={<MonstersTab />} />
         <Route path="/quest/small-monsters" element={<SmallMonsterTab />} />
