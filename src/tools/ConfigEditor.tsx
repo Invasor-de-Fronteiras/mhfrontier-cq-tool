@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Config, ConfigContextProvider, DBConfig } from "../context/ConfigContext";
-import { getConfig } from "../events";
+import events from "../events";
 
 interface ConfigEditorProps {
     children: React.ReactNode;
@@ -11,7 +11,7 @@ function ConfigEditor({ children }: ConfigEditorProps) {
   const [dbSelected, setDBSelected] = useState<DBConfig | null>(null);
 
   useEffect(() => {
-    getConfig()
+    events.db.getConfig()
         .then(v => {
             setConfig(v)
         })

@@ -1,9 +1,7 @@
-use std::io::Result;
-
 use crate::editor::questlist::{quest_info::QuestInfo, questlist_file::QuestlistFile};
 use serde::{Deserialize, Serialize};
 
-use super::utils::{wrap_json_result, wrap_result};
+use super::utils::EventResponse;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 struct SaveQuestlistPayload {
@@ -14,26 +12,24 @@ struct SaveQuestlistPayload {
 #[tauri::command]
 pub fn read_all_questlist(event: String) -> String {
     let result = QuestlistFile::read_all_questlist(&event);
-    wrap_json_result(result)
+    EventResponse::from_result_data(result).to_string()
 }
 
 #[tauri::command]
 pub fn read_questinfo(event: String) -> String {
     let result = QuestInfo::from_questfile(&event);
-    wrap_json_result(result)
+    EventResponse::from_result_data(result).to_string()
 }
 
 #[tauri::command]
 pub fn save_all_questlists(event: String) -> String {
-    let result = || -> Result<String> {
-        let mut payload = serde_json::from_str::<SaveQuestlistPayload>(&event)?;
-        QuestlistFile::save_all_questlist(&payload.folder, &mut payload.questlists)?;
-
-        Ok(String::from("{ \"status\": \"Success\" }"))
-    };
-
-    match result() {
-        Ok(response) => response,
-        Err(error) => wrap_result(error.to_string(), true),
+    let event_payload = serde_json::from_str::<SaveQuestlistPayload>(&event);
+    
+    match event_payload {
+        Ok(mut payload) => {
+            let result = QuestlistFile::save_all_questlist(&payload.folder, &mut payload.questlists);
+            EventResponse::from_result(result).to_string()
+        },
+        Err(error) => EventResponse::payload_error(error.to_string()).to_string(),
     }
 }

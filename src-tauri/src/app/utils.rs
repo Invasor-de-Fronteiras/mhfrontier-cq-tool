@@ -3,31 +3,82 @@ use std::fmt::Display;
 use serde::Serialize;
 
 #[derive(Serialize)]
-pub struct ErrorResponse {
-    error: String,
+pub struct EventResponse<T: Serialize = ()> {
+    pub success: bool,
+    pub data: Option<T>,
+    pub error: Option<String>
 }
 
-pub fn wrap_result(message: String, has_error: bool) -> String {
-    if has_error {
-        let error = ErrorResponse { error: message };
+impl EventResponse<()> {
 
-        if let Ok(result) = serde_json::to_string_pretty(&error) {
-            return result;
-        } else {
-            return "{ \"error\": \"unexpected error\" }".to_string();
+    pub fn success() -> EventResponse<()> {
+        EventResponse::<()> {
+            success: true,
+            data: None,
+            error: None
         }
     }
 
-    message
+    pub fn error(error: String) -> EventResponse<()> {
+        EventResponse::<()> {
+            success: false,
+            data: None,
+            error: Some(error)
+        }
+    }
+
+    pub fn payload_error(error: String) -> EventResponse<()> {
+        let message = format!("Payload error: {}", error);
+        EventResponse::error(message)
+    }
+
+    pub fn from_result<E: std::fmt::Display>(result: Result<(), E>) -> EventResponse<()> {
+        match result {
+            Ok(_) => EventResponse::success(),
+            Err(error) => EventResponse::error(error.to_string())
+        }
+    }
 }
 
-pub fn wrap_json_result<T: Serialize, E: std::fmt::Display>(result: Result<T, E>) -> String {
-    match result {
-        Ok(data) => match serde_json::to_string_pretty(&data) {
-            Ok(text) => text,
-            Err(error) => wrap_result(error.to_string(), true),
-        },
-        Err(error) => wrap_result(error.to_string(), true),
+impl <T: Serialize> EventResponse<T> {
+
+    pub fn from_result_data<E: std::fmt::Display>(result: Result<T, E>) -> EventResponseResult<T> {
+        match result {
+            Ok(data) => EventResponseResult::Ok(EventResponse::success_with_data(data)),
+            Err(error) => EventResponseResult::Err(EventResponse::error(error.to_string()))
+        }
+    }
+
+    pub fn success_with_data(data: T) -> EventResponse<T> {
+        EventResponse::<T> {
+            success: true,
+            data: Some(data),
+            error: None
+        }
+    }
+
+    pub fn to_string(&self) -> String {
+        if let Ok(result) = serde_json::to_string_pretty(self) {
+            return result;
+        }
+
+        return "{ \"success\": false, \"error\": \"unexpected error\" }".to_string();
+    }
+
+}
+
+pub enum EventResponseResult<T: Serialize> {
+    Ok(EventResponse<T>),
+    Err(EventResponse<()>)
+}
+
+impl <T: Serialize> EventResponseResult<T> {
+    
+    pub fn to_string(&self) -> String {
+        match self {
+            EventResponseResult::Ok(response) => response.to_string(),
+            EventResponseResult::Err(response) => response.to_string(),
+        }
     }
 }
 

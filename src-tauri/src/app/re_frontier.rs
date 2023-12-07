@@ -1,8 +1,8 @@
-use std::{io::Result, process::Command};
+use std::{process::Command, env};
 
 use serde::{Deserialize, Serialize};
 
-use super::utils::wrap_result;
+use super::utils::EventResponse;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct ReFrontierPayload {
@@ -12,29 +12,38 @@ pub struct ReFrontierPayload {
 
 #[tauri::command]
 pub fn re_frontier(event: String) -> String {
-    let result = || -> Result<String> {
-        let mut payload = serde_json::from_str::<ReFrontierPayload>(&event)?;
+    let event_payload = serde_json::from_str::<ReFrontierPayload>(&event);
 
-        let is_windows = cfg!(target_os = "windows");
+    match event_payload {
+        Ok(payload) => {
+            let is_windows = cfg!(target_os = "windows");
 
-        if !is_windows {
-            return Ok(String::from(
-                "{ \"message\": \"This feature only works on Windows\" }",
-            ));
-        }
+            if !is_windows {
+                return EventResponse::error(String::from("This feature only works on Windows")).to_string();
+            }
 
-        let output = Command::new("C:\\Users\\raina_py7xzzm\\OneDrive\\Área de Trabalho\\arca\\repos\\mhfrontier-cq-tool\\app\\src-tauri\\ReFrontier\\ReFrontier.exe")
-            .args([payload.filepath])
-            .output()?;
+            let refrontier_path = env::current_dir()
+                .unwrap()
+                .join("ReFrontier")
+                .join("ReFrontier.exe");
 
-        let message = String::from_utf8_lossy(&output.stdout).to_string();
+            let result = Command::new(refrontier_path)
+                .args([payload.filepath])
+                .output();
 
-        let result = serde_json::json!({ "message": message });
-        Ok(result.to_string())
-    };
+            match result {
+                Ok(output) => {                    
+                    if output.stderr.len() > 0 {
+                        let error = String::from_utf8_lossy(&output.stderr).to_string();
+                        return EventResponse::error(error).to_string();
+                    }
 
-    match result() {
-        Ok(response) => response,
-        Err(error) => wrap_result(error.to_string(), true),
+                    let message = String::from_utf8_lossy(&output.stdout).to_string();
+                    EventResponse::success_with_data(message).to_string()
+                },
+                Err(error) => EventResponse::error(error.to_string()).to_string(),
+            }
+        },
+        Err(error) => EventResponse::payload_error(error.to_string()).to_string()
     }
 }

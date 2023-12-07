@@ -3,9 +3,7 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { open, save } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
-import { exportQuestInfo } from "../events";
-import * as db from '../events/db';
-import * as questEvents from '../events/quest';
+import events from "../events";
 import { QuestFile, QuestInfo, getPeriotFromQuestTypeFlags, getSeasonFromQuestTypeFlags } from "../utils";
 import { useDatabaseSelected } from "../context/ConfigContext";
 import { EditorContextProvider } from "../context/EditorContext";
@@ -23,14 +21,14 @@ function QuestEditor({ children }: QuestEditorProps) {
     if (!questPath || !data) return;
 
     try {
-      await questEvents.saveQuest({
+      await events.quest.saveQuest({
         filepath: questPath,
         quest: data
       });
 
       toast.success('Successfully saved quest file!');
     } catch(err) {
-      toast.error(`Failed to save file: ${err}`);
+      toast.error(`Failed to save quest file: ${err}`);
     }
   };
 
@@ -39,26 +37,14 @@ function QuestEditor({ children }: QuestEditorProps) {
       const path = filepath || await open({ multiple: false });
       if (!path) return false;
 
-      const response: string = await invoke("read_quest_file", {
-        event: path,
-      });
+      const quest = await events.quest.readQuest(path as string);
 
-      const quest = JSON.parse(response);
-      if (quest && quest.error) {
-        toast.error(`Failed to read file: ${quest.error}`);
-        // setError(quest.error);
-        console.error("response ", response);
-        return false;
-      }
-      console.log('quest: ', quest);
-
-      setFile(quest as QuestFile);
+      setFile(quest);
       setQuestPath(path as string);
       toast.success('Quest file read successfully!');
       return true;
     } catch (error) {
-      console.error("error ", error);
-      toast.error(`Failed to read quest: ${error}`);
+      toast.error(`Failed to read quest file: ${error}`);
     }
 
     return false;
@@ -66,36 +52,17 @@ function QuestEditor({ children }: QuestEditorProps) {
 
   const reFrontier = async () => {
     try {
-      console.log('step 1');
       const filePath = await open({ multiple: false });
       if (!filePath) return;
 
-      console.log('step 2');
-      const response: string = await invoke("re_frontier", {
-        event: JSON.stringify({
-          filepath: filePath,
-          re_frontier_path: "./ReFrontier/ReFrontier.exe"
-        })
+      const message = await events.refrontier.refrontier(filePath as string);
+      const messages = message.split('==============================');
+      messages.forEach(v => {
+        toast.success(v);
       });
 
-      console.log('step 3');
-      console.log('response: ', response);
-
-      const result = JSON.parse(response) as { message: string, error?: string };
-      if (result && result.error) {
-        toast.error(`Failed to execute ReFrontier: ${result.error}`);
-        return;
-      }
-
-      console.log('step 4');
-      console.log('response: ', result.message);
-      const messages = result.message.split('==============================');
-      toast.success(messages[1]);
-      toast.success(messages[2]);
-      console.log('step 5');
-
     } catch (error) {
-      console.error("error ", error);
+      toast.error(`Failed to execute ReFrontier: ${error}`);
     }
   };
 
@@ -105,7 +72,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       const filepath = await save({ defaultPath: questPath.replace('.bin', '-info.bin') });
       if (!filepath) return;
 
-      await exportQuestInfo({ quest_info: data, filepath: filepath as string });
+      await events.quest.exportQuestInfo({ quest_info: data, filepath: filepath as string });
       toast.success('Quest exported successfully!');
     } catch (error) {
       toast.error(`Failed to export quest info: ${error}`);
@@ -119,7 +86,7 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
 
     try {
-      await questEvents.saveQuest({
+      await events.quest.saveQuest({
         filepath: questPath,
         quest: data
       });
@@ -127,7 +94,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       const period = getPeriotFromQuestTypeFlags(data.quest_type_flags);
       const season = getSeasonFromQuestTypeFlags(data.quest_type_flags);
 
-      await db.insertOrUpdateQuest({
+      await events.db.insertOrUpdateQuest({
         db_config: dbSelected,
         quest_id: data.quest_type_flags.main_quest_prop.quest_id,
         period,
@@ -135,7 +102,7 @@ function QuestEditor({ children }: QuestEditorProps) {
         quest_filepath: questPath
       });
 
-      const questlist = await db.getQuestInfo({
+      const questlist = await events.db.getQuestInfo({
         db_config: dbSelected,
         quest_id: data.quest_type_flags.main_quest_prop.quest_id,
         period,
@@ -143,7 +110,7 @@ function QuestEditor({ children }: QuestEditorProps) {
       });
 
       if (questlist) {
-        await db.insertOrUpdateQuestlist({
+        await events.db.insertOrUpdateQuestlist({
           db_config: dbSelected,
           options: {
             enable: questlist.enable,

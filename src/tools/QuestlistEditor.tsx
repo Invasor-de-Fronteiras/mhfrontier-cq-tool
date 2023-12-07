@@ -5,6 +5,7 @@ import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
 import { QuestInfo, QuestlistFile } from "../utils";
 import { QuestlistEditorContextProvider } from "../context/QuestlistEditorContext";
+import events from "../events";
 
 interface SaveQuestlistPayload {
   folder: string;
@@ -43,67 +44,44 @@ function QuestlistEditor({ children }: QuestlistEditorProps) {
       i += 42;
     }
 
-    const payload: SaveQuestlistPayload = {
-      folder,
-      questlists
-    };
+    try {
+      await events.questlist.saveQuestlist({
+        folder,
+        questlists
+      });
 
-    const response: string = await invoke("save_all_questlists", {
-      event: JSON.stringify(payload),
-    });
-
-    const resData = JSON.parse(response);
-    if (resData?.error) {
-      toast.error(`Failed to save questlists: ${resData.error}`);
-      return;
+      toast.success('Successfully saved questlist!');
+    } catch(err) {
+      toast.error(`Failed to save questlists: ${err}`);
     }
-
-    toast.success('Successfully saved questlist!');
   };
 
   const loadQuestlists = async () => {
+    const path = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder });
+    if (!path) return;
+    
     try {
-      const path = await open({ multiple: false, directory: true, defaultPath: lastQuestlistFolder });
-      if (!path) return;
-
-      const response: string = await invoke("read_all_questlist", {
-        event: path,
-      });
-
-      const questlists = JSON.parse(response);
-      if (questlists && questlists.error) {
-        toast.error(`Failed to read file: ${questlists.error}`);
-        return;
-      }
-
-      console.log('questlists: ', questlists);
+      const questlists = await events.questlist.readQuestlist(path as string);
       setQuests((questlists as QuestlistFile[]).reduce<QuestInfo[]>((acc, cur) => {
         acc.push(...cur.quests);
         return acc;
       }, []));
+
       setLastQuestlistFolder(path as string);
       setQuestlistPath(path as string);
-      toast.success('Quest file read successfully!');
+      toast.success('Questlist read successfully!');
     } catch (error) {
-      console.error("error ", error);
+      toast.error(`Failed to read file: ${error}`);
     }
   };
 
   const getQuestFromFile = async (path: string): Promise<QuestInfo | null> => {
     try {
-      const response: string = await invoke("read_questinfo", {
-        event: path,
-      });
-
-      const questInfo = JSON.parse(response);
-      if (questInfo && questInfo.error) {
-        toast.error(`Failed to read file: ${questInfo.error}`);
-        return null;
-      }
+      const questInfo = await events.questlist.readQuestInfo(path);
       toast.success('Quest file read successfully!');
       return questInfo;
     } catch (error) {
-      console.error("error ", error);
+      toast.error(`Failed to read file: ${error}`);
     }
     return null;
   }

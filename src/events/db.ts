@@ -1,47 +1,18 @@
-import { invoke } from "@tauri-apps/api";
 import { Config, DBConfig } from "../context/ConfigContext";
 import { QuestDB, QuestDBQueryOptions, QuestInfo, QuestlistDB, QuestlistDBOptions, QuestlistDBQueryOptions, QuestlistDBWithInfo } from "../utils";
+import { invokeEvent } from "./core";
 
 interface ImportQuestlistPayload {
     db_config: DBConfig;
     filepath: string;
 }
 
-interface Result {
-    status: string;
-    error?: string;
-}
-
 export const getConfig = async (): Promise<Config | null> => {
-    const response: string = await invoke("get_config");
-
-    try {
-        if (!response) {
-            return null;
-        }
-
-        return JSON.parse(response) as Config
-    } catch {
-        return null;
-    }
+    return invokeEvent('get_config');
 }
 
 export const importQuestlists = async (payload: ImportQuestlistPayload): Promise<void> => {
-    const response: string = await invoke("db_import_questlist", {
-        event: JSON.stringify(payload)
-    });
-
-    try {
-        if (!response) {
-            throw Error("No response!");
-        }
-        const result = JSON.parse(response) as Result;
-        if (result.status !== "Success" || result.error) {
-            throw Error(result.error);
-        }
-    } catch(error) {
-        throw error;
-    }
+    return invokeEvent('db_import_questlist', payload);
 }
 
 interface ImportQuestsPayload {
@@ -50,18 +21,7 @@ interface ImportQuestsPayload {
 }
 
 export const importQuests = async (payload: ImportQuestsPayload): Promise<void> => {
-    const response: string = await invoke("db_import_quests", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-
-    const result = JSON.parse(response) as Result;
-    if (result.status !== "Success" || result.error) {
-        throw Error(result.error);
-    }
+    return invokeEvent('db_import_quests', payload);
 }
 
 interface DownloadQuestPayload {
@@ -73,20 +33,8 @@ interface DownloadQuestPayload {
 }
 
 export const downloadQuest = async (payload: DownloadQuestPayload): Promise<boolean> => {
-    const response: string = await invoke("db_download_quest", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-
-    const result = JSON.parse(response) as Result;
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
-
-    return result.status === "Success";
+    await invokeEvent('db_download_quest', payload);
+    return true;
 }
 
 interface GetQuestInfoPayload {
@@ -97,37 +45,11 @@ interface GetQuestInfoPayload {
 }
 
 export const getQuestInfo = async (payload: GetQuestInfoPayload): Promise<QuestlistDBWithInfo | null> => {
-    const response: string = await invoke("db_get_questlist_info", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-
-    const result = JSON.parse(response);
-    if (result && (result as Result).error) {
-        throw Error(result.error);
-    }
-
-    return result as QuestlistDBWithInfo;
+    return invokeEvent('db_get_questlist_info', payload);
 }
 
 export const getQuestInfoFromQuest = async (payload: GetQuestInfoPayload): Promise<QuestInfo | null> => {
-    const response: string = await invoke("db_get_quest_info_from_quest", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-
-    const result = JSON.parse(response);
-    if (result && (result as Result).error) {
-        throw Error(result.error);
-    }
-
-    return result as QuestInfo;
+    return invokeEvent('db_get_quest_info_from_quest', payload);
 }
 
 
@@ -137,39 +59,11 @@ interface GetQuestsPayload {
 }
 
 export const getQuests = async (payload: GetQuestsPayload): Promise<QuestDB[]> => {
-    const response: string = await invoke("db_get_quests", {
-        event: JSON.stringify(payload)
-    });
-
-    try {
-        if (!response) {
-            throw Error("No response!");
-        }
-        const result = JSON.parse(response);
-        if ((result as Result).error) {
-            throw Error(result.error);
-        }
-
-        return result as QuestDB[];
-    } catch(error) {
-        throw error;
-    }
+    return invokeEvent('db_get_quests', payload);
 }
 
 export const countQuests = async (payload: GetQuestsPayload): Promise<number> => {
-    const response: string = await invoke("db_count_quests", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-    const result = JSON.parse(response);
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
-
-    return result as number;
+    return invokeEvent('db_count_quests', payload);
 }
 
 interface InsertOrUpdateQuestPayload {
@@ -181,17 +75,7 @@ interface InsertOrUpdateQuestPayload {
 }
 
 export const insertOrUpdateQuest = async (payload: InsertOrUpdateQuestPayload): Promise<void> => {
-    const response: string = await invoke("db_insert_or_update_quest", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-    const result = JSON.parse(response);
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
+    return invokeEvent('db_insert_or_update_quest', payload);
 }
 
 
@@ -201,39 +85,11 @@ interface GetQuestlistPayload {
 }
 
 export const getQuestlists = async (payload: GetQuestlistPayload): Promise<QuestlistDB[]> => {
-    const response: string = await invoke("db_get_questlists", {
-        event: JSON.stringify(payload)
-    });
-
-    try {
-        if (!response) {
-            throw Error("No response!");
-        }
-        const result = JSON.parse(response);
-        if ((result as Result).error) {
-            throw Error(result.error);
-        }
-
-        return result as QuestlistDB[];
-    } catch(error) {
-        throw error;
-    }
+    return invokeEvent('db_get_questlists', payload);
 }
 
 export const countQuestlist = async (payload: GetQuestlistPayload): Promise<number> => {
-    const response: string = await invoke("db_count_questlist", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-    const result = JSON.parse(response);
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
-
-    return result as number;
+    return invokeEvent('db_count_questlist', payload);
 }
 
 interface InsertOrUpdateQuestlistPayload {
@@ -243,18 +99,7 @@ interface InsertOrUpdateQuestlistPayload {
 }
 
 export const insertOrUpdateQuestlist = async (payload: InsertOrUpdateQuestlistPayload): Promise<void> => {
-    
-    const response: string = await invoke("db_insert_or_update_questlist", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-    const result = JSON.parse(response);
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
+    return invokeEvent('db_insert_or_update_questlist', payload);
 }
 
 interface UpdateQuestlistOptionsPayload {
@@ -266,15 +111,5 @@ interface UpdateQuestlistOptionsPayload {
 }
 
 export const updateQuestlistOptions = async (payload: UpdateQuestlistOptionsPayload): Promise<void> => {
-    const response: string = await invoke("db_update_questlist_options", {
-        event: JSON.stringify(payload)
-    });
-
-    if (!response) {
-        throw Error("No response!");
-    }
-    const result = JSON.parse(response);
-    if ((result as Result).error) {
-        throw Error(result.error);
-    }
+    return invokeEvent('db_update_questlist_options', payload);
 }
