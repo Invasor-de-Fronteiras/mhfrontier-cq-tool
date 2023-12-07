@@ -1,9 +1,4 @@
-use super::file_end::{FILE_END_P1, FILE_END_P2, FILE_END_P3};
-use super::last_file_end::last_file_end_p1::LAST_FILE_END_P1;
-use super::last_file_end::last_file_end_p2::LAST_FILE_END_P2;
-use super::last_file_end::last_file_end_p3::LAST_FILE_END_P3;
 use super::quest_info::QuestInfo;
-use super::questlist_header::{QuestlistHeader, QUEST_END};
 use crate::editor::file::reader::FileReader;
 use crate::editor::file::writer::FileWriter;
 use serde::{Deserialize, Serialize};
@@ -24,7 +19,7 @@ impl QuestlistFile {
         let quest_count = reader.read_u16_be()?;
         let mut quests: Vec<QuestInfo> = vec![];
 
-        for i in 0..quest_count {
+        for _ in 0..quest_count {
             let quest = QuestInfo::from_questlist(&mut reader)?;
             quests.push(quest);
         }
@@ -91,7 +86,6 @@ impl QuestlistFile {
     }
 
     pub fn save_all_questlist(path: &str, questlists: &mut Vec<QuestlistFile>) -> Result<()> {
-        let last_index = questlists.len() - 1;
         let total = questlists
             .iter()
             .fold(0u16, |acc, cur| acc + cur.quests.len() as u16);
