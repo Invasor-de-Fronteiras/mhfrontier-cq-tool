@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { ComponentProps } from "react";
-import { Control, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { QuestFile } from "../utils";
 
 interface CheckboxProps extends Omit<ComponentProps<"input">, 'value' | 'onChange'> {
@@ -31,27 +30,24 @@ export function Checkbox({ label, name, value, onChange, ...rest }: CheckboxProp
     );
 }
 
-interface CheckboxFieldProps<T = QuestFile> extends CheckboxProps {
+interface CheckboxFieldProps<T extends FieldValues = QuestFile> extends CheckboxProps {
     /**
      * Path reference to the value in the form data.
      */
     name: Path<T>;
-    control?: Control<T>;
+    control: Control<T>;
 }
 
-export function CheckboxField<T>({
+export function CheckboxField<T extends FieldValues>({
     name,
     defaultValue,
     control,
     type,
     ...props
 }: CheckboxFieldProps<T>) {
-    const { form } = useEditor();
     const { field } = useController({
-        // @ts-ignore
         name,
-        // @ts-ignore
-        control: control ?? form.control,
+        control
     });
 
     // @ts-ignore

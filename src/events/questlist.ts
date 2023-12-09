@@ -1,5 +1,4 @@
-import { prepareQuest } from "../utils/prepare";
-import { QuestFile, QuestInfo, QuestlistFile } from "../utils";
+import { QuestInfo, QuestlistFile } from "../utils";
 import { invokeEvent } from "./core";
 
 interface SaveQuestlistPayload {

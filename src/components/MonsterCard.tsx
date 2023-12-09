@@ -22,7 +22,7 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
   const { form } = useEditor();
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
   const data = useWatch({
-    name: `large_monster_spawns.${index}`,
+    name: `large_monsters.large_monster_spawns.${index}`,
     control: form.control,
   });
 
@@ -50,7 +50,7 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
         isClearable
         onClearValue={65535}
         control={form.control}
-        name={`large_monster_spawns.${index}.monster_id`}
+        name={`large_monsters.large_monster_spawns.${index}.monster_id`}
         value={monsterSelected || null}
       />
       <SelectField
@@ -59,7 +59,7 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
         isClearable
         onClearValue={0}
         control={form.control}
-        name={`large_monster_spawns.${index}.spawn_stage`}
+        name={`large_monsters.large_monster_spawns.${index}.spawn_stage`}
         value={stageSelected || null}
       />
       <div className="flex flex-wrap">
@@ -68,15 +68,18 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
           <div className="flex flex-col flex-wrap">
             <PosInputField
               label="X"
-              name={`large_monster_spawns.${index}.x_position`}
+              name={`large_monsters.large_monster_spawns.${index}.x_position`}
+              control={form.control}
             />
             <PosInputField
               label="Y"
-              name={`large_monster_spawns.${index}.y_position`}
+              name={`large_monsters.large_monster_spawns.${index}.y_position`}
+              control={form.control}
             />
             <PosInputField
               label="Z"
-              name={`large_monster_spawns.${index}.z_position`}
+              name={`large_monsters.large_monster_spawns.${index}.z_position`}
+              control={form.control}
             />
           </div>
           <MapPreview
@@ -90,7 +93,7 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
               },
             ]}
             onChange={(obj) =>
-              form.setValue(`large_monster_spawns.${index}`, {
+              form.setValue(`large_monsters.large_monster_spawns.${index}`, {
                 ...data,
                 x_position: obj.x,
                 z_position: obj.y,
@@ -102,7 +105,8 @@ export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
           <InputField
             label="Amount"
             type="number"
-            name={`large_monster_spawns.${index}.spawn_amount`}
+            name={`large_monsters.large_monster_spawns.${index}.spawn_amount`}
+            control={form.control}
           />
         </fieldset>
       </div>

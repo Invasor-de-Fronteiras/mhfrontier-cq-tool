@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useTool } from "../../context/ToolContext";
 import { useConfig } from "../../context/ConfigContext";
 import { Select } from "../../components/Select";

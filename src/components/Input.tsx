@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import classNames from "classnames";
 import React from "react";
-import { Control, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { QuestFile } from "../utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -45,27 +44,24 @@ export function Input({
   );
 }
 
-interface InputFieldProps<T = QuestFile> extends InputProps {
+interface InputFieldProps<T extends FieldValues = QuestFile> extends InputProps {
   /**
    * Path reference to the value in the form data.
    */
   name: Path<T>;
-  control?: Control<T>;
+  control: Control<T>;
 }
 
-export function InputField<T>({
+export function InputField<T extends FieldValues>({
   name,
   defaultValue,
   control,
   type,
   ...props
 }: InputFieldProps<T>) {
-  const { form } = useEditor();
   const { field } = useController({
-    // @ts-ignore
     name,
-    // @ts-ignore
-    control: control ?? form.control,
+    control,
   });
 
   // @ts-ignore

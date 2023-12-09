@@ -64,6 +64,7 @@ export function RewardsTab() {
           options={monster_options}
           className="mt-2 px-2"
           filterOption={createFilter({ ignoreAccents: false })}
+          control={form.control}
         />
         <SelectField
           name="quest_type_flags.rewards_focus.item1"
@@ -71,6 +72,7 @@ export function RewardsTab() {
           options={item_options}
           className="mt-2 px-2"
           filterOption={createFilter({ ignoreAccents: false })}
+          control={form.control}
         />
         <SelectField
           name="quest_type_flags.rewards_focus.item2"
@@ -78,6 +80,7 @@ export function RewardsTab() {
           options={item_options}
           className="mt-2 px-2"
           filterOption={createFilter({ ignoreAccents: false })}
+          control={form.control}
         />
         <SelectField
           name="quest_type_flags.rewards_focus.item3"
@@ -85,6 +88,7 @@ export function RewardsTab() {
           options={item_options}
           className="mt-2 px-2"
           filterOption={createFilter({ ignoreAccents: false })}
+          control={form.control}
         />
         <Button type="button" className="mt-5 mx-4" onClick={onAddTable()}>Add Table</Button>
         <Button type="button" className="mt-5 mr-4" onClick={onReorder}>Reorder</Button>
@@ -100,18 +104,21 @@ export function RewardsTab() {
               className="col-span-2"
               type="number"
               name={`rewards.${tableIndex}.table_header.table_id`}
+              control={form.control}
             />
             <InputField
               label="Unk 0"
               className="col-span-2"
               type="number"
               name={`rewards.${tableIndex}.table_header.unk_0`}
+              control={form.control}
             />
             <InputField
               label="Unk 1"
               className="col-span-2"
               type="number"
               name={`rewards.${tableIndex}.table_header.unk_1`}
+              control={form.control}
             />
             <Button type="button" onClick={onAddItem(tableIndex)} >Add Item</Button>
             <Button type="button" onClick={onRemoveTable(tableIndex)} >Remove Table</Button>
@@ -150,6 +157,7 @@ export function RewardsTab() {
                         options={item_options}
                         className="mt-2"
                         filterOption={createFilter({ ignoreAccents: false })}
+                        control={form.control}
                       />
                     </td>
                     <td className="px-6 py-3">
@@ -158,6 +166,7 @@ export function RewardsTab() {
                         className="mt-0"
                         type="number"
                         name={`rewards.${tableIndex}.items.${itemIndex}.quantity`}
+                        control={form.control}
                       />
                     </td>
                     <td className="px-6 py-3">
@@ -166,6 +175,7 @@ export function RewardsTab() {
                         className="mt-0"
                         type="number"
                         name={`rewards.${tableIndex}.items.${itemIndex}.rate`}
+                        control={form.control}
                       />
                     </td>
                     <td className="px-6 py-3">

@@ -188,6 +188,7 @@ export function ForcedEquipmentTab() {
               { bitValue: 65536, label: "Prayer Weap" },
               { bitValue: 131072, label: "Zenith Weap" },
             ]}
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Forced Equipment">
@@ -206,6 +207,7 @@ export function ForcedEquipmentTab() {
           <AllowedWeaponTypeField
             name="quest_type_flags.forced_equipement.weapon_attach1or_bitmask"
             msFlag="quest_type_flags.skip3.0"
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Weapon">
@@ -223,6 +225,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.weapon"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!weapon}
+            control={form.control}
           />
           <SelectField
             label="Weapon Attach 1"
@@ -232,6 +235,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!weapon}
+            control={form.control}
           />
           <SelectField
             label="Weapon Attach 2"
@@ -241,6 +245,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!weapon}
+            control={form.control}
           />
           <SelectField
             label="Weapon Attach 3"
@@ -250,6 +255,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!weapon}
+            control={form.control}
           />
         </GroupCard>
 
@@ -260,6 +266,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.head"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!head}
+            control={form.control}
           />
           <SelectField
             label="Head Attach 1"
@@ -269,6 +276,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!head}
+            control={form.control}
           />
           <SelectField
             label="Head Attach 2"
@@ -278,6 +286,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!head}
+            control={form.control}
           />
           <SelectField
             label="Head Attach 3"
@@ -287,6 +296,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!head}
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Chest">
@@ -296,6 +306,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.chest"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!chest}
+            control={form.control}
           />
           <SelectField
             label="Chest Attach 1"
@@ -305,6 +316,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!chest}
+            control={form.control}
           />
           <SelectField
             label="Chest Attach 2"
@@ -314,6 +326,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!chest}
+            control={form.control}
           />
           <SelectField
             label="Chest Attach 3"
@@ -323,6 +336,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!chest}
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Arms">
@@ -332,6 +346,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.arms"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!arms}
+            control={form.control}
           />
           <SelectField
             label="Arms Attach 1"
@@ -341,6 +356,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!arms}
+            control={form.control}
           />
           <SelectField
             label="Arms Attach 2"
@@ -350,6 +366,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!arms}
+            control={form.control}
           />
           <SelectField
             label="Arms Attach 3"
@@ -359,6 +376,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!arms}
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Waist">
@@ -368,6 +386,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.waist"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!waist}
+            control={form.control}
           />
           <SelectField
             label="Waist Attach 1"
@@ -377,6 +396,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!waist}
+            control={form.control}
           />
           <SelectField
             label="Waist Attach 2"
@@ -386,6 +406,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!waist}
+            control={form.control}
           />
           <SelectField
             label="Waist Attach 3"
@@ -395,6 +416,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!waist}
+            control={form.control}
           />
         </GroupCard>
         <GroupCard title="Legs">
@@ -404,6 +426,7 @@ export function ForcedEquipmentTab() {
             name="quest_type_flags.forced_equipement.legs"
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!legs}
+            control={form.control}
           />
           <SelectField
             label="Legs Attach 1"
@@ -413,6 +436,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!legs}
+            control={form.control}
           />
           <SelectField
             label="Legs Attach 2"
@@ -422,6 +446,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!legs}
+            control={form.control}
           />
           <SelectField
             label="Legs Attach 3"
@@ -431,6 +456,7 @@ export function ForcedEquipmentTab() {
             setFormValue={setFormValue}
             filterOption={createFilter({ ignoreAccents: false })}
             isDisabled={!legs}
+            control={form.control}
           />
         </GroupCard>
     </div>

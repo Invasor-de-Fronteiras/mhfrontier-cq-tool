@@ -1,16 +1,10 @@
 import { useMemo, useState } from "react";
 
-import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { toast } from 'react-toastify';
 import { QuestInfo, QuestlistFile } from "../utils";
 import { QuestlistEditorContextProvider } from "../context/QuestlistEditorContext";
 import events from "../events";
-
-interface SaveQuestlistPayload {
-  folder: string;
-  questlists: QuestlistFile[];
-}
 
 interface QuestlistEditorProps {
     children: React.ReactNode;

@@ -75,7 +75,7 @@ export function RemoteQuestlistTab() {
         setQuests(result);
     }
 
-    const onSearch = (key: keyof QuestlistDBQueryOptions, value: any) => {
+    const onSearch = (key: keyof QuestlistDBQueryOptions, value?: string | number | null | boolean) => {
         if (value === null || value === undefined || value === '') {
             const { ...data } = query;
             delete data[key];

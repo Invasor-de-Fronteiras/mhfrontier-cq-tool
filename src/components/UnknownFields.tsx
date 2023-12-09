@@ -1,9 +1,9 @@
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useMemo, useState } from "react";
 import { isObject } from "../utils/util";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues } from "react-hook-form";
 
-interface UnknownFieldProps<T> {
+interface UnknownFieldProps<T extends FieldValues> {
   data: object;
   name: string;
   path: string;
@@ -20,7 +20,7 @@ const wrapOnChange = (onChange?: (...event: any[]) => void) => {
   return onChange;
 }
 
-export function UnknownField<T>({
+export function UnknownField<T extends FieldValues>({
   data,
   name,
   initialHide = true,

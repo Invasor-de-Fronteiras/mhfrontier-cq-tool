@@ -12,8 +12,8 @@ import { HiTemplate } from "react-icons/hi";
 import { Menu, MenuGroup } from "./types";
 
 export const useQuestMenu = (): Menu => {
-  const { isLoadedFile, handleSaveQuest, insertOrUpdateQuest, reFrontier } = useEditor();
-  const { config, dbSelected, setDBSelected } = useConfig();
+  const { isLoadedFile, insertOrUpdateQuest, reFrontier } = useEditor();
+  const { config, dbSelected } = useConfig();
 
   const groups: MenuGroup[] = [
     {

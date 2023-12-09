@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import classNames from "classnames";
 import React, { useMemo } from "react";
-import { Control, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
-import { QuestFile } from "../utils";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Checkbox } from "./Checkbox";
 import { Input } from "./Input";
 
@@ -128,26 +126,22 @@ export function BitFlags({
     );
 }
 
-interface BitFlagsFieldProps<T = QuestFile> extends Omit<BitFlagsProps, 'value' | 'onChange'> {
+interface BitFlagsFieldProps<T extends FieldValues> extends Omit<BitFlagsProps, 'value' | 'onChange'> {
   /**
    * Path reference to the value in the form data.
    */
   name: Path<T>;
-  // @ts-ignore
-  control?: Control<T>;
+  control: Control<T>;
 }
 
-export function BitFlagsField<T>({
+export function BitFlagsField<T extends FieldValues>({
     name,
     control,
     ...props
 }: BitFlagsFieldProps<T>) {
-    const { form } = useEditor();
     const { field } = useController({
-        // @ts-ignore
         name,
-        // @ts-ignore
-        control: control ?? form.control,
+        control,
     });
 
     return <BitFlags

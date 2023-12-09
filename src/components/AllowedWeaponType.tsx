@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import classNames from "classnames";
 import React, { useMemo } from "react";
-import { Control, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
-import { QuestFile } from "../utils";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Checkbox } from "./Checkbox";
 import { Input } from "./Input";
 
@@ -133,35 +131,29 @@ export function AllowedWeaponType({
     );
 }
 
-interface AllowedWeaponTypeFieldProps<T = QuestFile> extends Omit<AllowedWeaponTypeProps, 'value' | 'onChange' | 'msFlag' | 'onChangeMSFlag'> {
+interface AllowedWeaponTypeFieldProps<T extends FieldValues> extends Omit<AllowedWeaponTypeProps, 'value' | 'onChange' | 'msFlag' | 'onChangeMSFlag'> {
   /**
    * Path reference to the value in the form data.
    */
   name: Path<T>;
   msFlag: Path<T>;
-  // @ts-ignore
-  control?: Control<T>;
+  control: Control<T>;
 }
 
-export function AllowedWeaponTypeField<T>({
+export function AllowedWeaponTypeField<T extends FieldValues>({
     name,
     msFlag,
     control,
     ...props
 }: AllowedWeaponTypeFieldProps<T>) {
-    const { form } = useEditor();
     const { field } = useController({
-        // @ts-ignore
         name,
-        // @ts-ignore
-        control: control ?? form.control,
+        control
     });
 
     const { field: msField } = useController({
-        // @ts-ignore
         name: msFlag,
-        // @ts-ignore
-        control: control ?? form.control,
+        control,
     });
 
     return <AllowedWeaponType

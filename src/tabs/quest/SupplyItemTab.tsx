@@ -46,6 +46,7 @@ export function SupplyItemTab() {
                       options={item_options}
                       className="mt-2"
                       filterOption={createFilter({ ignoreAccents: false })}
+                      control={form.control}
                     />
                   </td>
                   <td className="px-6 py-3">
@@ -54,6 +55,7 @@ export function SupplyItemTab() {
                       className="mt-0"
                       type="number"
                       name={`supply_items.${slot_index}.quantity`}
+                      control={form.control}
                     />
                   </td>
                 </tr>

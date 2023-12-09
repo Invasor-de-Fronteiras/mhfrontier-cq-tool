@@ -2,7 +2,7 @@ import { GenQuestProp } from './genQuestProp';
 import { LoadedStage, QuestFileHeader } from './header';
 import { MapInfo } from './map';
 import { MapZones } from './mapZones';
-import { LargeMonsterPointers, LargeMonsterSpawn, LargeMonsters } from './monsters';
+import { LargeMonsters } from './monsters';
 import { QuestStrings } from './questStrings';
 import { QuestTypeFlags } from './questTypeFlags';
 import { RewardTable } from './reward';

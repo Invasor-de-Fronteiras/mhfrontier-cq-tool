@@ -54,8 +54,8 @@ export function RemoteQuestTab() {
         setTotalQuests(totalQuests + 1);
     }
 
-    const onSearch = (key: keyof QuestDBQueryOptions, value: any) => {
-        if (value === null || value === '') {
+    const onSearch = (key: keyof QuestDBQueryOptions, value?: string | number | null) => {
+        if (value === null || value === undefined || value === '') {
             const { ...data } = query;
             delete data[key];
             return setQuery(data);

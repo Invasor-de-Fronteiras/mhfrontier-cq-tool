@@ -103,6 +103,7 @@ export function SmallMonsterTab() {
           label="Small Monster Status table"
           type="number"
           name="gen_quest_prop.little_mons_stat_table"
+          control={form.control}
         />
       </GroupCard>
       <Button type="button" className="mt-5 mr-4" onClick={onReorder}>Reorder</Button>

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import { Control, Path, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import ReactSelect, {
   Props,
   GroupBase,
@@ -8,7 +8,6 @@ import ReactSelect, {
   createFilter,
 } from "react-select";
 import { FixedSizeList as List } from "react-window";
-import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
 
 export type SelectOption = {
@@ -94,19 +93,19 @@ export function Select<T>({ label, className='m-2', ...props }: SelectProps<T>) 
   );
 }
 
-interface SelectFieldProps<T = SelectOption, FormT = QuestFile>
+interface SelectFieldProps<T = SelectOption, FormT extends FieldValues = QuestFile>
   extends Omit<SelectProps<T>, "onChange"> {
   /**
    * Path reference to the value in the form data.
    */
   name: Path<FormT>;
-  control?: Control<FormT>;
+  control: Control<FormT>;
   getFormValue?: (option: T) => unknown;
   setFormValue?: (option: T) => unknown;
   onClearValue?: unknown;
 }
 
-export function SelectField<T, FormT>({
+export function SelectField<T, FormT extends FieldValues>({
   name,
   control,
   options,
@@ -116,16 +115,11 @@ export function SelectField<T, FormT>({
   onClearValue,
   ...props
 }: SelectFieldProps<T, FormT>) {
-  const { form } = useEditor();
   const {
     field: { value: _value, onChange, ...field },
   } = useController({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     name: name,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    control: control ?? form.control,
+    control,
   });
 
   const selectedValue = useMemo(() => {

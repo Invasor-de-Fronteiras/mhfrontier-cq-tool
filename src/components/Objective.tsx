@@ -60,7 +60,6 @@ export function ObjectiveCard({ objective }: ObjectiveCardProps) {
     );
 
     return (
-        // <div className="drop-shadow-sm border bg-white dark:bg-slate-800 rounded px-3 py-3 flex flex-col flex-wrap items-center gap-3 w-full max-w-sm">
         <div className="flex flex-row" >
             <SelectField
                 label="Objective Type"
@@ -94,20 +93,20 @@ export function ObjectiveCard({ objective }: ObjectiveCardProps) {
                 label="Objective Id"
                 type="number"
                 name={`quest_type_flags.main_quest_prop.objectives.objective${objective}.monster_id`}
+                control={form.control}
             />}
             <InputField
                 label="Unk"
                 type="number"
                 name={`quest_type_flags.main_quest_prop.objectives.objective${objective}.unk`}
+                control={form.control}
             />
             <InputField
                 label="Quantity"
                 type="number"
                 name={`quest_type_flags.main_quest_prop.objectives.objective${objective}.quantity`}
+                control={form.control}
             />
-            {/* <div className="flex flex-row">
-
-            </div> */}
         </div>
     );
 }

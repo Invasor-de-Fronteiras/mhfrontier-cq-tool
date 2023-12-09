@@ -144,7 +144,7 @@ export function ApplyTemplateTab() {
         }
     });
 
-    form.setValue(`large_monster_spawns`, monsters);
+    form.setValue(`large_monsters.large_monster_spawns`, monsters);
   }
 
   const addMassiveSmallMonsters = () => {

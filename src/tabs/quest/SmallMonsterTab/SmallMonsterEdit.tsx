@@ -56,36 +56,43 @@ export function SmallMonsterEdit({
           label="Monster Id"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.monster_id`}
+          control={form.control}
         />
         <InputField
           label="Position X"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.x_position`}
+          control={form.control}
         />
         <InputField
           label="Position Y"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.y_position`}
+          control={form.control}
         />
         <InputField
           label="Position Z"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.z_position`}
+          control={form.control}
         />
         <InputField
           label="Spawn amount"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.spawn_amount`}
+          control={form.control}
         />
         <InputField
           label="Spawn toggle"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.spawn_toggle`}
+          control={form.control}
         />
         <InputField
           label="Size"
           type="number"
           name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${monsterIndex}.size`}
+          control={form.control}
         />
       </GroupCard>
       <GroupCard title="Unknown Data">

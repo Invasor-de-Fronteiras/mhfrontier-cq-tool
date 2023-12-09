@@ -61,31 +61,37 @@ export function FlagsTab() {
           label="Map Variant 0"
           type="number"
           name="quest_type_flags.variants.map_variant0"
+          control={form.control}
         />
         <InputField
           label="Monster Variant 0 (Reward variant)"
           type="number"
           name="quest_type_flags.variants.monster_variant0"
+          control={form.control}
         />
         <InputField
           label="Monster Variant 1"
           type="number"
           name="quest_type_flags.variants.monster_variant1"
+          control={form.control}
         />
         <InputField
           label="Monster Variant 2"
           type="number"
           name="quest_type_flags.variants.monster_variant2"
+          control={form.control}
         />
         <SelectField
           label="Quest Variant 1"
           options={questType}
           name="quest_type_flags.variants.quest_variant1"
+          control={form.control}
         />
         <InputField
           label="Ranking/Star"
           type="number"
           name="quest_type_flags.main_quest_prop.ranking_id"
+          control={form.control}
         />
       </GroupCard>
       <GroupCard title="Quest Variant 1">
@@ -102,6 +108,7 @@ export function FlagsTab() {
             { label: 'Unk', bitValue: 64 },
             { label: 'UL Fixed', bitValue: 128 }
           ]}
+          control={form.control}
         />
       </GroupCard>
       <GroupCard title="Quest Variant 2">
@@ -118,6 +125,7 @@ export function FlagsTab() {
             { label: 'LV 9999', bitValue: 64 },
             { label: 'Road', bitValue: 128 }
           ]}
+          control={form.control}
         />
       </GroupCard>
       <GroupCard title="Quest Variant 3">
@@ -134,6 +142,7 @@ export function FlagsTab() {
             { label: 'Course???', bitValue: 64 },
             { label: 'Sigil not allowed', bitValue: 128 }
           ]}
+          control={form.control}
         />
       </GroupCard>
       <GroupCard title="Quest Variant 4">
@@ -150,6 +159,7 @@ export function FlagsTab() {
             { label: 'Unk', bitValue: 64 },
             { label: 'Unk', bitValue: 128 }
           ]}
+          control={form.control}
         />
       </GroupCard>
     </div>

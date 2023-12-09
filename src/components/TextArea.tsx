@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import classNames from "classnames";
 import React from "react";
-import { Control, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
-import { QuestFile } from "../utils";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 
 interface TextAreaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -32,28 +30,24 @@ export function TextArea({
   );
 }
 
-interface TextAreaFieldProps<T = QuestFile> extends TextAreaProps {
+interface TextAreaFieldProps<T extends FieldValues> extends TextAreaProps {
   /**
    * Path reference to the value in the form data.
    */
   name: Path<T>;
-  control?: Control<T>;
+  control: Control<T>;
 }
 
-export function TextAreaField<T>({
+export function TextAreaField<T extends FieldValues>({
   name,
   defaultValue,
   control,
   ...props
 }: TextAreaFieldProps<T>) {
-  const { form } = useEditor();
   const { field } = useController({
-    // @ts-ignore
     name,
-    // @ts-ignore
-    control: control ?? form.control,
+    control,
   });
 
-  // @ts-ignore
   return <TextArea {...props} {...field} />;
 }

@@ -2,6 +2,17 @@
   "name": "desktop",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "tauri dev",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "icon": "npx @tauri-apps/tauricon .",
+    "vite-tauri": "vite-tauri",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint>fix": "eslint --fix \"**/*.{ts,tsx}\"",
+    "check-types": "tsc --noEmit"
+  },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
     "classnames": "^2.3.1",
@@ -18,17 +29,6 @@
     "typescript": "^4.7.2",
     "web-vitals": "^2.1.4",
     "vite-plugin-tauri": "^3.1.0"
-  },
-  "scripts": {
-    "dev": "tauri dev",
-    "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "icon": "npx @tauri-apps/tauricon .",
-    "vite-tauri": "vite-tauri",
-    "lint": "eslint \"**/*.{ts,tsx}\"",
-    "lint>fix": "eslint --fix \"**/*.{ts,tsx}\"",
-    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.3",

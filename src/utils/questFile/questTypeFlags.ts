@@ -56,7 +56,7 @@ export interface Variants {
   quest_variant1: number;
   quest_variant2: number;
   quest_variant3: number;
-  // quest_variant4: number;
+  quest_variant4: number;
 }
 
 export interface ForcedEquipment {

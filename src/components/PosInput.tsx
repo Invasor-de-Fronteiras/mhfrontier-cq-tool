@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, Path, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { useEditor } from "../context/EditorContext";
 import { QuestFile } from "../utils";
 
@@ -29,12 +29,12 @@ export function PosInput({ label, ...props }: PosInputProps) {
   );
 }
 
-interface PosInputFieldProps<T = QuestFile> extends PosInputProps {
+interface PosInputFieldProps<T extends FieldValues = QuestFile> extends PosInputProps {
   name: Path<T>;
-  control?: Control<T>;
+  control: Control<T>;
 }
 
-export function PosInputField<T>({
+export function PosInputField<T extends FieldValues>({
   label,
   name,
   defaultValue,
@@ -43,15 +43,9 @@ export function PosInputField<T>({
 }: PosInputFieldProps<T>) {
   const { form } = useEditor();
   const { field } = useController({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     name,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     control: control ?? form.control,
   });
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   return <PosInput label={label} {...props} {...field} onChange={wrapOnChange(field.onChange)}  />;
 }

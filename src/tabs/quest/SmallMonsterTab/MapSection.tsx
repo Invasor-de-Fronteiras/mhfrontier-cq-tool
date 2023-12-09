@@ -156,36 +156,42 @@ export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.monster_id`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2">
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.x_position`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2">
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.y_position`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2">
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.z_position`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2">
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.spawn_amount`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2">
                   <InputField
                     type="number"
                     name={`map_zones.map_zones.${mapZoneIndex}.map_sections.${mapSectionIndex}.small_monster_spawns.${i}.spawn_toggle`}
+                    control={form.control}
                   />
                 </td>
                 <td className="px-2 py-2 flex">

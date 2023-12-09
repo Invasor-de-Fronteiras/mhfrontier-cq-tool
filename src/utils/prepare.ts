@@ -22,11 +22,13 @@ export const prepareQuest = (quest: QuestFile): QuestFile => ({
     quest_type_flags: quest.quest_type_flags,
     map_info: quest.map_info,
     map_zones: prepareMapZones(quest.map_zones),
-    large_monster_pointers: quest.large_monster_pointers,
-    large_monster_spawns: quest.large_monster_spawns,
-    large_monster_ids: quest.large_monster_spawns.map((v) =>
-        v.monster_id >= 255 ? 0 : v.monster_id
-    ),
+    large_monsters: {
+        large_monster_pointers: quest.large_monsters.large_monster_pointers,
+        large_monster_spawns: quest.large_monsters.large_monster_spawns,
+        large_monster_ids: quest.large_monsters.large_monster_spawns.map((v) =>
+            v.monster_id >= 255 ? 0 : v.monster_id
+        ),
+    },
     rewards: quest.rewards,
     supply_items: quest.supply_items,
     loaded_stages: quest.loaded_stages,

@@ -16,11 +16,11 @@ export function MonstersTab() {
 
   const fields = useWatch({
     control: form.control,
-    name: "large_monster_spawns",
+    name: "large_monsters.large_monster_spawns",
   });
 
   const onAddMonster = () => {
-    form.setValue(`large_monster_spawns`, [
+    form.setValue(`large_monsters.large_monster_spawns`, [
       ...fields,
       { 
         monster_id: 0,
@@ -46,7 +46,7 @@ export function MonstersTab() {
   };
 
   const onRemoveMonster = (index: number) => {
-    form.setValue('large_monster_spawns', fields.filter((v, i) => i !== index));
+    form.setValue('large_monsters.large_monster_spawns', fields.filter((v, i) => i !== index));
   };
 
   const stages = useMemo(
@@ -74,21 +74,25 @@ export function MonstersTab() {
           label="Monster size multiplier"
           type="number"
           name="gen_quest_prop.big_monster_size_multi"
+          control={form.control}
         />
         <InputField
           label="Monster size range"
           type="number"
           name="gen_quest_prop.size_range"
+          control={form.control}
         />
         <InputField
           label="Monster Status table"
           type="number"
           name="gen_quest_prop.mons_stat_table1"
+          control={form.control}
         />
         <SelectField
           label="Monster class id"
           options={quest_type_options}
           name="gen_quest_prop.monster_class_id"
+          control={form.control}
         />
       </GroupCard>
       <div>
