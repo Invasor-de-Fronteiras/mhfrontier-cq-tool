@@ -2,7 +2,7 @@ import { GenQuestProp } from './genQuestProp';
 import { LoadedStage, QuestFileHeader } from './header';
 import { MapInfo } from './map';
 import { MapZones } from './mapZones';
-import { LargeMonsterPointers, LargeMonsterSpawn } from './monsters';
+import { LargeMonsterPointers, LargeMonsterSpawn, LargeMonsters } from './monsters';
 import { QuestStrings } from './questStrings';
 import { QuestTypeFlags } from './questTypeFlags';
 import { RewardTable } from './reward';
@@ -17,12 +17,13 @@ export * from "./monsters";
 export interface QuestFile {
     header: QuestFileHeader;
     map_info:  MapInfo;
-    map_zones: MapZones,
-    gen_quest_prop: GenQuestProp,
-    quest_type_flags: QuestTypeFlags,
+    map_zones: MapZones;
+    gen_quest_prop: GenQuestProp;
+    quest_type_flags: QuestTypeFlags;
     large_monster_pointers: LargeMonsterPointers;
     large_monster_ids: number[];
     large_monster_spawns: LargeMonsterSpawn[];
+    large_monsters: LargeMonsters;
     rewards: RewardTable[];
     supply_items: SupplyItem[];
     loaded_stages: LoadedStage[];

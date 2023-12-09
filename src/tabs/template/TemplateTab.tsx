@@ -4,7 +4,7 @@ import { Button } from "../../components/Button";
 import { GroupCard } from "../../components/CardGroup";
 import { useEditor } from "../../context/EditorContext";
 import { LargeMonsterSpawn, maps } from "../../utils";
-import { SmallMonsterSpawn } from "../../utils/quest-file/mapZones";
+import { SmallMonsterSpawn } from "../../utils/questFile/mapZones";
 
 export function ApplyTemplateTab() {
   const { form } = useEditor();

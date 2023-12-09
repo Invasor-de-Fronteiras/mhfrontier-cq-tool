@@ -1,4 +1,4 @@
-import { QuestTypeFlags } from "./quest-file";
+import { QuestTypeFlags } from "./questFile";
 import { QuestInfo } from "./questlist";
 
 export enum PERIOD {

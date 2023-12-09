@@ -1,5 +1,5 @@
-import { QuestTypeFlags } from "../quest-file";
-import { QuestStrings } from "../quest-file/questStrings";
+import { QuestTypeFlags } from "../questFile";
+import { QuestStrings } from "../questFile/questStrings";
 
 
 export interface QuestInfoHeader {

@@ -1,5 +1,5 @@
-import { QuestFile } from "./quest-file";
-import { MapZones } from "./quest-file/mapZones";
+import { QuestFile } from "./questFile";
+import { MapZones } from "./questFile/mapZones";
 
 export const prepareMapZones = (mapZones: MapZones) => {
     mapZones.map_zones.forEach(mapZone => {

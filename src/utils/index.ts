@@ -1,4 +1,4 @@
-export * from "./quest-file";
+export * from "./questFile";
 export * from "./questlist";
 export * from "./quest";
 export * from "./monsters";

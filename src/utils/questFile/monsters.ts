@@ -32,3 +32,9 @@ export interface LargeMonsterSpawn {
   unk11: number;
   unk12: number;
 }
+
+export interface LargeMonsters {
+  large_monster_pointers: LargeMonsterPointers,
+  large_monster_ids: number[],
+  large_monster_spawns: LargeMonsterSpawn[],
+}
