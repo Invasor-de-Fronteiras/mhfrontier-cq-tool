@@ -23,8 +23,8 @@ pub fn save_quest_file(event: String) -> String {
             let result = QuestFile::save_to(&payload.filepath, &mut payload.quest);
 
             EventResponse::from_result(result).to_string()
-        },
-        Err(error) => EventResponse::payload_error(error.to_string()).to_string()
+        }
+        Err(error) => EventResponse::payload_error(error.to_string()).to_string(),
     }
 }
 
@@ -40,10 +40,10 @@ pub fn export_quest_info(event: String) -> String {
 
     match event_payload {
         Ok(mut payload) => {
-            let result =  payload.quest_info.save_to(&payload.filepath);
+            let result = payload.quest_info.save_to(&payload.filepath);
 
             EventResponse::from_result(result).to_string()
-        },
-        Err(error) => EventResponse::payload_error(error.to_string()).to_string()
+        }
+        Err(error) => EventResponse::payload_error(error.to_string()).to_string(),
     }
 }

@@ -240,7 +240,8 @@ fn reader_test() {
 
     assert_eq!(quest_file.header, expected.header, "Header");
     assert_eq!(
-        quest_file.large_monsters.large_monster_pointers, expected.large_monsters.large_monster_pointers,
+        quest_file.large_monsters.large_monster_pointers,
+        expected.large_monsters.large_monster_pointers,
         "LargeMonsterPointers"
     );
 

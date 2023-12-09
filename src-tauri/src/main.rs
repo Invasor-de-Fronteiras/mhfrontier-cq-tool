@@ -6,8 +6,8 @@
 pub mod app;
 pub mod editor;
 
-use tauri;
 use app::*;
+use tauri;
 
 #[tokio::main]
 async fn main() {

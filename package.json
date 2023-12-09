@@ -11,7 +11,8 @@
     "vite-tauri": "vite-tauri",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "lint>fix": "eslint --fix \"**/*.{ts,tsx}\"",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "check-rust": "cd src-tauri && cargo fmt --all --check"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",

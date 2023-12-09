@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::editor::file::{reader::{CustomReader, FileReader}, writer::{CustomWriter, FileWriter}};
+use crate::editor::file::{
+    reader::{CustomReader, FileReader},
+    writer::{CustomWriter, FileWriter},
+};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]

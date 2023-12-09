@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
-use crate::editor::{file::writer::FileWriter, questlist::quest_info::QuestInfo};
 use crate::app::utils::CustomResult;
+use crate::editor::{file::writer::FileWriter, questlist::quest_info::QuestInfo};
+use serde::{Deserialize, Serialize};
 
 use super::config::DBConfig;
 use super::db::DB;

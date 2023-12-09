@@ -1,4 +1,4 @@
-use super::loaded_stages::{LoadedStages, LoadedStage};
+use super::loaded_stages::{LoadedStage, LoadedStages};
 use super::map_zones::MapZones;
 use super::monsters::LargeMonsters;
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
@@ -141,9 +141,8 @@ impl QuestFile {
         writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
 
         writer.write_struct(&mut new_end_flag)?;
-        writer.write_u8(&0)?; 
+        writer.write_u8(&0)?;
 
         Ok(())
     }
-
 }

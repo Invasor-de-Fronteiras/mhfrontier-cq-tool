@@ -1,4 +1,4 @@
-use std::{process::Command, env};
+use std::{env, process::Command};
 
 use serde::{Deserialize, Serialize};
 
@@ -19,7 +19,8 @@ pub fn re_frontier(event: String) -> String {
             let is_windows = cfg!(target_os = "windows");
 
             if !is_windows {
-                return EventResponse::error(String::from("This feature only works on Windows")).to_string();
+                return EventResponse::error(String::from("This feature only works on Windows"))
+                    .to_string();
             }
 
             let refrontier_path = env::current_dir()
@@ -32,7 +33,7 @@ pub fn re_frontier(event: String) -> String {
                 .output();
 
             match result {
-                Ok(output) => {                    
+                Ok(output) => {
                     if output.stderr.len() > 0 {
                         let error = String::from_utf8_lossy(&output.stderr).to_string();
                         return EventResponse::error(error).to_string();
@@ -40,10 +41,10 @@ pub fn re_frontier(event: String) -> String {
 
                     let message = String::from_utf8_lossy(&output.stdout).to_string();
                     EventResponse::success_with_data(message).to_string()
-                },
+                }
                 Err(error) => EventResponse::error(error.to_string()).to_string(),
             }
-        },
-        Err(error) => EventResponse::payload_error(error.to_string()).to_string()
+        }
+        Err(error) => EventResponse::payload_error(error.to_string()).to_string(),
     }
 }

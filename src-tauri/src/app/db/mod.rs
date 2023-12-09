@@ -20,7 +20,7 @@ pub fn get_config() -> String {
         Some(config) => {
             let result = serde_json::to_string_pretty(&config);
             EventResponse::from_result_data(result).to_string()
-        },
+        }
         None => EventResponse::success().to_string(),
     }
 }

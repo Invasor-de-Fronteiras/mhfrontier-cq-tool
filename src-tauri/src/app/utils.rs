@@ -6,16 +6,15 @@ use serde::Serialize;
 pub struct EventResponse<T: Serialize = ()> {
     pub success: bool,
     pub data: Option<T>,
-    pub error: Option<String>
+    pub error: Option<String>,
 }
 
 impl EventResponse<()> {
-
     pub fn success() -> EventResponse<()> {
         EventResponse::<()> {
             success: true,
             data: None,
-            error: None
+            error: None,
         }
     }
 
@@ -23,7 +22,7 @@ impl EventResponse<()> {
         EventResponse::<()> {
             success: false,
             data: None,
-            error: Some(error)
+            error: Some(error),
         }
     }
 
@@ -35,17 +34,16 @@ impl EventResponse<()> {
     pub fn from_result<E: std::fmt::Display>(result: Result<(), E>) -> EventResponse<()> {
         match result {
             Ok(_) => EventResponse::success(),
-            Err(error) => EventResponse::error(error.to_string())
+            Err(error) => EventResponse::error(error.to_string()),
         }
     }
 }
 
-impl <T: Serialize> EventResponse<T> {
-
+impl<T: Serialize> EventResponse<T> {
     pub fn from_result_data<E: std::fmt::Display>(result: Result<T, E>) -> EventResponseResult<T> {
         match result {
             Ok(data) => EventResponseResult::Ok(EventResponse::success_with_data(data)),
-            Err(error) => EventResponseResult::Err(EventResponse::error(error.to_string()))
+            Err(error) => EventResponseResult::Err(EventResponse::error(error.to_string())),
         }
     }
 
@@ -53,7 +51,7 @@ impl <T: Serialize> EventResponse<T> {
         EventResponse::<T> {
             success: true,
             data: Some(data),
-            error: None
+            error: None,
         }
     }
 
@@ -64,16 +62,14 @@ impl <T: Serialize> EventResponse<T> {
 
         return "{ \"success\": false, \"error\": \"unexpected error\" }".to_string();
     }
-
 }
 
 pub enum EventResponseResult<T: Serialize> {
     Ok(EventResponse<T>),
-    Err(EventResponse<()>)
+    Err(EventResponse<()>),
 }
 
-impl <T: Serialize> EventResponseResult<T> {
-    
+impl<T: Serialize> EventResponseResult<T> {
     pub fn to_string(&self) -> String {
         match self {
             EventResponseResult::Ok(response) => response.to_string(),

@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::editor::file::{reader::CustomReader, reader::FileReader, writer::CustomWriter, writer::FileWriter};
+use crate::editor::file::{
+    reader::CustomReader, reader::FileReader, writer::CustomWriter, writer::FileWriter,
+};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -99,4 +101,3 @@ impl CustomWriter for LargeMonsters {
         Ok(large_monster_ids_ptr)
     }
 }
-

@@ -24,12 +24,13 @@ pub fn read_questinfo(event: String) -> String {
 #[tauri::command]
 pub fn save_all_questlists(event: String) -> String {
     let event_payload = serde_json::from_str::<SaveQuestlistPayload>(&event);
-    
+
     match event_payload {
         Ok(mut payload) => {
-            let result = QuestlistFile::save_all_questlist(&payload.folder, &mut payload.questlists);
+            let result =
+                QuestlistFile::save_all_questlist(&payload.folder, &mut payload.questlists);
             EventResponse::from_result(result).to_string()
-        },
+        }
         Err(error) => EventResponse::payload_error(error.to_string()).to_string(),
     }
 }
