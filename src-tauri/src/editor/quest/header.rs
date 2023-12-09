@@ -33,12 +33,3 @@ pub struct MapInfo {
     pub map_id: u32,
     pub return_bc_id: u32,
 }
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
-pub struct LoadedStage {
-    pub stage_id: u32,
-    pub unk1: u32,
-    pub unk2: u32,
-    pub unk3: u32,
-}

@@ -5,7 +5,7 @@ use crate::editor::{
     quest::{
         header::{MapInfo, QuestFileHeader},
         map_zones::MapZones,
-        monsters::{LargeMonsterPointers, LargeMonsterSpawn},
+        monsters::{LargeMonsterPointers, LargeMonsterSpawn, LargeMonsters},
         quest_type_flags::{
             ForcedEquipment, GenQuestProp, MainQuestProp, Objective, Quantity, QuestObjective,
             QuestTypeFlags, RewardsFocus, Variants,
@@ -194,37 +194,39 @@ fn reader_test() {
             map_id: 6,
             return_bc_id: 110,
         },
-        large_monster_pointers: LargeMonsterPointers {
-            large_monster_ids: 5952,
-            large_monster_spawns: 5984,
-            unk_0: 1,
-            unk_1: 0,
-            unk_2: 0,
-            unk_3: 0,
-            unk_4: 0,
-            unk_5: 0,
+        large_monsters: LargeMonsters {
+            large_monster_pointers: LargeMonsterPointers {
+                large_monster_ids: 5952,
+                large_monster_spawns: 5984,
+                unk_0: 1,
+                unk_1: 0,
+                unk_2: 0,
+                unk_3: 0,
+                unk_4: 0,
+                unk_5: 0,
+            },
+            large_monster_ids: vec![48, 0, 0, 0, 0],
+            large_monster_spawns: vec![LargeMonsterSpawn {
+                monster_id: 48,
+                unk0: 0,
+                unk1: 0,
+                unk2: 0,
+                spawn_amount: 1,
+                spawn_stage: 120,
+                unk4: 0,
+                unk5: 0,
+                unk6: 0,
+                unk7: 0,
+                unk8: 65202,
+                x_position: 8651.0,
+                y_position: 3.0,
+                z_position: 7795.0,
+                unk9: 0,
+                unk10: 0,
+                unk11: 0,
+                unk12: 0,
+            }],
         },
-        large_monster_ids: vec![48, 0, 0, 0, 0],
-        large_monster_spawns: vec![LargeMonsterSpawn {
-            monster_id: 48,
-            unk0: 0,
-            unk1: 0,
-            unk2: 0,
-            spawn_amount: 1,
-            spawn_stage: 120,
-            unk4: 0,
-            unk5: 0,
-            unk6: 0,
-            unk7: 0,
-            unk8: 65202,
-            x_position: 8651.0,
-            y_position: 3.0,
-            z_position: 7795.0,
-            unk9: 0,
-            unk10: 0,
-            unk11: 0,
-            unk12: 0,
-        }],
         rewards: vec![],
         unk_data: vec![],
         loaded_stages: vec![],
@@ -238,12 +240,12 @@ fn reader_test() {
 
     assert_eq!(quest_file.header, expected.header, "Header");
     assert_eq!(
-        quest_file.large_monster_pointers, expected.large_monster_pointers,
+        quest_file.large_monsters.large_monster_pointers, expected.large_monsters.large_monster_pointers,
         "LargeMonsterPointers"
     );
 
     assert_eq!(
-        quest_file.large_monster_ids, expected.large_monster_ids,
+        quest_file.large_monsters.large_monster_ids, expected.large_monsters.large_monster_ids,
         "LargeMonsterIds"
     );
 

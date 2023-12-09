@@ -1,184 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-pub enum MonsterID {
-    None,
-    Rathian,
-    Fatalis,
-    Kelbi,
-    Mosswine,
-    Bullfango,
-    YianKutKu,
-    LaoShanLung,
-    Cephadrome,
-    Felyne1,
-    VeggieElder,
-    Rathalos,
-    Aptonoth,
-    Genprey,
-    Diablos,
-    Khezu,
-    Velociprey,
-    Gravios,
-    Felyne2,
-    Vespoid,
-    Gypceros,
-    Plesioth,
-    Basarios,
-    Melynx,
-    Hornetaur,
-    Apceros,
-    Monoblos,
-    Velocidrome,
-    Gendrome,
-    Rocks0,
-    Ioprey,
-    Iodrome,
-    Pugis,
-    Kirin,
-    Cephalos,
-    Giaprey,
-    CrimsonFatalis,
-    PinkRathian,
-    BlueYianKutKu,
-    PurpleGypceros,
-    YianGaruga,
-    SilverRathalos,
-    GoldRathian,
-    BlackDiablos,
-    WhiteMonoblos,
-    RedKhezu,
-    GreenPlesioth,
-    BlackGravios,
-    DaimyoHermitaur,
-    AzureRathalos,
-    AshenLaoShanLung,
-    Blangonga,
-    Congalala,
-    Rajang,
-    KushalaDaora,
-    ShenGaoren,
-    GreatThunderbug,
-    Shakalaka,
-    YamaTsukami1,
-    Chameleos,
-    RustedKushalaDaora,
-    Blango,
-    Conga,
-    Remobra,
-    Lunastra,
-    Teostra,
-    Hermitaur,
-    ShogunCeanataur,
-    Bulldrome,
-    Anteka,
-    Popo,
-    WhiteFatalis,
-    YamaTsukami2,
-    Ceanataur,
-    Hypnocatrice,
-    Lavasioth,
-    Tigrex,
-    Akantor,
-    BrightHypnoc,
-    LavasiothSubspecies,
-    Espinas,
-    OrangeEspinas,
-    WhiteHypnoc,
-    AkuraVashimu,
-    AkuraJebia,
-    Berukyurosu,
-    Cactus01,
-    GorgeObjects,
-    GorgeRocks,
-    Pariapuria,
-    WhiteEspinas,
-    KamuOrugaron,
-    NonoOrugaron,
-    Raviente,
-    Dyuragaua,
-    Doragyurosu,
-    Gurenzeburu,
-    Burukku,
-    Erupe,
-    Rukodiora,
-    Unknown,
-    Gogomoa,
-    Kokomoa,
-    TaikunZamuza,
-    Abiorugu,
-    Kuarusepusu,
-    Odibatorasu,
-    Disufiroa,
-    Rebidiora,
-    Anorupatisu,
-    Hyujikiki,
-    Midogaron,
-    Giaorugu,
-    MiRu,
-    Farunokku,
-    Pokaradon,
-    Shantien,
-    Pokara,
-    Dummy,
-    Goruganosu,
-    Aruganosu,
-    Baruragaru,
-    Zerureusu,
-    Gougarf,
-    Uruki,
-    Forokururu,
-    Meraginasu,
-    Diorekkusu,
-    GarubaDaora,
-    Inagami,
-    Varusaburosu,
-    Poborubarumu,
-    Duremudira,
-    Unk0,
-    Felyne,
-    BlueNpc,
-    Unk1,
-    CactusVarusa,
-    VeggieElders,
-    Gureadomosu,
-    Harudomerugu,
-    Toridcless,
-    Gasurabazura,
-    Kusubami,
-    YamaKurai,
-    Dure2ndDistrict,
-    Zinogre,
-    Deviljho,
-    Brachydios,
-    BerserkLaviente,
-    ToaTesukatora,
-    Barioth,
-    Uragaan,
-    StygianZinogre,
-    Guanzorumu,
-    StarvingDeviljho,
-    UNK,
-    Egyurasu,
-    Voljang,
-    Nargacuga,
-    Keoaruboru,
-    Zenaserisu,
-    GoreMagala,
-    BlinkingNargacuga,
-    ShagaruMagala,
-    Amatsu,
-    Elzelion,
-    MusouDure,
-    Rocks1,
-    Seregios,
-    Bogabadorumu,
-    UnknownBlueBarrel,
-    MusouBogabadorumu,
-    CostumedUruki,
-    MusouZerureusu,
-    Pso2Rappy,
-    KingShakalaka,
-}
+use crate::editor::file::{reader::CustomReader, reader::FileReader, writer::CustomWriter, writer::FileWriter};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[repr(C)]
@@ -219,3 +41,62 @@ pub struct LargeMonsterSpawn {
     pub unk11: u32,
     pub unk12: u32,
 }
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+pub struct LargeMonsters {
+    pub large_monster_pointers: LargeMonsterPointers,
+    pub large_monster_ids: Vec<u32>,
+    pub large_monster_spawns: Vec<LargeMonsterSpawn>,
+}
+
+impl CustomReader for LargeMonsters {
+    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+        // Read large_monster_ptr
+        let large_monster_pointers = reader.read_struct::<LargeMonsterPointers>()?;
+
+        // Read large_monster_ptr
+        let mut large_monster_ids: Vec<u32> = vec![];
+        let mut large_monster_spawns: Vec<LargeMonsterSpawn> = vec![];
+
+        reader.seek_start(large_monster_pointers.large_monster_ids as u64)?;
+        while reader.read_current_u16()? != 0xFFFF {
+            let monster_id = reader.read_u32()?;
+            large_monster_ids.push(monster_id);
+        }
+
+        reader.seek_start(large_monster_pointers.large_monster_spawns as u64)?;
+        while reader.read_current_u16()? != 0xFFFF {
+            let monster_spawn = reader.read_struct::<LargeMonsterSpawn>()?;
+            large_monster_spawns.push(monster_spawn);
+        }
+
+        Ok(LargeMonsters {
+            large_monster_pointers,
+            large_monster_ids,
+            large_monster_spawns,
+        })
+    }
+}
+
+impl CustomWriter for LargeMonsters {
+    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+        let large_monster_ids_ptr = writer.current_position()?;
+        for large_monster_id in &self.large_monster_ids {
+            writer.write_u32(&large_monster_id)?;
+        }
+
+        writer.write_u32(&0xFFFFFFFF)?;
+
+        let large_monster_spawn_ptr = writer.current_position()?;
+        for large_monster_spawn in &mut self.large_monster_spawns {
+            writer.write_struct(large_monster_spawn)?;
+        }
+        writer.write_u16(&0xFFFF)?;
+
+        self.large_monster_pointers.large_monster_ids = large_monster_ids_ptr as u32;
+        self.large_monster_pointers.large_monster_spawns = large_monster_spawn_ptr as u32;
+
+        Ok(large_monster_ids_ptr)
+    }
+}
+

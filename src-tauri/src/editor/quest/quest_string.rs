@@ -119,23 +119,6 @@ impl QuestStrings {
             sub_b_objective,
         })
     }
-
-    pub fn get_total_size(&self) -> u16 {
-        let mut size: u16 = 0;
-
-        size += self.title.len() as u16;
-        size += self.main_objective.len() as u16;
-        size += self.sub_a_objective.len() as u16;
-        size += self.sub_b_objective.len() as u16;
-
-        size += self.clear_reqs.len() as u16;
-        size += self.fail_reqs.len() as u16;
-        size += self.contractor.len() as u16;
-        size += self.description.len() as u16;
-
-        // 8 bytes for each "end string byte" (0x00)
-        return size + 8;
-    }
 }
 
 impl CustomWriter for QuestStrings {

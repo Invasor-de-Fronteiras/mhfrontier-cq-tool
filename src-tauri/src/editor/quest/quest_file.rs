@@ -1,15 +1,15 @@
-use super::header::LoadedStage;
+use super::loaded_stages::{LoadedStages, LoadedStage};
 use super::map_zones::MapZones;
+use super::monsters::LargeMonsters;
 use super::offsets::{GEN_QUEST_PROP_PRT, MAIN_QUEST_PROP_PRT};
 use super::quest_end_flag::QuestEndFlag;
 use super::quest_string::QuestStrings;
 use super::reward::Rewards;
+use super::supply_items::SupplyItems;
 use crate::editor::file::reader::FileReader;
 use crate::editor::file::writer::FileWriter;
 use crate::editor::quest::header::{MapInfo, QuestFileHeader};
-use crate::editor::quest::monsters::{LargeMonsterPointers, LargeMonsterSpawn};
 use crate::editor::quest::quest_type_flags::{GenQuestProp, QuestTypeFlags};
-use crate::editor::quest::supply_items::SupplyItem;
 use serde::{Deserialize, Serialize};
 use std::io::Result;
 
@@ -21,14 +21,11 @@ pub struct QuestFile {
     pub quest_type_flags: QuestTypeFlags,
     pub map_info: MapInfo,
     pub map_zones: MapZones,
-    pub large_monster_pointers: LargeMonsterPointers,
-    pub large_monster_ids: Vec<u32>,
-    pub large_monster_spawns: Vec<LargeMonsterSpawn>,
+    pub large_monsters: LargeMonsters,
     pub rewards: Rewards,
-    pub loaded_stages: Vec<LoadedStage>,
+    pub loaded_stages: LoadedStages,
     pub unk_data: Vec<u8>,
-    // supply items are a fixed-size array of 40 item slots
-    pub supply_items: Vec<SupplyItem>,
+    pub supply_items: SupplyItems,
     pub strings: QuestStrings,
 }
 
@@ -50,32 +47,15 @@ impl QuestFile {
         reader.seek_start(header.map_info as u64)?;
         let map_info = reader.read_struct::<MapInfo>()?;
 
-        let mut loaded_stages: Vec<LoadedStage> = vec![];
         reader.seek_start(header.loaded_stages_ptr as u64)?;
+        let mut loaded_stages: Vec<LoadedStage> = vec![];
         while reader.current_position()? != header.fixed_cords1 as u64 {
             let loaded_stage = reader.read_struct::<LoadedStage>()?;
             loaded_stages.push(loaded_stage);
         }
 
-        // Read large_monster_ptr
         reader.seek_start(header.large_monster_ptr as u64)?;
-        let large_monster_pointers = reader.read_struct::<LargeMonsterPointers>()?;
-
-        // Read large_monster_ptr
-        let mut large_monster_ids: Vec<u32> = vec![];
-        let mut large_monster_spawns: Vec<LargeMonsterSpawn> = vec![];
-
-        reader.seek_start(large_monster_pointers.large_monster_ids as u64)?;
-        while reader.read_current_u16()? != 0xFFFF {
-            let monster_id = reader.read_u32()?;
-            large_monster_ids.push(monster_id);
-        }
-
-        reader.seek_start(large_monster_pointers.large_monster_spawns as u64)?;
-        while reader.read_current_u16()? != 0xFFFF {
-            let monster_spawn = reader.read_struct::<LargeMonsterSpawn>()?;
-            large_monster_spawns.push(monster_spawn);
-        }
+        let large_monsters = reader.read_custom::<LargeMonsters>()?;
 
         reader.seek_start(header.reward_ptr as u64)?;
         let rewards: Rewards = reader.read_custom::<Rewards>()?;
@@ -83,7 +63,8 @@ impl QuestFile {
         reader.seek_start(header.quest_area_ptr as u64)?;
         let map_zones = reader.read_custom::<MapZones>()?;
 
-        let supply_items: Vec<SupplyItem> = QuestFile::read_supply_items(&header, &mut reader)?;
+        reader.seek_start(header.supply_box_ptr as u64)?;
+        let supply_items = reader.read_custom::<SupplyItems>()?;
 
         let strings = QuestStrings::from_reader(
             &mut reader,
@@ -97,41 +78,13 @@ impl QuestFile {
             quest_type_flags,
             map_info,
             map_zones,
-            large_monster_pointers,
-            large_monster_ids,
-            large_monster_spawns,
+            large_monsters,
             rewards,
             supply_items,
             loaded_stages,
             unk_data,
             strings,
         })
-    }
-
-    fn read_supply_items(
-        header: &QuestFileHeader,
-        reader: &mut FileReader,
-    ) -> Result<Vec<SupplyItem>> {
-        let max_supply_items = 40;
-        let mut supply_items: Vec<SupplyItem> = Vec::with_capacity(max_supply_items);
-
-        reader.seek_start(header.supply_box_ptr as u64)?;
-
-        let supply_item = reader.read_struct::<SupplyItem>()?;
-        supply_items.push(supply_item);
-
-        let mut count = 1;
-        while reader.read_current_u16()? != 0xFFFF {
-            if count == max_supply_items {
-                break;
-            }
-
-            let supply_item = reader.read_struct::<SupplyItem>()?;
-            supply_items.push(supply_item);
-            count += 1;
-        }
-
-        Ok(supply_items)
     }
 
     pub fn save_to(filename: &str, quest: &mut QuestFile) -> Result<()> {
@@ -153,9 +106,7 @@ impl QuestFile {
 
         // Write supply items
         writer.seek_start(quest.header.supply_box_ptr as u64)?;
-        for i in 0..40 {
-            writer.write_struct(&mut quest.supply_items[i])?;
-        }
+        writer.write_custom(&mut quest.supply_items)?;
 
         QuestFile::write_extra_data(&mut writer, quest, &mut end_flag)?;
 
@@ -180,38 +131,19 @@ impl QuestFile {
         quest.quest_type_flags.main_quest_prop.quest_strings_ptr =
             writer.write_custom(&mut quest.strings)? as u32;
         quest.header.quest_area_ptr = writer.write_custom(&mut quest.map_zones)? as u32;
-        let (large_monster_ids_ptr, large_monster_spawn_ptr) =
-            QuestFile::write_monster_spawn(writer, quest)?;
-        quest.large_monster_pointers.large_monster_ids = large_monster_ids_ptr as u32;
-        quest.large_monster_pointers.large_monster_spawns = large_monster_spawn_ptr as u32;
 
+        writer.write_custom(&mut quest.large_monsters)?;
         writer.write_struct_on(
-            &mut quest.large_monster_pointers,
+            &mut quest.large_monsters.large_monster_pointers,
             quest.header.large_monster_ptr as u64,
         )?;
         writer.write_struct_on(&mut quest.header, 0)?;
         writer.write_struct_on(&mut quest.quest_type_flags, MAIN_QUEST_PROP_PRT as u64)?;
 
         writer.write_struct(&mut new_end_flag)?;
-        writer.write_u8(&0)?;
+        writer.write_u8(&0)?; 
 
         Ok(())
     }
 
-    fn write_monster_spawn(writer: &mut FileWriter, quest: &mut QuestFile) -> Result<(u64, u64)> {
-        let large_monster_ids_ptr = writer.current_position()?;
-        for large_monster_id in &quest.large_monster_ids {
-            writer.write_u32(&large_monster_id)?;
-        }
-
-        writer.write_u32(&0xFFFFFFFF)?;
-
-        let large_monster_spawn_ptr = writer.current_position()?;
-        for large_monster_spawn in &mut quest.large_monster_spawns {
-            writer.write_struct(large_monster_spawn)?;
-        }
-        writer.write_u16(&0xFFFF)?;
-
-        Ok((large_monster_ids_ptr, large_monster_spawn_ptr))
-    }
 }

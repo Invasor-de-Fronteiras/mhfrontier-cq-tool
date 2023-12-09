@@ -7,7 +7,7 @@ use crate::editor::quest::{
 };
 use std::io::{Cursor, Read, Result};
 
-use super::quest_info_header::{QuestInfoHeader, QuestInfoHeaderOld};
+use super::quest_info_header::QuestInfoHeader;
 use super::questlist_header::QUEST_UNK_END;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
