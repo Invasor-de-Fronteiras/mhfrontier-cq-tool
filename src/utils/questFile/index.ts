@@ -20,9 +20,6 @@ export interface QuestFile {
     map_zones: MapZones;
     gen_quest_prop: GenQuestProp;
     quest_type_flags: QuestTypeFlags;
-    large_monster_pointers: LargeMonsterPointers;
-    large_monster_ids: number[];
-    large_monster_spawns: LargeMonsterSpawn[];
     large_monsters: LargeMonsters;
     rewards: RewardTable[];
     supply_items: SupplyItem[];
