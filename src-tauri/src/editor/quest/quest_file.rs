@@ -104,6 +104,10 @@ impl QuestFile {
             writer.write_struct(loaded_stage)?;
         }
 
+        // Write mapinfo
+        writer.seek_start(quest.header.map_info as u64)?;
+        writer.write_struct(&mut quest.map_info)?;
+
         // Write supply items
         writer.seek_start(quest.header.supply_box_ptr as u64)?;
         writer.write_custom(&mut quest.supply_items)?;
