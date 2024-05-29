@@ -1,1 +1,11 @@
-module.exports = require("config/tailwind.config");
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{tsx,ts,js,jsx}",
+    "../../packages/ui/**/*.{tsx,ts,js,jsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
