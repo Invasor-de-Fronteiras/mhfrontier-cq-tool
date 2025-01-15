@@ -1,8 +1,9 @@
 name: "publish"
 on:
   push:
-    branches:
-      - release
+    branches: ['release', 'main']
+    tags:
+      - 'v*'
  
 permissions: write-all
  
@@ -30,13 +31,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
     - name: install app dependencies and build it
-      run: yarn && yarn build-desktop
+      run: yarn && yarn build
     - name: build desktop
       uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        projectPath: apps/desktop
+        projectPath: ./
         tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
         releaseName: "App v__VERSION__"
         releaseBody: "See the assets to download this version and install."

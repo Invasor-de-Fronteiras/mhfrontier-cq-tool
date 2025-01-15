@@ -4,18 +4,20 @@ on:
   push:
     branches:
       - main
+      - development
     paths:
-      - "apps/**"
-      - "packages/**"
+      - "src/**"
+      - "src-tauri/**"
   pull_request:
     branches:
       - main
+      - development
     paths:
-      - "apps/**"
-      - "packages/**"
+      - "src/**"
+      - "src-tauri/**"
 
 jobs:
-  build:
+  build-ts:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +29,24 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn check-types
+  build-rs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+        
+      - name: Build
+        working-directory: src-tauri
+        run: cargo build --verbose
+        
+      - name: Test
+        working-directory: src-tauri
+        run: cargo test
+      
+      - name: Format
+        working-directory: src-tauri
+        run: cargo  fmt --all -- --check
