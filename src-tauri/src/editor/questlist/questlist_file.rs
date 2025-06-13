@@ -1,6 +1,5 @@
 use super::quest_info::QuestInfo;
-use crate::editor::file::reader::FileReader;
-use crate::editor::file::writer::FileWriter;
+use better_cursor::{BetterRead, BetterWrite};
 use serde::{Deserialize, Serialize};
 use std::io::Result;
 use std::path::Path;
@@ -15,7 +14,7 @@ pub struct QuestlistFile {
 
 impl QuestlistFile {
     pub fn from_path(filename: &str, offset: u16) -> Result<QuestlistFile> {
-        let mut reader = FileReader::from_filename(filename)?;
+        let mut reader = better_cursor::from_filepath(filename)?;
         let quest_count = reader.read_u16_be()?;
         let mut quests: Vec<QuestInfo> = vec![];
 
@@ -32,7 +31,7 @@ impl QuestlistFile {
     }
 
     pub fn save_to(filename: &str, questlist: &mut QuestlistFile, total: u16) -> Result<()> {
-        let mut writer = FileWriter::from_new_filename(filename)?;
+        let mut writer = better_cursor::from_new_file(filename)?;
 
         let quest_count = if questlist.quests.len() <= 42 {
             questlist.quests.len() as u16

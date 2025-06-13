@@ -18,8 +18,7 @@ use self::config::Config;
 pub fn get_config() -> String {
     match Config::from_file() {
         Some(config) => {
-            let result = serde_json::to_string_pretty(&config);
-            EventResponse::from_result_data(result).to_string()
+            EventResponse::success_with_data(config).to_string()
         }
         None => EventResponse::success().to_string(),
     }

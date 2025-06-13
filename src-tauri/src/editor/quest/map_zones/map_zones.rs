@@ -1,10 +1,8 @@
 use std::collections::HashMap;
 use std::mem::size_of;
 
+use better_cursor::{BetterRead, BetterWrite, CustomRead, CustomWrite};
 use serde::{Deserialize, Serialize};
-
-use crate::editor::file::reader::{CustomReader, FileReader};
-use crate::editor::file::writer::{CustomWriter, FileWriter};
 
 use super::map_section::{MapSection, MapSectionHeader};
 
@@ -18,8 +16,8 @@ pub struct MapZone {
     pub unk3: u32,
 }
 
-impl CustomReader for MapZone {
-    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+impl CustomRead for MapZone {
+    fn read<R: BetterRead + ?Sized>(reader: &mut R) -> std::io::Result<Self> {
         let map_zone_ptr = reader.current_position()?;
         let mut map_sections: Vec<MapSection> = vec![];
 
@@ -44,13 +42,13 @@ impl CustomReader for MapZone {
     }
 }
 
-impl CustomWriter for MapZone {
-    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+impl CustomWrite for MapZone {
+    fn write<W: BetterWrite + ?Sized>(&self, writer: &mut W) -> std::io::Result<u64> {
         let map_zone_ptr = writer.current_position()?;
         let section_header_size = size_of::<MapSectionHeader>();
 
-        for map_section in &mut self.map_sections {
-            writer.write_struct(&mut map_section.header)?;
+        for map_section in &self.map_sections {
+            writer.write_struct(&map_section.header)?;
         }
 
         writer.write_u32(&0)?;
@@ -58,7 +56,7 @@ impl CustomWriter for MapZone {
         writer.write_u32(&self.unk2)?;
         writer.write_u32(&self.unk3)?;
 
-        for (i, map_section) in self.map_sections.iter_mut().enumerate() {
+        for (i, map_section) in self.map_sections.iter().enumerate() {
             let monster_ids_ptr = writer.current_position()?;
 
             for monster_id in &map_section.monster_ids {
@@ -68,16 +66,17 @@ impl CustomWriter for MapZone {
 
             let small_monster_spawns_ptr = writer.current_position()?;
 
-            for small_monster_spawn in &mut map_section.small_monster_spawns {
+            for small_monster_spawn in &map_section.small_monster_spawns {
                 writer.write_struct(small_monster_spawn)?;
             }
             writer.write_u16(&0xFFFF)?;
 
             let end_section = writer.current_position()?;
             writer.seek_start(map_zone_ptr + (i * section_header_size) as u64)?;
-            map_section.header.spawn_types_ptr = monster_ids_ptr as u32;
-            map_section.header.spawn_stats_ptr = small_monster_spawns_ptr as u32;
-            writer.write_struct(&mut map_section.header)?;
+            let mut header = map_section.header.clone();
+            header.spawn_types_ptr = monster_ids_ptr as u32;
+            header.spawn_stats_ptr = small_monster_spawns_ptr as u32;
+            writer.write_struct(&header)?;
             writer.seek_start(end_section)?;
         }
 
@@ -91,8 +90,8 @@ pub struct MapZones {
     pub map_zones: Vec<MapZone>,
 }
 
-impl CustomReader for MapZones {
-    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+impl CustomRead for MapZones {
+    fn read<R: BetterRead + ?Sized>(reader: &mut R) -> std::io::Result<Self> {
         let mut map_zone_ptrs: Vec<u32> = vec![];
         let mut map_zones: HashMap<u32, MapZone> = HashMap::new();
 
@@ -117,8 +116,8 @@ impl CustomReader for MapZones {
     }
 }
 
-impl CustomWriter for MapZones {
-    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+impl CustomWrite for MapZones {
+    fn write<W: BetterWrite + ?Sized>(&self, writer: &mut W) -> std::io::Result<u64> {
         let map_zones_ptr = writer.current_position()?;
 
         for map_zone_ptr in &self.map_zone_ptrs {
@@ -126,7 +125,7 @@ impl CustomWriter for MapZones {
         }
         writer.write_u32(&0)?;
 
-        for map_zone in &mut self.map_zones {
+        for map_zone in &self.map_zones {
             let new_map_zone_ptr = writer.write_custom(map_zone)?;
             let end_section = writer.current_position()?;
             writer.seek_start(map_zones_ptr)?;

@@ -1,0 +1,8 @@
+[package]
+name = "better_cursor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+better_cursor_core = { path= "core" }
+better_cursor_derive = { path= "derive" }

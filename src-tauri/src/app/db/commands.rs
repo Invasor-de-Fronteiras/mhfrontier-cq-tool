@@ -1,5 +1,6 @@
 use crate::app::utils::CustomResult;
-use crate::editor::{file::writer::FileWriter, questlist::quest_info::QuestInfo};
+use crate::editor::questlist::quest_info::QuestInfo;
+use better_cursor::BetterWrite;
 use serde::{Deserialize, Serialize};
 
 use super::config::DBConfig;
@@ -68,7 +69,7 @@ pub async fn download_quest(event: String) -> CustomResult<bool> {
     db.pool.close().await;
 
     if let Some(quest) = result {
-        let mut writer = FileWriter::from_new_filename(&payload.filepath)?;
+        let mut writer = better_cursor::from_new_file(&payload.filepath)?;
         writer.write_buffer(&quest.quest_bin)?;
 
         return Ok(true);

@@ -1,0 +1,10 @@
+[package]
+name = "better_cursor_core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+encoding_rs = "0.8.31"
+
+[lib]
+path = "./lib.rs"
