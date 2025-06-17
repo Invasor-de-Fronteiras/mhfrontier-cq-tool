@@ -17,5 +17,9 @@ pub fn get_file_hash(input: &str) -> Result<u32> {
 }
 
 pub fn prepare_mock_files() {
+    if let Some(parent_dir) = Path::new(MOCK_QUEST).parent() {
+        fs::create_dir_all(parent_dir).unwrap();
+    }
+
     fs::copy(MOCK_QUEST_SOURCE, MOCK_QUEST).unwrap();
 }
