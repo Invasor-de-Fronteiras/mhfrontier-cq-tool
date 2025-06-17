@@ -49,8 +49,13 @@ jobs:
             patchelf \
             libglib2.0-dev \
             libsoup2.4-dev \
+            libjavascriptcoregtk-4.0-dev \
             pkg-config \
-            build-essential
+            build-essential \
+            curl \
+            wget \
+            libssl-dev \
+            ca-certificates
       - name: Build
         working-directory: src-tauri
         run: cargo build --verbose
