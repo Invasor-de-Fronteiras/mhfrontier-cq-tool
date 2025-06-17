@@ -25,7 +25,7 @@ pub struct RewardTable {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct Rewards(Vec<RewardTable>);
+pub struct Rewards(pub Vec<RewardTable>);
 
 impl CustomRead for Rewards {
     fn read<R: better_cursor::BetterRead + ?Sized>(reader: &mut R) -> Result<Self> {

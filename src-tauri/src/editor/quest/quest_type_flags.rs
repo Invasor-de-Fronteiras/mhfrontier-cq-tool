@@ -163,7 +163,7 @@ pub struct QuestTypeFlags {
     pub variants: Variants,
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8; 8],
+    pub skip3: [u8; 10],
     pub quest_clears_allowed: u32,
     pub quest_monster_icon: u8,
 }

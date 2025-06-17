@@ -3,7 +3,7 @@ use better_cursor::{BetterRead, BetterWrite, CustomRead};
 use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
 
-#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct SmallMonsterSpawn {
     pub monster_id: u8,
     pub unk0: u8,
@@ -27,7 +27,7 @@ pub struct MapSectionHeader {
     pub spawn_stats_ptr: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct MapSection {
     pub header: MapSectionHeader,
     pub monster_ids: Vec<u32>,

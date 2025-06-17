@@ -8,11 +8,10 @@ use super::reward::Rewards;
 use super::supply_items::SupplyItems;
 use crate::editor::quest::header::{MapInfo, QuestFileHeader};
 use crate::editor::quest::quest_type_flags::{GenQuestProp, QuestTypeFlags};
-use better_cursor::{BetterCursor, BetterRead, BetterSeek, BetterWrite, StructRead, StructWrite};
+use better_cursor::{BetterRead, BetterSeek, BetterWrite};
 use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::Result;
-use std::path::Path;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestFile {

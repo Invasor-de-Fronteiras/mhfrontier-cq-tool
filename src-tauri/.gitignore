@@ -4,3 +4,4 @@
 WixTools
 config.json
 .env
+src/editor/tests/temp/**
