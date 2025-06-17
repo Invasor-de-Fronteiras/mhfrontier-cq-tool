@@ -1,6 +1,6 @@
-use std::{io::Result, path::Path};
-use std::fs::File;
 use std::fs;
+use std::fs::File;
+use std::{io::Result, path::Path};
 
 use better_cursor::BetterRead;
 

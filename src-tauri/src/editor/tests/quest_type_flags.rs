@@ -1,5 +1,8 @@
 use crate::editor::quest::quest_file::QuestFile;
-use crate::editor::quest::quest_type_flags::{ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus, Variants};
+use crate::editor::quest::quest_type_flags::{
+    ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
+    Variants,
+};
 use crate::editor::tests::utils::{prepare_mock_files, MOCK_QUEST};
 
 #[test]
@@ -44,9 +47,24 @@ pub fn load_quest_type_flags() {
         join_rank_min: 1,
         max_death: 3,
         objectives: QuestObjective {
-            objective1: Objective { monster_id: 125, quantity: 1, quest_objective: 1, unk: 0 },
-            objective2: Objective { monster_id: 0, quantity: 0, quest_objective: 0, unk: 0 },
-            objective3: Objective { monster_id: 0, quantity: 0, quest_objective: 0, unk: 0 },
+            objective1: Objective {
+                monster_id: 125,
+                quantity: 1,
+                quest_objective: 1,
+                unk: 0,
+            },
+            objective2: Objective {
+                monster_id: 0,
+                quantity: 0,
+                quest_objective: 0,
+                unk: 0,
+            },
+            objective3: Objective {
+                monster_id: 0,
+                quantity: 0,
+                quest_objective: 0,
+                unk: 0,
+            },
         },
         post_rank_max: 0,
         post_rank_min: 1,
@@ -62,7 +80,7 @@ pub fn load_quest_type_flags() {
         reward_b: 0,
         reward_main: 2000,
         skip1: 0,
-        skip2: [0u8;2],
+        skip2: [0u8; 2],
         unk0: 65,
         unk1: 64,
         unk10: 0,
@@ -91,7 +109,7 @@ pub fn load_quest_type_flags() {
         monster_icon3: 0,
         monster_icon4: 0,
         monster_icon5: 0,
-        skip4: [0u8;3],
+        skip4: [0u8; 3],
         sub_a_rp_grp: 0,
         sub_b_rp_grp: 0,
     };
@@ -122,13 +140,22 @@ pub fn load_quest_type_flags() {
         quest_monster_icon: 0,
         rewards_focus,
         skip1: [0u8; 8],
-        skip3: [1 , 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        skip3: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         variants,
     };
 
-    println!("allowed_equipment_bitmask {:?}", quest.quest_type_flags.allowed_equipment_bitmask);
-    println!("quest_clears_allowed {:?}", quest.quest_type_flags.quest_clears_allowed);
-    println!("quest_monster_icon {:?}", quest.quest_type_flags.quest_monster_icon);
+    println!(
+        "allowed_equipment_bitmask {:?}",
+        quest.quest_type_flags.allowed_equipment_bitmask
+    );
+    println!(
+        "quest_clears_allowed {:?}",
+        quest.quest_type_flags.quest_clears_allowed
+    );
+    println!(
+        "quest_monster_icon {:?}",
+        quest.quest_type_flags.quest_monster_icon
+    );
     println!("skip1 {:?}", quest.quest_type_flags.skip1);
     println!("skip3 {:?}", quest.quest_type_flags.skip3);
     assert_eq!(quest.quest_type_flags, quest_type_flags);

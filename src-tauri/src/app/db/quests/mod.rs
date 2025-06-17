@@ -1,7 +1,7 @@
+use better_cursor::BetterRead;
 use std::fs;
 use std::sync::Arc;
 use std::time::Instant;
-use better_cursor::BetterRead;
 use tokio::sync::Mutex;
 
 use crate::editor::questlist::quest_info::QuestInfo;

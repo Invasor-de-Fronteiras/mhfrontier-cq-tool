@@ -1,10 +1,7 @@
-use std::{
-    io::Result, mem::size_of
-};
-use better_cursor::{BetterCursor, BetterRead, BetterSeek, BetterWrite};
+use better_cursor::{BetterCursor, BetterRead, BetterWrite};
 use better_cursor::{StructRead, StructWrite};
-use encoding_rs::SHIFT_JIS;
 use serde::{Deserialize, Serialize};
+use std::{io::Result, mem::size_of};
 
 #[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestEndFlag {

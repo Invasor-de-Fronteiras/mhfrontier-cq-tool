@@ -1,10 +1,10 @@
 use std::fs::{remove_file, File, OpenOptions};
-use std::io::{Result, Cursor};
+use std::io::{Cursor, Result};
 use std::path::Path;
 
+use super::cursor::read::BetterRead;
 use super::cursor::seek::BetterSeek;
 use super::cursor::write::BetterWrite;
-use super::cursor::read::BetterRead;
 
 impl BetterSeek for File {}
 impl BetterSeek for Cursor<Vec<u8>> {}
@@ -15,8 +15,8 @@ impl BetterWrite for Cursor<Vec<u8>> {}
 
 pub trait BetterCursor: BetterSeek + BetterRead + BetterWrite {}
 
-impl BetterCursor for  Cursor<Vec<u8>> {}
-impl BetterCursor for  File {}
+impl BetterCursor for Cursor<Vec<u8>> {}
+impl BetterCursor for File {}
 
 pub fn from_buffer(buffer: Vec<u8>) -> Cursor<Vec<u8>> {
     Cursor::new(buffer)

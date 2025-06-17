@@ -6,7 +6,7 @@ use crate::editor::tests::utils::{prepare_mock_files, MOCK_QUEST};
 pub fn load_header() {
     prepare_mock_files();
     let quest = QuestFile::from_path(MOCK_QUEST).unwrap();
-    
+
     let header = QuestFileHeader {
         area_change: 5120,
         area_maping: 4928,

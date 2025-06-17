@@ -1,5 +1,7 @@
 use crate::editor::quest::quest_file::QuestFile;
-use crate::editor::tests::utils::{get_file_hash, prepare_mock_files, MOCK_QUEST, MOCK_QUEST_SOURCE};
+use crate::editor::tests::utils::{
+    get_file_hash, prepare_mock_files, MOCK_QUEST, MOCK_QUEST_SOURCE,
+};
 
 #[test]
 pub fn write_preserves_input() {

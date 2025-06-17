@@ -59,9 +59,14 @@ pub fn get_reader_call(ty: &Type) -> proc_macro2::TokenStream {
     } else if let Type::Array(array) = ty {
         let elem_ty = &*array.elem;
         let len_expr = &array.len;
-        let length: usize = if let Expr::Lit(ExprLit { lit: Lit::Int(lit_int), .. }) = len_expr {
-            lit_int.base10_parse::<usize>()
-                  .expect("Array length must be a valid integer literal")
+        let length: usize = if let Expr::Lit(ExprLit {
+            lit: Lit::Int(lit_int),
+            ..
+        }) = len_expr
+        {
+            lit_int
+                .base10_parse::<usize>()
+                .expect("Array length must be a valid integer literal")
         } else {
             panic!("Array length must be a literal integer (e.g. [u8; 10])");
         };
@@ -79,7 +84,7 @@ pub fn get_reader_call(ty: &Type) -> proc_macro2::TokenStream {
                                 buffer
                             }
                         };
-                    },
+                    }
                     _ => {
                         panic!("Unsupported array element type in StructRead");
                     }
@@ -87,7 +92,7 @@ pub fn get_reader_call(ty: &Type) -> proc_macro2::TokenStream {
             }
         }
         panic!("Unsupported array element type in StructRead");
-    }  else {
+    } else {
         panic!("Unsupported type kind in StructRead. Only Path or Array so far.");
     }
 }

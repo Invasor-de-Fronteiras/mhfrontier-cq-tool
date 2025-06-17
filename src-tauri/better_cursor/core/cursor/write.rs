@@ -2,7 +2,7 @@ use std::io::{Error, ErrorKind, Result, Write};
 use std::mem::size_of;
 use std::slice;
 
-use encoding_rs::{SHIFT_JIS, Encoding, UTF_8};
+use encoding_rs::{Encoding, SHIFT_JIS, UTF_8};
 
 use super::seek::BetterSeek;
 
@@ -66,7 +66,6 @@ where
         Ok(())
     }
 
-
     fn write_u16(&mut self, value: &u16) -> Result<()> {
         let mut buffer = value.to_le_bytes();
         self.write(&mut buffer)?;
@@ -95,7 +94,6 @@ where
         Ok(())
     }
 
-
     fn write_u16_be(&mut self, value: &u16) -> Result<()> {
         let mut buffer = value.to_be_bytes();
         self.write(&mut buffer)?;
@@ -109,7 +107,7 @@ where
 
         Ok(result)
     }
-    
+
     fn write_f32(&mut self, value: &f32) -> Result<()> {
         let mut buffer = value.to_le_bytes();
         self.write(&mut buffer)?;
@@ -161,6 +159,4 @@ where
     fn write_string_utf_8(&mut self, value: &str) -> Result<()> {
         self.write_string_by_encoding(UTF_8, value)
     }
-
 }
-

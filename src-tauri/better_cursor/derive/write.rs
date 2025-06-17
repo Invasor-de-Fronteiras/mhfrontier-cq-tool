@@ -67,7 +67,7 @@ pub fn get_writer_call(ty: &Type) -> proc_macro2::TokenStream {
                         return quote! {
                             writer.write_buffer
                         };
-                    },
+                    }
                     _ => {
                         panic!("Unsupported array element type in StructWrite");
                     }

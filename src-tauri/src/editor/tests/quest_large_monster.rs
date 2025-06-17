@@ -6,7 +6,7 @@ use crate::editor::tests::utils::{prepare_mock_files, MOCK_QUEST};
 pub fn load_large_monster() {
     prepare_mock_files();
     let quest = QuestFile::from_path(MOCK_QUEST).unwrap();
-    
+
     let large_monster_ids: Vec<u32> = vec![125];
 
     assert_eq!(quest.large_monsters.large_monster_ids, large_monster_ids);
@@ -22,7 +22,10 @@ pub fn load_large_monster() {
         unk_5: 0,
     };
 
-    assert_eq!(quest.large_monsters.large_monster_pointers, large_monster_pointers);
+    assert_eq!(
+        quest.large_monsters.large_monster_pointers,
+        large_monster_pointers
+    );
 
     let large_monster_spawns = vec![LargeMonsterSpawn {
         monster_id: 125,
@@ -42,10 +45,13 @@ pub fn load_large_monster() {
         unk9: 0,
         x_position: 10687.0,
         y_position: 0.0,
-        z_position: 7429.0
+        z_position: 7429.0,
     }];
 
-    assert_eq!(quest.large_monsters.large_monster_spawns, large_monster_spawns);
+    assert_eq!(
+        quest.large_monsters.large_monster_spawns,
+        large_monster_spawns
+    );
 
     let large_monsters = LargeMonsters {
         large_monster_ids,

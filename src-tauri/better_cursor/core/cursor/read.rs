@@ -2,7 +2,7 @@ use std::io::{Cursor, Read, Result};
 use std::mem::{forget, size_of, MaybeUninit};
 use std::{slice, usize};
 
-use encoding_rs::{SHIFT_JIS, Encoding, UTF_8, };
+use encoding_rs::{Encoding, SHIFT_JIS, UTF_8};
 
 use super::seek::BetterSeek;
 
@@ -211,5 +211,4 @@ where
     fn read_string_utf_8(&mut self) -> Result<String> {
         self.read_string_by_encoding(UTF_8)
     }
-
 }

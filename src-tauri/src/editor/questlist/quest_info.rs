@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::editor::quest::{
     offsets::MAIN_QUEST_PROP_PRT, quest_string::QuestStrings, quest_type_flags::QuestTypeFlags,
 };
-use std::io::{ Read, Result};
+use std::io::{Read, Result};
 
 use super::quest_info_header::QuestInfoHeader;
 use super::questlist_header::QUEST_UNK_END;
@@ -179,7 +179,10 @@ impl QuestInfo {
         Ok(buffer.into_inner())
     }
 
-    pub fn write_on_questlist<T: BetterWrite>(writer: &mut T, quest_info: &mut QuestInfo) -> Result<()> {
+    pub fn write_on_questlist<T: BetterWrite>(
+        writer: &mut T,
+        quest_info: &mut QuestInfo,
+    ) -> Result<()> {
         let buffer = quest_info.get_buffer()?;
         writer.write_buffer(&buffer)?;
 

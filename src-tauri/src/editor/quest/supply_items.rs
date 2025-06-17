@@ -1,6 +1,6 @@
 use std::io::Result;
 
-use better_cursor::{CustomRead, CustomWrite, StructRead, StructWrite, BetterRead, BetterWrite};
+use better_cursor::{BetterRead, BetterWrite, CustomRead, CustomWrite, StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
 
 #[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
@@ -36,7 +36,10 @@ impl CustomRead for SupplyItems {
 }
 
 impl CustomWrite for SupplyItems {
-    fn write<W: better_cursor::BetterWrite + ?Sized>(&self, writer: &mut W) -> std::io::Result<u64> {
+    fn write<W: better_cursor::BetterWrite + ?Sized>(
+        &self,
+        writer: &mut W,
+    ) -> std::io::Result<u64> {
         let position = writer.current_position()?;
         for i in 0..40 {
             writer.write_struct(&self.0[i])?;

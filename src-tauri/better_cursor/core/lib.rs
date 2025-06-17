@@ -1,2 +1,2 @@
-pub mod cursor;
 pub mod better_cursor;
+pub mod cursor;

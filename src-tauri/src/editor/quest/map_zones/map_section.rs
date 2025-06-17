@@ -1,7 +1,7 @@
-use std::io::Result;
 use better_cursor::{BetterRead, BetterWrite, CustomRead};
 use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
 #[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct SmallMonsterSpawn {

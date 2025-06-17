@@ -45,13 +45,20 @@ impl QuestStrings {
         let string_ptr = reader.read_struct::<QuestStringsPointers>()?;
 
         let title = QuestStrings::read_string_from_offset(reader, offset + string_ptr.title)?;
-        let main_objective = QuestStrings::read_string_from_offset(reader, offset + string_ptr.main_objective)?;
-        let sub_a_objective = QuestStrings::read_string_from_offset(reader, offset + string_ptr.sub_a_objective)?;
-        let sub_b_objective = QuestStrings::read_string_from_offset(reader, offset + string_ptr.sub_b_objective)?;
-        let clear_reqs = QuestStrings::read_string_from_offset(reader, offset + string_ptr.clear_reqs)?;
-        let fail_reqs = QuestStrings::read_string_from_offset(reader, offset + string_ptr.fail_reqs)?;
-        let contractor = QuestStrings::read_string_from_offset(reader, offset + string_ptr.contractor)?;
-        let description = QuestStrings::read_string_from_offset(reader, offset + string_ptr.description)?;
+        let main_objective =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.main_objective)?;
+        let sub_a_objective =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.sub_a_objective)?;
+        let sub_b_objective =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.sub_b_objective)?;
+        let clear_reqs =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.clear_reqs)?;
+        let fail_reqs =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.fail_reqs)?;
+        let contractor =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.contractor)?;
+        let description =
+            QuestStrings::read_string_from_offset(reader, offset + string_ptr.description)?;
 
         Ok(QuestStrings {
             pointers: string_ptr,

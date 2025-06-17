@@ -17,9 +17,7 @@ use self::config::Config;
 #[tauri::command]
 pub fn get_config() -> String {
     match Config::from_file() {
-        Some(config) => {
-            EventResponse::success_with_data(config).to_string()
-        }
+        Some(config) => EventResponse::success_with_data(config).to_string(),
         None => EventResponse::success().to_string(),
     }
 }

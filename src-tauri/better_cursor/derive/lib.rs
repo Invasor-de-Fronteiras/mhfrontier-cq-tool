@@ -1,7 +1,7 @@
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
-mod write;
 mod read;
+mod write;
 
 #[proc_macro_derive(StructRead)]
 pub fn derive_struct_read(input: TokenStream) -> TokenStream {
@@ -16,5 +16,3 @@ pub fn derive_struct_write(input: TokenStream) -> TokenStream {
     let gen = write::impl_struct_write(&ast);
     gen.into()
 }
-
-

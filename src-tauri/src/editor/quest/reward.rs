@@ -1,6 +1,6 @@
 use std::io::Result;
 
-use better_cursor::{CustomRead, CustomWrite, StructRead, StructWrite, BetterRead, BetterWrite};
+use better_cursor::{BetterRead, BetterWrite, CustomRead, CustomWrite, StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
 
 #[derive(StructRead, StructWrite, Serialize, Deserialize, Clone, Debug, PartialEq)]
