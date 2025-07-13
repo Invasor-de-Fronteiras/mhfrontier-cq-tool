@@ -30,22 +30,26 @@ jobs:
       - run: yarn lint
       - run: yarn check-types
   build-rs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
-          profile: minimal
           toolchain: stable
-        
+      - name: install dependencies (ubuntu only)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Create empty dist
+        run: mkdir dist
       - name: Build
         working-directory: src-tauri
         run: cargo build --verbose
         
       - name: Test
         working-directory: src-tauri
-        run: cargo test
+        run: cargo test -- --test-threads=1
       
       - name: Format
         working-directory: src-tauri

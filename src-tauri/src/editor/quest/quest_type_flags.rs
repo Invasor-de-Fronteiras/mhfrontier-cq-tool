@@ -1,7 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct Objective {
     pub quest_objective: u32,
     pub monster_id: u8,
@@ -9,16 +11,14 @@ pub struct Objective {
     pub quantity: u16,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestObjective {
     pub objective1: Objective,
     pub objective2: Objective,
     pub objective3: Objective,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct Quantity {
     pub gathering_tables_qty: u16,
     pub unk0: u16,
@@ -28,8 +28,7 @@ pub struct Quantity {
     pub area4zones: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct MainQuestProp {
     pub unk0: u8,
     pub unk1: u8,
@@ -67,8 +66,7 @@ pub struct MainQuestProp {
     pub unk13: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct Variants {
     pub monster_variant0: u8,
     pub monster_variant1: u8,
@@ -83,8 +81,7 @@ pub struct Variants {
     pub unk1: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct ForcedEquipment {
     pub legs: u16,
     pub legs_attach1: u16, // +0x80 for some reason
@@ -114,8 +111,7 @@ pub struct ForcedEquipment {
     pub unk: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct RewardsFocus {
     pub exp_type_maybe: u32,
     pub main_rp_grp: u32,
@@ -132,8 +128,7 @@ pub struct RewardsFocus {
     pub monster_icon5: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct GenQuestProp {
     pub big_monster_size_multi: u16,
     pub size_range: u16,
@@ -160,8 +155,7 @@ pub struct GenQuestProp {
     pub unk5: u16,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestTypeFlags {
     pub main_quest_prop: MainQuestProp,
     pub skip1: [u8; 8],
@@ -169,7 +163,7 @@ pub struct QuestTypeFlags {
     pub variants: Variants,
     pub allowed_equipment_bitmask: u32, // FF7F for none
     pub rewards_focus: RewardsFocus,
-    pub skip3: [u8; 8],
+    pub skip3: [u8; 10],
     pub quest_clears_allowed: u32,
     pub quest_monster_icon: u8,
 }

@@ -1,9 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite, CustomRead};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-use crate::editor::file::reader::{CustomReader, FileReader};
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct SmallMonsterSpawn {
     pub monster_id: u8,
     pub unk0: u8,
@@ -19,8 +19,7 @@ pub struct SmallMonsterSpawn {
     pub skip1: [u8; 16],
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct MapSectionHeader {
     pub loaded_stage: u32,
     pub unk0: u32,
@@ -28,15 +27,15 @@ pub struct MapSectionHeader {
     pub spawn_stats_ptr: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct MapSection {
     pub header: MapSectionHeader,
     pub monster_ids: Vec<u32>,
     pub small_monster_spawns: Vec<SmallMonsterSpawn>,
 }
 
-impl CustomReader for MapSection {
-    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+impl CustomRead for MapSection {
+    fn read<R: BetterRead + ?Sized>(reader: &mut R) -> Result<Self> {
         let header = reader.read_struct::<MapSectionHeader>()?;
         let mut monster_ids: Vec<u32> = vec![];
         let mut small_monster_spawns: Vec<SmallMonsterSpawn> = vec![];
@@ -44,7 +43,7 @@ impl CustomReader for MapSection {
 
         reader.seek_start(header.spawn_types_ptr as u64)?;
         while reader.read_current_u32()? != 0xFFFFFFFF {
-            let monster_id = reader.read_u32()?;
+            let monster_id: u32 = reader.read_u32()?;
             monster_ids.push(monster_id);
         }
 

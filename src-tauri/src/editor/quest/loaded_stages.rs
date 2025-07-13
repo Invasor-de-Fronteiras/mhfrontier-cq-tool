@@ -1,7 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct LoadedStage {
     pub stage_id: u32,
     pub unk1: u32,

@@ -1,13 +1,12 @@
+use better_cursor::BetterRead;
 use std::fs;
 use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
 
-use crate::editor::file::reader::FileReader;
 use crate::editor::questlist::quest_info::QuestInfo;
 use sqlx::QueryBuilder;
 use sqlx::Result;
-// use sqlx::Result;
 
 pub mod types;
 
@@ -23,7 +22,7 @@ use self::types::QuestDB;
 use self::types::QuestDBQueryOptions;
 
 fn get_quest_buffer(filepath: &str) -> CustomResult<Vec<u8>> {
-    let mut reader = FileReader::from_filename(filepath)?;
+    let mut reader = better_cursor::from_filepath(filepath)?;
     let result = reader.get_buffer()?;
 
     Ok(result)

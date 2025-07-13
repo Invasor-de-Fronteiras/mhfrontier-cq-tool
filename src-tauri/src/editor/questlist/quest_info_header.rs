@@ -1,7 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestInfoHeader {
     pub unk0: [u8; 3],
     // This byte is the number of players that can join the quest
@@ -67,8 +69,7 @@ pub fn quest_header() -> [u8; 16] {
     ];
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestInfoHeaderOld {
     pub unk0: [u8; 3],
     pub max_players: u8,

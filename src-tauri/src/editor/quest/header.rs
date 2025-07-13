@@ -1,10 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-// O Rust não armazena os attributos na mesma ordem que foi declarado na memória
-// O compilador decide a ordem para otimizações
-// É necessário adicionar o repr(C) para o rust utilizar a mesma ordem
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestFileHeader {
     pub quest_type_ptr: u32,
     pub loaded_stages_ptr: u32,
@@ -27,8 +26,7 @@ pub struct QuestFileHeader {
     pub fixed_inf: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct MapInfo {
     pub map_id: u32,
     pub return_bc_id: u32,

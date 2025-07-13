@@ -1,21 +1,19 @@
+use std::io::Result;
+
+use better_cursor::{BetterRead, BetterWrite, CustomRead, CustomWrite, StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
 
-use crate::editor::file::{
-    reader::{CustomReader, FileReader},
-    writer::{CustomWriter, FileWriter},
-};
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct SupplyItem {
     pub item: u16,
     pub quantity: u16,
 }
 
-pub type SupplyItems = Vec<SupplyItem>;
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+pub struct SupplyItems(Vec<SupplyItem>);
 
-impl CustomReader for SupplyItems {
-    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+impl CustomRead for SupplyItems {
+    fn read<R: better_cursor::BetterRead + ?Sized>(reader: &mut R) -> std::io::Result<Self> {
         let max_supply_items = 40;
         let mut supply_items: Vec<SupplyItem> = Vec::with_capacity(max_supply_items);
 
@@ -33,15 +31,18 @@ impl CustomReader for SupplyItems {
             count += 1;
         }
 
-        Ok(supply_items)
+        Ok(SupplyItems(supply_items))
     }
 }
 
-impl CustomWriter for SupplyItems {
-    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+impl CustomWrite for SupplyItems {
+    fn write<W: better_cursor::BetterWrite + ?Sized>(
+        &self,
+        writer: &mut W,
+    ) -> std::io::Result<u64> {
         let position = writer.current_position()?;
         for i in 0..40 {
-            writer.write_struct(&mut self[i])?;
+            writer.write_struct(&self.0[i])?;
         }
 
         Ok(position)

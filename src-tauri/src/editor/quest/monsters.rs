@@ -1,11 +1,9 @@
+use better_cursor::{BetterRead, BetterWrite, CustomRead, CustomWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::io::Result;
 
-use crate::editor::file::{
-    reader::CustomReader, reader::FileReader, writer::CustomWriter, writer::FileWriter,
-};
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct LargeMonsterPointers {
     // skip 8 bytes
     pub unk_0: u32,
@@ -18,8 +16,7 @@ pub struct LargeMonsterPointers {
     pub unk_5: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct LargeMonsterSpawn {
     pub monster_id: u8,
     pub unk0: u8,
@@ -51,8 +48,8 @@ pub struct LargeMonsters {
     pub large_monster_spawns: Vec<LargeMonsterSpawn>,
 }
 
-impl CustomReader for LargeMonsters {
-    fn read(reader: &mut FileReader) -> std::io::Result<Self> {
+impl CustomRead for LargeMonsters {
+    fn read<R: BetterRead + ?Sized>(reader: &mut R) -> Result<Self> {
         // Read large_monster_ptr
         let large_monster_pointers = reader.read_struct::<LargeMonsterPointers>()?;
 
@@ -80,8 +77,8 @@ impl CustomReader for LargeMonsters {
     }
 }
 
-impl CustomWriter for LargeMonsters {
-    fn write(&mut self, writer: &mut FileWriter) -> std::io::Result<u64> {
+impl LargeMonsters {
+    pub fn write_monster_ids<W: BetterWrite + ?Sized>(&self, writer: &mut W) -> Result<u64> {
         let large_monster_ids_ptr = writer.current_position()?;
         for large_monster_id in &self.large_monster_ids {
             writer.write_u32(&large_monster_id)?;
@@ -89,15 +86,26 @@ impl CustomWriter for LargeMonsters {
 
         writer.write_u32(&0xFFFFFFFF)?;
 
+        Ok(large_monster_ids_ptr)
+    }
+
+    pub fn write_monster_spawns<W: BetterWrite + ?Sized>(&self, writer: &mut W) -> Result<u64> {
         let large_monster_spawn_ptr = writer.current_position()?;
-        for large_monster_spawn in &mut self.large_monster_spawns {
+        for large_monster_spawn in &self.large_monster_spawns {
             writer.write_struct(large_monster_spawn)?;
         }
         writer.write_u16(&0xFFFF)?;
 
-        self.large_monster_pointers.large_monster_ids = large_monster_ids_ptr as u32;
-        self.large_monster_pointers.large_monster_spawns = large_monster_spawn_ptr as u32;
+        Ok(large_monster_spawn_ptr)
+    }
+}
 
-        Ok(large_monster_ids_ptr)
+impl CustomWrite for LargeMonsters {
+    fn write<W: BetterWrite + ?Sized>(&self, writer: &mut W) -> Result<u64> {
+        let large_monsters_prt = writer.current_position()?;
+        self.write_monster_ids(writer)?;
+        self.write_monster_spawns(writer)?;
+
+        Ok(large_monsters_prt)
     }
 }

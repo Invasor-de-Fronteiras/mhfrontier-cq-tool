@@ -1,14 +1,9 @@
-use std::{
-    io::{Read, Result},
-    mem::size_of,
-};
-
+use better_cursor::{BetterCursor, BetterRead, BetterWrite};
+use better_cursor::{StructRead, StructWrite};
 use serde::{Deserialize, Serialize};
+use std::{io::Result, mem::size_of};
 
-use crate::editor::file::reader::FileReader;
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
+#[derive(StructRead, StructWrite, Serialize, Deserialize, Debug, PartialEq)]
 pub struct QuestEndFlag {
     pub start_ptr: u32,
     pub sign: [u8; 4],
@@ -23,16 +18,14 @@ impl QuestEndFlag {
     }
 
     pub fn from_path(filename: &str) -> Result<QuestEndFlag> {
-        let mut reader = FileReader::from_filename(filename)?;
+        let mut reader = better_cursor::from_filepath(filename)?;
         QuestEndFlag::from_reader(&mut reader)
     }
 
-    pub fn from_reader(reader: &mut FileReader) -> Result<QuestEndFlag> {
-        let mut buffer = Vec::<u8>::new();
-        reader.reader.read_to_end(&mut buffer)?;
-        let end_ptr = buffer.len() - 1;
-        let sign_size = size_of::<QuestEndFlag>();
-        reader.seek_start((end_ptr - sign_size) as u64)?;
+    pub fn from_reader<T: BetterCursor>(reader: &mut T) -> Result<QuestEndFlag> {
+        let end_ptr = reader.len()? - 1;
+        let sign_size = size_of::<QuestEndFlag>() as u64;
+        reader.seek_start(end_ptr - sign_size)?;
         reader.read_struct::<QuestEndFlag>()
     }
 

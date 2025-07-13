@@ -1,17 +1,15 @@
+use better_cursor::{BetterCursor, BetterRead, BetterSeek, BetterWrite};
 use serde::{Deserialize, Serialize};
 
-use crate::editor::file::reader::FileReader;
-use crate::editor::file::writer::FileWriter;
 use crate::editor::quest::{
     offsets::MAIN_QUEST_PROP_PRT, quest_string::QuestStrings, quest_type_flags::QuestTypeFlags,
 };
-use std::io::{Cursor, Read, Result};
+use std::io::{Read, Result};
 
 use super::quest_info_header::QuestInfoHeader;
 use super::questlist_header::QUEST_UNK_END;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-#[repr(C)]
 pub struct QuestInfo {
     pub header: QuestInfoHeader,
     pub quest_type_flags: QuestTypeFlags,
@@ -23,12 +21,12 @@ pub struct QuestInfo {
 
 impl QuestInfo {
     pub fn from_questfile(filename: &str) -> Result<QuestInfo> {
-        let mut reader = FileReader::from_filename(filename)?;
+        let mut reader = better_cursor::from_filepath(filename)?;
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
         let mut unk_data: Vec<u8> = vec![0; 112];
-        reader.reader.read_exact(&mut unk_data)?;
+        reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
             &mut reader,
@@ -47,9 +45,7 @@ impl QuestInfo {
     }
 
     pub fn from_buffer(buffer: Vec<u8>) -> Result<QuestInfo> {
-        use crate::editor::file::read_cursor::ReadCursor;
-
-        let mut reader: Cursor<Vec<u8>> = Cursor::new(buffer);
+        let mut reader = better_cursor::from_buffer(buffer);
         let current = reader.current_position()?;
         reader.seek_start(current + 6)?;
         let header = reader.read_struct::<QuestInfoHeader>()?;
@@ -59,7 +55,7 @@ impl QuestInfo {
         let mut unk_data: Vec<u8> = vec![0; 112];
         reader.read_exact(&mut unk_data)?;
 
-        let strings = QuestStrings::from_cursor(
+        let strings = QuestStrings::from_reader(
             &mut reader,
             quest_type_flags.main_quest_prop.quest_strings_ptr,
             Some(data_ptr),
@@ -67,7 +63,7 @@ impl QuestInfo {
 
         reader.seek_start(data_ptr as u64 + header.get_length() as u64)?;
         let unk0_len = reader.read_u8()?;
-        let unk0 = reader.read_custom_buffer(unk0_len as u64)?;
+        let unk0 = reader.read_buffer(unk0_len as u64)?;
 
         Ok(QuestInfo {
             header,
@@ -80,16 +76,15 @@ impl QuestInfo {
     }
 
     pub fn from_quest_buffer(buffer: Vec<u8>) -> Result<QuestInfo> {
-        use crate::editor::file::read_cursor::ReadCursor;
+        let mut reader = better_cursor::from_buffer(buffer);
 
-        let mut reader: Cursor<Vec<u8>> = Cursor::new(buffer);
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
         let mut unk_data: Vec<u8> = vec![0; 112];
         reader.read_exact(&mut unk_data)?;
 
-        let strings = QuestStrings::from_cursor(
+        let strings = QuestStrings::from_reader(
             &mut reader,
             quest_type_flags.main_quest_prop.quest_strings_ptr,
             None,
@@ -105,7 +100,7 @@ impl QuestInfo {
         })
     }
 
-    pub fn from_questlist(reader: &mut FileReader) -> Result<QuestInfo> {
+    pub fn from_questlist<T: BetterCursor>(reader: &mut T) -> Result<QuestInfo> {
         let current = reader.current_position()?;
         reader.seek_start(current + 6)?;
         let header = reader.read_struct::<QuestInfoHeader>()?;
@@ -113,7 +108,7 @@ impl QuestInfo {
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
         let mut unk_data: Vec<u8> = vec![0; 112];
-        reader.reader.read_exact(&mut unk_data)?;
+        reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
             reader,
@@ -123,7 +118,7 @@ impl QuestInfo {
 
         reader.seek_start(data_ptr as u64 + header.get_length() as u64)?;
         let unk0_len = reader.read_u8()?;
-        let unk0 = reader.read_custom_buffer(unk0_len as u64)?;
+        let unk0 = reader.read_buffer(unk0_len as u64)?;
 
         Ok(QuestInfo {
             header,
@@ -136,9 +131,7 @@ impl QuestInfo {
     }
 
     pub fn get_buffer(&mut self) -> Result<Vec<u8>> {
-        use crate::editor::file::write_cursor::WriteCursor;
-
-        let mut buffer: Cursor<Vec<u8>> = Cursor::new(vec![]);
+        let mut buffer = better_cursor::from_buffer(vec![]);
 
         self.quest_type_flags.main_quest_prop.quest_strings_ptr = 0x140;
 
@@ -154,21 +147,21 @@ impl QuestInfo {
 
         // write strings
         self.strings.pointers.title = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.title)?;
+        buffer.write_string_shift_jis(&self.strings.title)?;
         self.strings.pointers.main_objective = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.main_objective)?;
+        buffer.write_string_shift_jis(&self.strings.main_objective)?;
         self.strings.pointers.sub_a_objective = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.sub_a_objective)?;
+        buffer.write_string_shift_jis(&self.strings.sub_a_objective)?;
         self.strings.pointers.sub_b_objective = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.sub_b_objective)?;
+        buffer.write_string_shift_jis(&self.strings.sub_b_objective)?;
         self.strings.pointers.clear_reqs = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.clear_reqs)?;
+        buffer.write_string_shift_jis(&self.strings.clear_reqs)?;
         self.strings.pointers.fail_reqs = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.fail_reqs)?;
+        buffer.write_string_shift_jis(&self.strings.fail_reqs)?;
         self.strings.pointers.contractor = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.contractor)?;
+        buffer.write_string_shift_jis(&self.strings.contractor)?;
         self.strings.pointers.description = (buffer.current_position()? - start_ptr) as u32;
-        buffer.write_string(&self.strings.description)?;
+        buffer.write_string_shift_jis(&self.strings.description)?;
 
         let end_ptr = buffer.current_position()?;
 
@@ -186,7 +179,10 @@ impl QuestInfo {
         Ok(buffer.into_inner())
     }
 
-    pub fn write_on_questlist(writer: &mut FileWriter, quest_info: &mut QuestInfo) -> Result<()> {
+    pub fn write_on_questlist<T: BetterWrite>(
+        writer: &mut T,
+        quest_info: &mut QuestInfo,
+    ) -> Result<()> {
         let buffer = quest_info.get_buffer()?;
         writer.write_buffer(&buffer)?;
 
@@ -194,7 +190,7 @@ impl QuestInfo {
     }
 
     pub fn save_to(&mut self, filename: &str) -> Result<()> {
-        let mut writer = FileWriter::from_new_filename(filename)?;
+        let mut writer = better_cursor::from_new_file(filename)?;
 
         let buffer = self.get_buffer()?;
         writer.write_buffer(&buffer)?;
