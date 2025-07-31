@@ -1,8 +1,12 @@
 use crate::editor::quest::quest_file::QuestFile;
-use crate::editor::quest::quest_type_flags::{ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus, Variants};
+use crate::editor::quest::quest_type_flags::{
+    ForcedEquipment, MainQuestProp, Objective, QuestObjective, QuestTypeFlags, RewardsFocus,
+    Variants,
+};
 use crate::editor::questlist::quest_info::QuestInfo;
 use crate::editor::tests::utils::{
-    get_file_hash, prepare_mock_files, prepare_mock_info_files, MOCK_QUEST, MOCK_QUEST_INFO, MOCK_QUEST_INFO_SOURCE, MOCK_QUEST_SOURCE
+    get_file_hash, prepare_mock_files, prepare_mock_info_files, MOCK_QUEST, MOCK_QUEST_INFO,
+    MOCK_QUEST_INFO_SOURCE, MOCK_QUEST_SOURCE,
 };
 
 #[test]
@@ -57,7 +61,10 @@ pub fn quest_info_type_flags() {
         unk: 1,
     };
 
-    assert_eq!(quest_info.quest_type_flags.forced_equipement, forced_equipement);
+    assert_eq!(
+        quest_info.quest_type_flags.forced_equipement,
+        forced_equipement
+    );
 
     let main_quest_prop = MainQuestProp {
         course: 18,
@@ -166,7 +173,6 @@ pub fn quest_info_type_flags() {
     assert_eq!(quest_info.quest_type_flags, quest_type_flags);
 }
 
-
 #[test]
 pub fn quest_info_strings() {
     prepare_mock_files();
@@ -174,12 +180,26 @@ pub fn quest_info_strings() {
 
     let quest_info = QuestInfo::from_questfile(MOCK_QUEST).unwrap();
 
-    assert_eq!(quest_info.strings.title, String::from("≪Ｇ★７花畑探索≫
-百花の地に舞降りし華鳳鳥"));
+    assert_eq!(
+        quest_info.strings.title,
+        String::from(
+            "≪Ｇ★７花畑探索≫
+百花の地に舞降りし華鳳鳥"
+        )
+    );
 
-    assert_eq!(quest_info.strings.clear_reqs, String::from("メインターゲットの達成"));
-    assert_eq!(quest_info.strings.contractor, String::from("ハンターズギルド"));
-    assert_eq!(quest_info.strings.description, String::from("花畑に≪フォロクルル≫がa
+    assert_eq!(
+        quest_info.strings.clear_reqs,
+        String::from("メインターゲットの達成")
+    );
+    assert_eq!(
+        quest_info.strings.contractor,
+        String::from("ハンターズギルド")
+    );
+    assert_eq!(
+        quest_info.strings.description,
+        String::from(
+            "花畑に≪フォロクルル≫がa
 現れました。報告によれば蜜
 を摂取し体質変化させる、
 非常に珍しいモンスターのよ
@@ -187,10 +207,20 @@ pub fn quest_info_strings() {
 します。また、花畑の獣人族
 ですが、ハンターを敵視して
 いる様子はなく危険は少ない
-という報告も届いています。A"));
-    assert_eq!(quest_info.strings.fail_reqs, String::from("３回力尽きる
-タイムアップ"));
-    assert_eq!(quest_info.strings.main_objective, String::from("フォロクルル１頭の狩猟"));
+という報告も届いています。A"
+        )
+    );
+    assert_eq!(
+        quest_info.strings.fail_reqs,
+        String::from(
+            "３回力尽きる
+タイムアップ"
+        )
+    );
+    assert_eq!(
+        quest_info.strings.main_objective,
+        String::from("フォロクルル１頭の狩猟")
+    );
     assert_eq!(quest_info.strings.sub_a_objective, String::from("なし"));
     assert_eq!(quest_info.strings.sub_b_objective, String::from("なし"));
 }

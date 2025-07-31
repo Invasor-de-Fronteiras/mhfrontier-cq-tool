@@ -1,11 +1,11 @@
 pub mod quest_gen_quest_prop;
 pub mod quest_header;
+pub mod quest_info;
 pub mod quest_io;
 pub mod quest_large_monster;
 pub mod quest_loaded_stages;
 pub mod quest_map;
 pub mod quest_rewards;
+pub mod quest_strings;
 pub mod quest_type_flags;
 pub mod utils;
-pub mod quest_strings;
-pub mod quest_info;
