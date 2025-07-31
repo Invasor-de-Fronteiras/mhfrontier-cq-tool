@@ -7,7 +7,7 @@ import { InputField } from "../../components/Input";
 import { MonsterCard } from "../../components/MonsterCard";
 import { SelectField } from "../../components/Select";
 import { useEditor } from "../../context/EditorContext";
-import { findMap, getStageName, monsters, quest_type_options } from "../../utils";
+import { findMap, getStageName, LargeMonsterSpawn, monsters, quest_type_options } from "../../utils";
 
 export function MonstersTab() {
   const { form } = useEditor();
@@ -18,6 +18,15 @@ export function MonstersTab() {
     control: form.control,
     name: "large_monsters.large_monster_spawns",
   });
+
+  const onCloneMonster = (monsterSpawn: LargeMonsterSpawn) => {
+    form.setValue(`large_monsters.large_monster_spawns`, [
+      ...fields,
+      { 
+        ...monsterSpawn
+      },
+    ]);
+  };
 
   const onAddMonster = () => {
     form.setValue(`large_monsters.large_monster_spawns`, [
@@ -152,7 +161,15 @@ export function MonstersTab() {
                 <td className="px-6 py-4">{monster.y_position}</td>
                 <td className="px-6 py-4">{monster.z_position}</td>
                 <td className="px-6 py-4">{monster.spawn_amount}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex gap-4">
+                  <button 
+                    type="button" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onCloneMonster(monster);
+                    }}
+                  >Clone</button>
                   <button 
                     type="button" 
                     onClick={(e) => {

@@ -40,7 +40,7 @@ impl QuestFile {
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
 
-        let unk_data: Vec<u8> = reader.read_buffer(112)?;
+        let unk_data: Vec<u8> = reader.read_buffer(115)?;
 
         // Read mapinfo
         reader.seek_start(header.map_info as u64)?;
