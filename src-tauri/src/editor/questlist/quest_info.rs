@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::editor::quest::{
     offsets::MAIN_QUEST_PROP_PRT, quest_string::QuestStrings, quest_type_flags::QuestTypeFlags,
 };
-use std::io::{Read, Result};
+use std::io::{Read, Result, Write};
 
 use super::quest_info_header::QuestInfoHeader;
 use super::questlist_header::QUEST_UNK_END;
@@ -13,7 +13,7 @@ use super::questlist_header::QUEST_UNK_END;
 pub struct QuestInfo {
     pub header: QuestInfoHeader,
     pub quest_type_flags: QuestTypeFlags,
-    pub unk_data: Vec<u8>, // 112 bytes
+    pub unk_data: Vec<u8>, // 115 bytes
     pub strings: QuestStrings,
     pub unk0_len: u8,
     pub unk0: Vec<u8>,
@@ -25,7 +25,7 @@ impl QuestInfo {
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
-        let mut unk_data: Vec<u8> = vec![0; 112];
+        let mut unk_data: Vec<u8> = vec![0; 115];
         reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
@@ -52,7 +52,7 @@ impl QuestInfo {
         let data_ptr = reader.current_position()? as u32;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
-        let mut unk_data: Vec<u8> = vec![0; 112];
+        let mut unk_data: Vec<u8> = vec![0; 115];
         reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
@@ -81,7 +81,7 @@ impl QuestInfo {
         reader.seek_start(MAIN_QUEST_PROP_PRT as u64)?;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
-        let mut unk_data: Vec<u8> = vec![0; 112];
+        let mut unk_data: Vec<u8> = vec![0; 115];
         reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
@@ -107,7 +107,7 @@ impl QuestInfo {
         let data_ptr = reader.current_position()? as u32;
 
         let quest_type_flags = reader.read_struct::<QuestTypeFlags>()?;
-        let mut unk_data: Vec<u8> = vec![0; 112];
+        let mut unk_data: Vec<u8> = vec![0; 115];
         reader.read_exact(&mut unk_data)?;
 
         let strings = QuestStrings::from_reader(
