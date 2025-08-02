@@ -206,7 +206,7 @@ export function ForcedEquipmentTab() {
         <GroupCard title="Disable Weapons type">
           <AllowedWeaponTypeField
             name="quest_type_flags.forced_equipement.weapon_attach1or_bitmask"
-            msFlag="quest_type_flags.skip3.0"
+            msFlag="quest_type_flags.skip3.2"
             control={form.control}
           />
         </GroupCard>
