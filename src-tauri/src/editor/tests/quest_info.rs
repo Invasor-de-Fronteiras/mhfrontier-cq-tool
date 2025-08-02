@@ -135,7 +135,9 @@ pub fn quest_info_type_flags() {
         monster_icon3: 0,
         monster_icon4: 0,
         monster_icon5: 0,
-        skip4: [0u8; 3],
+        monster_variant3: 0,
+        monster_variant4: 0,
+        monster_variant5: 0,
         sub_a_rp_grp: 0,
         sub_b_rp_grp: 0,
     };

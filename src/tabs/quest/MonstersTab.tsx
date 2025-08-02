@@ -78,7 +78,7 @@ export function MonstersTab() {
 
   return (
     <div className="relative">
-      <GroupCard title="Monsters">
+      <GroupCard title="Monsters" className="mb-4">
         <InputField
           label="Monster size multiplier"
           type="number"
@@ -101,6 +101,38 @@ export function MonstersTab() {
           label="Monster class id"
           options={quest_type_options}
           name="gen_quest_prop.monster_class_id"
+          control={form.control}
+        />
+      </GroupCard>
+      <GroupCard title="Monsters Variants" >
+        <InputField
+          label="Monster Variant 1"
+          type="number"
+          name="quest_type_flags.variants.monster_variant1"
+          control={form.control}
+        />
+        <InputField
+          label="Monster Variant 2"
+          type="number"
+          name="quest_type_flags.variants.monster_variant2"
+          control={form.control}
+        />
+        <InputField
+          label="Monster Variant 3 (Diva Defense)"
+          type="number"
+          name="quest_type_flags.rewards_focus.monster_variant3"
+          control={form.control}
+        />
+        <InputField
+          label="Monster Variant 4 (Diva Defense)"
+          type="number"
+          name="quest_type_flags.rewards_focus.monster_variant4"
+          control={form.control}
+        />
+        <InputField
+          label="Monster Variant 5 (Diva Defense)"
+          type="number"
+          name="quest_type_flags.rewards_focus.monster_variant5"
           control={form.control}
         />
       </GroupCard>

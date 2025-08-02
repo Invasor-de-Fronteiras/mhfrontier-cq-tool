@@ -96,7 +96,9 @@ export interface RewardsFocus {
   item1: number;
   item2: number;
   item3: number;
-  skip4: number[];
+  monster_variant3: number;
+  monster_variant4: number;
+  monster_variant5: number;
   monster_icon1: number;
   monster_icon2: number;
   monster_icon3: number;

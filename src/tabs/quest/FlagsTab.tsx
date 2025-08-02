@@ -69,18 +69,6 @@ export function FlagsTab() {
           name="quest_type_flags.variants.monster_variant0"
           control={form.control}
         />
-        <InputField
-          label="Monster Variant 1"
-          type="number"
-          name="quest_type_flags.variants.monster_variant1"
-          control={form.control}
-        />
-        <InputField
-          label="Monster Variant 2"
-          type="number"
-          name="quest_type_flags.variants.monster_variant2"
-          control={form.control}
-        />
         <SelectField
           label="Quest Variant 1"
           options={questType}
