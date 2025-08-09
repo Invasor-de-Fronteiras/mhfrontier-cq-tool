@@ -15,6 +15,10 @@ export function SmallMonsterTab() {
     control: form.control,
     name: "map_zones.map_zones",
   });
+  const mapZonePtrs = useWatch({
+    control: form.control,
+    name: "map_zones.map_zone_ptrs",
+  });
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
 
   const onReorder = () => {
@@ -37,13 +41,14 @@ export function SmallMonsterTab() {
   }
 
   const onAddZone = () => {
+      const lastOne = mapZonePtrs.length > 0 ? Math.max(...mapZonePtrs) : 0;
       form.setValue(
         `map_zones.map_zones`,
         [
           ...mapZones,
           {
             map_sections: [],
-            map_zone_ptr: 0,
+            map_zone_ptr: lastOne + 1,
             unk0: 0,
             unk1: 0,
             unk2: 0,
@@ -51,12 +56,26 @@ export function SmallMonsterTab() {
           }
         ]
       );
+
+      form.setValue(
+        `map_zones.map_zone_ptrs`,
+        [
+          ...mapZonePtrs,
+          lastOne + 1
+        ]
+      );
   }
 
-  const onRemoveZone = (zone: number) => {
+  const onRemoveZone = (index: number) => {
+    const zone = mapZones[index];
     form.setValue(
       `map_zones.map_zones`,
-      mapZones.filter((v, i) => i !== zone)
+      mapZones.filter((v) => v.map_zone_ptr !== zone.map_zone_ptr)
+    );
+
+    form.setValue(
+      `map_zones.map_zone_ptrs`,
+      mapZonePtrs.filter((v) => v !== zone.map_zone_ptr)
     );
   }
 
