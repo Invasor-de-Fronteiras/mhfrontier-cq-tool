@@ -1,5 +1,5 @@
 import { BsFillAwardFill, BsFillGeoFill, BsFillWalletFill, BsInfoCircle, BsMinecartLoaded, BsQuestion, BsSave, BsUmbrella, BsUpload } from "react-icons/bs";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { RiUploadCloudFill } from "react-icons/ri";
 import { useConfig } from "../../context/ConfigContext";
 import { FaFileExport } from "react-icons/fa";
@@ -12,7 +12,7 @@ import { HiTemplate } from "react-icons/hi";
 import { Menu, MenuGroup } from "./types";
 
 export const useQuestMenu = (): Menu => {
-  const { isLoadedFile, insertOrUpdateQuest, reFrontier } = useEditor();
+  const { isLoadedFile, insertOrUpdateQuest, reFrontier } = useQuestEditor();
   const { config, dbSelected } = useConfig();
 
   const groups: MenuGroup[] = [

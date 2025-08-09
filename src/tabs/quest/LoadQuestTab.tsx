@@ -1,10 +1,10 @@
 import { Button } from "../../components/Button";
 import { Dropzone } from "../../components/Dropzone";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { maps } from "../../utils";
 
 export function LoadQuestTab() {
-  const { loadQuest } = useEditor();
+  const { loadQuest } = useQuestEditor();
 
   return (
     <div className="flex flex-col items-center justify-center mt-6 px-2">

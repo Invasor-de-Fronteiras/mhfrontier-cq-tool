@@ -1,4 +1,4 @@
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
 import { isObject } from "../../utils/util";
@@ -14,7 +14,7 @@ const wrapOnChange = (onChange?: (...event: any[]) => void) => {
 }
 
 export function UnknownTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const data = useWatch({ control: form.control });
 
   return <UnknownField data={data!} name="root" initialHide={false} path="" />;
@@ -34,7 +34,7 @@ function UnknownField({
   path,
 }: UnknownFieldProps) {
   const [hide, setHide] = useState(initialHide);
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
 
   return (
     <fieldset className="border p-2 w-full">

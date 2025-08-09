@@ -1,6 +1,6 @@
 import React from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 import { QuestFile } from "../utils";
 
 interface PosInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -41,7 +41,7 @@ export function PosInputField<T extends FieldValues>({
   control,
   ...props
 }: PosInputFieldProps<T>) {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const { field } = useController({
     name,
     control: control ?? form.control,

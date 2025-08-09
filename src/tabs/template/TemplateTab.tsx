@@ -2,12 +2,12 @@ import classNames from "classnames";
 import { useWatch } from 'react-hook-form';
 import { Button } from "../../components/Button";
 import { GroupCard } from "../../components/CardGroup";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { LargeMonsterSpawn, maps } from "../../utils";
 import { SmallMonsterSpawn } from "../../utils/questFile/mapZones";
 
 export function ApplyTemplateTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
 
   const mapZones = useWatch({
     control: form.control,

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { monster_options } from "../utils";
 import { SelectField } from "./Select";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 import { InputField } from "./Input";
 import { useWatch } from "react-hook-form";
 import { ObjectiveType, objective_options } from "../utils/objectiveType";
@@ -14,7 +14,7 @@ export interface ObjectiveCardProps {
 }
 
 export function ObjectiveCard({ objective }: ObjectiveCardProps) {
-    const { form } = useEditor();
+    const { form } = useQuestEditor();
 
     const data = useWatch({
         name: `quest_type_flags.main_quest_prop.objectives.objective${objective}`,

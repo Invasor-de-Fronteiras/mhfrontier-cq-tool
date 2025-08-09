@@ -45,7 +45,7 @@ const defaultHeader: QuestInfoHeader = {
 };
 
 export const AddQuestToList: React.FC<AddQuestToListProps> = ({ quest, onClose }) => {
-  // const { form, handleExportQuestInfo } = useEditor();
+  // const { form, handleExportQuestInfo } = useQuestEditor();
   const { insertOrUpdateQuestlist } = useRemoteQuestlist();
   const { getQuestInfoFromQuest } = useRemoteQuest();
   const [questInfo, setQuestInfo] = useState<QuestInfo | null>(null);

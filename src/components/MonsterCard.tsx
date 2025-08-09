@@ -3,7 +3,7 @@ import { PosInputField } from "./PosInput";
 import { monster_options } from "../utils";
 import { SelectField } from "./Select";
 import { MapPreview } from "./MapPreview";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 import { InputField } from "./Input";
 import { GrClose } from "react-icons/gr";
 import { useWatch } from "react-hook-form";
@@ -19,7 +19,7 @@ export interface MonsterCardProps {
 }
 
 export function MonsterCard({ stages, onClose, index }: MonsterCardProps) {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
   const data = useWatch({
     name: `large_monsters.large_monster_spawns.${index}`,

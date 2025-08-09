@@ -1,24 +1,24 @@
 import { Ui } from "./ui";
 import { ToolContextProvider } from "./context/ToolContext";
 import ConfigEditor from "./tools/ConfigEditor";
-import QuestEditor from "./tools/QuestEditor";
-import QuestlistEditor from "./tools/QuestlistEditor";
-import RemoteQuest from "./tools/RemoteQuest";
-import RemoteQuestlist from "./tools/RemoteQuestlist";
+import { QuestEditorProvider } from "./context/QuestEditorContext";
+import { QuestlistEditorProvider } from "./context/QuestlistEditorContext";
+import { RemoteQuestProvider } from "./context/RemoteQuestContext";
+import { RemoteQuestlistProvider } from "./context/RemoteQuestlistContext";
 
 function App() {
   return (
     <ConfigEditor>
       <ToolContextProvider>
-        <QuestEditor>
-          <QuestlistEditor>
-            <RemoteQuest>
-              <RemoteQuestlist>
+        <QuestEditorProvider>
+          <QuestlistEditorProvider>
+            <RemoteQuestProvider>
+              <RemoteQuestlistProvider>
                 <Ui />
-              </RemoteQuestlist>
-            </RemoteQuest>
-          </QuestlistEditor>
-        </QuestEditor>
+              </RemoteQuestlistProvider>
+            </RemoteQuestProvider>
+          </QuestlistEditorProvider>
+        </QuestEditorProvider>
       </ToolContextProvider>
     </ConfigEditor>
   );

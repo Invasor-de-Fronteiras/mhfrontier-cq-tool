@@ -7,10 +7,10 @@ import { SelectField } from "../../components/Select";
 import { locale_flags, monster_options } from "../../utils";
 import { item_options } from "../../utils/items";
 import { requirements } from "../../utils/requirements";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 
 export function QuestInfoTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
 
   return (
     <div className="flex flex-row flex-wrap gap-2">

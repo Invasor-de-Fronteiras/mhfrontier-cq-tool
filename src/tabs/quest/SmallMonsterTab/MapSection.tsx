@@ -6,7 +6,7 @@ import { Button } from "../../../components/Button";
 import { GroupCard } from "../../../components/CardGroup";
 import { InputField } from "../../../components/Input";
 import { SelectField } from "../../../components/Select";
-import { useEditor } from "../../../context/EditorContext";
+import { useQuestEditor } from "../../../context/QuestEditorContext";
 import { findMap, monster_options } from "../../../utils";
 import { ActionButton } from "../../questlist/QuestlistTab/QuestlistRow";
 import { SmallMonsterIndex } from "./SmallMonsterEdit";
@@ -19,7 +19,7 @@ interface MapSectionProps {
 }
 
 export function MapSection({ mapSectionIndex, mapZoneIndex, onSelectSmallMonster, onRemoveSection }: MapSectionProps) {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
 
   const mapSection = useWatch({

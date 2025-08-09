@@ -4,7 +4,7 @@ import { GroupCard } from "../../../components/CardGroup";
 import { InputField } from "../../../components/Input";
 import { SelectField } from "../../../components/Select";
 import { UnknownField } from "../../../components/UnknownFields";
-import { useEditor } from "../../../context/EditorContext";
+import { useQuestEditor } from "../../../context/QuestEditorContext";
 import { monster_options } from "../../../utils";
 
 export interface SmallMonsterIndex {
@@ -26,7 +26,7 @@ export function SmallMonsterEdit({
   monsterIndex,
   onClose
 }: SmallMonsterEditProps) {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
 
   const data = useWatch({
     control: form.control,

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { findMap } from "../utils";
 import { SelectField } from "./Select";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 import { useWatch } from "react-hook-form";
 
 const colors = [
@@ -12,7 +12,7 @@ const colors = [
 ];
 
 export function PlayerSpawn() {
-    const { form } = useEditor();
+    const { form } = useQuestEditor();
     const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
     const fields = useWatch({
         control: form.control,

@@ -1,22 +1,57 @@
-import { useState } from "react";
-
-import { open, save } from "@tauri-apps/api/dialog";
-import { toast } from 'react-toastify';
+import { useContext, useEffect, useState } from "react";
+import { createContext } from "react";
+import { useForm, UseFormReturn } from "react-hook-form";
+import { getPeriotFromQuestTypeFlags, getSeasonFromQuestTypeFlags, QuestFile, QuestInfo } from "../utils";
+import { toast } from "react-toastify";
 import events from "../events";
-import { QuestFile, QuestInfo, getPeriotFromQuestTypeFlags, getSeasonFromQuestTypeFlags } from "../utils";
-import { useDatabaseSelected } from "../context/ConfigContext";
-import { EditorContextProvider } from "../context/EditorContext";
+import { save, open } from "@tauri-apps/api/dialog";
+import { useDatabaseSelected } from "./ConfigContext";
 
-interface QuestEditorProps {
-    children: React.ReactNode;
+interface EditorContextState {
+  uploadFile: {
+    dragSupport: boolean;
+    uploadFileContainerProps: () => React.HTMLAttributes<HTMLDivElement>;
+    uploadFileInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
+    isDragActive: boolean;
+  };
+  handleSaveQuest: (data: QuestFile) => void;
+  handleExportQuestInfo: (data: QuestInfo) => void;
+  insertOrUpdateQuest: () => Promise<void>;
+  reFrontier?: () => void;
+  loadQuest: (filepath?: string) => Promise<boolean>;
+  form: UseFormReturn<QuestFile>;
+  isLoadedFile: boolean;
 }
 
-function QuestEditor({ children }: QuestEditorProps) {
+interface QuestEditorProps {
+  children: React.ReactNode;
+  // insertOrUpdateQuest: (data: QuestFile) => Promise<void>;
+  // data?: QuestFile;
+}
+
+const context = createContext({} as EditorContextState);
+
+export function QuestEditorProvider({
+  children,
+}: QuestEditorProps) {
   const [questPath, setQuestPath] = useState<string | null>(null);
   const [file, setFile] = useState<QuestFile | undefined>(undefined);
   const dbSelected = useDatabaseSelected();
 
-  const handleChangeSave = async (data: QuestFile) => {
+  const form = useForm<QuestFile>({
+    defaultValues: file,
+  });
+
+  useEffect(() => {
+    form.reset(file);
+  }, [file]);
+
+  // const insertOrUpdateQuest = async () => {
+  //   const values = form.getValues();
+  //   props.insertOrUpdateQuest(values);
+  // }
+
+  const handleSaveQuest = async (data: QuestFile) => {
     if (!questPath || !data) return;
 
     try {
@@ -31,7 +66,7 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   };
 
-  const onReadFile = async (filepath?: string): Promise<boolean> => {
+  const loadQuest = async (filepath?: string): Promise<boolean> => {
     try {
       const path = filepath || await open({ multiple: false });
       if (!path) return false;
@@ -78,7 +113,9 @@ function QuestEditor({ children }: QuestEditorProps) {
     }
   }
 
-  const insertOrUpdateQuest = async (data: QuestFile) => {
+  const insertOrUpdateQuest = async () => {
+    const data = form.getValues();
+
     if (!questPath || !data) return;
     if (!dbSelected) {
       return;
@@ -131,28 +168,26 @@ function QuestEditor({ children }: QuestEditorProps) {
   }
 
   return (
-    <EditorContextProvider
-      data={file}
-      handleSaveQuest={handleChangeSave}
-      loadQuest={onReadFile}
-      handleExportQuestInfo={handleExportQuestInfo}
-      reFrontier={reFrontier}
-      isLoadedFile={!!file}
-      insertOrUpdateQuest={insertOrUpdateQuest}
-      uploadFile={{
+    <context.Provider value={{
+      form,
+      insertOrUpdateQuest,
+      handleExportQuestInfo,
+      handleSaveQuest,
+      isLoadedFile: !!file,
+      loadQuest,
+      reFrontier,
+      uploadFile: {
         dragSupport: false,
         isDragActive: false,
         uploadFileInputProps: () => ({
-          onClick: () => onReadFile(),
+          onClick: () => loadQuest(),
         }),
         uploadFileContainerProps: () => ({
-          onClick: () => onReadFile(),
+          onClick: () => loadQuest(),
         }),
-      }}
-    >
-        {children}
-    </EditorContextProvider>
+      }
+    }}>{children}</context.Provider>
   );
 }
 
-export default QuestEditor;
+export const useQuestEditor = () => useContext(context);

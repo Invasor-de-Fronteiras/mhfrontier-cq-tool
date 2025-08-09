@@ -1,10 +1,10 @@
 import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { TextAreaField } from "../../components/TextArea";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 
 export function QuestStringTab() {
-    const { form } = useEditor();
+    const { form } = useQuestEditor();
     return (
     <div className="flex flex-row flex-wrap gap-2">
         <GroupCard title="Text" contentClass="grid grid-cols-4">
