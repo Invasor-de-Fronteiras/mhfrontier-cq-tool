@@ -1,10 +1,10 @@
 import { Ui } from "./ui";
 import { ToolContextProvider } from "./context/ToolContext";
 import ConfigEditor from "./tools/ConfigEditor";
-import RemoteQuestlist from "./tools/RemoteQuestlist";
 import { QuestEditorProvider } from "./context/QuestEditorContext";
 import { QuestlistEditorProvider } from "./context/QuestlistEditorContext";
 import { RemoteQuestProvider } from "./context/RemoteQuestContext";
+import { RemoteQuestlistProvider } from "./context/RemoteQuestlistContext";
 
 function App() {
   return (
@@ -13,9 +13,9 @@ function App() {
         <QuestEditorProvider>
           <QuestlistEditorProvider>
             <RemoteQuestProvider>
-              <RemoteQuestlist>
+              <RemoteQuestlistProvider>
                 <Ui />
-              </RemoteQuestlist>
+              </RemoteQuestlistProvider>
             </RemoteQuestProvider>
           </QuestlistEditorProvider>
         </QuestEditorProvider>

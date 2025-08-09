@@ -19,7 +19,7 @@ interface RemoteQuestContextState {
   onImportQuests: () => Promise<void>;
 }
 
-interface RemoteQuestContextProps {
+interface RemoteQuestProviderProps {
   children: React.ReactNode;
 }
 
@@ -27,7 +27,7 @@ const context = createContext({} as RemoteQuestContextState);
 
 export function RemoteQuestProvider({
   children,
-}: RemoteQuestContextProps) {
+}: RemoteQuestProviderProps) {
 
   const nav = useNavigate();
   const dbSelected = useDatabaseSelected();
