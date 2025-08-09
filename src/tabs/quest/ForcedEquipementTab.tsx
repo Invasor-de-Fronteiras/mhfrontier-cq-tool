@@ -6,7 +6,7 @@ import { BitFlagsField } from "../../components/BitFlags";
 import { GroupCard } from "../../components/CardGroup";
 import { Checkbox } from "../../components/Checkbox";
 import { Select, SelectField, SelectOption } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { arms_options, chest_options, equipeTypes, head_options, legs_options, melee, meleeTypes, range, rangeTypes, waist_options } from "../../utils/equips";
 import { item_options } from "../../utils/items";
 
@@ -16,7 +16,7 @@ const setFormValue = (option: SelectOption) => option.value + 0x8000;
 
 export function ForcedEquipmentTab() {
   const [weaponType, setWeaponType] = useState<string | null>(null);
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const forcedEquipment = useWatch({
     control: form.control,
     name: 'quest_type_flags.forced_equipement'

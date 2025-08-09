@@ -3,12 +3,12 @@ import { createFilter } from "react-select";
 import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { SelectField } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 
 import { item_options } from "../../utils/items";
 
 export function SupplyItemTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
 
   const supplyItems = useWatch({
     control: form.control,

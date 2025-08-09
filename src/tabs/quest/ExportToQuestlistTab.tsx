@@ -4,11 +4,11 @@ import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { SelectField } from "../../components/Select";
 import { UnknownField } from "../../components/UnknownFields";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { QuestInfoHeader, quest_category, quest_mark } from "../../utils";
 
 export function ExportToQuestlistTab() {
-  const { form, handleExportQuestInfo } = useEditor();
+  const { form, handleExportQuestInfo } = useQuestEditor();
 
   const formHeader = useForm<QuestInfoHeader>({
     defaultValues: {

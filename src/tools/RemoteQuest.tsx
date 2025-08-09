@@ -4,7 +4,7 @@ import * as db from '../events/db';
 import * as quests from '../events/quest';
 import { useNavigate } from "react-router-dom";
 import { useDatabaseSelected } from "../context/ConfigContext";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 import { useTool } from "../context/ToolContext";
 import { QuestDB, QuestDBQueryOptions, QuestInfo, getPeriotFromQuestTypeFlags, getSeasonFromQuestTypeFlags } from "../utils";
 import { RemoteQuestContextProvider } from "../context/RemoteQuestContext";
@@ -16,7 +16,7 @@ interface RemoteQuestProps {
 function RemoteQuest({ children }: RemoteQuestProps) {
   const nav = useNavigate();
   const dbSelected = useDatabaseSelected();
-  const { loadQuest } = useEditor();
+  const { loadQuest } = useQuestEditor();
   const { setTool } = useTool();
 
   const onImportQuests = async (): Promise<void> => {

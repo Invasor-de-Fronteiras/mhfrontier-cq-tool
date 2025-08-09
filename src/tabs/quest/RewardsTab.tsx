@@ -6,13 +6,13 @@ import { Button } from "../../components/Button";
 import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { SelectField } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { monster_options } from "../../utils";
 import { item_options } from "../../utils/items";
 import { ActionButton } from "../questlist/QuestlistTab/QuestlistRow";
 
 export function RewardsTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const rewardsTables = useWatch({
     control: form.control,
     name: "rewards",

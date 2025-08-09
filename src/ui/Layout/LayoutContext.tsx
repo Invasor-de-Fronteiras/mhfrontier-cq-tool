@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createContext, useState } from "react";
 import { useContext } from "react";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 
 export interface LayoutContextState {
   isOpen: boolean;
@@ -16,7 +16,7 @@ export const useLayout = () => {
 }
 export function LayoutProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
-  const { form, handleSaveQuest } = useEditor();
+  const { form, handleSaveQuest } = useQuestEditor();
 
   return (
     <context.Provider value={{ isOpen, onToggle: () => setIsOpen(!isOpen) }}>

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { BsUpload } from "react-icons/bs";
-import { useEditor } from "../context/EditorContext";
+import { useQuestEditor } from "../context/QuestEditorContext";
 
 export function Dropzone() {
-  const { uploadFile } = useEditor();
+  const { uploadFile } = useQuestEditor();
 
   return (
     <div

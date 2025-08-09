@@ -3,7 +3,7 @@ import { BitFlagsField } from "../../components/BitFlags";
 import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { SelectField } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 
 const questTypeRaw = [
   "HR",
@@ -50,7 +50,7 @@ const questType = [
 ];
 
 export function FlagsTab() {
-    const { form } = useEditor();
+    const { form } = useQuestEditor();
     const quest = useWatch({ control: form.control });
 
     quest.quest_type_flags?.variants?.map_variant0

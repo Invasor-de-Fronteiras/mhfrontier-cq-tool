@@ -6,11 +6,11 @@ import { GroupCard } from "../../components/CardGroup";
 import { InputField } from "../../components/Input";
 import { MonsterCard } from "../../components/MonsterCard";
 import { SelectField } from "../../components/Select";
-import { useEditor } from "../../context/EditorContext";
+import { useQuestEditor } from "../../context/QuestEditorContext";
 import { findMap, getStageName, LargeMonsterSpawn, monsters, quest_type_options } from "../../utils";
 
 export function MonstersTab() {
-  const { form } = useEditor();
+  const { form } = useQuestEditor();
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const mapId = useWatch({ control: form.control, name: "map_info.map_id" });
 
