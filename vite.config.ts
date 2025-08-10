@@ -8,5 +8,5 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  publicDir: path.resolve(__dirname, "..", "..", "resources"),
+  publicDir: path.resolve(__dirname, "resources"),
 });

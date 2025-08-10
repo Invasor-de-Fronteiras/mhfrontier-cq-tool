@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { useMemo } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import ReactSelect, {
@@ -8,6 +7,7 @@ import ReactSelect, {
   createFilter,
 } from "react-select";
 import { FixedSizeList as List } from "react-window";
+import { twMerge } from 'tailwind-merge';
 import { QuestFile } from "../utils";
 
 export type SelectOption = {
@@ -58,7 +58,7 @@ interface SelectProps<T = SelectOption> extends Props<T, false, GroupBase<T>> {
 
 export function Select<T>({ label, className='m-2', ...props }: SelectProps<T>) {
   return (
-    <label className={classNames(className, "flex flex-col w-full max-w-xs")}>
+    <label className={twMerge("flex flex-col w-full max-w-xs", className)}>
       {label && (
         <span className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2">
           {label}

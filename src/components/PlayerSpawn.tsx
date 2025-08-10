@@ -34,8 +34,8 @@ export function PlayerSpawn() {
     );
 
     return (
-        <div className="px-2 py-2 flex flex-row flex-wrap w-full">
-            {fields.map((v, i) => <SelectField
+        <div className="py-2 flex flex-row flex-wrap w-full">
+            {(fields || []).map((v, i) => <SelectField
                 label={`Player ${colors[i]} Area Spawn`}
                 options={stages}
                 isClearable

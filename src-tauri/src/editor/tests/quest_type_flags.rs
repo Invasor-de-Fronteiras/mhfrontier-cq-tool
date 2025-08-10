@@ -89,7 +89,7 @@ pub fn load_quest_type_flags() {
         unk13: 0,
         unk2: 0,
         unk3: 2,
-        unk6: 2,
+        requirement_to_finish: 2,
         unk7: 0,
         unk9: 0,
         unkk: 0,

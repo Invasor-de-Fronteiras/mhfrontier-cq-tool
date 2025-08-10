@@ -38,7 +38,7 @@ export interface MainQuestProp {
   unkk: number;
   quest_id: number;
   objectives: QuestObjective;
-  unk6: number;
+  requirement_to_finish: number;
   unk7: number;
   join_rank_min: number;
   join_rank_max: number;

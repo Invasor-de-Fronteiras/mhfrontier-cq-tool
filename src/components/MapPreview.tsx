@@ -55,7 +55,8 @@ export function MapPreview({
     const ctx = canvas.getContext("2d")!;
 
     const img = new Image();
-    img.src = `/maps/${map.name}/${stage.areaNumber}.png`;
+    const areaNumber = stage.areaNumber === 'Base' ? 0 : (stage.areaNumber.split(' ')[1])
+    img.src = `/maps/${map.name}/${areaNumber}.png`;
 
     img.onerror = () => {
       canvas.height = 150;

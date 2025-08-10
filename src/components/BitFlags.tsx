@@ -150,3 +150,29 @@ export function BitFlagsField<T extends FieldValues>({
         onChange={field.onChange}
     />;
 }
+
+interface BitFlagFieldProps<T extends FieldValues> extends Omit<BitFlagProps, 'value' | 'onChange'> {
+  /**
+   * Path reference to the value in the form data.
+   */
+  name: Path<T>;
+  control: Control<T>;
+}
+
+export function BitFlagField<T extends FieldValues>({
+    name,
+    control,
+    ...props
+}: BitFlagFieldProps<T>) {
+    const { field } = useController({
+        name,
+        control,
+    });
+
+    return <BitFlag
+        {...props}
+        value={field.value as number} 
+        onChange={field.onChange}
+    />
+}
+
