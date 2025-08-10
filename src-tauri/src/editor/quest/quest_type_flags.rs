@@ -56,7 +56,7 @@ pub struct MainQuestProp {
     pub unkk: u16,
     pub quest_id: u16,
     pub objectives: QuestObjective,
-    pub unk6: u8,
+    pub requirement_to_finish: u8,
     pub unk7: u8,
     pub join_rank_min: u16,
     pub join_rank_max: u16,

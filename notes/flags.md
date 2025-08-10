@@ -47,3 +47,9 @@ quest_type_flags.main.quest_variant3 = 2 // require GR
 
 monster_spawn.unk8 = 11776 (rotacao do monstro)
 main_quest_prop.unk6 = 3 // multiplos monstros
+
+gen_quest_prop.skip1 (player spawn)
+    0 - fix spawn
+    1 - random spawn
+    2 - in front of monster spawn
+    3 - castle shrade?

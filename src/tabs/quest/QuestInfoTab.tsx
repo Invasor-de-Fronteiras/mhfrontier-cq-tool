@@ -4,10 +4,11 @@ import { InputField } from "../../components/Input";
 import { ObjectiveCard } from "../../components/Objective";
 import { PlayerSpawn } from "../../components/PlayerSpawn";
 import { SelectField } from "../../components/Select";
-import { locale_flags, monster_options } from "../../utils";
+import { locale_flags, monster_options, requirement_to_finish_quest } from "../../utils";
 import { item_options } from "../../utils/items";
 import { requirements } from "../../utils/requirements";
 import { useQuestEditor } from "../../context/QuestEditorContext";
+import { BitFlagField } from "../../components/BitFlags";
 
 export function QuestInfoTab() {
   const { form } = useQuestEditor();
@@ -57,8 +58,31 @@ export function QuestInfoTab() {
           name="quest_type_flags.main_quest_prop.quest_locale_flags"
           control={form.control}
         />
+        <div className="flex justify-center items-center m-2 gap-4">
+          <BitFlagField
+            label="Master Quest"
+            bitValue={0b1000000}
+            control={form.control}
+            name="quest_type_flags.main_quest_prop.quest_locale_flags"
+          />
+          <BitFlagField
+            label="Return in 20 seconds"
+            bitValue={32}
+            control={form.control}
+            name="quest_type_flags.main_quest_prop.unk2"
+          />
+        </div>
       </GroupCard>
       <GroupCard title="Objectives" >
+        <div className="w-full">
+          <SelectField
+            name="quest_type_flags.main_quest_prop.requirement_to_finish"
+            label="Requirement to finish quest"
+            options={requirement_to_finish_quest}
+            className="mt-2 w-full max-w-lg"
+            control={form.control}
+          />
+        </div>
         <div>
           <ObjectiveCard objective={1} />
           <ObjectiveCard objective={2} />
@@ -104,6 +128,19 @@ export function QuestInfoTab() {
         />
       </GroupCard>
       <GroupCard title="Player Spawn">
+        <div className="w-full">
+          <SelectField
+            name="gen_quest_prop.skip1.0"
+            label="Player Spawn Flag"
+            options={[
+              { label: 'Fixed', value: 0 },
+              { label: 'Random', value: 1 },
+              { label: 'Monster Area', value: 2 },
+            ]}
+            className="mt-2 px-2 w-full"
+            control={form.control}
+          />
+        </div>
         <PlayerSpawn />
       </GroupCard>
       <GroupCard title="Monster Icons (Only for Diva Defense)">

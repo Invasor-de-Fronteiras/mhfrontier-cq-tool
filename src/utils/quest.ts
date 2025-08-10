@@ -76,3 +76,11 @@ export const locale_flags = [
   { value: 90, label: "Warm/Day/Master" },
   { value: 201, label: "Breed/Day/Master" }
 ]
+
+export const requirement_to_finish_quest = [
+  { value: 0, label: "None" },
+  { value: 1, label: "Main Objective / Exit with Subquest allowed" },
+  { value: 2, label: "Main Objective / Exit with Subquest not allowed" },
+  { value: 3, label: "Main Objective + Sub A" },
+  { value: 4, label: "All Objectives" },
+]
