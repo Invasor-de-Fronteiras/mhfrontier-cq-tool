@@ -11,12 +11,24 @@ MHFrontier CQ Tool is a free and open-source solution to edit and create quests 
 
 - [Install](#install)
 - [Instructions](#instructions)
+- [Troubleshooting](#troubleshooting)
 - [Contributions](#contributions)
 - [License](#license)
 
 ## Install
 
-Download them from the [Github Release](https://github.com/Invasor-de-Fronteiras/mhfrontier-cq-tool/releases) for Windows, Linux and Mac.
+Download from the [Github Release](https://github.com/Invasor-de-Fronteiras/mhfrontier-cq-tool/releases) for Windows, Linux and Mac.
+
+### Prerequisites
+
+**[ReFrontier](https://github.com/mhvuze/ReFrontier)** is required to decompress quest files before opening them in the editor.
+
+Setup steps:
+1. Download ReFrontier from [its repository](https://github.com/mhvuze/ReFrontier/releases)
+2. Place the `ReFrontier.exe` executable in the **same folder** as the CQ Tool executable
+3. The editor will detect it automatically and enable the built-in decompress feature
+
+> ReFrontier is **not bundled** with CQ Tool — you must download and place it manually.
 
 ## Instructions
 
@@ -24,7 +36,7 @@ Download them from the [Github Release](https://github.com/Invasor-de-Fronteiras
 
 ### Decompress the Quest
 
-It is required to decompress the quest file so the editor can read it. Use [ReFrontier](https://github.com/mhvuze/ReFrontier) for that. If [ReFrontier](https://github.com/mhvuze/ReFrontier) is inside the editor folder it can be used directly from the editor.
+Quest files from the server are compressed and **must be decompressed** before the editor can read them. Use [ReFrontier](https://github.com/mhvuze/ReFrontier) for that. With ReFrontier in the same folder as the editor, you can decompress directly from the editor UI.
 
 <img src="./screenshots/refrontier.png" alt="Quest" width="300" />
 
@@ -63,6 +75,16 @@ After update [9.1](https://github.com/ZeruLight/Erupe/releases/tag/v9.1.0), the 
 To do this just go to **Export quest** in QuestEditor and choose questlist options.
 
 ![ExportQuest](./screenshots/export_quest.png)
+
+## Troubleshooting
+
+### "The system cannot find the path specified" when using ReFrontier
+
+ReFrontier executable is not in the correct location. Make sure `ReFrontier.exe` is in the **same folder** as the CQ Tool executable, not in a subfolder or a different directory.
+
+### "Failed to fill whole buffer" when opening a quest file
+
+The quest file is still compressed. You must [decompress it first](#decompress-the-quest) using ReFrontier before opening it in the editor.
 
 ## Contributions
 
