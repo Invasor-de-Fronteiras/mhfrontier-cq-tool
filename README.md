@@ -82,9 +82,6 @@ To do this just go to **Export quest** in QuestEditor and choose questlist optio
 
 ReFrontier executable is not in the correct location. Make sure `ReFrontier.exe` is in the **same folder** as the CQ Tool executable, not in a subfolder or a different directory.
 
-### "Failed to fill whole buffer" when opening a quest file
-
-The quest file is still compressed. You must [decompress it first](#decompress-the-quest) using ReFrontier before opening it in the editor.
 
 ## Contributions
 
